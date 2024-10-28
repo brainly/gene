@@ -1,0 +1,44 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/translations/src",
+  "projectType": "library",
+  "tags": ["type:utility"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/translations/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/translations"],
+      "options": {
+        "jestConfig": "libs/translations/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "copy-translations-to-app": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.projectRoot}/public/nx-locales"],
+      "options": {
+        "command": "pnpm gene-tools copy-translations-to-app {args.projectName}"
+      }
+    },
+    "copy-translations-to-storybook": {
+      "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/storybook/assets/images"],
+      "options": {
+        "command": "pnpm gene-tools copy-translations-to-storybook"
+      }
+    },
+    "fetch": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "echo 'Create your own script to fetch translations and save them in the libs/translations/src/locales folder'"
+      }
+    }
+  },
+  "name": "translations"
+}

@@ -1,0 +1,8 @@
+# Learn more about rules in the Gene documentation: https://brainly.github.io/gene/gene/modules/pr-checker
+checker_config:
+  rules:
+    memoization: false
+    no_jsx_in_hooks: true
+    no_direct_inversify_import: true
+    unit_tests_for_hooks_required: true
+    storybook_required: true

@@ -1,0 +1,124 @@
+import * as React from 'react';
+
+import {compose} from 'ramda';
+import {getRequestHeaders} from '@brainly-gene/next';
+import {getHomePageContainer} from '../ioc/getHomePageIoc';
+import { GetServerSideProps } from 'next/types';
+
+<% if (reactQuery) { %>
+import {withIoc, reactQueryFactory} from '@brainly-gene/core';
+import { QueryClient } from '@tanstack/react-query';
+<% } %>
+
+<% if (!reactQuery) { %>
+import {withIoc} from '@brainly-gene/core';
+<% } %>
+
+
+<% if (apollo) { %>
+import { apolloFactory } from '@brainly-gene/apollo';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+<% } %>
+
+
+function HomePage() {
+  return <div data-testid="<%= dataTestId %>">Home Page</div>
+}
+
+<% if (!apollo && !reactQuery) { %>
+  export async function getServerSideProps(req) {
+    const reqHeaders = getRequestHeaders(req);
+
+    return {
+      props: {
+        reqHeaders,
+      },
+    };
+  }
+<% } %>
+
+<% if (!apollo && reactQuery) { %>
+  
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+    const reactQueryClient = reactQueryFactory(() => new QueryClient());
+    const reactQueryClientInstance = reactQueryClient.getClient();
+
+    const reqHeaders = getRequestHeaders(req);
+
+    // Invoke service queries here:
+    // e.g await myQuery(apolloClientInstance);
+
+    // End of queries invokes
+
+    return {
+      props: {
+        dehydratedQueryClient: reactQueryClient.dehydrate(),
+        reqHeaders,
+      },
+    };
+  }
+<% } %>
+
+<% if (apollo && reactQuery) { %>
+  
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+    const apolloClient = apolloFactory(
+      () =>
+        new ApolloClient({
+          uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URL,
+          cache: new InMemoryCache(),
+        })
+    );
+    const apolloClientInstance = apolloClient.getClient();
+
+    const reactQueryClient = reactQueryFactory(() => new QueryClient());
+    const reactQueryClientInstance = reactQueryClient.getClient();
+
+    const reqHeaders = getRequestHeaders(req);
+
+    // Invoke service queries here:
+    // e.g await myQuery(apolloClientInstance);
+
+    // End of queries invokes
+
+    return {
+      props: {
+        dehydratedApolloClient: apolloClient.dehydrate(),
+        dehydratedQueryClient: reactQueryClient.dehydrate(),
+        reqHeaders,
+      },
+    };
+  }
+<% } %>
+
+<% if (apollo && !reactQuery) { %>
+  
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+    const apolloClient = apolloFactory(
+      () =>
+        new ApolloClient({
+          uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URL,
+          cache: new InMemoryCache(),
+        })
+    );
+    const apolloClientInstance = apolloClient.getClient();
+    
+    const reqHeaders = getRequestHeaders(req);
+    const translations = await fetchSSRTranslations();
+
+    // Invoke service queries here:
+    // e.g await myQuery(apolloClientInstance);
+
+    // End of queries invokes
+
+    return {
+      props: {
+       dehydratedApolloClient: apolloClient.dehydrate(),
+       reqHeaders,
+      },
+    };
+  }
+<% } %>
+
+export default compose(withIoc(getHomePageContainer))(HomePage);
+

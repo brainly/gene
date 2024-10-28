@@ -1,0 +1,73 @@
+---
+title: Gene CLI Cheatsheet
+---
+
+import Image from 'next/image';
+
+# Gene CLI Generators Cheatsheet
+
+### **Cheating is allowed here 🤫**
+
+All of the generators used inside of a terminal are step-based to ease the way of generating them. In some, if you need to place something inside of a specific library, you don't have to know its exact directory, there is a search functionality inside of the script.
+
+#### Module Generator 🎁
+
+```shell copy
+nx g @brainly-gene/tools:module
+```
+
+#### Core Module Generator 🎁
+
+```shell copy
+nx g @brainly-gene/tools:core-module
+```
+
+#### NextJS App Generator 💻
+
+```shell copy
+nx g @brainly-gene/tools:nextjs-app
+```
+
+#### Library Generator 📕
+
+```shell copy
+nx g @brainly-gene/tools:library
+```
+
+#### Service Generator
+
+```shell copy
+nx generate @brainly-gene/tools:service
+```
+
+#### Subapp Generator
+
+```shell copy
+nx g @brainly-gene/tools:subapp
+```
+
+If you have issues with jest tests failing such as `SyntaxError: Cannot use import statement outside a module`, check if your newly generated `jest.config` doesn't have a line with `transform`. If so, remove it.
+
+#### UI Library Generator 📙
+
+```shell copy
+nx g @brainly-gene/tools:components-library
+```
+
+#### Component Generator 🧩
+
+```shell copy
+nx g @brainly-gene/tools:component
+```
+
+#### API Route Generator 🚏
+
+```shell copy
+nx g @brainly-gene/tools:api-route
+```
+
+#### BFF App Generator
+
+```shell copy
+nx g @brainly-gene/tools:bff-app
+```

@@ -1,0 +1,84 @@
+{
+  "generators": {
+    "nextjs-app": {
+      "implementation": "./src/generators/nextjs-app-generator",
+      "schema": "./src/generators/nextjs-app-generator/schema.json",
+      "description": "Generates Next.js app"
+    },
+    "bff-app": {
+      "implementation": "./src/generators/bff-app-generator",
+      "schema": "./src/generators/bff-app-generator/schema.json",
+      "description": "Generates BFF app"
+    },
+    "api-route": {
+      "implementation": "./src/generators/api-route-generator",
+      "schema": "./src/generators/api-route-generator/schema.json",
+      "description": "Generates an API route"
+    },
+    "subapp": {
+      "implementation": "./src/generators/subapp-generator",
+      "schema": "./src/generators/subapp-generator/schema.json",
+      "description": "Generates a subapp"
+    },
+    "service": {
+      "implementation": "./src/generators/service-generator",
+      "schema": "./src/generators/service-generator/schema.json",
+      "description": "Generates a service"
+    },
+    "components-library": {
+      "implementation": "./src/generators/components-library-generator",
+      "schema": "./src/generators/components-library-generator/schema.json",
+      "description": "Generates a components library"
+    },
+    "component": {
+      "implementation": "./src/generators/component-generator",
+      "schema": "./src/generators/component-generator/schema.json",
+      "description": "Generates a gene component"
+    },
+    "module": {
+      "implementation": "./src/generators/module-generator",
+      "schema": "./src/generators/module-generator/schema.json",
+      "description": "Generates a gene module"
+    },
+    "core-module": {
+      "implementation": "./src/generators/core-module-generator",
+      "schema": "./src/generators/core-module-generator/schema.json",
+      "description": "Generates a gene core module"
+    },
+    "assets-library": {
+      "implementation": "./src/generators/assets-library-generator",
+      "schema": "./src/generators/assets-library-generator/schema.json",
+      "description": "Generates an assets library"
+    },
+    "translations-library": {
+      "implementation": "./src/generators/translations-library-generator",
+      "schema": "./src/generators/translations-library-generator/schema.json",
+      "description": "Generates a translations library"
+    },
+    "e2e-providers": {
+      "implementation": "./src/generators/e2e-providers-generator",
+      "schema": "./src/generators/e2e-providers-generator/schema.json",
+      "description": "Generates a e2e storybook providers library"
+    },
+    "library": {
+      "implementation": "./src/generators/library-generator",
+      "schema": "./src/generators/library-generator/schema.json",
+      "description": "Generates generic library"
+    },
+    "storybook-configuration": {
+      "implementation": "./src/generators/storybook-configuration",
+      "schema": "./src/generators/storybook-configuration/schema.json",
+      "description": "Generates storybook configuration"
+    },
+    "storybook-init": {
+      "implementation": "./src/generators/storybook-init",
+      "schema": "./src/generators/storybook-init/schema.json",
+      "description": "Initializes storybook (creates .storybook folder with main.js, preview.js and manager.js)"
+    },
+    "gene-workspace": {
+      "implementation": "./src/generators/gene-workspace-generator",
+      "schema": "./src/generators/gene-workspace-generator/schema.json",
+      "description": "Transforms current NX workspace to gene workspace"
+    }
+  }
+}

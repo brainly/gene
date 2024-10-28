@@ -1,0 +1,32 @@
+<% if (shouldAddFlowDeclaration && flowDeclaration) { %>
+  <%= flowDeclaration %>
+<% } %>
+import * as React from 'react';
+import {storiesOf} from '@storybook/react';
+import {StorybookMediator} from '@brainly-gene/core';
+<% if (storybookKnobs.length > 0) { %>import {<%= storybookKnobs.join(', ') %>} from '@storybook/addon-knobs';<% } %>
+import <%= classify(name) %> from './<%= classify(name) %>';
+<% if (events) { %>import {<%= eventsTypeName(name) %>} from './<%= eventsTypeName(name) %>';<% } %>
+
+const EVENTS_LIST = [<% for (let event of eventsArray) { %>{
+    value: <%= eventsTypeName(name) %>.<%= eventsKeyName(event) %>,
+    description: 'Event runs on action: <%= classify(event) %>',
+  },<% } %>];
+
+storiesOf('<%= libraryShortName %>/<%= classify(name) %>', module)
+  .addDecorator(storyFn => (
+    <StorybookMediator events={EVENTS_LIST}>{storyFn()}</StorybookMediator>
+  ))
+  .addParameters({
+    events: EVENTS_LIST,
+  })
+  .add('Default view', () => (
+    <<%= classify(name) %>
+      <% if (props || copy) { %>
+        <% if (copy) { %>
+          copy={{<% for (let copyKey of copyArray) { %><%= camelize(copyKey) %>: <%- defaultStorybookInput(`copy${classify(copyKey)}`, 'string') %>,
+        <% } %>}}<% } %>
+      <% for (let [prop, propType] of propsArray) { %><%= camelize(prop) %>={<%- defaultStorybookInput(prop, propType) %>}
+      <% } %>
+    <% } %> />
+  ));

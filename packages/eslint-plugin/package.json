@@ -1,0 +1,16 @@
+{
+  "name": "@brainly-gene/eslint-plugin",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "src/index.js",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "peerDependencies": {
+    "eslint": "^8.44.0",
+    "@nrwl/linter": "^15.0.3",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-regexp": "^2.6.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^28.8.3"
+  }
+}

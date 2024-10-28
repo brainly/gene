@@ -1,0 +1,77 @@
+---
+title: Backend for Frontend (BFF) - Create a New BFF
+---
+
+# Creating a New BFF
+
+## BFF Application Generator
+
+### Overview
+
+The following command generates a new Backend for Frontend (BFF) application with customizable configurations:
+
+```bash
+nx generate @brainly-gene/tools:bff-app
+```
+
+**Generator Code:** [View on GitHub](https://github.com/brainly/gene/blob/master/packages/gene-tools/src/generators/bff-app/README.md)
+
+### Command Execution Example
+
+Running the command above initiates a prompt to gather the required details for setting up your BFF. Below is an example of the command flow:
+
+```bash
+>  NX  Generating @brainly-gene/tools:bff-app
+
+✔ What is the BFF name? (e.g. web, ios, android)  · my-first-bff
+✔ Application tittle · Example BFF Application
+✔ Application description · Example BFF Application for the US web
+✔ Specify the path to the BFF directory relative to '/apps'? · 
+✔ What are tags of the application?
+✔ Should the application routes be translated? (y/N) · false
+✔ Should include apollo client config? (Y/n) · true
+✔ Should include react query config? (y/N) · true
+✔ Should include e2e config? (Y/n) · false
+```
+
+### Generated Files Structure
+
+The generator will create the following structure and files in the specified directory, representing a fully initialized BFF project:
+
+```bash
+CREATE apps/my-first-bff/index.d.ts
+CREATE apps/my-first-bff/next-env.d.ts
+CREATE apps/my-first-bff/next.config.js
+CREATE apps/my-first-bff/public/.gitkeep
+CREATE apps/my-first-bff/specs/index.spec.tsx
+CREATE apps/my-first-bff/tsconfig.json
+CREATE apps/my-first-bff/project.json
+CREATE apps/my-first-bff/jest.config.ts
+CREATE apps/my-first-bff/tsconfig.spec.json
+CREATE apps/my-first-bff/.eslintrc.json
+CREATE apps/my-first-bff/.env
+CREATE apps/my-first-bff/.gitignore
+CREATE apps/my-first-bff/README.md
+CREATE apps/my-first-bff/config/envVars.ts
+CREATE apps/my-first-bff/config/openApi.ts
+CREATE apps/my-first-bff/config/redirects.json
+CREATE apps/my-first-bff/ioc/baseIoc.ts
+CREATE apps/my-first-bff/ioc/getHomePageIoc.ts
+CREATE apps/my-first-bff/loadRewrites.js
+CREATE apps/my-first-bff/pages/api/docs/openapi.ts
+CREATE apps/my-first-bff/pages/api/health.ts
+CREATE apps/my-first-bff/pages/api/v1/endpoint.ts
+CREATE apps/my-first-bff/pages/api-docs.tsx
+CREATE apps/my-first-bff/public/nx-static/.gitignore
+CREATE apps/my-first-bff/public/nx-static/manifest.json
+CREATE apps/my-first-bff/specs/pages/api/v1/endpoint.spec.ts
+CREATE apps/my-first-bff/types/endpointHandlerGetTypes.ts
+CREATE apps/my-first-bff/types/endpointHandlerPostTypes.ts
+CREATE apps/my-first-bff/types/types.ts
+CREATE apps/my-first-bff/withNodeModulesCSS.js
+CREATE apps/my-first-bff/.storybook/main.js
+CREATE apps/my-first-bff/.storybook/manager.js
+CREATE apps/my-first-bff/.storybook/preview.js
+CREATE apps/my-first-bff/.storybook/tsconfig.json
+```
+

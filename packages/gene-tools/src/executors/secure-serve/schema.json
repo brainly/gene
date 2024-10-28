@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "host": {
+      "type": "string",
+      "description": "Hostname of the proxy.",
+      "default": "localhost"
+    },
+    "port": {
+      "type": "number",
+      "description": "Port of the proxy.",
+      "default": 3000
+    },
+    "serveTarget": {
+      "type": "string",
+      "description": "Target that serves the application.",
+      "pattern": "^[^:\\s]+:[^:\\s]+(:[^\\s]+)?$"
+    },
+    "targetHost": {
+      "type": "string",
+      "description": "Hostname of the target application.",
+      "default": "localhost"
+    },
+    "targetPort": {
+      "type": "number",
+      "description": "Port of the target application.",
+      "default": 4200
+    }
+  },
+  "additionalProperties": false,
+  "required": ["host", "port", "serveTarget", "targetHost", "targetPort"]
+}

@@ -1,0 +1,107 @@
+---
+title: Implementing On-Demand Data Fetching and Updates with Service Hooks
+---
+
+# Implementing On-Demand Data Fetching and Updates with Service Hooks
+
+Service hooks provide a consistent API across all services. However, some situations require on-demand data retrieval, such as when a user interacts with an element. For these cases, the `useMyServiceLazy` hook can be used. This hook, automatically created with a `Lazy` suffix when a service is generated, is designed for executing data fetching and mutations as needed. It also provides methods for updating the UI immediately and keeping data in sync after changes.
+
+## Reactive Operations with `useMyServiceLazy`
+
+The `useMyServiceLazy` hook is especially useful in scenarios where data fetching and updates are triggered by user actions, such as button clicks.
+
+### Example of Fetching Data On-Demand
+
+```tsx
+const { fetch, data, loading, error } = useMyServiceLazy();
+
+const handleClick = (variables) => {
+  fetch(variables).then((data) => {
+    // Do something with data
+  });
+};
+
+if (loading) {
+  return 'loading';
+}
+
+if (error) {
+  return error;
+}
+```
+
+### Strategies for Data Synchronization
+
+- **Optimistic Updates**: Provide a simulated response (`optimisticResponse`) for immediate visual feedback in the UI, assuming the mutation will succeed.
+- **Manual Cache Updates (`updates`)**: Directly modify the cache after a mutation using the provided update functions.
+- **Automated Query Refetching (`refetchQueries`)**: Specify which queries to rerun after a successful mutation for automatic data sync.
+
+### Practical Examples
+
+#### Modifying an Existing TODO Item
+
+```tsx
+import { queryKey as getTodoListQueryKey } from '@acme/services/get-todos-service';
+import { useEditTodoLazy } from '@acme/services/update-todo-service';
+
+const { fetch: updateTodo } = useEditTodoLazy();
+
+function updateTodoItem(todoId, updatedDetails) {
+  updateTodo({
+    variables: { id: todoId, ...updatedDetails },
+    optimisticResponse: {
+      // Construct the optimistic UI update here...
+      ...updatedDetails,
+    },
+    updates: [
+      {
+        queryKey: getTodoListQueryKey({ userId }),
+        updateFn: (existingTodos, updatedTodo) => ({
+          ...existingTodos,
+          todos: existingTodos.todos.map((todo) =>
+            todo.id === todoId ? { ...todo, ...updatedTodo } : todo
+          ),
+        }),
+      },
+    ],
+    refetchQueries: [
+      // Alternatively, refetch the query for automatic updates
+      getTodoListQueryKey({ userId }),
+    ],
+  });
+}
+```
+
+#### Adding a New TODO Item
+
+```tsx
+import { queryKey as getTodoListQueryKey } from '@acme/services/get-todos-service';
+import { useAddTodoLazy } from '@acme/services/add-todo-service';
+
+const { fetch: addTodo } = useAddTodoLazy();
+
+function addNewTodoItem(todoDetails) {
+  addTodo({
+    variables: { ...todoDetails },
+    optimisticResponse: {
+      id: 'temp-id', // Temporary ID until backend confirmation
+      ...todoDetails,
+    },
+    updates: [
+      {
+        queryKey: getTodoListQueryKey(),
+        updateFn: (existingTodos, newTodo) => ({
+          ...existingTodos,
+          todos: [...existingTodos.todos, newTodo],
+        }),
+      },
+    ],
+    refetchQueries: [
+      // Alternatively, refetch the query for automatic updates
+      getTodoListQueryKey({ userId }),
+    ],
+  });
+}
+```
+
+These examples demonstrate the use of optimistic updates for seamless user interaction and two methods for updating the cache: manual updates via `updates` and automatic synchronization using `refetchQueries`. This flexibility allows developers to handle various mutation scenarios effectively, ensuring a reliable and responsive application state.

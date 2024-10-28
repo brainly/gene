@@ -1,0 +1,11 @@
+import {ApiResultType} from '@<%= npmScope %>/common';
+export type <%=pascalCaseFileName %>GetInputQuery = Readonly<{
+  id: string;
+}>;
+
+export type <%=pascalCaseFileName %>GetResultBody = Readonly<ApiResultType<{
+  user: number;
+  id: number;
+  title: string;
+  completed: string;
+}>>;

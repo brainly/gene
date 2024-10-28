@@ -1,0 +1,6 @@
+<% if (shouldAddFlowDeclaration && flowDeclaration) { %>
+  <%= flowDeclaration %>
+<% } %>
+export type <%= copyTypeName(name) %> = <%= readonlyUtilType %><{
+  <% for (let copyKey of copyArray) { %><%= camelize(copyKey) %>: string,<% } %>
+}>;

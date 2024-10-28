@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "subapp-generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Subapp name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the subapp name?",
+      "default": "my-subapp"
+    },
+    "library": {
+      "type": "string",
+      "description": "A library name where the subapp will be placed",
+      "x-prompt": "What is the library name? (e.g. api-utils, classroom-api, social-qa-question-api etc.)",
+      "default": "api-utils"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory name inside the library, where the subapp will be placed",
+      "x-prompt": "What to name the directory in this library? (e.g. subapps, base, v1 etc.)",
+      "default": "subapps"
+    },
+    "getHandler": {
+      "type": "boolean",
+      "description": "Whether should generate GET method handler",
+      "x-prompt": "Generate GET method handler?",
+      "default": true
+    },
+    "postHandler": {
+      "type": "boolean",
+      "description": "Whether should generate POST method handler",
+      "x-prompt": "Generate POST method handler?",
+      "default": true
+    }
+  },
+  "required": ["name"]
+}

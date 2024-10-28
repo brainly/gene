@@ -1,0 +1,100 @@
+import { Container } from 'inversify';
+
+import { useDispatch, useStore, AppStoreType } from '../context/appContext';
+
+<% if (apollo) { %>
+
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClientType, apolloFactory } from '@brainly-gene/apollo';
+
+<% } %>
+
+<% if (reactQuery) { %>
+
+import {
+  ReactQueryClientType,
+  reactQueryFactory,
+} from '@brainly-gene/core';
+import { QueryClient } from '@tanstack/react-query';
+
+<% } %>
+
+import { NEXT_ROUTER, getRouterContainer } from '@brainly-gene/next';
+import {
+  APP_CONTEXT_IDENTIFIER,
+  AppContextType,
+} from '@brainly-gene/core';
+import { getTranslatorContainer, REACT_I18_NEXT } from '@brainly-gene/next';
+
+export function getBaseContainer() {
+  const container = new Container();
+<% if (!apollo && reactQuery) { %>
+  const reactQueryContainer = new Container();
+
+  /* Configure your RQ client */
+  const rqClient = new QueryClient();
+
+  reactQueryContainer
+    .bind<ReactQueryClientType>('reactQueryClient')
+    .toConstantValue(reactQueryFactory(() => rqClient));
+<% } %>
+<% if (apollo && !reactQuery) { %>
+  const apolloContainer = new Container();
+
+  /* Configure your apollo client */
+  const apolloClient = new ApolloClient({
+    cache: new InMemoryCache(),
+  });
+  apolloContainer
+    .bind<ApolloClientType>('apolloClient')
+    .toConstantValue(apolloFactory(() => apolloClient));
+<% } %>
+<% if (apollo && reactQuery) { %>
+    const reactQueryContainer = new Container();
+
+  /* Configure your RQ client */
+  const rqClient = new QueryClient();
+
+  reactQueryContainer
+    .bind<ReactQueryClientType>('reactQueryClient')
+    .toConstantValue(reactQueryFactory(() => rqClient));
+
+  const apolloContainer = new Container();
+  /* Configure your apollo client */
+  const apolloClient = new ApolloClient({
+    cache: new InMemoryCache(),
+  });
+  apolloContainer
+    .bind<ApolloClientType>('apolloClient')
+    .toConstantValue(apolloFactory(() => apolloClient));
+<% } %>
+
+  /** Use your own router if needed */
+  const routerContainer = getRouterContainer(NEXT_ROUTER);
+
+  container
+    .bind<AppContextType<AppStoreType>>(APP_CONTEXT_IDENTIFIER)
+    .toConstantValue({
+      useDispatch,
+      useStore,
+    });
+
+  /** Use your own translator if needed */
+  const translatorContainer = getTranslatorContainer(REACT_I18_NEXT);
+
+  return Container.merge(
+    container,
+    translatorContainer,
+  <% if (apollo && !reactQuery) { %>
+    apolloContainer,
+  <% } %>
+  <% if (!apollo && reactQuery) { %>
+    reactQueryContainer,
+  <% } %>
+  <% if (apollo && reactQuery) { %>
+    apolloContainer,
+    reactQueryContainer,
+  <% } %>
+    routerContainer
+  ) as Container;
+}

@@ -1,0 +1,61 @@
+import 'reflect-metadata';
+import type {ReactElement} from 'react';
+import {AppProps} from 'next/app';
+import Head from 'next/head';
+import {compose} from 'ramda';
+
+import {Layout} from 'brainly-style-guide';
+<% if (rewrites) { %>
+import rewrites from '../config/rewrites.json';
+import redirects from '../config/redirects.json';
+<% } %>
+
+import {Provider} from '../context/appContext';
+import {
+  <% if (rewrites) { %>
+  LinkRewriteContextProvider,
+  <% } %>
+  getOriginURL,
+  initI18n,
+  withSSRTranslations
+} from '@brainly-gene/next';
+
+initI18n();
+
+interface CustomAppProps extends AppProps {
+  pageProps: {
+    reqHeaders: Record<string, string>;
+  };
+}
+
+const CustomApp = ({Component, pageProps}: CustomAppProps) => {
+  const header = <div>Header</div>;
+  const footer = <div>Footer</div>;
+  const originUrl = getOriginURL(pageProps.reqHeaders);
+
+  return (
+    <Provider initialState={{originUrl}}>
+      <Head>
+        <title>Welcome to ES!</title>
+      </Head>
+      <div>Headers..</div>
+      <div>
+      <% if (rewrites) { %>
+        <LinkRewriteContextProvider
+          rewrites={rewrites}
+          redirects={redirects}
+          originUrl={originUrl.origin}
+        >
+      <% } %>
+          <Layout header={header} footer={footer}>
+            <Component {...pageProps} />
+          </Layout>
+      <% if (rewrites) { %>
+        </LinkRewriteContextProvider>
+      <% } %>
+      </div>
+    </Provider>
+  );
+}
+
+export default compose(withSSRTranslations<CustomAppProps>())(CustomApp);

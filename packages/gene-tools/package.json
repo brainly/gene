@@ -1,0 +1,19 @@
+{
+  "name": "@brainly-gene/tools",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "typings": "./src/index.d.ts",
+  "exports": {
+    "./generators": "./src/generators/index.js",
+    "./package.json": "./package.json",
+    "./executors.json": "./executors.json",
+    "./generators.json": "./generators.json",
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@angular-devkit/core": "11.2.0",
+    "@angular-devkit/schematics": "11.2.0"
+  }
+}

@@ -1,0 +1,34 @@
+name: Check Pull Request semantic
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Title
+        uses: amannn/action-semantic-pull-request@505e44b4f33b4c801f063838b3f053990ee46ea7 # v4.6.0
+        with:
+          # Define the allowed types
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          # Single commits also should be in that structure
+          validateSingleCommit: true
+          ignoreLabels: |
+            bot
+            internal
+            release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

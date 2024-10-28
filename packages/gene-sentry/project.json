@@ -1,0 +1,35 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/gene-sentry/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/gene-sentry",
+        "main": "packages/gene-sentry/src/index.ts",
+        "tsConfig": "packages/gene-sentry/tsconfig.lib.json",
+        "assets": ["packages/gene-sentry/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/gene-sentry/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/gene-sentry"],
+      "options": {
+        "jestConfig": "packages/gene-sentry/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:public"],
+  "name": "packages-gene-sentry"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@brainly-gene/create",
+  "version": "0.1.0",
+  "type": "commonjs",
+  "bin": {
+    "create-gene-workspace": "./bin/create-gene-workspace.js"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@nrwl/workspace": "15.8.9",
+    "create-nx-workspace": "15.8.9"
+  }
+}

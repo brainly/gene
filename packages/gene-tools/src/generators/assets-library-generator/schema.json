@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "assets-library-generator",
+  "type": "object",
+  "properties": {
+    "withStyleGuide": {
+      "type": "boolean",
+      "description": "Use brainly-style-guide",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Are you using brainly-style-guide?"
+    }
+  },
+  "required": ["withStyleGuide"]
+}

@@ -1,0 +1,83 @@
+import { getHttpProtocol } from '@brainly-gene/next';
+import { NextPageContext } from 'next';
+
+type CustomErrorProps = {
+  errorCode: number;
+  redirectUrl: string;
+  copy: Record<string, string>;
+};
+
+const CustomError = ({errorCode, redirectUrl, copy}: CustomErrorProps) => {
+  return (
+    <div>
+      <h1>{errorCode}</h1>
+      <p>{copy.message}</p>
+      <a href={redirectUrl}> {copy.redirectButtonLabel}</a>
+    </div>
+  );
+}
+
+type PropsType = {
+  statusCode?: number;
+  host: string;
+};
+
+const getComponentForErrorType = ({ host }: { host: string }) => {
+  const redirectUrl = host ? getHttpProtocol(host) : '#';
+
+  return new Map([
+    [
+      404,
+      <CustomError
+        errorCode={404}
+        key="404"
+        redirectUrl={redirectUrl}
+        copy={{
+          message: "Well that's awkward. Page not found.",
+          redirectButtonLabel: 'go back to',
+          redirectTargetLocationName: 'main page',
+        }}
+      />,
+    ],
+    [
+      500,
+      <CustomError
+        errorCode={500}
+        key="500"
+        redirectUrl={redirectUrl}
+        copy={{
+          message: 'Internal server error',
+          redirectButtonLabel: 'go back to',
+          redirectTargetLocationName: 'main page',
+        }}
+      />,
+    ],
+    [
+      410,
+      <CustomError
+        errorCode={500}
+        key="500"
+        redirectUrl={redirectUrl}
+        copy={{
+          message: 'Internal server error',
+          redirectButtonLabel: 'go back to',
+          redirectTargetLocationName: 'main page',
+        }}
+      />,
+    ],
+  ]);
+};
+
+function Error({ statusCode, host }: PropsType) {
+  const errorComponentsForTypeMap = getComponentForErrorType({ host });
+
+  return errorComponentsForTypeMap.get(statusCode || 404);
+}
+
+Error.getInitialProps = async ({ res, err, req }: NextPageContext) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+
+  return { statusCode, host: req?.headers?.host };
+};
+
+export default Error;

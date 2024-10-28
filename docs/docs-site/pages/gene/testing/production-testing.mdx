@@ -1,0 +1,47 @@
+# Production Tests Guide
+
+## Why We Need Production Tests
+Production testing ensures that our application functions correctly in the live environment, catching issues that might not appear in staging due to differences in data, configurations, or third-party integrations. Key reasons include:
+
+- Validating critical user flows in the real-world environment.
+- Ensuring new releases do not break existing functionality.
+- Detecting edge cases and anomalies specific to production data or configuration.
+
+## Responsibilities
+Production E2E testing is a collaborative effort between developers and QA engineers.
+
+**Creation:**
+  - **Developer or QA**:
+    - Creates tests when working on specific increments, with responsibility assigned based on team and project leader decisions.
+    - Ensures flaky tests are promptly addressed and fixed.
+
+**Fixing:** The developer who introduced the bug.
+
+**Maintenance:** Developers responsible for changes in the relevant area of production E2E tests.
+
+**Observability:** Developers ensure the codebase supports production testing, including adequate logging and monitoring.
+
+## Scope and Effort
+- **E2E Smoke Tests**: Quick checks on critical user flows to confirm basic functionality.
+- **Manual Exploratory Tests**: Ad-hoc testing to uncover edge cases and unexpected behaviors not covered by automated tests.
+
+## Tools
+- **Testing Frameworks**: Jest, Cypress
+- **Assertion Libraries**: Chai, Assert
+- **Mocking Libraries**: Sinon, Nock, Mock Service Worker
+- **CI/CD Tools**: GitHub Actions, Jenkins, TeamCity, GitLab CI
+- **Monitoring Tools**: New Relic, DataDog, Sentry
+- **Project Management**: TestRail, Jira
+
+## Guidelines and Best Practices
+- Back up production data before testing.
+- Run tests during off-peak hours to reduce user impact.
+- Ensure proper logging and monitoring to capture any issues.
+- Use feature flags to enable/disable features during testing.
+- Communicate testing schedules and potential impacts to stakeholders.
+
+## Definition of Done
+- All critical user flows have been tested and verified.
+- No major issues or regressions have been identified.
+- All detected issues have been documented and communicated.
+- Monitoring and logging do not show new or unexplained errors.

@@ -1,0 +1,54 @@
+---
+title: Backend for Frontend (BFF) - Run BFF Locally
+---
+
+# Run BFF Locally
+
+To run both the app and BFF locally, ports must be configured correctly since both default to using ports 3000 and 4200. Follow the steps below to modify the BFF ports.
+
+### Steps
+
+1. **Locate the BFF Entry in the `.env` File**  
+   Find the relevant BFF entry in the `.env` file for the desired market. Example: `NEXT_PUBLIC_MY_BFF_API_URL` in `apps/example.com/us/.env`.
+
+2. **Update the URL Port**  
+   Modify the URL to use an unused port, e.g., `http://localhost:4201`.
+
+3. **Open `project.json` in the BFF Project Root**  
+   Navigate to the root of the BFF project and open `project.json`.
+
+4. **Modify the `serve` and `serve-base` Options**  
+   - The `serve-base` option serves the Next.js app by default.
+   - The `serve` option performs the same function with SSL enabled.
+
+5. **Update the `serve` Configuration**  
+   Add the following properties inside `serve`:
+
+   ```json {4,5}
+   "serve": {
+     "options": {
+       "serveTarget": "my-bff-us-web:serve-base",
+       "targetPort": 4201,
+       "port": 3001
+     }
+   }
+   ```
+
+6. **Update the `serve-base` Configuration**  
+   Add the following properties inside `serve-base`:
+
+   ```json {5}
+   "serve-base": {
+     "options": {
+       "buildTarget": "my-bff-us-web:build",
+       "dev": true,
+       "port": 4201
+     }
+   }
+   ```
+
+7. **Run the BFF Locally**  
+   Execute the following command to start the BFF:  
+   ```bash
+   nx run my-bff-us-web:serve
+   ```

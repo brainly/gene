@@ -1,0 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare module '*.svg' {
+  const content: any;
+  export const ReactComponent: any;
+  export default content;
+}
+
+declare module '*.scss';
+
+// FRINFRA-457: Research how CSS modules imports can be typed
+declare module '*.module.css' {
+  const styles: {[className: string]: string};
+  export default styles;
+}
+
+declare module '*.png';

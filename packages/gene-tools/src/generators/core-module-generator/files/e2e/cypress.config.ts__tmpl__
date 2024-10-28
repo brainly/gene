@@ -1,0 +1,16 @@
+import { defineConfig } from 'cypress';
+import {nxE2EPreset} from '@nrwl/cypress/plugins/cypress-preset';
+import * as setupNodeEvents from './src/plugins/index';
+
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:4400',
+    setupNodeEvents,
+    specPattern: './src/e2e/**/*.feature',
+    supportFile: './src/support/e2e.ts',
+    retries: 2,
+    env: {
+      TAGS: 'not @skip',
+    },
+  },
+});

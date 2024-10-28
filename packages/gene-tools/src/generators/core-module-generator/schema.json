@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "core-module-generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Library name (without -module suffix)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the module name? (without -module suffix)"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the module is placed",
+      "x-prompt": "What is the module directory?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the library (used for linting)",
+      "x-prompt": "What are the module tags? Please include domain tag (domain:<domain-or-product-in-which-module-will-be-scoped>)."
+    },
+    "errorBoundary": {
+      "type": "boolean",
+      "default": true,
+      "description": "Indicator on whether to wrap imodule with error boundary or not. Boundary name will be inherited from module name",
+      "x-prompt": "Should module be wrapped with error boundary? It is suggested to wrap all modules with error boundary. Read more: https://github.io/brainly/error-boundaries"
+    }
+  },
+  "required": ["name", "tags"]
+}

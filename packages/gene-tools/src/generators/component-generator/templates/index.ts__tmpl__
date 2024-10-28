@@ -1,0 +1,11 @@
+<% if (shouldAddFlowDeclaration && flowDeclaration) { %>
+  <%= flowDeclaration %>
+<% } %>
+
+export {default as <%= classify(name) %>} from './<%= classify(name) %>';
+<% if (events) { %>
+  export * from './<%= classify(name) %>EventsType';
+<% } %>
+<% if (copy) { %>
+  export type {<%= copyTypeName(name) %>} from './<%= copyTypeName(name) %>';
+<% } %>

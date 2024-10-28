@@ -1,0 +1,5 @@
+@import '~brainly-style-guide/src/sass/config';
+@import '~brainly-style-guide/src/sass/mixins';
+
+<% for (let style of stylesArray) { %>.<%= camelize(style) %> {}
+<% } %>

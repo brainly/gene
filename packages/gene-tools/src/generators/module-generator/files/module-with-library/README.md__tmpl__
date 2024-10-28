@@ -1,0 +1,5 @@
+This is a <%= pascalCaseFileName %>
+
+Learn how to develop and debug this module [here](https://brainly.github.io/gene/modules/development)
+
+If you need a copy of this module with slightly different behaviour learn how to create inheritor for this module [here](https://brainly.github.io/gene/modules/advanced)

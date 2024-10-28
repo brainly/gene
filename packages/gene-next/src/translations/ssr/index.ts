@@ -1,0 +1,1 @@
+export { withSSRTranslations } from './withSSRTranslations';

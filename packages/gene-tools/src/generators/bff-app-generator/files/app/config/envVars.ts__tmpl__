@@ -1,0 +1,15 @@
+import {z} from 'zod';
+
+const nonemptyStrSchema = z
+  .string()
+  .trim()
+  .nonempty('String must not me empty');
+
+const schema = z.object({
+  PUBLIC_HOSTNAME: nonemptyStrSchema,
+  API_PLACEHOLDER_URL: nonemptyStrSchema,
+});
+
+export function getConfig() {
+  return schema.parse(process.env);
+}

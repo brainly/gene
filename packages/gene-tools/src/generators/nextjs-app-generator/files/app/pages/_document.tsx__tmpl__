@@ -1,0 +1,39 @@
+import React from 'react';
+import {Html, Head, Main, NextScript} from 'next/document';
+
+export default function Document() {
+  return (
+    <Html>
+      <Head>
+        <link
+          href="https://styleguide.brainly.com/220.7.1/style-guide.css"
+          rel="stylesheet"
+        />
+        <script
+          src="https://styleguide.brainly.com/images/icons-16b3fa1763.js"
+          defer
+        />
+        <script
+          src="https://styleguide.brainly.com/images/subjects-icons-b0f96b6e0b.js"
+          defer
+        />
+        <script
+          src="https://styleguide.brainly.com/images/subjects-mono-icons-0fe77c49f4.js"
+          defer
+        />
+        <script
+          src="https://styleguide.brainly.com/images/math-symbols-icons-76ec20f543.js"
+          defer
+        />
+        <script
+          src="https://styleguide.brainly.com/images/mobile-icons-2c4ecfb112.js"
+          defer
+        />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}

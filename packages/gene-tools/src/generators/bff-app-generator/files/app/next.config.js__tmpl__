@@ -1,0 +1,98 @@
+const withNx = require('@nrwl/next/plugins/with-nx');
+const withNodeModulesCSS = require('./withNodeModulesCSS');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+<% if (rewrites) { %>
+const path = require('path');
+const loadRewrites = require('./loadRewrites');
+const REWRITES_PATH = path.resolve(__dirname, 'config/rewrites.json');
+<% } %>
+
+/**
+ * Set next.js buildId and the BUILD_ID environment variable
+ * to the value of the CI_SERVICE_VERSION which is set to git commit hash by the CI service.
+ */
+const withBuildId = (nextConfig = {}) => {
+  const buildId = process.env.CI_SERVICE_VERSION ?? 'local-build';
+  return Object.assign({}, nextConfig, {
+    generateBuildId: () => buildId,
+    env: Object.assign({}, nextConfig.env || {}, {
+      BUILD_ID: buildId,
+    }),
+  });
+};
+
+const productionPlugins = [];
+
+const devPlugins = [];
+
+const plugins = [
+  withNodeModulesCSS,
+  withBundleAnalyzer,
+  withNx,
+  withBuildId,
+].concat(
+  process.env.NEXT_PUBLIC_ENV === 'local' ? devPlugins : productionPlugins
+);
+
+const domains = [
+  'xf-static.z-dn.net',
+  'xb-static.z-dn.net',
+  'pt-static.z-dn.net',
+  'srv-supersonic-images.z-dn.net',
+];
+
+module.exports = () => {
+  return plugins.reduce(
+    (acc, next) => {
+      if (typeof next !== 'function') {
+        return {...acc, ...next};
+      }
+
+      if (next.name === 'withSentryConfig') {
+        return next(acc, {silent: true});
+      }
+
+      return next(acc);
+    },
+    {
+      images: {
+        /**
+         * Disable image optimization. When image optimization is enabled, the
+         * image static imports returns an object instead of a string and our
+         * components are expecting a string. The returned object has the following
+         * shape: `{ blurDataURL: string; height: number; src: string; width: number }`.
+         * In order to use image optimization our components would need to support
+         * receiving this object.
+         *
+         * See: https://nextjs.org/docs/basic-features/image-optimization
+         */
+        disableStaticImages: true,
+        domains,
+        minimumCacheTTL: 3600,
+      },
+      i18n: {
+        locales: ['en-US'],
+        defaultLocale: 'en-US',
+      },
+      <% if (rewrites) { %>
+      rewrites: loadRewrites(REWRITES_PATH),
+      <% } %>
+      swcMinify: true,
+      experimental: {
+        forceSwcTransforms: true,
+        /*
+         * Increase max page data size warning threshold from 128kB to 400kB
+         * to reduce amount of warnings logged to console
+         */
+        largePageDataBytes: 400 * 100000,
+        esmExternals: false,
+      },
+      serverRuntimeConfig: {
+        domains,
+      },
+    }
+  );
+};

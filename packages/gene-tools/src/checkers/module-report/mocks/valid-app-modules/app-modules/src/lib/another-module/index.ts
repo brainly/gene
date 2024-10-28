@@ -1,0 +1,1 @@
+export {AnotherValidModule} from './AnotherValidModule';

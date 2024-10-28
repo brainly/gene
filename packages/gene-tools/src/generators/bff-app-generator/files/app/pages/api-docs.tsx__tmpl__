@@ -1,0 +1,37 @@
+import {InferGetStaticPropsType} from 'next';
+import dynamic from 'next/dynamic';
+import openApiDocumentation from '../config/openApi';
+import {ApiDocumentation} from '@<%= npmScope %>/swagger/components';
+
+const SwaggerUI = dynamic<any>(import('swagger-ui-react'), {
+  ssr: false,
+});
+
+function ApiDoc({spec}: InferGetStaticPropsType<typeof getStaticProps>) {
+  if (process.env.NEXT_PUBLIC_ENV === 'production') {
+    return null;
+  }
+
+  return <ApiDocumentation swaggerUI={<SwaggerUI spec={spec} />} />;
+}
+
+export const getStaticProps: () => Promise<
+  {redirect: {destination: string}} | {props: {spec: Record<string, any>}}
+> = async () => {
+  if (process.env.NEXT_PUBLIC_ENV === 'production') {
+    return {
+      props: {
+        spec: null,
+      },
+    };
+  }
+
+  return {
+    props: {
+      spec: openApiDocumentation,
+    },
+  };
+};
+
+ApiDoc.getLayout = page => page;
+export default ApiDoc;

@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "bff-app-generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "NextJS Application - BFF name. Please use guide in https://silver-adventure-znwmjng.pages.github.io/gene/backend-for-frontend/create",
+      "default": "web",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the BFF name? (e.g. web, ios, android) "
+    },
+    "title": {
+      "type": "string",
+      "description": "OpenApi documentation application title used in generated Swagger",
+      "x-prompt": "Application tittle",
+      "default": "Example BFF Application"
+    },
+    "description": {
+      "type": "string",
+      "description": "OpenApi documentation application description used in generated Swagger.",
+      "x-prompt": "Application description",
+      "default": "Example BFF Application for the US web"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the BFF is placed",
+      "x-prompt": "Specify the path to the BFF directory relative to '/apps'?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the application (used for linting).",
+      "x-prompt": "What are tags of the application?"
+    },
+    "rewrites": {
+      "type": "boolean",
+      "description": "This will add config/rewrites.json",
+      "x-prompt": "Should the application routes be translated?"
+    },
+    "apollo": {
+      "type": "boolean",
+      "default": true,
+      "description": "Should include apollo client config",
+      "x-prompt": "Should include apollo client config?"
+    },
+    "reactQuery": {
+      "type": "boolean",
+      "description": "Should include react query config",
+      "x-prompt": "Should include react query config?"
+    },
+    "e2e": {
+      "type": "boolean",
+      "description": "Should include e2e config",
+      "x-prompt": "Should include e2e config?",
+      "default": true
+    }
+  },
+  "required": ["name", "directory"]
+}

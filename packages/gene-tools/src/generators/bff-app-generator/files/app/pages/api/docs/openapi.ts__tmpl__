@@ -1,0 +1,6 @@
+import {apiHandlerConnect} from '@brainly-gene/next';
+import openApiDocumentation from '../../../config/openApi';
+
+export default apiHandlerConnect().get(async (req, res) => {
+  res.status(200).json(openApiDocumentation);
+});

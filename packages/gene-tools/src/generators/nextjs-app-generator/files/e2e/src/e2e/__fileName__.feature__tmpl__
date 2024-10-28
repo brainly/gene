@@ -1,0 +1,5 @@
+Feature: <%= camelCaseFileName %>
+
+  Scenario: <%= camelCaseFileName %> page
+    Given I visit <%= camelCaseFileName %> page
+    Then I see <%= camelCaseFileName %> page is displayed

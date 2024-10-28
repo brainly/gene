@@ -1,0 +1,35 @@
+---
+title: Dispatch API
+---
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+# Dispatch API
+
+The `dispatch` method accepts two arguments:
+
+```jsx
+dispatch(eventTarget, eventTuple)
+```
+
+where:
+
+| Parameter       | Description                                                   |
+|-----------------|---------------------------------------------------------------|
+| `eventTarget`   | The target element of the dispatched event, typically `e.target`. |
+| `eventTuple`    | An array containing `[eventName, eventPayload]`.              |
+
+## Example Usage
+
+```jsx
+const eventPayload = {
+  id: '1234'
+}
+
+<button
+  onClick={(e) => dispatch(e.target, ['myCustomEventName', eventPayload])}
+>
+  Click me!
+</button>
+```

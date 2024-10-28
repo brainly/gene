@@ -1,0 +1,43 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:js-app', // https://docs.renovatebot.com/presets-config/#configjs-app
+    ':semanticCommits',
+    ':semanticCommitTypeAll(chore)',
+    'group:monorepos',
+    'group:allDigest',
+    'helpers:pinGitHubActionDigests',
+  ],
+  rebaseWhen: 'never', // we use merge queue which will rebase PRs before merging
+  prConcurrentLimit: 3,
+  commitMessageAction: '🔗 update',
+  internalChecksFilter: 'strict', // required for packageRules[].stabilityDays
+  dependencyDashboard: true,
+  dependencyDashboardApproval: true, // require approval for all updates initially
+  pin: {
+    dependencyDashboardApproval: false,
+    automerge: false, // let's test it and change to true later
+    rebaseWhen: 'never', //
+  },
+  separateMinorPatch: true,
+  separateMajorMinor: true,
+  separateMultipleMajor: true,
+  packageRules: [
+    {
+      // group all patch updates together in a single PR
+      groupName: 'all patch dependencies',
+      groupSlug: 'all-patch',
+      matchPackageNames: ['*'],
+      matchUpdateTypes: ['patch'],
+    },
+    {
+      matchDatasources: ['npm'],
+      stabilityDays: 3, // npm packages less than 72 hours (3 days) old can be unpublished
+    },
+    {
+      matchCurrentVersion: '2.8.8', // [Prettier v3 doesn't work with jest-snapshots](https://github.com/jestjs/jest/issues/14305), remove after jest update to >=30
+      matchPackageNames: ['prettier'],
+      enabled: false,
+    },
+  ],
+}

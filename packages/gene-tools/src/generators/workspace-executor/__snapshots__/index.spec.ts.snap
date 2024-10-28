@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`workspaceExecutor generator should add the executor to the executors.json 1`] = `
+Object {
+  "executors": Object {
+    "foo-bar": Object {
+      "description": "Add a meaningful description for the executor.",
+      "implementation": "./foo-bar/impl",
+      "schema": "./foo-bar/schema.json",
+    },
+  },
+}
+`;
+
+exports[`workspaceExecutor generator should add the executor to the list of available executors in the README 1`] = `
+"# Executors
+
+Some description
+
+## Available workspace executors
+
+-   [some-executor](./some-executor/README.md)
+-   [foo-bar](foo-bar/README.md): Add a meaningful description for the executor.
+
+## Other sections
+
+Some text
+"
+`;

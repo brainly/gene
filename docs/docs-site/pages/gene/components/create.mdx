@@ -1,0 +1,58 @@
+---
+title: Create Component
+---
+
+import Image from 'next/image';
+
+# Create Component
+
+### Prerequisites
+
+**Important**: Components can only be generated within _component libraries_.
+
+The target library for your new component must be created with the [components-library-generator](https://github.com/brainly/gene/blob/master/packages/gene-tools/src/generators/components-library-generator/README.md). If the library does not exist, you can generate a new one with the following command:
+
+```shell
+npx nx g @brainly-gene/tools:components-library
+```
+
+### Creating a Component
+
+To create a component, use the NX plugin's [component-generator](https://github.com/brainly/gene/blob/master/packages/gene-tools/src/generators/component-generator/README.md) or run the following command in the CLI:
+
+```shell
+npx nx g @brainly-gene/tools:component --library=my-components-ui
+```
+
+**Generator Options:**
+
+- `prompts-profile`: Choose between `basic`, `simple`, or `advanced`.
+- `library`: Specify the library where the component should be placed.
+
+After generation, the components will appear in the designated location with the following structure:
+
+```
+repo-dir
+│   README.md
+│   package.json
+│   ...
+└───libs
+    └───my-components-ui
+        │   .storybook
+        │   ...
+        └───src
+            └───HelloWorld
+                │   index.ts
+                │   HelloWorld.tsx
+                │   HelloWorld.module.scss
+                │   HelloWorld.spec.tsx
+                │   HelloWorld.stories.tsx
+```
+
+The generator automatically handles the component boilerplate, Storybook files, SCSS, basic specs, and re-exports.
+
+Now, you can run Storybook in the component library to view the generated component and start development:
+
+```shell
+npx nx run my-components-ui:storybook
+```

@@ -1,0 +1,4 @@
+import {apiHandlerConnect} from '@brainly-gene/next';
+import {getHealth} from '@<%= npmScope %>/api-utils';
+
+export default apiHandlerConnect().get(getHealth);

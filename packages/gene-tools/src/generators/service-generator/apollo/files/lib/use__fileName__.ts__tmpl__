@@ -1,0 +1,27 @@
+import {
+  <%= lowerCaseFileName %>Query,
+  <%= fileName %>Query,
+  <%= fileName %>QueryVariables,  
+} from './queries';
+import { useQuery } from '@apollo/client';
+import {
+  transformApolloResponse,
+  useInjectedApolloClient,
+} from '@brainly-gene/apollo';
+
+export function use<%= fileName %>({
+  variables,
+}: {
+  variables: <%= fileName %>QueryVariables;
+}) {
+  const apolloClient = useInjectedApolloClient();
+  const result = useQuery<
+    <%= fileName %>Query,
+    <%= fileName %>QueryVariables
+  >(<%= lowerCaseFileName %>Query, {
+    client: apolloClient,
+    variables,
+  });
+
+  return transformApolloResponse(result);
+}

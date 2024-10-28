@@ -1,0 +1,11 @@
+import {workerPath} from '<%= offsetFromRoot %>.storybook/preview';
+import {initialize} from 'msw-storybook-addon';
+const {use} = initialize({
+  serviceWorker: {
+    url: workerPath,
+  },
+});
+
+export {use};
+
+export {decorators, parameters} from '<%= offsetFromRoot %>.storybook/preview';

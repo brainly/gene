@@ -1,0 +1,250 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`storybookConfiguration generator application should add storybook targets to the project configuration 1`] = `
+Object {
+  "executor": "@brainly-gene/tools:storybook",
+  "options": Object {
+    "command": "start",
+  },
+}
+`;
+
+exports[`storybookConfiguration generator application should add storybook targets to the project configuration 2`] = `
+Object {
+  "executor": "@brainly-gene/tools:storybook",
+  "options": Object {
+    "command": "build",
+  },
+}
+`;
+
+exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 1`] = `
+"const rootMain = require('../../../.storybook/main');
+
+module.exports = {
+  ...rootMain,
+  stories: [
+    
+    '../components/**/*.stories.mdx',
+    '../components/**/*.stories.@(js|jsx|ts|tsx)',
+    
+  ],
+
+  webpackFinal: async (config, {configType}) => {
+    // apply any global webpack configs that might have been specified in .storybook/main.js
+    if (rootMain.webpackFinal) {
+      config = await rootMain.webpackFinal(config, {configType});
+    }
+
+    // add your own webpack tweaks if needed
+
+    return config;
+  },
+};
+"
+`;
+
+exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 2`] = `
+"import '../../../.storybook/manager';
+"
+`;
+
+exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 3`] = `
+"import {workerPath} from '../../../.storybook/preview';
+import {initialize} from 'msw-storybook-addon';
+const {use} = initialize({
+  serviceWorker: {
+    url: workerPath,
+  },
+});
+
+export {use};
+
+export {decorators, parameters} from '../../../.storybook/preview';
+"
+`;
+
+exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 4`] = `
+"{
+  \\"extends\\": \\"../tsconfig.json\\",
+  \\"compilerOptions\\": {
+    \\"emitDecoratorMetadata\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"outDir\\": \\"\\"
+  },
+  \\"exclude\\": [
+    \\"../**/*.spec.ts\\",
+    \\"../**/*.spec.js\\",
+    \\"../**/*.spec.tsx\\",
+    \\"../**/*.spec.jsx\\"
+  ],
+  \\"include\\": [
+    \\"../**/*.stories.ts\\",
+    \\"../**/*.stories.js\\",
+    \\"../**/*.stories.jsx\\",
+    \\"../**/*.stories.tsx\\",
+    \\"*.js\\"
+  ]
+}
+"
+`;
+
+exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 1`] = `
+"const rootMain = require('../../../.storybook/main');
+
+module.exports = {
+  ...rootMain,
+  stories: [
+    
+    '../components/**/*.stories.mdx',
+    '../components/**/*.stories.@(js|jsx|ts|tsx)',
+    
+  ],
+
+  webpackFinal: async (config, {configType}) => {
+    // apply any global webpack configs that might have been specified in .storybook/main.js
+    if (rootMain.webpackFinal) {
+      config = await rootMain.webpackFinal(config, {configType});
+    }
+
+    // add your own webpack tweaks if needed
+
+    return config;
+  },
+};
+"
+`;
+
+exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 2`] = `
+"import '../../../.storybook/manager';
+"
+`;
+
+exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 3`] = `
+"import {workerPath} from '../../../.storybook/preview';
+import {initialize} from 'msw-storybook-addon';
+const {use} = initialize({
+  serviceWorker: {
+    url: workerPath,
+  },
+});
+
+export {use};
+
+export {decorators, parameters} from '../../../.storybook/preview';
+"
+`;
+
+exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 4`] = `
+"{
+  \\"extends\\": \\"../tsconfig.json\\",
+  \\"compilerOptions\\": {
+    \\"emitDecoratorMetadata\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"outDir\\": \\"\\"
+  },
+  \\"exclude\\": [
+    \\"../**/*.spec.ts\\",
+    \\"../**/*.spec.js\\",
+    \\"../**/*.spec.tsx\\",
+    \\"../**/*.spec.jsx\\"
+  ],
+  \\"include\\": [
+    \\"../**/*.stories.ts\\",
+    \\"../**/*.stories.js\\",
+    \\"../**/*.stories.jsx\\",
+    \\"../**/*.stories.tsx\\",
+    \\"*.js\\"
+  ]
+}
+"
+`;
+
+exports[`storybookConfiguration generator library should add storybook targets to the project configuration 1`] = `
+Object {
+  "executor": "@brainly-gene/tools:storybook",
+  "options": Object {
+    "command": "start",
+  },
+}
+`;
+
+exports[`storybookConfiguration generator library should add storybook targets to the project configuration 2`] = `
+Object {
+  "executor": "@brainly-gene/tools:storybook",
+  "options": Object {
+    "command": "build",
+  },
+}
+`;
+
+exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 1`] = `
+"const rootMain = require('../../../.storybook/main');
+
+module.exports = {
+  ...rootMain,
+  stories: [
+    
+    '../src/**/*.stories.mdx',
+    '../src/**/*.stories.@(js|jsx|ts|tsx)',
+    
+  ],
+
+  webpackFinal: async (config, {configType}) => {
+    // apply any global webpack configs that might have been specified in .storybook/main.js
+    if (rootMain.webpackFinal) {
+      config = await rootMain.webpackFinal(config, {configType});
+    }
+
+    // add your own webpack tweaks if needed
+
+    return config;
+  },
+};
+"
+`;
+
+exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 2`] = `
+"import '../../../.storybook/manager';
+"
+`;
+
+exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 3`] = `
+"import {workerPath} from '../../../.storybook/preview';
+import {initialize} from 'msw-storybook-addon';
+const {use} = initialize({
+  serviceWorker: {
+    url: workerPath,
+  },
+});
+
+export {use};
+
+export {decorators, parameters} from '../../../.storybook/preview';
+"
+`;
+
+exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 4`] = `
+"{
+  \\"extends\\": \\"../tsconfig.json\\",
+  \\"compilerOptions\\": {
+    \\"emitDecoratorMetadata\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"outDir\\": \\"\\"
+  },
+  \\"exclude\\": [
+    \\"../**/*.spec.ts\\",
+    \\"../**/*.spec.js\\",
+    \\"../**/*.spec.tsx\\",
+    \\"../**/*.spec.jsx\\"
+  ],
+  \\"include\\": [
+    \\"../**/*.stories.ts\\",
+    \\"../**/*.stories.js\\",
+    \\"../**/*.stories.jsx\\",
+    \\"../**/*.stories.tsx\\",
+    \\"*.js\\"
+  ]
+}
+"
+`;

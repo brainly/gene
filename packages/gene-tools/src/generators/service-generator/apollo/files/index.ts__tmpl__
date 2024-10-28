@@ -1,0 +1,5 @@
+export {use<%= fileName %>} from './lib/use<%= fileName %>';
+export {use<%= fileName %>Lazy} from './lib/use<%= fileName %>Lazy';
+export {
+  <%= lowerCaseFileName %>Query,
+} from './lib/queries';

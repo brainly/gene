@@ -1,0 +1,131 @@
+---
+title: Backend for Frontend (BFF) - Add New Handlers
+---
+
+# Add New Handlers
+
+Handlers for a given BFF should be placed in `/pages/api`, organized within a folder for each platform. In this example, we’re building a BFF for a simple CMS that handles `question` and `user` data.
+
+## Directory Structure
+
+Below is a typical structure for BFF and platform-specific folders:
+
+```
+bff-dir
+└───web
+│   └───...
+│   └───pages
+│       └───api
+│           │   health.ts
+│           │   question.ts
+│           │   user.ts
+│
+└───web-e2e
+│   └───...
+└───mobile
+│   └───...
+└───mobile-e2e
+│   └───...
+```
+
+## Handler Example: `question.ts`
+
+```typescript
+import cors from 'cors';
+import { apiHandlerConnect } from '@brainly-gene/next';
+import {
+  getQuestion,
+  postQuestion,
+  deleteQuestion
+} from '@acme/simple-cms/api';
+
+export default apiHandlerConnect()
+  .use(cors())
+  .get(getQuestion)
+  .post(postQuestion)
+  .delete(deleteQuestion);
+```
+
+## Handler Example: `user.ts`
+
+```typescript
+import cors from 'cors';
+import { apiHandlerConnect } from '@brainly-gene/next';
+import {
+  getUser,
+  deleteUser
+} from '@acme/simple-cms/api';
+
+export default apiHandlerConnect()
+  .use(cors())
+  .use(customMiddleware)
+  .get(getUser)
+  .delete(deleteUser);
+```
+
+The `use` method from `apiHandlerConnect` allows for the injection of any middleware, such as third-party libraries like `cors` or custom middleware for additional functionality (e.g., modifying request cookies or adding logs).
+
+## Using `apiHandlerConnect` for REST Methods
+
+The `apiHandlerConnect` methods (`get`, `post`, `delete`, etc.) allow handling of standard REST requests by passing in the appropriate handler, which is typically located in the feature’s library folder (e.g., `@acme/simple-cms/api`).
+
+```
+simple-cms-dir
+└───api
+    └───src
+        └───subapps
+            │   question.ts
+            │   question.spec.ts
+            │   user.ts
+            │   user.spec.ts
+```
+
+## Custom Middleware Example
+
+Below is an example of custom middleware that intercepts requests to add an authorization key:
+
+```typescript
+export function customMiddleware(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  next: () => void
+) {
+  const apiKey = process.env.API_KEY;
+
+  req.headers = {
+    'Content-Type': 'application/json',
+    authorization: `Basic ${apiKey}`,
+    Cookie: req.headers.cookie,
+  };
+
+  next();
+}
+```
+
+## Example Handlers in `question.ts`
+
+```typescript
+export async function getQuestion(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const response = await fetch('apiHost/v1/us/question');
+
+    if (response.status === 200) {
+      return res.status(response.status).json(await response.json());
+    }
+
+    return res.status(500).json({ error: 'failure' });
+  } catch (err) {
+    return res.status(500).json({ error: 'failure' });
+  }
+}
+
+export async function deleteQuestion(req: NextApiRequest, res: NextApiResponse) {
+  // Delete question logic here
+}
+
+export async function postQuestion(req: NextApiRequest, res: NextApiResponse) {
+  // Post question logic here
+}
+```
+
+This structure provides a clear and maintainable way to add new handlers for each route in the BFF, utilizing standard REST practices and custom middleware as needed.

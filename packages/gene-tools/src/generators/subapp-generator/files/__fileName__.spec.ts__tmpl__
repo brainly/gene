@@ -1,0 +1,79 @@
+import {
+  handlePostEndpointHandler,
+  handleGetEndpointHandler,
+} from './endpoint-handler';
+import nodeFetch from 'node-fetch';
+
+jest.mock('node-fetch');
+
+describe('handlePostEndpointHandler', () => {
+  it('should return error when requestBody is null', async () => {
+    const result = await handlePostEndpointHandler(
+      {apiUrl: 'https://test.com'},
+      null as any as {someValue: string}
+    );
+    expect(result).toEqual({
+      success: false,
+      status: 400,
+      error: 'Bad request',
+    });
+  });
+
+  it('should return error when fetch throws an error', async () => {
+    (nodeFetch as any).mockImplementation(() => {
+      throw new Error('Fetch error occurred');
+    });
+
+    const result = await handlePostEndpointHandler(
+      {apiUrl: 'https://test.com'},
+      {someValue: 'test'}
+    );
+    expect(result).toEqual({
+      success: false,
+      status: 500,
+      error: 'Fetch error occurred',
+    });
+  });
+});
+
+describe('handleGetEndpointHandler', () => {
+  it('should return error when id is null', async () => {
+    const result = await handleGetEndpointHandler(
+      {apiUrl: 'https://test.com'},
+      {id: null} as any as {id: string}
+    );
+    expect(result).toEqual({
+      success: false,
+      status: 400,
+      error: 'Bad request',
+    });
+  });
+
+  it('should return error when id is not valid', async () => {
+    const result = await handleGetEndpointHandler(
+      {apiUrl: 'https://test.com'},
+      {id: 'invalid id'}
+    );
+    expect(result).toEqual({
+      success: false,
+      status: 400,
+      error: 'Bad request',
+    });
+  });
+
+  it('should return error when fetch throws an error', async () => {
+    (nodeFetch as any).mockImplementation(() => {
+      throw new Error('Fetch error occurred');
+    });
+
+    const result = await handleGetEndpointHandler(
+      {apiUrl: 'https://test.com'},
+      {id: 'valid-id'}
+    );
+    expect(result).toEqual({
+      success: false,
+      status: 500,
+      error: 'Fetch error occurred',
+    });
+  });
+});

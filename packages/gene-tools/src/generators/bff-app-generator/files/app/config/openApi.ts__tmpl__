@@ -1,0 +1,38 @@
+import {
+  openapiGetEndpointRouteConfig,
+  openapiPostEndpointRouteConfig,
+} from '../pages/api/v1/endpoint';
+import {defaultHealthRouteConfig as healthRouteConfig, generateOpenApiDocument} from '@<%= npmScope %>/swagger/api';
+import {getConfig} from './envVars';
+
+const envConfig = getConfig();
+
+const baseRouteConfigs = [
+  healthRouteConfig,
+];
+
+const v1RouteConfigs = [
+  openapiGetEndpointRouteConfig,
+  openapiPostEndpointRouteConfig
+];
+
+const generator = generateOpenApiDocument([
+  ...baseRouteConfigs,
+  ...v1RouteConfigs,
+]);
+
+const openApiDocumentation = generator.generateDocument({
+  openapi: '3.0.0',
+  info: {
+    version: '1.0.0',
+    title: '<%= title %>',
+    description: '<%= description %>',
+  },
+  servers: [
+    {
+      url: `${envConfig.PUBLIC_HOSTNAME}/api`,
+    },
+  ],
+});
+
+export default openApiDocumentation;

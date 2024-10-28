@@ -1,0 +1,77 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "docs/docs-site",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node ./scripts/cache.js",
+          "next build",
+          "nx run docs-docs-site:build-styles"
+        ],
+        "cwd": "docs/docs-site",
+        "outputPath": "dist/docs/docs-site"
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node ./scripts/cache.js",
+          "next dev",
+          "nx run docs-docs-site:sync-styles"
+        ],
+        "cwd": "docs/docs-site",
+        "outputPath": "dist/docs/docs-site"
+      }
+    },
+    "build-styles": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "pnpm tailwindcss build ./styles/input.css -o ./styles/generated.css"
+        ],
+        "cwd": "docs/docs-site"
+      }
+    },
+    "sync-styles": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "pnpm tailwindcss build ./styles/input.css -o ./styles/generated.css --watch"
+        ],
+        "cwd": "docs/docs-site"
+      }
+    },
+    "export": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx next export",
+        "cwd": "docs/docs-site"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/docs/docs-site"],
+      "options": {
+        "jestConfig": "docs/docs-site/jest.config.ts",
+        "passWithNoTests": true,
+        "updateBuildableProjectDepsInPackageJson": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["docs/docs-site/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": [],
+  "name": "docs-docs-site"
+}

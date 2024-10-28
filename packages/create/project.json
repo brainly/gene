@@ -1,0 +1,26 @@
+{
+  "name": "create",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/create/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/create",
+        "main": "packages/create/src/index.ts",
+        "tsConfig": "packages/create/tsconfig.lib.json",
+        "assets": ["packages/create/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/create/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

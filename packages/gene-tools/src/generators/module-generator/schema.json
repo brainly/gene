@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "module-generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Library name (without -module suffix)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the module name? (without -module suffix)"
+    },
+    "appName": {
+      "type": "string",
+      "description": "Host application name"
+    },
+    "errorBoundary": {
+      "type": "boolean",
+      "default": true,
+      "description": "Indicator on whether to wrap imodule with error boundary or not. Boundary name will be inherited from module name",
+      "x-prompt": "Should module be wrapped with error boundary? It is suggested to wrap all modules with error boundary. Read more: https://github.io/brainly/error-boundaries"
+    },
+    "e2e": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicator on whether to generate e2e tests or not",
+      "x-prompt": "Should e2e tests for this module be generated?"
+    },
+    "shouldAutoprefix": {
+      "type": "boolean",
+      "description": "Indicator on whether to add autoprefixer to the module name, based on the application name"
+    }
+  },
+  "required": ["name"]
+}

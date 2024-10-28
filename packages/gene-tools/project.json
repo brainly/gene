@@ -1,0 +1,47 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/gene-tools/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/gene-tools",
+        "main": "packages/gene-tools/src/index.ts",
+        "tsConfig": "packages/gene-tools/tsconfig.lib.json",
+        "assets": [
+          "packages/gene-tools/**/*.md",
+          "packages/gene-tools/**/*__tmpl__",
+          "packages/gene-tools/**/.*__tmpl__",
+          "packages/gene-tools/**/*.json",
+          "packages/gene-tools/**/*.ejs",
+          "packages/gene-tools/**/*.js",
+          "packages/gene-tools/**/*.yaml",
+          "packages/gene-tools/**/*.yml",
+          "packages/gene-tools/**/*.crt",
+          "packages/gene-tools/**/*.key",
+          "packages/gene-tools/**/.gitkeep"
+        ],
+        "updateBuildableProjectDepsInPackageJson": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/gene-tools/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/gene-tools"],
+      "options": {
+        "jestConfig": "packages/gene-tools/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:public"],
+  "name": "packages-gene-tools"
+}

@@ -1,0 +1,45 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches:
+      - master
+      - alpha-*
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # v2
+        with:
+          node-version: '18.20.0'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - uses: nrwl/nx-set-shas@0e2d18b530b83b68263ff7b74e46b1ba300c83fc # v3
+      - run: git branch --track master origin/master
+      - name: Set NX_BASE and NX_HEAD
+        run: |
+          echo "NX_BASE=$(git merge-base origin/master HEAD)" >> $GITHUB_ENV
+          echo "NX_HEAD=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      - name: Lint, Test, and Build
+        run: |
+          pnpm nx affected --target=lint --parallel=3
+          pnpm nx affected --target=test --parallel=3
+          pnpm nx affected --target=build --parallel=3

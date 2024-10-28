@@ -1,0 +1,12 @@
+name: Run script and check stdout
+description: Run a script from package.json and checks stdout for a success message
+inputs:
+  packageCommand:
+    description: The package.json command to run
+    required: true
+  successRegexp:
+    description: The RegExp to match in stdout for success
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'

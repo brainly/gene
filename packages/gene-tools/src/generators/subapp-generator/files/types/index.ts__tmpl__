@@ -1,0 +1,2 @@
+<% if (postHandler) { %>export * from './<%=camelCaseFileName %>PostTypes';<% } %>
+<% if (getHandler) { %>export * from './<%=camelCaseFileName %>GetTypes';<% } %>

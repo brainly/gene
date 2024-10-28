@@ -1,0 +1,1 @@
+export {useSomeLogic} from './useSomeLogic';

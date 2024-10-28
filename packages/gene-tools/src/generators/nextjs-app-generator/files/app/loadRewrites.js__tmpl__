@@ -1,0 +1,22 @@
+const fs = require('fs');
+
+const loadRewrites = rewritesPath => () => {
+  // Keeping rewrites in JSON makes it easy to extend with a generator
+  const rewrites = JSON.parse(fs.readFileSync(rewritesPath).toString());
+
+  // beforeFiles is necessary as we want to resolve rewrites before hitting
+  // pages https://nextjs.org/docs/api-reference/next.config.js/rewrites
+  const nextRewrites = {
+    beforeFiles: rewrites.flatMap(rewrite => [
+      {source: rewrite.destination, destination: '/404'},
+      rewrite,
+    ]),
+  };
+
+  console.log('# REWRITES');
+  console.log(JSON.stringify(nextRewrites, null, 2));
+
+  return nextRewrites;
+};
+
+module.exports = loadRewrites;

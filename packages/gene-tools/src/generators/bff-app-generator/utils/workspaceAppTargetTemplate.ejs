@@ -1,0 +1,81 @@
+{
+  "build": {
+    "dependsOn": [
+     {
+        "target": "copy-translations-to-app",
+        "projects": "self"
+     },
+     {
+        "target": "copy-assets-to-app",
+        "projects": "self"
+      },
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "executor": "@nrwl/next:build",
+    "outputs": ["{options.outputPath}"],
+    "options": {
+      "root": "apps/<%= projectPath %>",
+      "outputPath": "dist/apps/<%= projectPath %>"
+    },
+    "configurations": {
+      "production": {}
+    }
+  },
+  "serve-base": {
+    "dependsOn": [
+       {
+          "target": "copy-translations-to-app",
+          "projects": "self"
+       },
+       {
+          "target": "copy-assets-to-app",
+          "projects": "self"
+        }
+    ],
+    "executor": "@nrwl/next:server",
+    "options": {
+      "buildTarget": "<%= projectName %>:build",
+      "dev": true
+    },
+    "configurations": {
+      "production": {
+        "buildTarget": "<%= projectName %>:build:production",
+        "dev": false
+      }
+    }
+  },
+  "serve": {
+    "executor": "@brainly-gene/tools:secure-serve",
+    "options": {
+      "serveTarget": "<%= projectName %>:serve-base"
+    },
+    "dependsOn": [
+     {
+        "target": "copy-translations-to-app",
+        "projects": "self"
+     },
+     {
+        "target": "copy-assets-to-app",
+        "projects": "self"
+      },
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "configurations": {
+      "production": {
+        "serveTarget": "<%= projectName %>:serve-base:production"
+      }
+    }
+  },
+  "copy-translations-to-app": {
+    "executor": "@brainly-gene/tools:copy-translations-to-app"
+  },
+  "copy-assets-to-app": {
+    "executor": "@brainly-gene/tools:copy-assets-to-app"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "e2eTests": {
+      "type": "array",
+      "description": "Targets that runs Cypress tests",
+      "pattern": "^[^:\\s]+:[^:\\s]+(:[^\\s]+)?$"
+    },
+    "serve": {
+      "type": "string",
+      "description": "Target that serves the application.",
+      "pattern": "^[^:\\s]+:[^:\\s]+(:[^\\s]+)?$"
+    },
+    "serveOptions": {
+      "type": "object",
+      "description": "Options for the serve target.",
+      "default": {}
+    },
+    "proxy": {
+      "type": "boolean",
+      "description": "Indicates whether proxy should be added or not.",
+      "default": true
+    },
+    "host": {
+      "type": "string",
+      "description": "Hostname of the proxy.",
+      "default": "localhost"
+    },
+    "port": {
+      "type": "number",
+      "description": "Port of the proxy.",
+      "default": 3000
+    },
+    "targetHost": {
+      "type": "string",
+      "description": "Hostname of the target application.",
+      "default": "localhost"
+    },
+    "targetPort": {
+      "type": "number",
+      "description": "Port of the target application.",
+      "default": 4200
+    },
+    "watch": {
+      "type": "boolean",
+      "description": "Whether test runner needs to run in Cypress inspector mode.",
+      "default": false
+    }
+  },
+  "additionalProperties": false,
+  "required": ["serve", "e2eTests"]
+}

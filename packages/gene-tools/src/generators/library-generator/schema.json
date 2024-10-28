@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "library-generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Library name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the library name?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the library is placed",
+      "x-prompt": "What is the library directory?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the library (used for linting)",
+      "x-prompt": "What are the library tags?"
+    }
+  },
+  "required": ["name"]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "storybook-configuration",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the project to generate the Storybook configuration.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Which project do you want to generate the Storybook configuration for?"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["name"]
+}
