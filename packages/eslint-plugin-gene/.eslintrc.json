@@ -1,0 +1,27 @@
+{
+  "extends": ["../../.eslintrc.json", "plugin:eslint-plugin/all-type-checked"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "eslint-plugin/require-meta-docs-url": "off"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["./package.json", "./generators.json", "./executors.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nrwl/nx/nx-plugin-checks": "error"
+      }
+    }
+  ]
+}

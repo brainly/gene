@@ -1,0 +1,43 @@
+---
+title: useMediator API
+---
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+# useMediator API
+
+The `useMediator` hook is implemented using `useEffect` and the native `addEventListener` function. Events handled by `useMediator` will not propagate further, as mediation is the final stage in the event handling process.
+
+## Arguments
+
+The `useMediator` hook accepts three arguments:
+
+```jsx
+useMediator(eventName, eventHandler, HTMLElement)
+```
+
+where:
+
+| Argument       | Description                                                                                      |
+|----------------|--------------------------------------------------------------------------------------------------|
+| `eventName`    | The name of the event to listen for.                                                             |
+| `eventHandler` | A handler function that processes the event payload. <br /> Example: `function handleMyEvent(payload) { console.log(payload) }` |
+| `HTMLElement`  | The HTML element to which the listener is attached.                                              |
+
+## Example Usage
+
+```jsx
+function ReactComponent() {
+  const ref = useRef()
+
+  function handleMyEvent(payload) {
+    // Handle the event payload, e.g., by navigating or fetching data
+    console.log(payload)
+  }
+
+  useMediator('myEvent', handleMyEvent, ref)
+
+  return <div ref={ref}>...</div>
+}
+```

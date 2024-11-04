@@ -1,0 +1,84 @@
+---
+title: Storybook Providers
+---
+
+# StorybookProviders
+
+`StorybookProviders` provides commonly used containers for many modules, including:
+
+- Service clients
+- Router
+- Translation
+- Tracking
+- App context
+
+## Generating StorybookProviders
+
+To use `StorybookProviders`, generate it with the following `nx` command:
+
+```bash
+nx g @brainly/gene-tools:e2e-providers
+```
+
+Then import it in your Storybook file:
+
+```tsx
+import { StorybookProviders } from '@acme/e2e-testing-providers';
+```
+
+You do not need to create these containers individually, but you can pass specific options to customize some of them. The available options for `StorybookProviders` include:
+
+## Available Options
+
+### `routingOptions`
+
+This option allows you to modify routing properties, such as changing the current question for a module.
+
+```jsx
+<StorybookProviders
+  routingOptions={{
+    query: {
+      id: '680975',
+    },
+  }}
+></StorybookProviders>
+```
+
+### `initialAppContext`
+
+The app context container includes default state values located in `libs/e2e-testing-providers/src/lib/ioc/contextContainer.ts`. To add or override values in the app state, pass an object with the desired values.
+
+```jsx
+<StorybookProviders
+  initialAppContext={{
+    dateFormat: 'd/m/Y',
+  }}
+></StorybookProviders>
+```
+
+### `appContextReducer`
+
+To modify state logic in response to actions, you can create and pass a custom reducer. Define your reducer first:
+
+```jsx
+const someReducer = (state: AppStoreType, action: ActionType) => {
+  switch (action.type) {
+    case 'myAction': {
+      return {
+        ...state,
+        myValue: state.myValue + 1,
+      };
+    }
+    default:
+      return state;
+  }
+};
+```
+
+Then, pass the reducer as a prop:
+
+```jsx
+<StorybookProviders appContextReducer={someReducer}></StorybookProviders>
+```
+
+Use these options to tailor `StorybookProviders` for your specific Storybook needs.

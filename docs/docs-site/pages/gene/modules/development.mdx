@@ -1,0 +1,509 @@
+---
+
+title: Modules development
+
+---
+
+import Image from 'next/image'
+
+# Modules development
+
+## Creation
+
+To create a module use generator (use NX plugin and choose [module-generator](https://github.com/brainly/gene/blob/master/packages/gene-tools/src/generators/module-generator/README.md)) or write command in CLI:
+
+```shell copy
+nx g @brainly/gene-tools:module
+```
+
+The generator will ask for the application for which the module should be created and the module name. The concept of using modules exclusively by the app is developed in [branching section](/gene/modules/branching). For now, let's focus on the development of the generic module.
+
+In order to run Storybook for development purposes, use:
+
+```shell copy
+nx run simple-module:storybook
+```
+
+## Building the simple module
+
+According to Gene principles, the module should be built using the builder pattern to ensure separation of concerns and maintainability. As an example of how to build a Gene module, let's use the `SimpleModule`. This module should:
+
+- Load data from the `serviceAbc` with the following type:
+
+```ts
+type AbcType = Array<{id: string, count: number}>;
+```
+
+- Transform the data
+- Handle side effects (e.g., event mediation)
+- Render either loading information or a `<Foo />` component with appropriate props:
+
+```ts
+type FooPropsType = {
+  list: Array<number>;
+  sumCount: number;
+};
+```
+
+The diagram below presents the dependencies of the entities used to wrap this module:
+
+
+  ```mermaid
+  
+  classDiagram
+    direction LR
+    namespace simple-module {
+        class SimpleModule {
+            useInit
+        }
+    }
+
+    namespace simple-ui {
+        class Foo
+    }
+
+    namespace service-abc {
+        class serviceAbc
+    }
+
+    SimpleModule *-- Foo
+    SimpleModule *-- serviceAbc
+  ```
+
+Besides the dependencies mentioned above, Gene modules are wrapped with an appropriate dependency injection container that provides utilities like a fetch client and a router. These dependencies are covered in the [dependencies doc](/gene/modules/dependencies).
+
+### Modules development
+
+Each module has its own Storybook. To develop it, simply run Storybook:
+
+```shell copy
+npx nx run simple-module:storybook
+```
+
+Storybook by default should be run on `localhost:4400`.
+
+### Obtaining server data from the service
+
+Gene uses services to fetch data from the server. Appropriate service invocation should be used to obtain the data. Besides data, the services interface includes returning `loading` and `error` and functions like `refetch`.
+
+```tsx filename="SimpleModule.tsx" {1, 4}
+import {useServiceAbc} from "@acme/services/service-abc";
+
+const useInit = () => {
+  const {data, loading, error} = useServiceAbc();
+
+  // ...
+}
+
+const RawSimpleModule = () => {
+  const { ... } = useInit();
+
+  // Code related to the module rendering and side effects
+
+  return (
+    // All code related to the module rendering
+  );
+};
+
+const {declarations, module: SimpleModule} = createGeneModule({
+  module: RawSimpleModule,
+  declarations: {},
+});
+
+export {SimpleModule, declarations};
+```
+
+### Transforming server data for the module
+
+Gene considers server data as raw data that should be transformed according to the needs of each module. The transformation can be handled by an appropriate `adapter` or `transformer` that separates the server data type from the module data type. You can use [default transformer](/gene/services/default-transformer) (if provided) or create a custom one.
+
+**It is crucial to separate server data from client data. Components should not be aware of the server data structure.**
+
+Once the server data is transformed, the module can combine it with additional client state.
+
+```tsx filename="SimpleModule.tsx" {1,3..6,8..23,26,28,30,32..35}
+import {useServiceAbc, AbcType} from "@acme/services/service-abc";
+
+type TransformedAbcType = {
+  items: Array<number>;
+  sumCount: number;
+};
+
+const transformAbc = (data: AbcType | null): TransformedAbcType => {
+  return (data || []).reduce(
+    (accData: TransformedAbcType, rawItem: { id: string; count: number }) => {
+      const { items, sumCount } = accData;
+
+      return {
+        items: [...items, Number(rawItem.id)],
+        sumCount: sumCount + rawItem.count,
+      };
+    },
+    {
+      items: [],
+      sumCount: 0,
+    },
+  );
+};
+
+const useInit = () => {
+  const {data, loading, error} = useServiceAbc();
+
+  const {items, sumCount} = React.useMemo(() => transformAbc(data), [data]);
+
+  const [additionalItems, setAdditionalItems] = React.useState<number[]>([]);
+
+  const list = React.useMemo(
+    () => (items ? [...items, ...additionalItems] : []),
+    [items, additionalItems],
+  );
+
+  // ...
+}
+
+const RawSimpleModule = () => {
+  const { ... } = useInit();
+
+  // Code related to the module rendering and side effects
+
+  return (
+    // All code related to the module rendering
+  );
+};
+
+const {declarations, module: SimpleModule} = createGeneModule({
+  module: RawSimpleModule,
+  declarations: {},
+});
+
+export {SimpleModule, declarations};
+```
+
+Another rule of thumb is that raw or transformed server data should not be stored in the app context with the intention of sharing it between modules. Each module should fetch the needed data and transform it on its own. This will become even more important when the transition to Next.js 14 takes place and server/client components are introduced.
+
+### Handling side effects
+
+The next step is to handle side effects. In Gene, there might be several sources of side effects:
+
+- Event mediation invocations (`useMediator` calls for React)
+- Effects like `useEffect` in React, which might be used for various purposes depending on the module's needs
+
+**Logic-related code in Gene should be a pure function. Side effects should be triggered within the module's body, similar to the rendering process. This will improve the predictability of the module and make it easier to test, compose, and maintain.**
+
+```tsx filename="SimpleModule.tsx" {1,3,39..45,52,62,65}
+import {FooButtonClick, FooEventsType} from "@acme/components/simple-ui";
+import {useServiceAbc, AbcType} from "@acme/services/service-abc";
+import {useMediator} from '@brainly/gene'
+
+type TransformedAbcType = {
+  items: Array<number>;
+  sumCount: number;
+};
+
+const transformAbc = (data: AbcType | null): TransformedAbcType => {
+  return (data || []).reduce(
+    (accData: TransformedAbcType, rawItem: { id: string; count: number }) => {
+      const { items, sumCount } = accData;
+
+      return {
+        items: [...items, Number(rawItem.id)],
+        sumCount: sumCount + rawItem.count,
+      };
+    },
+    {
+      items: [],
+      sumCount: 0,
+    },
+  );
+};
+
+const useInit = () => {
+  const {data, loading, error} = useServiceAbc();
+
+  const {items, sumCount} = React.useMemo(() => transformAbc(data), [data]);
+
+  const [additionalItems, setAdditionalItems] = React.useState<number[]>([]);
+
+  const list = React.useMemo(
+    () => (items ? [...items, ...additionalItems] : []),
+    [items, additionalItems],
+  );
+
+  const useMediators = () => {
+    useMediator<FooButtonClick>(
+      FooEventsType.ON_BUTTON_CLICK,
+      () => setAdditionalItems((curr) => [...curr, 1]),
+      ref,
+    );
+  };
+
+  return {
+    list,
+    loading,
+    sumCount,
+    ref,
+    useMediators,
+  }
+}
+
+const RawSimpleModule = () => {
+  const {
+    list,
+    loading,
+    sumCount,
+    ref,
+    useMediators,
+  } = useInit();
+
+  useMediators()
+
+  return (
+    // All code related to the module rendering
+  );
+};
+
+const {declarations, module: SimpleModule} = createGeneModule({
+  module: RawSimpleModule,
+  declarations: {},
+});
+
+export {SimpleModule, declarations};
+```
+
+### Rendering UI
+
+The last piece of the module is the rendering. In this simple scenario, the module should render either loading info or a `Foo` component with appropriate props.
+
+```tsx filename="SimpleModule.tsx" {1, 68..74}
+import {Foo, Loading, FooButtonClick, FooEventsType} from "@acme/components/simple-ui";
+import {useServiceAbc, AbcType} from "@acme/services/service-abc";
+import {useMediator} from '@brainly/gene'
+
+type TransformedAbcType = {
+  items: Array<number>;
+  sumCount: number;
+};
+
+const transformAbc = (data: AbcType | null): TransformedAbcType => {
+  return (data || []).reduce(
+    (accData: TransformedAbcType, rawItem: { id: string; count: number }) => {
+      const { items, sumCount } = accData;
+
+      return {
+        items: [...items, Number(rawItem.id)],
+        sumCount: sumCount + rawItem.count,
+      };
+    },
+    {
+      items: [],
+      sumCount: 0,
+    },
+  );
+};
+
+const useInit = () => {
+  const {data, loading, error} = useServiceAbc();
+
+  const {items, sumCount} = React.useMemo(() => transformAbc(data), [data]);
+
+  const [additionalItems, setAdditionalItems] = React.useState<number[]>([]);
+
+  const list = React.useMemo(
+    () => (items ? [...items, ...additionalItems] : []),
+    [items, additionalItems],
+  );
+
+  const useMediators = () => {
+    useMediator<FooButtonClick>(
+      FooEventsType.ON_BUTTON_CLICK,
+      () => setAdditionalItems((curr) => [...curr, 1]),
+      ref,
+    );
+  };
+
+  return {
+    list,
+    loading,
+    sumCount,
+    ref,
+    useMediators,
+  }
+}
+
+const RawSimpleModule = () => {
+  const {
+    list,
+    loading,
+    sumCount,
+    ref,
+    useMediators,
+  } = useInit();
+
+  useMediators()
+
+  return (
+    <div ref={ref}>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Foo list={list} sumCount={sumCount} />
+      )}
+    </div>
+  );
+};
+
+const {declarations, module: SimpleModule} = createGeneModule({
+  module: RawSimpleModule,
+  declarations: {},
+});
+
+export {SimpleModule, declarations};
+```
+
+#### Component Map
+
+In order to avoid mixing rendering and logic related to conditional component rendering (as in the example above, `Loading` or `Foo`), a **Component Map** concept is a recommended way to organize the display of different components based on the state.
+
+A component map is a JavaScript map consisting of pairs of `state -> component` that should be rendered. Logic-related code should expose a function that accepts a map and then returns a component based on the state. Each state should have a defined type.
+
+```ts
+type ComponentMapStatesType = 'state1' | 'state2' | ...;
+
+const ComponentMap = new Map<ComponentMapStatesType, ComponentType>([
+  ['state1', Component1],
+  ['state2', Component2],
+  // ...
+]);
+
+type UseComponentMapType = (componentMap: Map<ComponentMapStatesType, ComponentType>, DefaultComponent: ComponentType) => ComponentType;
+```
+
+The component map allows for gathering props for the component into a single object, making it easier to maintain and compose within the module.
+
+**As Gene separates rendering from logic, the component map should be created inside the module's body (and - ideally - passed further to the custom hooks - see [Custom Hooks section](/gene/modules/custom-hooks) for detailed info). Logic-related code should not manipulate the components, but rather - based on the logic - return the appropriate one from the provided map.**
+
+```tsx filename="SimpleModule.tsx" showLineNumbers {1,27,57..64,73,82,87,91}
+import {Foo, Loading, FooButtonClick, FooEventsType, FooPropsType} from "@acme/components/simple-ui";
+import {useServiceAbc, AbcType} from "@acme/services/service-abc";
+import {useMediator} from '@brainly/gene'
+
+type TransformedAbcType = {
+  items: Array<number>;
+  sumCount: number;
+};
+
+const transformAbc = (data: AbcType | null): TransformedAbcType => {
+  return (data || []).reduce(
+    (accData: TransformedAbcType, rawItem: { id: string; count: number }) => {
+      const { items, sumCount } = accData;
+
+      return {
+        items: [...items, Number(rawItem.id)],
+        sumCount: sumCount + rawItem.count,
+      };
+    },
+    {
+      items: [],
+      sumCount: 0,
+    },
+  );
+};
+
+type FooComponentMapStatesType = 'success' | 'loading';
+
+const fooComponentMap = new Map<
+  FooComponentMapStatesType,
+  React.ComponentType<FooPropsType>
+>([
+  ["success", Foo],
+  ["loading", Loading],
+]);
+
+const useInit = () => {
+  const {data, loading, error} = useServiceAbc();
+
+  const {items, sumCount} = React.useMemo(() => transformAbc(data), [data]);
+
+  const [additionalItems, setAdditionalItems] = React.useState<number[]>([]);
+
+  const list = React.useMemo(
+    () => (items ? [...items, ...additionalItems] : []),
+    [items, additionalItems],
+  );
+
+  const useMediators = () => {
+    useMediator<FooButtonClick>(
+      FooEventsType.ON_BUTTON_CLICK,
+      () => setAdditionalItems((curr) => [...curr, 1]),
+      ref,
+    );
+  };
+
+  const useFooComponentMap = React.useCallback(
+    (componentMap: Map<FooComponentMapStatesType, React.ComponentType<FooPropsType>>, DefaultComponent: React.ComponentType<FooPropsType>) => {
+    if (loading) {
+        return componentMap.get('loading') || DefaultComponent
+    }
+
+    return componentMap.get('success') || DefaultComponent;
+  }, [loading]);
+
+  return {
+    fooProps: {
+      list,
+      sumCount
+    }
+    ref,
+    useMediators,
+    useFooComponentMap
+  }
+}
+
+const RawSimpleModule = () => {
+  const {
+    fooProps,
+    ref,
+    useMediators,
+    useFooComponentMap
+  } = useInit();
+
+  useMediators();
+
+  const FooComponent = useFooComponentMap(fooComponentMap, Loading);
+
+  return (
+    <div ref={ref}>
+      <FooComponent {...fooProps} />
+    </div>
+  );
+};
+
+const {declarations, module: SimpleModule} = createGeneModule({
+  module: RawSimpleModule,
+  declarations: {},
+});
+
+export {SimpleModule, declarations};
+```
+
+## FAQ
+
+> Is keeping the adapter function in the same file as the custom hook mandatory?
+
+No, it is not mandatory. Once the custom hook grows in size, it's okay to move the adapter to a separate file. However, the adapter should be placed in the same directory as the custom hook.
+
+> Can I use the same adapter for multiple custom hooks?
+
+It is not recommended. Adapters should handle data transformation for a single custom hook. If your applications need to transform certain data in a similar way, you could create a library with a default transformer that will be placed next to the service. Then you can use this adapter in multiple custom hooks.
+
+> Can I use the same mediator for multiple modules?
+
+No, mediators are private to the custom hook. They should be used only in the custom hook where they are defined.
+
+> Is the component map mandatory?
+
+No, it is not mandatory. It is a recommended way to organize the display of different components based on the state. It helps to keep the rendering logic clean and maintainable.
+
+## Further reading
+
+This guide covers the development of a simple module, representing a single feature in the best way when using Gene. [Next guide](/gene/modules/custom-hooks) will show how to develop a more complex module that can handle multiple features by splitting them into smaller parts called custom hooks.

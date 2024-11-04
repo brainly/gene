@@ -1,0 +1,19 @@
+import {apiHandlerConnect} from '@brainly/gene-next';
+<% if (wrapWithSentry) { %> import {wrapApiHandlerWithSentry} from '@sentry/nextjs'; <% } %>
+// import {get<%= pascalCaseFileName %>, post<%= pascalCaseFileName %>} from '@<%= npmScope %>/some-lib'
+<% if (addCors) { %> import cors from 'cors'; <% } %>
+
+export default<% if (wrapWithSentry) { %> wrapApiHandlerWithSentry( <% } %>
+  apiHandlerConnect()
+   <% if (addCors) { %>
+    .use(
+      cors({
+        credentials: true,
+      })
+    ) <% } %>
+    // .get(get<%= pascalCaseFileName %>)
+    // .post(post<%= pascalCaseFileName %>) 
+    <% if (wrapWithSentry) { %>  
+    ,'/api<%= directory %>/<%= name %>'
+  );
+  <% } %>

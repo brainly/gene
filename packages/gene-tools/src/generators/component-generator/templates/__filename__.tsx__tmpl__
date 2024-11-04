@@ -1,0 +1,50 @@
+<% if (shouldAddFlowDeclaration && flowDeclaration) { %>
+  <%= flowDeclaration %>
+<% } %>
+
+import * as React from 'react';
+<% if (copy) { %>import {<% if (shouldAddFlowDeclaration) { %>type <% } %><%= copyTypeName(name) %>} from './<%= copyTypeName(name) %>';<% } %>
+<% if (styles) { %>import styles from './<%= classify(name) %>.module.<%= stylesExtension %>';
+import cx from 'classnames';<% } %>
+<% if (events) { %>import {dispatch} from '@brainly/gene';
+import {<%= eventsTypeName(name) %>, <% for (let event of eventsArray) { %><% if (shouldAddFlowDeclaration) { %>type <% } %><%= eventTypeName(name, event) %>, <% } %>} from './<%= eventsTypeName(name) %>';
+<% } %>
+<% if (props || copy) { %>export type PropsType = <%= readonlyUtilType %><{
+  <% if (copy) { %>copy: <%= copyTypeName(name) %>,<% } %>
+  <% for (let [prop, propType] of propsArray) { %><%= camelize(prop) %>: <%- propType %>,<% } %>
+}>;<% } %>
+<% if (sgComponents) { %>import {<%= sgComponentsArray.join(', ') %>} from 'brainly-style-guide';<% } %>
+
+const <%= classify(name) %> = (<% if (props || copy) { %>{<% if (copy) { %>
+  copy,<% } %><% for (let [prop, propType] of propsArray) { %>
+  <%= camelize(prop) %>,<% } %>
+}: PropsType<% } %>) => {
+  <% if (props || copy) { %>// eslint-disable-next-line no-console
+  console.log(`Hello world <%= classify(name) %> with props`, {
+    <% if (copy) { %>copy,<% } %>
+    <% for (let [prop, propType] of propsArray) { %><%= camelize(prop) %>,<% } %>
+  });
+  <% } %>
+  <% if (events) { %>
+    <% for (let event of eventsArray) { %>
+      const handle<%= classify(event) %> = React.useCallback(e => {
+        dispatch<<%= eventTypeName(name, event) %>>(
+          e.target,
+          [<%= eventsTypeName(name) %>.<%= eventsKeyName(event) %>]
+        );
+      }, []);
+    <% } %>
+  <% } %>
+  return (
+    <div data-testid="<%= dataTestIdName(name) %>">
+      <% if (markupContent) { %>
+        <%= markupContent %>
+      <% } else if (events) { %>
+        <% for (let event of eventsArray) { %><button onClick={handle<%= classify(event) %>}>{<%= eventsTypeName(name) %>.<%= eventsKeyName(event) %>}</button><% } %>
+      <% } %>
+    </div>
+  );
+};
+
+export default <% if ((props || copy)) { %>React.memo<PropsType>(<%= classify(name) %>);
+<% } else { %><%= classify(name) %>;<% } %>

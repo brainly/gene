@@ -1,0 +1,229 @@
+/**
+ * @description
+ * NextJS plugin for resolving errors related to
+ * importing SCSS modules from node modules components
+ * https://brainly.atlassian.net/browse/FRINFRA-778
+ */
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const findUp = require('find-up');
+
+// eslint-disable-next-line no-undef
+const fileExtensions = new Set();
+let extractCssInitialized = false;
+
+const cssLoaderConfig = (
+  config,
+  {
+    extensions = [],
+    cssModules,
+    cssLoaderOptions = {},
+    dev,
+    isServer,
+    postcssLoaderOptions = {},
+    loaders = [],
+  }
+) => {
+  // We have to keep a list of extensions for the splitchunk config
+  for (const extension of extensions) {
+    fileExtensions.add(extension);
+  }
+
+  if (!isServer && config.optimization.splitChunks) {
+    config.optimization.splitChunks.cacheGroups.styles = {
+      name: 'styles',
+      test: new RegExp(`\\.+(${[...fileExtensions].join('|')})$`),
+      chunks: 'all',
+      enforce: true,
+    };
+  }
+
+  if (!isServer && !extractCssInitialized) {
+    config.plugins.push(
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: dev
+          ? 'static/css/[name].css'
+          : 'static/css/[name].[contenthash:8].css',
+        chunkFilename: dev
+          ? 'static/css/[name].chunk.css'
+          : 'static/css/[name].[contenthash:8].chunk.css',
+      })
+    );
+    extractCssInitialized = true;
+  }
+
+  const postcssConfig = findUp.sync('postcss.config.js', {
+    cwd: config.context,
+  });
+  let postcssLoader;
+
+  if (postcssConfig) {
+    // Copy the postcss-loader config options first.
+    const postcssOptionsConfig = Object.assign(
+      {},
+      postcssLoaderOptions.config,
+      {path: postcssConfig}
+    );
+
+    postcssLoader = {
+      loader: 'postcss-loader',
+      options: Object.assign({}, postcssLoaderOptions, {
+        config: postcssOptionsConfig,
+      }),
+    };
+  }
+
+  /**
+   * @todo
+   * Maybe modify config to accept pure CSS/SCSS
+   * as well (right now everything is treated as module)
+   * we got plenty of experience in loaders config,
+   * so this should be feasible
+   */
+  const cssLoader = {
+    loader: 'css-loader?modules',
+    options: Object.assign(
+      {},
+      {
+        modules: cssModules,
+        sourceMap: dev,
+        importLoaders: loaders.length + (postcssLoader ? 1 : 0),
+        onlyLocals: isServer,
+      },
+      cssLoaderOptions
+    ),
+  };
+
+  // When not using css modules we don't transpile on the server
+  if (isServer && !cssLoader.options.modules) {
+    return ['ignore-loader'];
+  }
+
+  // When on the server and using css modules we transpile the css
+  if (isServer && cssLoader.options.modules) {
+    return [cssLoader, postcssLoader, ...loaders].filter(Boolean);
+  }
+
+  return [
+    !isServer && dev && 'extracted-loader',
+    !isServer && MiniCssExtractPlugin.loader,
+    cssLoader,
+    postcssLoader,
+    ...loaders,
+  ].filter(Boolean);
+};
+
+module.exports = (nextConfig = {}) => {
+  return Object.assign({}, nextConfig, {
+    webpack(config, options) {
+      config.devtool =
+        process.env.NODE_ENV === 'production'
+          ? 'source-map'
+          : 'eval-cheap-module-source-map';
+
+      if (!options.defaultLoaders) {
+        throw new Error(
+          'This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade'
+        );
+      }
+
+      const {dev, isServer} = options;
+
+      if (!isServer) {
+        config.resolve = {
+          ...config.resolve,
+          fallback: {
+            ...config.resolve.fallback,
+            net: false,
+            dns: false,
+            fs: false,
+            path: false,
+          },
+        };
+      }
+
+      config.module.rules.push({
+        test: /\.(jpe?g|png|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: dev
+                ? 'static/images/[name].[ext]'
+                : 'static/images/[name].[hash:8].[ext]',
+            },
+          },
+        ],
+        type: 'javascript/auto',
+      });
+
+      const {
+        cssModules = true,
+        cssLoaderOptions,
+        postcssLoaderOptions,
+        sassLoaderOptions = {},
+      } = nextConfig;
+
+      options.defaultLoaders.sass = cssLoaderConfig(config, {
+        extensions: ['scss', 'sass'],
+        cssModules,
+        cssLoaderOptions,
+        postcssLoaderOptions,
+        dev,
+        isServer,
+        loaders: [
+          {
+            loader: 'sass-loader',
+            options: sassLoaderOptions,
+          },
+        ],
+      });
+
+      options.defaultLoaders.css = cssLoaderConfig(config, {
+        extensions: ['css'],
+        cssModules,
+        cssLoaderOptions,
+        postcssLoaderOptions,
+        dev,
+        isServer,
+      });
+
+      config.module.rules.push(
+        {
+          test: /\.scss$/,
+          use: options.defaultLoaders.sass,
+        },
+        {
+          test: /\.sass$/,
+          use: options.defaultLoaders.sass,
+        },
+        {
+          test: /\.css$/,
+          use: options.defaultLoaders.css,
+        },
+        /**
+         * Next 12 doesn't resolve properly files outside of the root and libs dir.
+         * This is temporary solution only until we will migrate all packages from packages/**
+         * to NX libs
+         */
+        {
+          test: /packages\/.+\.tsx?$/,
+          use: options.defaultLoaders.babel,
+        },
+        {
+          test: /packages\/.+\.jsx?$/,
+          use: options.defaultLoaders.babel,
+        }
+      );
+
+      if (typeof nextConfig.webpack === 'function') {
+        return nextConfig.webpack(config, options);
+      }
+
+      return config;
+    },
+  });
+};

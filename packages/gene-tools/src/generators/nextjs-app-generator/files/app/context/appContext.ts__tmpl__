@@ -1,0 +1,24 @@
+import { ActionType, makeStore } from '@brainly/gene';
+
+export type AppStoreType = {
+  hello: string;
+  originUrl?: URL;
+};
+
+const appInitialState = {
+  hello: 'world',
+};
+
+const appReducer = (state: AppStoreType, action: ActionType) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+const [Provider, useDispatch, useStore] = makeStore<AppStoreType, ActionType>(
+  appInitialState,
+  appReducer
+);
+
+export { Provider, useDispatch, useStore };

@@ -1,0 +1,31 @@
+
+<% if (apollo && reactQuery) { %>
+  import {NormalizedCacheObject} from '@apollo/client';
+  import {DehydratedState} from '@tanstack/react-query';
+
+  export type HomePagePropsType = {
+    dehydratedApolloClient?: NormalizedCacheObject;
+    dehydratedQueryClient?: DehydratedState;
+  };
+<% } %>
+
+
+<% if (apollo && !reactQuery) { %>
+  import {NormalizedCacheObject} from '@apollo/client';
+
+  export type HomePagePropsType = {
+    dehydratedApolloClient?: NormalizedCacheObject;
+  };
+<% } %>
+
+<% if (!apollo && reactQuery) { %>
+  import {DehydratedState} from '@tanstack/react-query';
+
+  export type HomePagePropsType = {
+    dehydratedQueryClient?: DehydratedState;
+  };
+<% } %>
+
+<% if (!apollo && !reactQuery) { %>
+  export type HomePagePropsType = Record<string, never>;
+<% } %>

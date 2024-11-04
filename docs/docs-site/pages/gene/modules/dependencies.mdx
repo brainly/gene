@@ -1,0 +1,566 @@
+---
+title: Modules Dependencies
+---
+
+import Image from 'next/image'
+
+# Dependencies
+
+## Dependency Injection
+
+To keep modules and services agnostic Gene uses DI pattern to inject all needed elements to use module or service.
+You can think about that in this way:
+
+> Hi! I'm a module, I need to have router navigate method with this interface: `{navigate: (path:string) => void}` - please provide it to me from place where you're going to render me!
+
+It means that whenever you will be rendering this module you need to inject router with given interface.
+
+### Define interface in module
+
+You can define your interface in module, let's take router example:
+
+```jsx
+import {useInjection} from '@brainly/gene';
+
+// define interface to type it
+export interface SimpleRouter {
+  navigate: (path: string) => {};
+}
+
+// define unique key to avoid conflicts across all apps
+export const RouterIdentifier = Symbol.for('router');
+
+export function SimpleModule() {
+  const navigate = useInjection<SimpleRouter>RouterIdentifier;
+
+  return (
+    <div>
+      <a onClick={() => navigate('/home')}>navigate to home</a>
+    </div>
+  );
+}
+```
+
+This is how the module looks; now let's try to render it in a NextJS application:
+
+```jsx filename="pages/simple.tsx"
+import {SimpleModule, SimpleRouter, RouterIdentifier} from '@acme/simple-module';
+import {Container} from 'inversify';
+import {withIoc} from '@brainly/gene';
+import {useRouter} from 'next/router';
+
+// we have to create container getter which will bind router
+const usePageContainer = function (nextRouter) {
+    const container = new Container();
+
+    const router = useRouter();
+    // now let's bind our app router
+    container.bind<MyRouter>(RouterIdentifier)
+        .toConstantValue({
+            // transform app router to module interface
+            navigate: path => router.push(path),
+        });
+};
+
+function SimplePage() {
+  return (
+    <div>
+      Hello Page! <SimpleModule />
+    </div>
+  );
+}
+
+// export with withIoc HOC to inject container to context
+export default withIoc(usePageContainer)(MyPage);
+```
+
+
+
+  ```mermaid
+   
+  flowchart
+    1["container.bind('router').toConstantValue({navigate: window.location.assign})"]
+    2["const {navigate} = useInjection('router')"]
+
+    1 --> 2
+  ```
+
+As you can see, this is really powerful! With this, you can render this module in any other application. In the example above, we transformed the NextJS Router, but in the same manner, we could transform, for instance, React Router or create a custom router and bind it. With that, the module can be rendered anywhere and treated as a separate entity!
+
+Gene's DI system is based on [Inversify.js](https://inversify.io/) - if you would like to learn more, please visit their documentation.
+
+### Binding in Storybook
+
+During Storybook development, you have to bind all interfaces because Storybook is just an isolated environment - it can be treated like the app that renders the module. To do that, we prepared a provider that implements a context provider, and all you need to do is provide a container in the props.
+
+```jsx
+import {StorybookProviders} from '@acme/e2e-testing-providers';
+
+// create container like in the app
+
+const getModuleContainer = function (nextRouter) {
+  const container = new Container();
+  // now let's bind our app router
+  container.bind(RouterIdentifier).toConstantValue({
+    navigate: path => {
+      console.log(`mock Storybook navigation to ${path}`);
+    },
+  });
+
+  return {container};
+};
+
+const {container} = getModuleContainer();
+
+storiesOf('SimpleModule', module)
+  .addDecorator(storyFn => (
+    <StorybookProviders additionalContainers={[container]}>
+      {storyFn()}
+    </StorybookProviders>
+  ))
+  .add('core - default view', () => <SimpleModule />);
+```
+
+The rule is the same: you must provide a container and fulfill the interface. For Storybook purposes, when we don't need a real router, we can just put `console.log` in the navigate method. But it doesn't matter what you are binding - you have to fulfill the interface, and you can render your module whenever you want.
+
+More on [StorybookProviders](/gene/modules/storybook-providers)
+
+## Submodules
+
+Modules should not import other modules by default as they are designed to be standalone entities that can be tested in isolation. Custom hooks are a way to handle functionality separation within a module. In the majority of cases where there is a need to split a module into smaller parts, the recommended approach is to use custom hooks.
+
+However, there are certain scenarios where a module needs to be divided into smaller parts due to:
+
+- The need to iterate over elements, each consisting of complex logic (e.g., a `NewsFeed` module that allows for commenting and rating each news item and displaying them in a list with advertisement slots).
+- The need to handle complex flows of views that cannot be managed through page navigation (e.g., a payments modal or a registration modal).
+
+In such cases, it is permissible to split the module into smaller parts called **submodules**. They can be treated as a custom hook that returns a layout. They are not using Gene declaration (they reuse declarations from the module that imports them), should not be exported, and should be used only by the module they are a part of.
+
+**To prevent misuse of this pattern, submodules have certain restrictions:**
+
+- Submodules can only be used by the module they are a part of. They should be placed in the same library and should not be exported.
+- Submodules cannot import other modules.
+- Submodules should not have their own declarations. They should reuse declarations from the module that imports them.
+- Submodules, contrary to modules, can accept props that are essential for their operation (e.g., each `NewsSlot` submodule may need to accept an `id` or an `index` to map data from the service layer and display the corresponding news item). **There is a limited and specified list of options that should be checked by quality tools provided by Gene.**
+
+### Iterating over elements
+
+Let's consider the first case in which `NewsFeedModule` is used to display a list of news. The module uses two components: `NewsList` and `NewsItem`. `NewsList` is responsible for rendering the list of news using the render props pattern. `NewsItem` is responsible for rendering a single news item.
+
+```tsx filename="NewsFeedModule.tsx"
+import {NewsList, NewsItem} from "@acme/components/news-list-ui";
+import {useNewsList} from "./hooks/useNewsList";
+
+const useInit = () => {
+  const {newsListProps} = useNewsList();
+
+  return {
+    newsListProps,
+  };
+}
+
+const RawNewsFeedModule = ({) => {
+  const { newsListProps } = useInit();
+
+  return (
+    <NewsList
+      {...newsListProps}
+    >
+    ({newsItemProps}) => (
+      <NewsItem
+        {...newsItemProps}
+      />
+    )
+    </NewsList>
+  );
+};
+
+const {declarations, module: NewsFeedModule} = createGeneModule({
+  module: RawNewsFeedModule,
+  declarations: {},
+});
+
+export {NewsFeedModule, declarations};
+```
+
+**Creating such modules with a list can be done using a single module until there is a need for complex logic for each item.**
+
+Let's consider a case where there is a need to handle actions on news items. Each action result should impact how the news is displayed - for example, rating the news should change the props related to the ranking section inside `newsListProps`. The same goes for every other action. In such cases, using custom hooks alone would result in putting all of the logic into a single hook.
+
+To address this, it is recommended to separate a single item into a submodule named `NewsSlotSubmodule` or `NewsItemModule`. This submodule should only be used by `NewsFeedModule` and should not be exported.
+
+The diagram below illustrates how `NewsFeedModule` uses `NewsSlotSubmodule` as a submodule. `NewsSlotSubmodule` is responsible for rendering a single news item, while `NewsFeedSubmodule` is responsible for rendering a list of news items and handling the logic related to each item.
+
+  ```mermaid
+   
+  classDiagram
+    direction RL
+
+    namespace news-module {
+
+
+        class NewsListModule {
+        }
+
+        class NewsSlotSubmodule {
+            +id
+        }
+
+        class useNewsList
+        class useNewsItemContent
+        class useNewsRating
+        class useNewsCommenting
+
+
+    }
+
+    NewsListModule *-- useNewsList
+    News
+
+ListModule *-- NewsSlotSubmodule
+
+    NewsSlotSubmodule *-- useNewsItemContent
+    NewsSlotSubmodule *-- useNewsRating
+    NewsSlotSubmodule *-- useNewsCommenting
+
+  ```
+
+
+Code for both entities is presented below:
+
+```tsx filename="NewsFeedModule.tsx" showLineNumbers
+import {NewsList} from "@acme/components/news-list-ui";
+import {useNewsList} from "./hooks/useNewsList";
+import {NewsSlotSubmodule} from "./NewsSlotSubmodule";
+
+const useInit = () => {
+  const {newsListProps} = useNewsList();
+
+  return {
+    newsListProps,
+  };
+}
+
+const RawNewsFeedModule = () => {
+  const { newsListProps } = useInit();
+
+  return (
+    <NewsList
+      {...newsListProps}
+      adSlot={adSlot}
+    >
+    ({id}) => (
+      <NewsSlotSubmodule
+        id={id}
+      />
+    )
+    </NewsList>
+  );
+};
+
+const {declarations, module: NewsFeedModule} = createGeneModule({
+  module: RawNewsFeedModule,
+  declarations: {},
+});
+
+export {NewsFeedModule, declarations};
+```
+
+```tsx filename="NewsSlotSubmodule.tsx" showLineNumbers
+import {NewsItem, NewsRating, NewsComments} from "@acme/components/news-list-ui";
+import {useNewsItemContent} from "./hooks/useNewsItemContent";
+import {useNewsRating} from "./hooks/useNewsRating";
+import {useNewsCommenting} from "./hooks/useNewsCommenting";
+
+const useInit = ({id}: {id: string}) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const {newsItemContentProps} = useNewsItemContent({id, ref});
+  const {newsRatingProps, useNewsRatingMediators} = useNewsRating({id, ref});
+  const {newsCommentingProps, useNewsCommentingMediators} = useNewsCommenting({id, ref});
+
+  const useMediators = () => {
+    useNewsRatingMediators();
+    useNewsCommentingMediators();
+  };
+
+  return {
+    newsItemContentProps,
+    newsRatingProps,
+    newsCommentingProps,
+    useMediators,
+  };
+}
+
+const NewsSlotSubmodule = ({id}: {id: string}) => {
+  const { newsItemContentProps, newsRatingProps, newsCommentingProps, useMediators } = useInit({id});
+
+  useMediators();
+
+  return (
+    <NewsItem
+      {...newsItemContentProps}
+      rating={<NewsRating {...newsRatingProps} />}
+      commenting={<NewsComments {...newsCommentingProps} />}
+    />
+  );
+};
+
+export {NewsSlotSubmodule};
+```
+
+### Complex Flows of Views
+
+In some cases, a module may need to handle complex flows of views that cannot be managed through page navigation. In such cases, it is permissible to use submodules in a pattern named `State Machine Module` or `Machine Module`. In this pattern, the parent module uses a state machine to carry out the complex flow and facilitate communication between submodules and the parent module.
+
+As an example, the `RegistrationModule` implements several views that the user sees during the registration process. Each view is represented by a submodule. The parent module is responsible for managing the flow of views and passing data between them. Each submodule can implement one or more custom hooks, depending on the complexity of the view.
+
+
+
+
+  ```mermaid
+      
+  classDiagram
+    direction RL
+
+    namespace registration-module {
+
+
+        class RegistrationModule {
+        }
+
+        class SsoSubmodule {
+            +stateMachine
+        }
+
+        class UserDetailsSubmodule {
+            +stateMachine
+        }
+
+        class SuccessViewSubmodule {
+            +stateMachine
+        }
+
+        class useRegistrationProcess
+        class useSSO
+        class useUserDetails
+        class usePromo
+        class useSuccess
+    }
+
+    RegistrationModule *-- SsoSubmodule
+    RegistrationModule *-- UserDetailsSubmodule
+    RegistrationModule *-- SuccessViewSubmodule
+
+    RegistrationModule *-- useRegistrationProcess
+    SsoSubmodule *-- useSSO
+    UserDetailsSubmodule *-- useUserDetails
+    UserDetailsSubmodule *-- usePromo
+    SuccessViewSubmodule *-- useSuccess
+
+  ```
+
+
+Code of the registration module is presented below:
+
+```tsx filename="RegistrationModule.tsx" showLineNumbers
+import {useRegistrationProcess, RegistrationProcessStateType} from "./hooks/useRegistrationProcess";
+import {SsoSubmodule} from "./SsoSubmodule";
+import {UserDetailsSubmodule} from "./UserDetailsSubmodule";
+import {SuccessViewSubmodule} from "./SuccessViewSubmodule";
+import {RegistrationLayout} from "@acme/components/registration-layout";
+
+const useInit = () => {
+  const {registrationProcessProps, registrationProcessMachine, useRegistrationProcessComponentMap} = useRegistrationProcess();
+
+  return {
+    registrationProcessProps,
+    registrationProcessMachine,
+    useRegistrationProcessComponentMap,
+  };
+}
+
+const RegistrationProcessComponentMap = new Map([
+  [RegistrationProcessStateType.SSO, SsoSubmodule],
+  [RegistrationProcessStateType.USER_DETAILS, UserDetailsSubmodule],
+  [RegistrationProcessStateType.SUCCESS, SuccessViewSubmodule],
+]);
+
+const RawRegistrationModule = () => {
+  const { registrationProcessProps, registrationProcessMachine, useRegistrationProcessComponentMap} = useInit();
+
+  const RegistrationProcessComponent = useRegistrationProcessComponentMap(RegistrationProcessComponentMap);
+
+  return (
+    <RegistrationLayout
+      {...registrationProcessProps}
+    >
+      <RegistrationProcessComponent
+        machine={registrationProcessMachine}
+      />
+    </RegistrationLayout>
+  );
+};
+```
+
+Then, for example, `UserDetailsSubmodule` could look like this:
+
+```tsx filename="UserDetailsSubmodule.tsx" showLineNumbers
+import {UserDetailsForm} from "@acme/components/user-details-form";
+import {StateMachineType} from "./hooks/useRegistrationProcess";
+import {useUserDetails} from "./hooks/useUserDetails";
+import {usePromo} from "./hooks/usePromo";
+
+const useInit = ({stateMachine}: {stateMachine: StateMachineType}) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const {userDetailsProps, useUserDetailsMediators} = useUserDetails({ref, stateMachine});
+  const {promoProps, usePromoMediators} = usePromo({ref, stateMachine});
+
+  const useMediators = () => {
+    useUserDetailsMediators();
+    usePromoMediators();
+  };
+
+  return {
+    userDetailsProps,
+    promoProps,
+    useMediators,
+  };
+}
+
+const UserDetailsSubmodule = ({stateMachine}: {stateMachine: StateMachineType}) => {
+  const { userDetailsProps, promoProps, useMediators } = useInit({stateMachine});
+
+  useMediators();
+
+  return (
+    <UserDetailsForm
+      {...userDetailsProps}
+      promo={<Promo {...promoProps} />}
+    />
+  );
+};
+
+export {UserDetailsSubmodule};
+```
+
+This pattern is described further in [State Machine Module](/gene/modules/advanced/state-machine-module) section.
+
+### Branching submodules
+
+As submodules are private to the module they are a part of, they should be branched by copying instead of composition.
+
+### Submodules placement
+
+Submodules should be placed in the same library as the module they are a part of. They should not be exported and should not be used by other modules. Their files can be kept close to the module they are a part of.
+
+```
+<module-directory>
+├── index.ts
+└── hooks/
+│   ├── useNewsList.ts
+│   ├── ...
+└── NewsFeedModule.tsx
+└── NewsSlotSubmodule.tsx
+```
+
+If there is a need (for example, there are already many module variations in the library), submodules can be placed in a separate folder named `submodules`.
+
+```
+<module-directory>
+├── index.ts
+└── hooks/
+│   ├── useNewsList.ts
+│   ├── ...
+└── NewsFeedModule.tsx
+└── ...
+└── submodules/
+│   ├── NewsSlotSubmodule.tsx
+│   ├── ...
+```
+
+## Dynamic Dependencies
+
+Sections below describe all dynamic dependencies that can be used by the module that are not covered by server data (provided by services that use Dependency Injection for clients). Such dependencies should be used minimally and only if there is no other way to achieve the goal.
+
+### Props / Attributes
+
+Props (or [attributes](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements#responding_to_attribute_changes)) describe passing dynamic data to the module using its interface exposed by the module's UI element. For example, in React implementation, modules are React components and thus can accept props.
+
+Except for the slot pattern covered in the section below, props can be used in a single case - when a module is a submodule iterating over a list of elements, and each element has different data to display. In such a case, props can be used to pass data to the submodule. Another case is to pass a state machine. These cases have been described
+
+ in the [Submodules](#submodules) section.
+
+### Slot Pattern
+
+[Slot pattern](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) is widely recognized among UI standards and frameworks. It allows passing rendered components as dependencies of other rendered components.
+
+**Gene recognizes the slot pattern as a way to display widget-type modules like advertisements inside the layout of other modules that represent different features and do not communicate with the 'host' module.**
+
+An example of the situation above is a case in which advertisement banners are displayed within the `NewsFeed` module. As the `NewsFeed` module iterates over the list of news and combines them with ad slots, there is a need to use a slot pattern.
+
+```tsx filename="apps/example-application/market-a/pages/news.tsx" showLineNumbers
+import {NewsFeedModule} from "@acme/example-application/market-a/modules/news-feed";
+import {AdSlotWithinNewsFeed} from "@acme/example-application/market-a/modules/ad-slot-within-news-feed";
+
+export const NewsPage = () => {
+
+  return (
+    {/* ...other modules... */}
+    <NewsFeedModule
+      slots={{
+        adSlot: <AdSlotWithinNewsFeed />
+      }}
+    />
+  )
+};
+```
+
+In the example above, `AdSlotWithinNewsFeed` is a module that is being used as a slot. It is being passed to the `NewsFeed` module as a prop. The `NewsFeed` module is responsible for rendering the slot in the appropriate place.
+
+```tsx filename="NewsFeedModule.tsx" showLineNumbers {13, 22}
+import {NewsList} from "@acme/components/news-list-ui";
+import {useNewsList} from "./hooks/useNewsList";
+import {NewsSlotSubmodule} from "./NewsSlotSubmodule";
+
+const useInit = () => {
+  const {newsListProps} = useNewsList();
+
+  return {
+    newsListProps,
+  };
+}
+
+type SlotsLabelsTypes = 'adSlot'
+
+const RawNewsFeedModule = ({slots}: {slots?: Record<SlotsLabelsType, JSX.Element | null>}) => {
+  const { newsListProps } = useInit();
+
+  return (
+    <NewsList
+      {...newsListProps}
+    >
+    ({id}) => (
+      <>
+        {slots?.adSlot}
+        <NewsSlotSubmodule
+          id={id}
+        />
+      </>
+    )
+    </NewsList>
+  );
+};
+
+const {declarations, module: NewsFeedModule} = createGeneModule<Record<string, unknown>, SlotsLabelsTypes>({
+  module: RawNewsFeedModule,
+  declarations: {},
+});
+
+export {NewsFeedModule, declarations};
+```
+
+**The slot pattern allows for using different types of widget modules per application. This pattern should be used when the module passed as a slot represents different functionality, not as an alternative to composition. Composition is the preferred choice for most cases, as modules usually consist of integrated parts. Advertisement slots, for example, are typically maintained by different teams and have logic unrelated to the news feed module.**
+
+## Further reading
+
+This guide concludes essential information about modules in Gene. Remaining guides cover topics like testing and PR checks.

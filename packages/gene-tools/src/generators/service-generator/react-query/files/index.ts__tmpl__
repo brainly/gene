@@ -1,0 +1,4 @@
+export {use<%= fileName %>} from './lib/use<%= fileName %>';
+export {use<%= fileName %>Lazy} from './lib/use<%= fileName %>Lazy';
+export type {<%= fileName %>DataTypeAPI} from './lib/queries';
+export { query<%= fileName %> } from './lib/queries';

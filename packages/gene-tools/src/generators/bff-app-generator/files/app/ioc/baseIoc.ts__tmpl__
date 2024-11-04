@@ -1,0 +1,77 @@
+import { Container } from 'inversify';
+
+<% if (apollo) { %>
+
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClientType, apolloFactory } from '@brainly/gene-apollo';
+
+<% } %>
+
+<% if (reactQuery) { %>
+
+import {
+  ReactQueryClientType,
+  reactQueryFactory,
+} from '@brainly/gene';
+import { QueryClient } from '@tanstack/react-query';
+
+<% } %>
+
+
+export function getBaseContainer() {
+  const container = new Container();
+<% if (!apollo && reactQuery) { %>
+  const reactQueryContainer = new Container();
+
+  /* Configure your RQ client */
+  const rqClient = new QueryClient();
+
+  reactQueryContainer
+    .bind<ReactQueryClientType>('reactQueryClient')
+    .toConstantValue(reactQueryFactory(() => rqClient));
+<% } %>
+<% if (apollo && !reactQuery) { %>
+  const apolloContainer = new Container();
+
+  /* Configure your apollo client */
+  const apolloClient = new ApolloClient({
+    cache: new InMemoryCache(),
+  });
+  apolloContainer
+    .bind<ApolloClientType>('apolloClient')
+    .toConstantValue(apolloFactory(() => apolloClient));
+<% } %>
+<% if (apollo && reactQuery) { %>
+    const reactQueryContainer = new Container();
+
+  /* Configure your RQ client */
+  const rqClient = new QueryClient();
+
+  reactQueryContainer
+    .bind<ReactQueryClientType>('reactQueryClient')
+    .toConstantValue(reactQueryFactory(() => rqClient));
+
+  const apolloContainer = new Container();
+  /* Configure your apollo client */
+  const apolloClient = new ApolloClient({
+    cache: new InMemoryCache(),
+  });
+  apolloContainer
+    .bind<ApolloClientType>('apolloClient')
+    .toConstantValue(apolloFactory(() => apolloClient));
+<% } %>
+
+  return Container.merge(
+    container,
+  <% if (apollo && !reactQuery) { %>
+    apolloContainer,
+  <% } %>
+  <% if (!apollo && reactQuery) { %>
+    reactQueryContainer,
+  <% } %>
+  <% if (apollo && reactQuery) { %>
+    apolloContainer,
+    reactQueryContainer,
+  <% } %>
+  ) as Container;
+}

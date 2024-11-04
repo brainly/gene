@@ -1,0 +1,5 @@
+These are the tests for the <%= pascalCaseFileName %>
+
+Learn how to create and run tests [here](https://brainly.github.io/gene/modules/e2e)
+
+Learn about [StorybookProviders](https://brainly.github.io/gene/modules/storybook-providers) in order to change routing options, app context or mock requests.

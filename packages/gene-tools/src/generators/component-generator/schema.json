@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "component-generator",
+  "type": "object",
+  "properties": {
+    "prompts-profile": {
+      "type": "string",
+      "enum": ["basic", "sample", "advanced"],
+      "x-prompt": {
+        "message": "You will create a new component now. Which prompting options would you like to choose?",
+        "type": "list",
+        "items": [
+          {
+            "value": "basic",
+            "label": "I would like to create a basic component (only name)."
+          },
+          {
+            "value": "sample",
+            "label": "I would like to create a basic component with defaults for props, events, copy, styles."
+          },
+          {
+            "value": "advanced",
+            "label": "I would like to create an advanced component (name, props, events, copy, styles)."
+          }
+        ]
+      }
+    },
+    "library": {
+      "type": "string",
+      "description": "Library name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    }
+  },
+  "required": ["prompts-profile"]
+}

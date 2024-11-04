@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "BrainlyCLIComponent",
+  "title": "Brainly CLI component",
+  "type": "object",
+  "description": "Creates Brainly component",
+  "properties": {
+    "name": {
+      "type": "string",
+      "x-custom-default": "my-component",
+      "minLength": 3,
+      "description": "Name of the component",
+      "x-custom-prompt": "What is the name of your component?"
+    },
+    "props": {
+      "type": "string",
+      "x-custom-sample": "id:string,content:string,items:array",
+      "description": "Props of your component (separated by comma)",
+      "x-custom-prompt": "What are props of your component? Separate them using comma, leave empty input for no props and do not count copy prop here."
+    },
+    "events": {
+      "type": "string",
+      "x-custom-sample": "on-click",
+      "description": "Events names of your component (separated by comma)",
+      "x-custom-prompt": "What are the events names of your component? Separate them using comma and leave empty input for no events."
+    },
+    "copy": {
+      "type": "string",
+      "x-custom-sample": "title,description",
+      "description": "Copy keys of your component (separated by comma)",
+      "x-custom-prompt": "What are the copy keys of your component? Separate them using comma and leave empty input for no copy."
+    },
+    "styles": {
+      "type": "string",
+      "x-custom-sample": "wrapper,element",
+      "description": "Styles classes of your component (separated by comma)",
+      "x-custom-prompt": "What are the style classes of your component? Separate them using comma and leave empty input for no classes."
+    },
+    "tests": {
+      "type": "boolean",
+      "x-custom-default": true,
+      "x-custom-sample": true,
+      "description": "Confirmation on creating tests file",
+      "x-custom-prompt": "Should your component includes tests file?"
+    },
+    "storybook": {
+      "type": "boolean",
+      "x-custom-default": true,
+      "x-custom-sample": true,
+      "description": "Confirmation on creating storybook file",
+      "x-custom-prompt": "Should your component includes storybook file?"
+    },
+    "reexport": {
+      "type": "boolean",
+      "x-custom-default": true,
+      "x-custom-sample": true,
+      "description": "Confirmation on reexporting",
+      "x-custom-prompt": "Should your component be exported by a package?"
+    },
+    "data-testid": {
+      "type": "string",
+      "description": "[data-testid] parameter for QA and RTL testing",
+      "x-custom-prompt": "What is the name of data-testid of your component? For no one, component name will be used."
+    }
+  },
+  "required": []
+}

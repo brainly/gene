@@ -1,0 +1,102 @@
+name: Publish and Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      - alpha-*
+
+jobs:
+  publish-and-release:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3
+        with:
+          node-version: '18.20.0'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@brainly'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # - name: Build Projects marked as public
+      #   run: |
+      #     PACKAGES_DIR="./packages"
+      #     for DIR in $PACKAGES_DIR/*; do
+      #       if [ -d "$DIR" ]; then
+      #         PROJECT_JSON="$DIR/project.json"
+      #         if [ -f "$PROJECT_JSON" ] && grep -q '"type:public"' "$PROJECT_JSON"; then
+      #           PROJECT_NAME="packages-$(basename $DIR)"
+      #           echo "Building $PROJECT_NAME..."
+      #           pnpm nx build $PROJECT_NAME
+      #         fi
+      #       fi
+      #     done
+
+      # - name: Publish Packages
+      #   run: |
+      #     BUILD_PACKAGES_DIR="./dist/packages"
+      #     for PACKAGE in $BUILD_PACKAGES_DIR/*; do
+      #       if [ -d "$PACKAGE" ]; then
+      #         PACKAGE_JSON="$PACKAGE/package.json"
+      #         if [ -f "$PACKAGE_JSON" ]; then
+      #           if [[ "${GITHUB_BASE_REF}" == alpha-* ]]; then
+      #             echo "Publishing $PACKAGE with tag alpha..."
+      #             npm publish --access restricted --tag alpha $PACKAGE
+      #           else
+      #             echo "Publishing $PACKAGE..."
+      #             npm publish --access restricted $PACKAGE
+      #           fi
+      #         else
+      #           echo "$PACKAGE_JSON does not exist, skipping..."
+      #         fi
+      #       fi
+      #     done
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.BRAINLY_FRONTEND_TOKEN }}
+
+      # - name: Get latest tag from branch name
+      #   id: latest_tag
+      #   run: echo "::set-output name=tag::v${GITHUB_HEAD_REF#release/}"
+      # - name: Create GitHub Release
+      #   id: create_release
+      #   uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ steps.latest_tag.outputs.tag }}
+      #     release_name: Release ${{ steps.latest_tag.outputs.tag }}
+      #     body: "[Changelog](https://github.com/brainly/gene/blob/master/CHANGELOG.md)"
+      #     draft: false
+      #     prerelease: false
+      - name: Build docs site
+        run: pnpm nx run docs-docs-site:build --skip-nx-cache
+      - name: Export docs site
+        run: pnpm nx run docs-docs-site:export
+      - name: Deploy docs site
+        uses: peaceiris/actions-gh-pages@bbdfb200618d235585ad98e965f4aafc39b4c501 # v3.7.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/docs-site/out

@@ -1,0 +1,53 @@
+{
+  "name": "packages-eslint-plugin-gene",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/eslint-plugin-gene/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/eslint-plugin-gene",
+        "main": "packages/eslint-plugin-gene/src/index.ts",
+        "tsConfig": "packages/eslint-plugin-gene/tsconfig.lib.json",
+        "assets": [
+          "packages/eslint-plugin-gene/*.md",
+          {
+            "input": "./packages/eslint-plugin-gene/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/eslint-plugin-gene/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/eslint-plugin-gene",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/eslint-plugin-gene",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/eslint-plugin-gene/**/*.ts",
+          "packages/eslint-plugin-gene/generators.json",
+          "packages/eslint-plugin-gene/executors.json",
+          "packages/eslint-plugin-gene/package.json"
+        ]
+      }
+    }
+  },
+  "tags": ["type:public"]
+}

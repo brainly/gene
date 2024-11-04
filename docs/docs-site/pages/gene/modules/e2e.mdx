@@ -1,0 +1,98 @@
+---
+title: E2E Test Documentation
+---
+
+# E2E Test Documentation
+
+Each module can have its own E2E (End-to-End) test app. You can create E2E tests for your module, which will run against the module's Storybook. These tests use [Cucumber Gherkin](https://cucumber.io/docs/gherkin/reference/) syntax to describe features, allowing you to structure and implement test cases effectively.
+
+After a module is generated, an initial E2E app is also created with a sample test that opens Storybook and loads the module:
+
+```
+Feature: MyModule
+
+  Scenario: Display MyModule
+    Given I visit MyModule storybook
+    Then I see MyModule is displayed
+```
+
+### Cypress Test Implementation
+
+Here’s an example of the Cypress test implementation:
+
+```jsx
+import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
+
+Given('I visit MyModule storybook', () => {
+  cy.visit('/iframe.html?id=helloworldmodule');
+});
+
+Then('I see MyModule is displayed', () => {
+  cy.findByTestId('my-module-id').should('be.visible');
+});
+```
+
+This setup provides a solid foundation to expand with additional E2E test scenarios for your module.
+
+### Running the Tests
+
+You can run the tests using the following NX command:
+
+```bash
+$ nx run my-module-e2e:e2e
+```
+
+## Mocking API Requests
+
+If your module performs API requests, you need to enable `MockServiceWorker` in the module's Storybook to simulate these requests.
+
+To do so, add the following configuration in the `<module>/.storybook/preview.js` file:
+
+```js
+import { workerPath } from '../../../../../../.storybook/preview'; // Adjust the path based on the module's location
+import { initialize } from 'msw-storybook-addon';
+
+initialize({
+  serviceWorker: {
+    url: workerPath,
+  },
+});
+
+export { decorators, parameters } from '../../../../../../.storybook/preview';
+```
+
+### Defining Mock Handlers
+
+Define the request mocks within the module's story. Here’s an example setup:
+
+```tsx
+const handlers = {
+  myGraphqlMutation: [
+    graphql.mutation('myGraphqlMutation', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          myGraphqlData: {
+            validationErrors: null,
+          },
+        })
+      );
+    }),
+  ],
+  authorize: [
+    rest.post('/api/authorize', (_, res, ctx) => {
+      return res(ctx.json({ success: true }));
+    }),
+  ],
+};
+
+storiesOf('MyModule', module)
+  .addParameters({
+    msw: {
+      handlers,
+    },
+  })
+  .addDecorator()
+  .add('core - default view', () => <MyModule />);
+```
+
+For more information on `MockServiceWorker`, refer to the [MSW Storybook Addon documentation](https://github.com/mswjs/msw-storybook-addon).

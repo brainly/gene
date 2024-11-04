@@ -1,0 +1,47 @@
+import * as React from 'react';
+import {render, screen, fireEvent} from '@testing-library/react';
+import '@testing-library/jest-dom';
+<% if (events) { %>import {promiseFromEvent} from '@brainly/gene';
+import {<%= eventsTypeName(name) %>} from './<%= eventsTypeName(name) %>';<% } %>
+import <%= classify(name) %>, {PropsType} from './<%= classify(name) %>';
+<% if (props || copy) { %>
+const defaultProps: PropsType = {
+  <% if (copy) { %>
+  copy: {
+    <% for (let copyKey of copyArray) { %><%= camelize(copyKey) %>: 'test <%= copyKey %>',<% } %>
+  },
+  <% } %>
+<% for (let [prop, propType] of propsArray) { %><%= camelize(prop) %>: <%- defaultPropValue(prop, propType) %>,<% } %>
+};<% } %>
+
+describe('<<%= classify(name) %> />', () => {
+  it('render <%= classify(name) %>', () => {
+    render(<<%= classify(name) %>
+    <% if (props || copy) { %>
+      {...defaultProps}
+    <% } %> />);
+
+    expect(screen.getByTestId('<%= dataTestIdName(name) %>')).toBeInTheDocument();
+  });
+  <% if (events) { %>
+    <% for (let event of eventsArray) { %>
+      it('fires <%= classify(event) %> event', async () => {
+        const eventPromise = promiseFromEvent(
+          <%= eventsTypeName(name) %>.<%= eventsKeyName(event) %>
+        );
+
+        render(<<%= classify(name) %><% if (props || copy) { %>{...defaultProps}<% } %> />);
+
+        // interact with the component to trigger the event
+        // e.g. fireEvent.click(screen.getByRole('button'));
+
+        // Make sure the event was dispatched
+        // await eventPromise;
+
+        // You can also inspect event details (if there are some)
+        // const {detail: eventDetails} = await eventPromise;
+        // expect(eventDetails).toEqual({foo: "bar"});
+      });
+    <% } %>
+  <% } %>
+});

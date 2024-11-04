@@ -1,0 +1,8 @@
+checker_config:
+  rules:
+    memoization: false
+    no_jsx_in_delegates: true
+    no_direct_inversify_import: true
+    unit_tests_for_delegates_required: true
+    storybook_required: true
+    no_modules_export_from_core_library: false

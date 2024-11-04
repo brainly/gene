@@ -1,0 +1,25 @@
+import {ExecutorContext, logger} from '@nrwl/devkit';
+import chalk from 'chalk';
+import {exec} from 'child_process';
+import {promisify} from 'util';
+
+export interface <%= className %>ExecutorOptions {
+  textToEcho: string;
+}
+
+export default async function <%= className %>Executor(
+  options: <%= className %>ExecutorOptions,
+  context: ExecutorContext
+) {
+  logger.info(`Executing "echo"...`);
+  logger.info(`Options: ${JSON.stringify(options, null, 2)}`);
+
+  const {stdout, stderr} = await promisify(exec)(
+    `echo '${options.textToEcho}'`
+  );
+
+  logger.info(chalk.green(stdout));
+  logger.error(stderr);
+
+  return {success: !stderr};
+}

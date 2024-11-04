@@ -1,0 +1,72 @@
+import {Container} from 'inversify';
+import {getBaseContainer} from './baseIoc';
+import {HomePagePropsType} from '../types/types';
+
+<% if (apollo && !reactQuery) { %>
+  import {factory, Factory} from '@brainly/gene';
+  import {ServiceTypes} from '@brainly/gene'
+import { ApolloClientType } from '@brainly/gene-apollo';
+<% } %>
+
+<% if (reactQuery && !apollo) { %>
+  import {factory, Factory} from '@brainly/gene';
+  import {ReactQueryClientType} from '@brainly/gene'
+import {ServiceTypes} from '@brainly/gene'
+<% } %>
+
+<% if (apollo && reactQuery) { %>
+  import {factory, Factory} from '@brainly/gene';
+    import {ApolloClientType} from '@brainly/gene-apollo';
+  import {ReactQueryClientType} from '@brainly/gene';
+  import {ServiceTypes} from '@brainly/gene';
+<% } %>
+
+export function getHomePageContainer(props?: HomePagePropsType) {
+  const baseContainer = getBaseContainer();
+<% if (apollo && !reactQuery) { %>
+  const apolloClient = baseContainer.get<ApolloClientType>('apolloClient');
+  apolloClient.hydrate(props?.dehydratedApolloClient);
+
+  const clients = {
+    [ServiceTypes.apollo]: () => {
+      return apolloClient.getClient();
+    },
+  };
+<% } %>
+
+<% if (reactQuery && !apollo) { %>
+    const queryClient = baseContainer.get<ReactQueryClientType>('reactQueryClient');
+    queryClient.hydrate(props?.dehydratedQueryClient);
+
+    const clients = {
+      [ServiceTypes.reactQuery]: () => {
+        return queryClient.getClient();
+      },
+    };
+<% } %>
+
+<% if (apollo && reactQuery) { %>
+  const queryClient = baseContainer.get<ReactQueryClientType>('reactQueryClient');
+  queryClient.hydrate(props?.dehydratedQueryClient);
+  const apolloClient = baseContainer.get<ApolloClientType>('apolloClient');
+  apolloClient.hydrate(props?.dehydratedApolloClient);
+
+  const clients = {
+    [ServiceTypes.reactQuery]: () => {
+      return queryClient.getClient();
+    },
+    [ServiceTypes.apollo]: () => {
+      return apolloClient.getClient();
+    },
+  };
+<% } %>
+
+  const container = new Container();
+  container.parent = baseContainer;
+
+<% if (apollo || reactQuery) { %>
+  container.bind<Factory>('serviceFactory').toFunction(factory(clients));
+<% } %>
+
+  return container;
+}

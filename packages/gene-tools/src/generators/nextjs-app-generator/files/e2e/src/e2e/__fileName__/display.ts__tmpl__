@@ -1,0 +1,9 @@
+import {Given, Then} from '@badeball/cypress-cucumber-preprocessor';
+
+Given('I visit <%= camelCaseFileName %> page', () => {
+  cy.visit('/');
+});
+
+Then('I see <%= camelCaseFileName %> page is displayed', () => {
+  cy.findByTestId('<%= dataTestId %>').should('be.visible');
+});

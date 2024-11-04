@@ -1,0 +1,7 @@
+export enum <%= eventsTypeName(name) %> {
+  <% for (let event of eventsArray) { %><%= eventsKeyName(event) %> = '<%= eventValueName(event, name, eventsPrefix) %>',
+  <% } %>
+}
+
+<% for (let event of eventsArray) { %>export type <%= eventTypeName(name, event) %> = [<%= eventsTypeName(name) %>.<%= eventsKeyName(event) %>, undefined?];
+<% } %>

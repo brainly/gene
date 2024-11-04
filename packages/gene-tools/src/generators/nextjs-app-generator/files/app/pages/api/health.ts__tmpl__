@@ -1,0 +1,5 @@
+import { apiHandlerConnect } from '@brainly/gene-next';
+
+export default apiHandlerConnect().get(async (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});

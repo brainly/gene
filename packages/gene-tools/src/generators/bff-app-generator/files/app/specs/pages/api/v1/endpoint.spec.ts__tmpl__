@@ -1,0 +1,234 @@
+import {apiResolver} from 'next/dist/server/api-utils/node';
+import request from 'supertest';
+import http from 'http';
+import nodeFetch from 'node-fetch';
+import {legacyApiMiddleware} from '@<%= npmScope %>/middlewares';
+import {
+  newPostEndpointHandler as post,
+  newGetEndpointHandler as get,
+} from '../../../../pages/api/v1/endpoint';
+
+jest.mock('node-fetch');
+jest.mock('@<%= npmScope %>/middlewares', () => ({
+  legacyApiMiddleware: jest.fn((req, res, next) => next()),
+}));
+jest.mock('../../../../config/envVars', () => ({
+  getConfig: jest.fn(() => ({
+    API_PLACEHOLDER_URL: 'https://jsonplaceholder.typicode.com/todos',
+  })),
+}));
+
+const endpointConfig = {
+  apiUrl: 'https://jsonplaceholder.typicode.com/todos',
+};
+
+const apiPreviewPropsMock = {
+  previewModeId: 'id',
+  previewModeEncryptionKey: 'key',
+  previewModeSigningKey: 'key',
+};
+
+describe('EndpointHandler', () => {
+  const OLD_ENV = process.env;
+
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = {...OLD_ENV};
+  });
+
+  afterAll(() => {
+    process.env = OLD_ENV;
+  });
+
+  describe('post request', () => {
+    it('should handle success response', async () => {
+      (nodeFetch as any).mockResolvedValueOnce({
+        status: 201,
+        json: () => Promise.resolve({id: 42, someValue: 'test123'}),
+      });
+
+      const server = http.createServer((req, res) =>
+        apiResolver(
+          req,
+          res,
+          undefined,
+          post(endpointConfig),
+          apiPreviewPropsMock,
+          true,
+          legacyApiMiddleware
+        )
+      );
+
+      const response = await request
+        .agent(server)
+        .post('/my-api-route')
+        .send({someValue: 'test123'});
+
+      expect(response.status).toEqual(201);
+      expect(response.body).toEqual({
+        status: 201,
+        data: {id: 42, someResultValue: 'test123'},
+        success: true,
+      });
+    });
+
+    it('should propagate fetch error', async () => {
+      (nodeFetch as any).mockImplementation(() => {
+        throw new Error('Fetch error occurred');
+      });
+
+      const server = http.createServer((req, res) =>
+        apiResolver(
+          req,
+          res,
+          undefined,
+          post(endpointConfig),
+          apiPreviewPropsMock,
+          true,
+          legacyApiMiddleware
+        )
+      );
+
+      const response = await request
+        .agent(server)
+        .post('/my-api-route')
+        .send({someValue: 'test123'});
+
+      expect(response.status).toEqual(500);
+      expect(response.body).toEqual({
+        status: 500,
+        error: 'Fetch error occurred',
+        success: false,
+      });
+    });
+
+    it('should return unhandled response error', async () => {
+      (nodeFetch as any).mockResolvedValueOnce({
+        status: 404,
+        json: () => Promise.resolve({}),
+      });
+
+      const server = http.createServer((req, res) =>
+        apiResolver(
+          req,
+          res,
+          undefined,
+          post(endpointConfig),
+          apiPreviewPropsMock,
+          true,
+          legacyApiMiddleware
+        )
+      );
+
+      const response = await request
+        .agent(server)
+        .post('/my-api-route')
+        .send({someValue: 'test123'});
+
+      expect(response.status).toEqual(500);
+      expect(response.body).toEqual({
+        status: 500,
+        error: 'Unhandled response with code 404',
+        success: false,
+      });
+    });
+  });
+
+  describe('get request', () => {
+    it('should handle success response', async () => {
+      (nodeFetch as any).mockResolvedValueOnce({
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            userId: 4,
+            id: 42,
+            title:
+              'tempore molestias dolores rerum sequi voluptates ipsum consequatur',
+            completed: true,
+          }),
+      });
+
+      const server = http.createServer((req, res) =>
+        apiResolver(
+          req,
+          res,
+          {id: '1'},
+          get(endpointConfig),
+          apiPreviewPropsMock,
+          true,
+          legacyApiMiddleware
+        )
+      );
+
+      const response = await request.agent(server).get('/my-api-route').send();
+
+      expect(response.status).toEqual(200);
+      expect(response.body).toEqual({
+        status: 200,
+        data: {
+          completed: true,
+          id: 42,
+          title:
+            'tempore molestias dolores rerum sequi voluptates ipsum consequatur',
+          userId: 4,
+        },
+        success: true,
+      });
+    });
+
+    it('should propagate fetch error', async () => {
+      (nodeFetch as any).mockImplementation(() => {
+        throw new Error('Fetch error occurred');
+      });
+
+      const server = http.createServer((req, res) =>
+        apiResolver(
+          req,
+          res,
+          {id: '1'},
+          get(endpointConfig),
+          apiPreviewPropsMock,
+          true,
+          legacyApiMiddleware
+        )
+      );
+
+      const response = await request.agent(server).get('/my-api-route').send();
+
+      expect(response.status).toEqual(500);
+      expect(response.body).toEqual({
+        status: 500,
+        error: 'Fetch error occurred',
+        success: false,
+      });
+    });
+
+    it('should return unhandled response error', async () => {
+      (nodeFetch as any).mockResolvedValueOnce({
+        status: 404,
+        json: () => Promise.resolve({}),
+      });
+
+      const server = http.createServer((req, res) =>
+        apiResolver(
+          req,
+          res,
+          {id: '1'},
+          get(endpointConfig),
+          apiPreviewPropsMock,
+          true,
+          legacyApiMiddleware
+        )
+      );
+
+      const response = await request.agent(server).get('/my-api-route').send();
+
+      expect(response.status).toEqual(500);
+      expect(response.body).toEqual({
+        status: 500,
+        error: 'Unhandled response with code 404',
+        success: false,
+      });
+    });
+  });
+});

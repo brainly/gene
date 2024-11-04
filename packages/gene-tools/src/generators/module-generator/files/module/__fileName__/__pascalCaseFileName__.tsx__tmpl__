@@ -1,0 +1,45 @@
+import * as React from 'react';
+import {useRef} from 'react';
+import {createGeneModule} from '@brainly/gene';
+
+export function useInit() {
+  const ref = useRef(null);
+
+  const useMediators = () => {
+    // include here all mediators invocations
+    // e.g. useMyFeatureMediators()
+  }
+
+  return {
+    ref,
+    useMediators
+  };
+}
+
+function Raw<%= pascalCaseFileName %>() {
+  const {ref, useMediators} = useInit();
+
+  useMediators();
+
+  return <div ref={ref} data-testid="<%= dataTestId %>">Hello World!</div>;
+}
+
+const {
+  declarations,
+  identifiers,
+  module: <%= pascalCaseFileName %>,
+  container,
+} = createGeneModule({
+  module: Raw<%= pascalCaseFileName %>,
+  <% if (errorBoundary) { %>
+  declarations: {
+    errorBoundary: {
+      boundaryName: '<%= errorBoundary %>'
+    }
+  },
+  <% } else { %>
+  declarations: {},
+  <% } %>
+});
+
+export {<%= pascalCaseFileName %>, declarations, identifiers, container};

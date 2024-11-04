@@ -1,0 +1,44 @@
+---
+title: Default Data Transformer
+---
+
+# Default Data Transformer
+
+## Purpose
+
+For frequently used services (e.g., user data services, question-related services), a default data transformer provides a convenient utility to transform raw service data that modules frequently use. This transformer does not need to handle all data returned by the service—only the most common cases.
+
+Providing a default transformer is optional.
+
+## Motivation
+
+The default transformer should be a separate library for the following reasons:
+
+- **Separation of concerns**: It keeps data fetching (getting raw data from the service) separate from data transformation, aligning with the Gene pattern.
+- **Distinct data types**: Allows clear distinctions between raw and transformed data types.
+- **Avoids premature transformation**: Ensures that services do not return pre-transformed data.
+- **Flexible transformation**: Different use cases may require unique transformations, so the transformer offers a common, convenient approach without enforcing a specific transformation style.
+
+## Example
+
+```typescript showLineNumbers {2-5,11-14}
+import {useExampleData} from '@acme/example/services/example-data-service';
+import {
+  transformExampleData,
+  ExampleDataType,
+} from '@acme/example/services/example-data-service-default-transformer';
+...
+
+export const useExampleFeature = ({ref}: PropsType) => {
+  ...
+  const {data} = useExampleData();
+  const exampleData = React.useMemo(
+    () => transformExampleData(data),
+    [data]
+  );
+  ...
+  return {
+    ...
+  }
+}
+```

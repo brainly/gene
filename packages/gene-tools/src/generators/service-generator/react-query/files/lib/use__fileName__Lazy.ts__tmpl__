@@ -1,0 +1,15 @@
+import {queryFn, <%= fileName %>DataTypeAPI, queryKey, VariablesType} from './queries';
+import {
+  useInjectedReactQueryClient,
+  useReactQueryLazy,
+} from '@brainly/gene';
+
+export function use<%= fileName %>Lazy() {
+  const queryClient = useInjectedReactQueryClient();
+
+  return useReactQueryLazy<<%= fileName %>DataTypeAPI, VariablesType>({
+    reactQueryClient: queryClient,
+    queryFn: (_client, variables) => queryFn(variables),
+    queryKey,
+  })
+}

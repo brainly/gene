@@ -1,0 +1,29 @@
+const {
+  addCucumberPreprocessorPlugin,
+} = require('@badeball/cypress-cucumber-preprocessor');
+const {
+  preprocessor,
+} = require('@badeball/cypress-cucumber-preprocessor/browserify');
+
+module.exports = async (on, config) => {
+  await addCucumberPreprocessorPlugin(on, config);
+
+  on(
+    'file:preprocessor',
+    preprocessor(config, {
+      typescript: require.resolve('typescript'),
+    })
+  );
+
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.name === 'chrome') {
+      launchOptions.args.push('--disable-dev-shm-usage');
+      launchOptions.args.push('--no-sandbox');
+      launchOptions.args.push('--disable-site-isolation-trials');
+      launchOptions.args.push('--mute-audio');
+      return launchOptions;
+    }
+  });
+
+  return config;
+};

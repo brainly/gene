@@ -1,0 +1,1 @@
+export {InvalidModule} from './InvalidModule';

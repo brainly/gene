@@ -1,0 +1,74 @@
+---
+title: Event Delegation and Mediation
+---
+
+import Image from 'next/image'
+import Link from 'next/link'
+
+# Event Delegation and Mediation
+
+All components in the Gene framework dispatch events for handling by application-level mediators. To facilitate this, we use **event delegation**, where all mediated component events must be both **bubbling** and **cancelable**. 
+
+## Example
+
+Consider a basic `Button` component:
+
+```jsx
+export function MyButton({ text }) {
+  return <button onClick={() => {}}>{text}</button>
+}
+```
+
+Typically, you might handle a click event by passing a custom `onClick` prop with a callback. However, in Gene, you should instead dispatch the click event with both `cancelable` and `bubbles` set to `true`. The application mediator will then capture and cancel the event. 
+
+> **Important:** Mediators always cancel delegated events to prevent unintended cross-event interactions.
+
+This approach helps avoid prop drilling between nested components and keeps application logic and dependencies out of reusable components.
+
+## Dispatching Events in Gene
+
+Gene provides a `dispatch` method to handle proper event delegation:
+
+```jsx
+import { dispatch } from '@brainly/gene'
+
+export function MyButton({ text }) {
+  const handleClick = React.useCallback((e) => {
+    dispatch(e.target, ['onMyButtonClicked']);
+  }, []);
+
+  return <button onClick={handleClick}>{text}</button>
+}
+```
+
+With this setup, the `onMyButtonClicked` event is dispatched on a button click. You can handle this event using the native `element.addEventListener('onMyButtonClicked')` method. However, in React, you'll need to remember to remove listeners on component unmounting and to stop propagation according to the event delegation pattern.
+
+## Using `useMediator` in Gene
+
+To simplify event handling, Gene provides a `useMediator` hook, which manages event handling and cleanup in React.
+
+### Example Usage
+
+```jsx
+import { useMediator } from '@brainly/gene'
+import { useRef } from 'react'
+
+function MyApp() {
+  const ref = useRef()
+
+  useMediator(
+    'onMyButtonClicked',
+    () => console.log('button clicked!'),
+    ref
+  );
+
+  return (
+    <div ref={ref}>
+      My App Layout...
+      <MyButton text="Click me!" />
+    </div>
+  )
+}
+```
+
+In this example, `useMediator` listens for the `onMyButtonClicked` event within the specified `ref` context and logs a message when the button is clicked. This hook handles setup and teardown of listeners automatically, ensuring a consistent event delegation pattern and easing the development experience in React.

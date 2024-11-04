@@ -1,0 +1,3 @@
+
+This an Apollo service - <%= name %>
+Learn how to use this service in a module [here](https://brainly.github.io/gene/services/apollo#usage-in-module)

@@ -1,0 +1,22 @@
+import {z} from 'zod';
+import {stringSchema, withBFFResponseSchema} from '@<%= npmScope %>/swagger/api';
+
+export const endpointHandlerPostInputBodySchema = z
+  .object({
+    someValue: stringSchema({description: 'Some request field, optional.'}),
+  })
+  .openapi('PostEndpointRequest');
+
+export type EndpointHandlerPostInputBody = Readonly<
+  z.infer<typeof endpointHandlerPostInputBodySchema>
+>;
+
+export const endpointHandlerPostResultBodySchema = withBFFResponseSchema(
+  z.object({
+    id: z.number(),
+    someResultValue: z.number(),
+  })
+);
+export type EndpointHandlerPostResultBody = Readonly<
+  z.infer<typeof endpointHandlerPostResultBodySchema>
+>;

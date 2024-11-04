@@ -1,0 +1,123 @@
+---
+title: Contexts
+---
+
+# Contexts
+
+To communicate between modules Gene uses two patterns, one is AppContext - where we keep common state,
+and another is [Event Bus](/gene/eventBus), which allows us for event based communication.
+
+The app context communication bases on app state changes. As the state may be used by many modules, when it changes,
+the context is updated and all modules that are using this context are re-rendered.
+
+## What is app context for?
+- holding common state that is used by multiple modules
+- holding dynamic data that cannot be fetched from API (e.g. user settings) and needs to be shared between modules
+- communication between modules (via some state property)
+
+## What is app context **not** for?
+- holding raw or transformed data fetched from API with the intention of being shared between modules
+(in this case each module should call the service and transform the data on its own)
+- holding _feature flag_-like data
+- holding data that cannot be easily serialized/deserialized (e.g. functions)
+
+
+If you want to use context in your module we are recommending usage of `makeStore` pattern by creating contexts with `makeStore` helper.
+Example context:
+
+```tsx
+import {makeStore} from '@brainly/gene';
+
+export enum Actions {
+  UPDATE_HELLO,
+  RESET_HELLO,
+}
+
+type StateType = {
+  hello: string;
+};
+
+type ActionType = {
+  type: Actions;
+  value: string;
+};
+
+const initialState = {
+  hello: 'world',
+};
+
+function reducer(state: StateType, action: ActionType) {
+  switch (action.type) {
+    case Actions.UPDATE_HELLO:
+      return {
+        ...state,
+        hello: action.value,
+      };
+    case Actions.RESET_HELLO:
+      return {
+        ...state,
+        hello: 'world',
+      };
+    default:
+      return state;
+  }
+}
+
+const [StoreProvider, useDispatch, useStore] = makeStore<StateType, ActionType>(
+  initialState,
+  reducer
+);
+
+export {StoreProvider, useStore, useDispatch};
+```
+
+## Add context provider
+
+To be able to use context on module level, you need to wrap your module with provider. To do that you can use module manifest file and define
+all providers for modules:
+
+```jsx
+import {createGeneModule} from '@brainly/gene';
+import {StoreProvider, AnotherStoreProvider} from './contexts';
+import {MyModule as RawMyModule} from './MyModule';
+
+const {declarations, module: MyModule} = createGeneModule({
+  module: RawMyModule,
+  declarations: {
+    contextProviders: [StoreProvider, AnotherStoreProvider],
+  },
+});
+
+export {MyModule, declarations};
+```
+
+with that you will be able to use context on module level, i.e:
+
+```jsx
+function MyModule() {
+  const store = useStore()
+  const anotherStore = useAnotherStore()
+  ...
+  return (
+    <div>
+      ...
+    </div>
+  )
+}
+```
+
+Contexts will be rendered in the same order as in definition, so if definiton is:
+
+```jsx
+contextProviders: [StoreProvider, AnotherStoreProvider];
+```
+
+then contexts will be render:
+
+```jsx
+<StoreProvider>
+  <AnotherStoreProvider>
+    <MyModule />
+  </AnotherStoreProvider>
+</StoreProvider>
+```

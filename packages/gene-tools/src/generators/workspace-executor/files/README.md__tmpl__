@@ -1,0 +1,60 @@
+# <%= name %>
+
+Add a meaningful description for the executor.
+
+## Usage
+
+In the project configuration, add a target that uses the `<%= name %>` executor. For example:
+
+```json
+{
+  //...
+  "projects": {
+    "app1": {
+      //...
+      "targets": {
+        "build": {
+          // ...
+        },
+        "lint": {
+          // ...
+        },
+        "serve": {
+          // ...
+        },
+        "target-name": {
+          "executor": "./tools/executors:<%= name %>",
+          "options": {
+            "textToEcho": "Hello World!"
+          },
+          "configurations": {
+            "production": {
+              "textToEcho": "Hello Production World!"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+With that configured, you can run:
+
+```bash
+yarn nx target-name app1
+```
+
+Or:
+
+```bash
+yarn nx run app1:target-name
+```
+
+## Options
+
+### textToEcho (_**required**_)
+
+Type: `string`
+
+Text to echo.

@@ -1,0 +1,28 @@
+---
+title: Components Core Concept
+---
+
+import Image from 'next/image';
+import Link from 'next/link';
+import EnlargableContent from '@/components/enlargable-content';
+
+# Core Concept
+
+Gene components operate on key principles that enable efficient use of the framework's full capabilities. A clear understanding of the separation between application-layer concerns and component concerns is essential.
+
+- **Components are fully decoupled.**
+- **Components communicate with the application only through dispatched events.**
+- **The application communicates with components only through props.**
+
+This approach ensures each component remains standalone and free of application-specific dependencies. Gene's reliance on events for application communication effectively addresses issues like callback hell and props drilling.
+
+The following diagram illustrates this structure:
+
+<EnlargableContent>
+  <Image
+    src="/gene-components.png"
+    width={1178}
+    height={834}
+    alt="Components diagram"
+  />
+</EnlargableContent>

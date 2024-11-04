@@ -1,0 +1,25 @@
+import {query<%= fileName %>} from './queries';
+import {
+  useInjectedApolloClient,
+  useApolloLazyQuery,
+} from '@brainly/gene-apollo';
+
+/*
+You can possibly import Query types from auto-generated types:
+
+import {
+<%= fileName %>Query,
+<%= fileName %>QueryVariables,
+} from '@brainly/graphql-types';
+*/
+type <%= fileName %>Query = unknown;
+type <%= fileName %>QueryVariables = unknown;
+
+export function use<%= fileName %>Lazy() {
+  const apolloClient = useInjectedApolloClient();
+
+  return useApolloLazyQuery<<%= fileName %>Query, <%= fileName %>QueryVariables>({
+apolloClient,
+     queryFn: query<%= fileName %>
+  })
+}

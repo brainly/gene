@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "properties": {
+    "command": {
+      "type": "string",
+      "description": "Command which indicates if it should serve storybook or build",
+      "default": "start"
+    },
+    "e2e": {
+      "type": "boolean",
+      "description": "Indicates if storybook should be run in background",
+      "default": false
+    }
+  },
+  "required": ["command"],
+  "additionalProperties": false
+}

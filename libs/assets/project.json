@@ -1,0 +1,48 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/assets/src",
+  "projectType": "library",
+  "tags": ["type:utility"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/assets/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/assets"],
+      "options": {
+        "jestConfig": "libs/assets/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "copy-assets-to-app": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{options.projectRoot}/public/nx-images",
+        "{options.projectRoot}/public/nx-fonts",
+        "{options.projectRoot}/public/nx-static"
+      ],
+      "options": {
+        "commands": [
+          "pnpm gene-tools copy-assets-to-app {args.projectName}"
+        ]
+      }
+    },
+    "copy-assets-to-storybook": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{projectRoot}/storybook/assets/nx-images",
+        "{projectRoot}/storybook/assets/nx-fonts",
+        "{projectRoot}/storybook/assets/nx-static"
+      ],
+      "options": {
+        "command": "pnpm gene-tools prepare-storybook-root-assets --includeBrainlyStyleGuide && pnpm gene-tools copy-assets-to-storybook"
+      }
+    }
+  },
+  "name": "assets"
+}

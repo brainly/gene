@@ -1,0 +1,313 @@
+---
+title: Gene Module Documentation
+---
+
+import Image from 'next/image';
+
+# Introduction
+
+You can think of Gene modules as standalone entities that can live alone, but need to be powered by some configs. In Gene, you can power your modules with dependency injections.
+
+As you know, Gene consists of 3 main layers: Components, Services, and **Modules**.
+
+You can treat a module as a layer to glue all those entities together, adjust/transform data, and render component compositions.
+
+  ```mermaid
+  
+  flowchart BT
+    Modules
+
+    Services --> Modules
+    Components --> Modules
+
+    Utils --> Components
+    Utils --> Modules
+    Types
+    Others[...]
+    Others --> Services
+    Others --> Components
+  ```
+
+Diagram shows that Module is kind of end layer. So modules are fully working features. You can imagine modules like `AuthenticationModule`, `AdsModule`, `CommentsModule`, `UserDataModule` etc...
+
+In horizontal micro-frontend architecture you can treat modules like small pieces of the app:
+
+  ```mermaid
+  
+  flowchart TD
+    subgraph App
+      direction RL
+        HeaderModule
+      subgraph Main
+        subgraph Content
+          direction RL
+          ContentModule
+          AdModule
+          CommentsModule
+        end
+        subgraph Aside
+          UserModule
+          PollModule
+        end
+
+      end
+        FooterModule
+    end
+  ```
+
+## Module Patterns
+
+Gene modules are designed using a set of established software engineering patterns used in fullstack development environment that help to structure the code in a way that is easy to maintain and extend.
+
+### Builder Pattern
+
+The Builder Pattern in Gene organizes the construction of modules in a step-by-step manner,
+separating the construction process from the rendering process.
+This enhances the maintainability, automation, and readability of the code.
+
+  ```mermaid
+  
+  flowchart TD
+    1["Obtaining server data"]
+    2["Transform server data"]
+    3["Handling side effects"]
+    4["Rendering UI"]
+    1 --> 2
+    2 --> 3
+    3 --> 4
+
+  ```
+
+
+```tsx filename="SimpleModule.tsx" {2,3,13,16}
+const useInit = () => {
+  // Obtaining server data
+  // Transform server data
+
+  return {
+    // ...
+  };
+}
+
+const SimpleModule = () => {
+  const { ... } = useInit();
+
+  // Handling side effects
+
+  return (
+    // Rendering UI
+  );
+};
+```
+
+
+### Custom Hooks + Composition Patterns
+
+The Custom Hooks Pattern in Gene facilitates logical separation within modules by splitting the logic related to particular features into custom hooks. This allows for improving encapsulation and testing. Then, the Composition Pattern allows for the assembling of the modules using already created custom hooks.
+
+The examples below represent the approach without custom hooks. The module displays 2 components: Foo and Bar. In the first example, all the logic is placed in the main module file. In the second example, the logic is split into two custom hooks.
+
+#### Module flow without custom hooks
+
+
+
+  ```mermaid
+  
+  flowchart TD
+    subgraph id["Module flow"]
+    1["Obtaining server data for Foo and Bar feature"]
+    2["Transform server data for Foo and Bar feature"]
+    3["Handling side effects for Foo and Bar feature"]
+    4["Rendering UI for Foo and Bar feature"]
+    1 --> 2
+    2 --> 3
+    3 --> 4
+    end
+
+  ```
+
+```tsx filename="SimpleModule.tsx" {2,3,13,16}
+const useInit = () => {
+  // Obtaining server data for Foo and Bar feature
+  // Transform server data for Foo and Bar feature
+
+  return {
+    // ...
+  };
+}
+
+const SimpleModule = () => {
+  const { ... } = useInit();
+
+  // Handling side effects for Foo and Bar feature
+
+  return (
+    // Rendering UI for Foo and Bar feature
+  );
+};
+```
+
+#### Module flow with custom hooks
+
+
+  ```mermaid
+  
+  flowchart TD
+    subgraph id["Module flow"]
+        subgraph useFoo
+            foo1["Obtaining server data for Foo feature"]
+            foo2["Transform server data for Foo feature"]
+        end
+        subgraph useBar
+            bar1["Obtaining server data for Bar feature"]
+            bar2["Transform server data for Bar feature"]
+        end
+        3["Handling side effects for Foo and Bar feature"]
+        4["Rendering UI for Foo and Bar feature"]
+        foo1 --> foo2
+        bar1 --> bar2
+        foo2 --> 3
+        bar2 --> 3
+        3 --> 4
+    end
+
+  ```
+
+
+```tsx filename="SimpleModule.tsx" {1,2,5,6,16,19}
+import { useFoo } from './hooks/useFoo';
+import { useBar } from './hooks/useBar';
+
+const useInit = () => {
+  const { ... } = useFoo();
+  const { ... } = useBar();
+
+  return {
+    // ...
+  };
+}
+
+const SimpleModule = () => {
+  const { ... } = useInit();
+
+  // Handling side effects for Foo and Bar feature
+
+  return (
+    // Rendering UI for Foo and Bar feature
+  );
+};
+```
+
+### Dependency Injection
+
+Dependency Injection in Gene enables modules to be independent of their application
+context. This design choice promotes reusability and flexibility in various applications.
+
+
+  ```mermaid
+  
+  flowchart LR
+    Original(Module) --> DI
+    subgraph DIContainer
+      DI(Module)
+    end
+  ```
+
+
+
+```tsx filename="SimpleModule.tsx" {8,9,10,12,13,14}
+import { useInjection } from '@brainly/gene';
+import {
+  ROUTER_SERVICE_IDENTIFIER,
+  RouterIocType,
+} from '@brainly/gene';
+
+const useInit = () => {
+  const {navigate} = useInjection<RouterIocType>(
+    ROUTER_SERVICE_IDENTIFIER
+  )();
+
+  const handleNavigateToQuestionPage = () => {
+    navigate('/question/123');
+  };
+
+  // ...
+}
+
+const SimpleModule = () => {
+  const { ... } = useInit();
+
+  // ...
+
+  return (
+    // ...
+  );
+};
+```
+
+
+### Inheritance
+
+Inheritance in Gene module design aids in quickly creating new modules by reusing existing ones. This approach is mostly used in experiments that modify existing modules in a limited way.
+
+## Anatomy of the module
+
+Module code should be structured according to the patterns used by Gene. Additionally, Gene module code is integrated with a dependency injection container using the **Gene Declaration**. The exact implementation may vary depending on the framework being used, but there are general guidelines that should be followed. Here is the general structure of the example Gene module code:
+
+### Module directory
+The main directory of the module, containing all the module's files. It may vary depending on the technology used. For example, for [NX](https://nx.dev/), it should be the root source directory for the module library. Once the module is initially created, it should have the following structure:
+
+```
+<module-directory>
+├── index.ts
+└── SimpleModule.tsx
+```
+
+### SimpleModule.tsx
+The main file of the module, containing the module's logic, rendering, and Gene declaration. Gene module code should separate the module's logic from the rendering. The logic should be placed inside the function scoped to 
+the `init` name (e.g., `useInit` hook for React), while rendering (e.g., JSX for React) should be placed in the actual module's code.
+
+The module file should then be wrapped with a Gene declaration, which is a function that returns the module wrapped in a dependency injection container and its declarations.
+
+```tsx filename="SimpleModule.tsx"
+const useInit = () => {
+  // All code related to the module logic
+}
+
+const RawSimpleModule = () => {
+  const { ... } = useInit();
+
+  // Code related to the module rendering and side effects
+
+  return (
+    // All code related to the module rendering
+  );
+};
+const {declarations, module: SimpleModule} = createGeneModule({
+  module: RawSimpleModule,
+  declarations: {},
+});
+
+export {SimpleModule, declarations};
+```
+
+### index.ts
+
+This file exports all the necessary elements of the module. It should contain all the public interfaces and functions of the module.
+
+
+``` js filename="index.ts"
+export {SimpleModule} from './SimpleModule';
+```
+
+**Gene modules should only export the necessary elements, such as the module itself (which is always allowed) and declarations (in certain branching cases, as explained in the *Branching* section). All other elements should be kept private.**
+
+## Further reading
+
+To gain a proper understanding of Gene modules, it is recommended to follow the guides in the following order:
+
+1. [Development](/gene/modules/development)
+2. [Custom Hooks](/gene/modules/custom-hooks)
+3. [Branching](/gene/modules/branching)
+4. [Dependencies](/gene/modules/dependencies)
+5. Remaining guides

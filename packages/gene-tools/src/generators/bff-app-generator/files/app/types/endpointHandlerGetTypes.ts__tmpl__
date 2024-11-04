@@ -1,0 +1,25 @@
+import {z} from 'zod';
+import {
+  nonEmptyStringSchema,
+  stringSchema,
+  withBFFResponseSchema,
+} from '@<%= npmScope %>/swagger/api';
+
+export const endpointHandlerGetInputQuerySchema = z.object({
+  id: stringSchema(),
+});
+export type EndpointHandlerGetInputQuery = Readonly<
+  z.infer<typeof endpointHandlerGetInputQuerySchema>
+>;
+
+export const endpointHandlerGetResultBodySchema = withBFFResponseSchema(
+  z.object({
+    user: z.number(),
+    id: z.number(),
+    title: nonEmptyStringSchema(),
+    completed: nonEmptyStringSchema(),
+  })
+);
+export type EndpointHandlerGetResultBody = Readonly<
+  z.infer<typeof endpointHandlerGetResultBodySchema>
+>;

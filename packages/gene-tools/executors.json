@@ -1,0 +1,39 @@
+{
+  "executors": {
+    "secure-serve": {
+      "implementation": "./src/executors/secure-serve/secure-serve",
+      "schema": "./src/executors/secure-serve/schema.json",
+      "description": "Serves a Next.js app securely by setting a proxy in front of the app."
+    },
+    "e2e-with-serve": {
+      "implementation": "./src/executors/e2e-with-serve/e2e-with-serve",
+      "schema": "./src/executors/e2e-with-serve/schema.json",
+      "description": "Serves a Next.js app securely by setting a proxy in front of the app and then runs Cypress tests."
+    },
+    "storybook": {
+      "implementation": "./src/executors/storybook/storybook",
+      "schema": "./src/executors/storybook/schema.json",
+      "description": "Run storybook with NODE_OPTIONS=--openssl-legacy-provider to support webpack4 openssl provider"
+    },
+    "copy-assets-to-app": {
+      "implementation": "./src/executors/copy-assets-to-app/copy-assets-to-app",
+      "schema": "./src/executors/copy-assets-to-app/schema.json",
+      "description": "Copies assets from assets library to selected app (based on context)"
+    },
+    "copy-assets-to-storybook": {
+      "implementation": "./src/executors/copy-assets-to-storybook/copy-assets-to-storybook",
+      "schema": "./src/executors/copy-assets-to-storybook/schema.json",
+      "description": "Copies assets from assets library to storybook"
+    },
+    "copy-translations-to-app": {
+      "implementation": "./src/executors/copy-translations-to-app/copy-translations-to-app",
+      "schema": "./src/executors/copy-translations-to-app/schema.json",
+      "description": "Copies translations from translations library to selected app (based on context)"
+    },
+    "copy-translations-to-storybook": {
+      "implementation": "./src/executors/copy-translations-to-storybook/copy-translations-to-storybook",
+      "schema": "./src/executors/copy-translations-to-storybook/schema.json",
+      "description": "Copies translations from translations library to storybook"
+    }
+  }
+}

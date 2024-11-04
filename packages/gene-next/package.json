@@ -1,0 +1,12 @@
+{
+  "name": "@brainly/gene-next",
+  "version": "0.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "restricted",
+    "@brainly:registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "@next/bundle-analyzer": "12.3.4"
+  }
+}

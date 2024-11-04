@@ -1,0 +1,26 @@
+{
+  "name": "@brainly/gene-tools",
+  "version": "0.0.1",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "restricted",
+    "@brainly:registry": "https://npm.pkg.github.com/"
+  },
+  "bin": {
+    "create-gene-workspace": "./bin/create-gene-workspace.js"
+  },
+  "typings": "./src/index.d.ts",
+  "exports": {
+    "./generators": "./src/generators/index.js",
+    "./package.json": "./package.json",
+    "./executors.json": "./executors.json",
+    "./generators.json": "./generators.json",
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@angular-devkit/core": "11.2.0",
+    "@angular-devkit/schematics": "11.2.0"
+  }
+}

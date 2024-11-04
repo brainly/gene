@@ -1,0 +1,6 @@
+Feature: <%= camelCaseFileName %>
+# E2E test in BFF https://brainly.atlassian.net/browse/FRINFRA-3061
+  @skip
+  Scenario: <%= camelCaseFileName %> page
+    Given I visit <%= camelCaseFileName %> page
+    Then I see <%= camelCaseFileName %> page is displayed

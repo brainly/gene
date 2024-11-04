@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "nextjs-app-generator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Application name",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the application name?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the application is placed",
+      "x-prompt": "What is the application directory?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the application (used for linting)",
+      "x-prompt": "What are tags of the application?"
+    },
+    "rewrites": {
+      "type": "boolean",
+      "description": "This will add config/rewrites.json",
+      "x-prompt": "Should the application routes be translated?"
+    },
+    "apollo": {
+      "type": "boolean",
+      "default": false,
+      "description": "Should include apollo client config",
+      "x-prompt": "Should include apollo client config?"
+    },
+    "reactQuery": {
+      "type": "boolean",
+      "default": true,
+      "description": "Should include react query config",
+      "x-prompt": "Should include react query config?"
+    },
+    "e2e": {
+      "type": "boolean",
+      "description": "Should include e2e config",
+      "x-prompt": "Should include e2e config?",
+      "default": true
+    }
+  },
+  "required": ["name"]
+}

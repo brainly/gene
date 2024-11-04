@@ -1,0 +1,7 @@
+{
+  "index": "Core concept",
+  "apollo": "Apollo Services",
+  "react-query": "React Query Services",
+  "fetchOnDemand": "Fetch on demand",
+  "default-transformer": "Default data transformer"
+}

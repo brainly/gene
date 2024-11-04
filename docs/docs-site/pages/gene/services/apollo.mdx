@@ -1,0 +1,184 @@
+---
+title: Apollo Service
+---
+
+import { Callout } from 'nextra-theme-docs';
+
+# Creating Apollo Client Service
+
+## Generator
+
+[Generator code](https://github.com/brainly/gene/blob/master/packages/gene-tools/src/generators/service-generator/README.md)
+
+```bash
+nx generate @brainly/gene-tools:service --name=myData --directory=my-feature/services --serviceType=apollo
+```
+
+Running the command above will generate the following structure:
+
+```
+CREATE libs/my-feature/services/myData-service/README.md
+CREATE libs/my-feature/services/myData-service/.babelrc
+CREATE libs/my-feature/services/myData-service/src/index.ts
+CREATE libs/my-feature/services/myData-service/tsconfig.json
+CREATE libs/my-feature/services/myData-service/tsconfig.lib.json
+UPDATE tsconfig.base.json
+UPDATE nx.json
+CREATE libs/my-feature/services/myData-service/.eslintrc.json
+CREATE libs/my-feature/services/myData-service/jest.config.js
+CREATE libs/my-feature/services/myData-service/tsconfig.spec.json
+CREATE libs/my-feature/services/myData-service/src/lib/queries.ts
+CREATE libs/my-feature/services/myData-service/src/lib/useMyData.ts
+CREATE libs/my-feature/services/myData-service/src/lib/useMyDataStatic.ts
+```
+
+The generator creates an Apollo service in the specified directory and updates necessary NX configuration files. With the boilerplate generated, you only need to write your query in the `queries.ts` file:
+
+```tsx
+export const myDataQuery = gql`
+  query myData {
+    # Write your query here
+  }
+`;
+```
+
+## Usage in a Module
+
+```tsx
+import { useMyData } from '@acme/my-feature/services/myData';
+
+function MyModule() {
+  const { data, loading, error } = useMyData();
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <MyErrorUi message={error} />;
+  }
+
+  return <MyUIComponent data={data} />;
+}
+```
+
+## SSR Hydration
+
+### Next.js
+
+To support server-side rendering (SSR) and client hydration, run the query on the server in `getServerSideProps`, dehydrate the client state, and hydrate the client instance.
+
+Example page with SSR:
+
+```tsx filename=pages/example.tsx
+import { compose } from 'ramda';
+import { getRequestHeaders } from '@brainly/gene-next';
+import { getHomePageContainer } from '../ioc/getHomePageIoc';
+import { GetServerSideProps } from 'next/types';
+
+import { withIoc } from '@brainly/gene';
+import { apolloFactory } from '@brainly/gene-apollo';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { queryMyTest } from '@acme/services/my-test-service';
+
+function HomePage() {
+  return <div>Hello ExamplePage!</div>;
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const apolloClient = apolloFactory(
+    () =>
+      new ApolloClient({
+        uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URL,
+        cache: new InMemoryCache(),
+      })
+  );
+  const apolloClientInstance = apolloClient.getClient();
+
+  const reqHeaders = getRequestHeaders(req);
+
+  // Invoke service queries here:
+  await queryMyTest(apolloClientInstance);
+
+  // End of queries invokes
+
+  return {
+    props: {
+      dehydratedApolloClient: apolloClient.dehydrate(),
+      reqHeaders,
+    },
+  };
+};
+
+export default compose(withIoc(getHomePageContainer))(HomePage);
+```
+
+Bind the Apollo client in the IOC container:
+
+```tsx filename=/ioc/getHomePageIoc.ts
+export function getHomePageContainer(props?: HomePagePropsType) {
+  const baseContainer = getBaseContainer();
+
+  const apolloClient = baseContainer.get<ApolloClientType>('apolloClient');
+  apolloClient.hydrate(props?.dehydratedApolloClient);
+
+  const clients = {
+    [ServiceTypes.apollo]: () => {
+      return apolloClient.getClient();
+    },
+  };
+
+  const container = new Container();
+  container.parent = baseContainer;
+
+  container.bind<Factory>('serviceFactory').toFunction(factory(clients));
+
+  return container;
+}
+```
+
+Then in your service, you can use the injected Apollo client:
+
+```tsx my-test-service/src/lib/useMyTest.ts
+export function useMyTest({ variables }: { variables: MyTestQueryVariables }) {
+  const apolloClient = useInjectedApolloClient();
+  const result = useQuery<MyTestQuery, MyTestQueryVariables>(myTestQuery, {
+    client: apolloClient,
+    variables,
+  });
+
+  return transformApolloResponse(result);
+}
+```
+
+No additional query configuration is needed.
+
+<Callout emoji="⚠️">
+  Ensure that the query and variables passed to `queryFn` are identical on both
+  the server and client. Cache keys rely on these elements, and discrepancies
+  between server and client will prevent hydration, causing the query to be
+  re-executed.
+</Callout>
+
+## Pagination
+
+To implement pagination, use the `fetchMore` function from the service API:
+
+```tsx
+function MyModule() {
+  const { data, loading, error, fetchMore } = useMyDataService();
+  const ref = useRef();
+
+  useMediator('onNextPageButtonClick', () => fetchMore(), ref);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <MyErrorUi message={error} />;
+  }
+
+  return <MyUIComponent data={data} />;
+}
+```

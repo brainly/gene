@@ -1,0 +1,5 @@
+Feature: <%= pascalCaseFileName %>
+
+  Scenario: Display <%= pascalCaseFileName %>
+    Given I visit <%= pascalCaseFileName %> storybook
+    Then I see <%= pascalCaseFileName %> is displayed

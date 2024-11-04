@@ -1,0 +1,122 @@
+import {apiHandlerConnect} from '@brainly/gene-next';
+import {legacyApiMiddleware} from '@<%= npmScope %>/middlewares';
+import cors from 'cors';
+
+import {RouteConfig} from '@asteasolutions/zod-to-openapi';
+import {defaultResponses} from '@<%= npmScope %>/swagger/api';
+import {getConfig} from '../../../config/envVars';
+import {NextApiRequest, NextApiResponse} from 'next';
+import {
+  EndpointConfig,
+  handleGetEndpointHandler,
+  handlePostEndpointHandler,
+} from '@<%= npmScope %>/examples/api-handler';
+import {
+  endpointHandlerPostInputBodySchema,
+  EndpointHandlerPostResultBody,
+  endpointHandlerPostResultBodySchema,
+} from '../../../types/endpointHandlerPostTypes';
+import {
+  endpointHandlerGetInputQuerySchema,
+  EndpointHandlerGetResultBody,
+  endpointHandlerGetResultBodySchema,
+} from '../../../types/endpointHandlerGetTypes';
+import {
+  parseRequestBody,
+  parseRequestQuery,
+  ValidationError,
+} from '@<%= npmScope %>/bff-sdk';
+
+const envConfig = getConfig();
+
+export default apiHandlerConnect()
+  .use(legacyApiMiddleware)
+  .use(
+    cors({
+      credentials: true,
+    })
+  )
+  .get(
+    newGetEndpointHandler({
+      apiUrl: envConfig.API_PLACEHOLDER_URL,
+    })
+  )
+  .post(
+    newPostEndpointHandler({
+      apiUrl: envConfig.API_PLACEHOLDER_URL,
+    })
+  );
+
+export function newPostEndpointHandler(config: EndpointConfig) {
+  return async function postEndpointHandler(
+    req: NextApiRequest,
+    res: NextApiResponse<EndpointHandlerPostResultBody>
+  ) {
+    try {
+      const {someValue} = parseRequestBody(
+        endpointHandlerPostInputBodySchema,
+        req
+      );
+      const response = await handlePostEndpointHandler(config, {someValue});
+
+      return res.status(response.status).json(response);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return res.status(400).json({error: error.message});
+      } else {
+        return res.status(500).json({error: error.message});
+      }
+    }
+  };
+}
+
+export function newGetEndpointHandler(config: EndpointConfig) {
+  return async function getEndpointHandler(
+    req: NextApiRequest,
+    res: NextApiResponse<EndpointHandlerGetResultBody>
+  ) {
+    try {
+      const {id} = parseRequestQuery(endpointHandlerGetInputQuerySchema, req);
+      const response = await handleGetEndpointHandler(config, {id});
+      return res.status(response.status).json(response);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return res.status(400).json({error: error.message});
+      } else {
+        return res.status(500).json({error: error.message});
+      }
+    }
+  };
+}
+
+export const openapiGetEndpointRouteConfig: RouteConfig = {
+  path: '/v1/endpoint',
+  method: 'get',
+  request: {
+    query: endpointHandlerGetInputQuerySchema,
+  },
+  responses: {
+    200: defaultResponses[200](endpointHandlerGetResultBodySchema),
+    400: defaultResponses[400],
+    500: defaultResponses[500],
+  },
+};
+
+export const openapiPostEndpointRouteConfig: RouteConfig = {
+  path: '/v1/endpoint',
+  method: 'post',
+  request: {
+    body: {
+      content: {
+        'application/json': {
+          schema: endpointHandlerPostInputBodySchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: defaultResponses[200](endpointHandlerPostResultBodySchema),
+    400: defaultResponses[400],
+    500: defaultResponses[500],
+  },
+};

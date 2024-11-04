@@ -1,0 +1,34 @@
+import {ApolloClient, gql, NormalizedCacheObject} from '@apollo/client';
+
+/*
+You can possibly import Query types from auto-generated types:
+
+import {
+  <%= fileName %>Query,
+  <%= fileName %>QueryVariables,
+} from '@brainly/graphql-types';
+*/
+export type <%= fileName %>Query = unknown;
+export type <%= fileName %>QueryVariables = unknown;
+
+/**
+ * @todo
+ * Remove those comments and write your query here.
+ */
+/* eslint-disable graphql/template-strings */
+/* eslint-disable graphql/named-operations */
+export const <%= lowerCaseFileName %>Query = gql`
+  query <%= fileName %> {
+    # write your query here
+  }
+`;
+
+export async function query<%= fileName %>(
+  client: ApolloClient<NormalizedCacheObject>,
+  variables?: <%= fileName %>QueryVariables
+) {
+  return client.query<<%= fileName %>Query, <%= fileName %>QueryVariables>({
+    query: <%= lowerCaseFileName %>Query,
+    variables: variables,
+  });
+}

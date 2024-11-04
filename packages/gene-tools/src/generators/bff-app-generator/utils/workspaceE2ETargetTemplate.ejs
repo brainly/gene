@@ -1,0 +1,20 @@
+{
+  "e2e": {
+    "executor": "@brainly/gene-tools:e2e-with-serve",
+    "options": {
+      "e2eTests": ["<%= projectName %>-e2e:e2e-base"],
+      "serve": "<%= projectName %>:serve-base"
+    },
+    "configurations": {
+      "production": {
+        "serveTarget": "<%= projectName %>:serve-base:production"
+      }
+    }
+  },
+  "e2e-base": {
+    "executor": "@nrwl/cypress:cypress",
+    "options": {
+      "cypressConfig": "apps/<%= projectPath %>-e2e/cypress.config.ts"
+    }
+  }
+}

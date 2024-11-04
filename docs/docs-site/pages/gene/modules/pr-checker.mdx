@@ -1,0 +1,190 @@
+---
+title: Modules Pull Request Checker
+---
+
+import Image from 'next/image';
+import { Callout } from 'nextra-theme-docs';
+
+# Modules Pull Request Checker (WIP)
+
+Gene is a tool that helps to maintain the quality of the modules in your codebase. It is a GitHub bot that checks the pull requests for the modules and validates them against the rules defined in the Gene Checker Config (the last section). The rules are defined in the Gene Checker Config file, which is a YAML file that should be placed in the root of the module directory. Rules essential from Gene's perspective are not configurable, but some of them can be turned off in the config file.
+
+<Callout type="warning" emoji="⚠️">
+  PR Checker is still in development. It is not yet available for use.
+  Though the generators already generate the configuration file, the Github bot is not yet published - stay tuned!
+</Callout>
+
+
+## Rules
+
+### Modules declarations
+
+- **Rule: `use_init_required`**
+  - **Highlight**: Check if `useInit` is in place.
+  - **Description**: Core modules should always have `useInit` hook which can be used to extend the module. It is required only for `core` version of the module.
+  - **Configurable**: No
+
+- **Rule: `memoization`**
+  - **Highlight**: Check usages of memo and callbacks.
+  - **Description**: Gene requires to memo everything, same checks exist for component checker. You can learn more about this pattern [here](https://attardi.org/why-we-memo-all-the-things/).
+  - **Configurable**: Yes, in `gene.config.yaml` file under `memoization`
+
+- **Rule: `no_direct_inversify_import`**
+  - **Highlight**: Check if there is no `imports import {Container} from 'inversify'`
+  - **Description**: These libs shouldn't be imported in module files. `inversify` is a Gene specific not module, direct usage of that is not recommended.
+  - **Configurable**: Yes, in `gene.config.yaml` file under `no_direct_inversify_import` key.
+
+- **Rule: `injection_declarations_coverage`**
+  - **Highlight**: Check if `useInjection` used in `ModuleName.tsx` has default value defined in `declarations`.
+  - **Description**: If module uses `useInjection` it means that module is opened for extension and we can bind something for created spot - that's why in `declarations` we should specify default value for that injection.
+  - **Configurable**: No
+
+### Custom Hooks
+
+- **Rule: `memoization`**
+  - **Highlight**: Check usages of memo and callbacks.
+  - **Description**: As above
+  - **Configurable**: Yes, in `gene.config.yaml` file under `memoization`
+
+- **Rule: `no_direct_inversify_import`**
+  - **Highlight**: Check if there is no `imports import {Container} from 'inversify'`
+  - **Description**: As above
+  - **Configurable**: Yes, in `gene.config.yaml` file under `no_direct_inversify_import` key.
+
+- **Rule: `no_jsx_in_custom_hooks`**
+  - **Highlight**: Check if there is no JSX layout in custom hooks files.
+  - **Description**: Custom hooks shouldn't have JSX, they should be just used to organize logic. Layout should be created in the main Module file.
+  - **Configurable**: Yes, in `gene.config.yaml` file under `no_jsx_in_custom_hooks` key.
+
+- **Rule: `unit_tests_for_custom_hooks_required`**
+  - **Highlight**: Check if there are tests for custom hooks.
+  - **Description**: Custom hooks should have tests, it's a good practice to have tests for every piece of code. This rule is required by default only for Core modules.
+  - **Configurable**: Yes, in `gene.config.yaml` file under `unit_tests_for_custom_hooks_required` key.
+
+### Index files
+
+- **Rule: `no_modules_export_from_core_library`**
+  - **Highlight**: Check if there are no exports of modules from Core modules libraries, only custom hooks and types.
+  - **Description**: Core modules are abstract and should not be exported, only custom hooks and types should be exported.
+  - **Configurable**: Yes, in `gene.config.yaml` file under `no_modules_export_from_core_library` key.
+
+- **Rule: `no_custom_hooks_exports_from_application_library`**
+  - **Highlight**: Check if there are no exports of custom hooks from Applications modules libraries.
+  - **Description**: Application modules should export only modules itself. Custom hooks should be private and not exported.
+  - **Configurable**: No
+
+### Storybook
+
+- **Rule: `storybook_required`**
+  - **Highlight**: Check if there is a storybook file for the module.
+  - **Description**: Storybook is a good place to show how a module works, it's a good practice to have storybook for every module. This rule is required by default only for Core modules.
+  - **Configurable**: Yes, in `gene.config.yaml` file under `storybook_required` key.
+
+## Gene Checker Config
+
+Gene config (`gene.config.yaml`) is a configuration file that allows you to modify certain rules of the checker. It should be used in order to increase ownership level over the modules by certain teams that maintain them. It is generated by default by the module generator and should be placed next to the modules directory. The configuration file is in YAML format and is named gene.config.yaml.
+
+Here is an example of a gene config file:
+
+```yaml
+checker_config:
+  rules:
+    memoization: false
+    no_jsx_in_custom_hooks: true
+    no_direct_inversify_import: true
+    unit_tests_for_custom_hooks_required: false
+    storybook_required: false
+```
+
+### Config file placement
+
+For Core modules, the config file should be placed in the root of the module directory.
+
+```text
+<repository-directory>
+├── libs
+│    └── my-domain
+│        └── modules
+│            └── simple-module
+│                ├── src
+│                │   └── lib
+│                │       └── hooks
+│                │           └── ...
+│                │       └── SimpleModule.tsx
+│                │       └── index.ts
+│                │       └── SimpleModule.stories.tsx
+│                │       └── gene.config.yaml
+│                ├── .storybook
+```
+
+For Application modules, the config file should be placed in the root of the certain module's directory.
+
+```text {12..33}
+<repository-directory>
+├── libs
+│    └── example-application
+│        └── market-a
+│            └── app-modules
+│                ├── src
+│                │   └── lib
+│                │       └── simple-module
+|                │           └── hooks
+|                │               └── ...
+|                │           └── ExampleApplicationMarketASimpleModule.tsx
+│                │           └── ExampleApplicationMarketASimpleModule.stories.tsx
+|                │           └── index.ts
+|                │           └── gene.config.yaml
+│                ├── .storybook
+```
+
+### Default values
+
+Values below will be used every time the checker won't find either an entire `gene.config.yaml` file in the module directory or a specific rule in the file.
+
+#### Application modules
+
+```ts
+const GENE_DEFAULT_APPS_CONFIG = {
+  rules: {
+    [GENE_CONFIG_RULES.MEMOIZATION]: {
+      enabled: false
+    },
+    [GENE_CONFIG_RULES.NO_JSX_IN_CUSTOM_HOOKS]: {
+      enabled: true
+    },
+    [GENE_CONFIG_RULES.NO_DIRECT_INVERSIFY_IMPORT]: {
+      enabled: true
+    },
+    [GENE_CONFIG_RULES.STORYBOOK_REQUIRED]: {
+      enabled: false
+    },
+    [GENE_CONFIG_RULES.UNIT_TESTS_FOR_CUSTOM_HOOKS_REQUIRED]: {
+      enabled: false
+    }
+  }
+}
+```
+
+#### Core modules
+
+```ts
+const GENE_DEFAULT_CORE_CONFIG = {
+  rules: {
+    [GENE_CONFIG_RULES.MEMOIZATION]: {
+      enabled: true
+    },
+    [GENE_CONFIG_RULES.NO_JSX_IN_CUSTOM_HOOKS]: {
+      enabled: true
+    },
+    [GENE_CONFIG_RULES.NO_DIRECT_INVERSIFY_IMPORT]: {
+      enabled: true
+    },
+    [GENE_CONFIG_RULES.STORYBOOK_REQUIRED]: {
+      enabled: true
+    },
+    [GENE_CONFIG_RULES.UNIT_TESTS_FOR_CUSTOM_HOOKS_REQUIRED]: {
+      enabled: true
+    }
+  }
+}
+```

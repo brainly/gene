@@ -1,0 +1,19 @@
+# <%= projectName %> application
+
+NextJS app generated using `app-generator` workspace generator. The app is provided with E2E tests in <%= projectName %>-e2e.
+
+## Run
+
+In order to server the app, run:
+
+```
+yarn nx run <%= projectName %>:serve
+```
+
+## E2E
+
+In order to run E2E tests for this app, run:
+
+```
+yarn nx run <%= projectName %>-e2e:e2e
+```

@@ -1,0 +1,65 @@
+# Unit Tests
+
+## Why We Need Unit Tests
+Unit tests focus on validating the business logic within custom hooks, components, subapps, and utilities to ensure individual units function correctly in isolation. These tests are essential for maintaining code reliability and correctness by:
+- Identifying bugs early,
+- Facilitating safe refactoring, and
+- Improving overall code quality.
+
+Testing individual components in isolation allows developers to verify that each part of the system functions as expected.
+
+## Responsibility
+Unit testing is a shared responsibility of the development team. Every developer should write and maintain unit tests for their code to foster accountability and uphold quality standards.
+
+**Roles:**
+- **Creation**:  
+  - **Developer**:
+    - Creates tests when working on new code or increments.
+    - Fixes flaky tests.
+  
+- **Fixing**:  
+  - **Developer** who introduced the bug.
+
+- **Maintenance**:  
+  - **Developer** responsible for changes in the relevant area of logic that tests validate.
+
+## Scope and Effort
+- **Scope**: Unit tests should cover critical paths, edge cases, and potential failure points within functions or methods.
+- **Effort**: Testing effort should align with the complexity and importance of the code. Aim for high coverage but prioritize tests that add the most value. Scope and effort should be agreed upon with the project leader.
+
+## Tools
+*These tools are suggestions; the team may select any stack that suits their needs.*
+
+- **Testing Frameworks**: Jest, Mocha
+- **Assertion Libraries**: Chai, Sinon
+- **Mocking Tools**: Nock, Sinon
+
+## Guidelines and Best Practices
+- Write tests that are clear and maintainable.
+- Ensure tests are independent and can run in any order.
+- Use descriptive test names.
+
+## Definition of Done
+A unit test is considered complete when it:
+- Verifies the expected behavior of the code,
+- Passes consistently without intermittent failures,
+- Is reviewed and approved by peers, and
+- Is documented and added to the test suite.
+
+## Example
+### Testing a React Hook with Jest and React Testing Library
+*Note: This example uses Jest and React Testing Library to test a React Hook. You may use alternative testing libraries, tools, or frameworks based on specific needs and preferences.*
+
+```javascript
+// src/hooks/useIntroStepLogic.spec.ts
+  it('shouldShowMessage returns true when messageNumber is less than or equal to shownMessagesCount', () => {
+    const { result } = renderHook(() => useIntroStepLogic());
+
+    expect(result.current.shouldShowMessage(1)).toBe(true);
+    expect(result.current.shouldShowMessage(2)).toBe(false);
+
+    jest.advanceTimersByTime(3000);
+
+    expect(result.current.shouldShowMessage(2)).toBe(true);
+  });
+```

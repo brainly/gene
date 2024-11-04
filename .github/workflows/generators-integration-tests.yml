@@ -1,0 +1,125 @@
+name: Generators Integration Tests
+
+on:
+  pull_request:
+    branches:
+      - master
+      - alpha-*
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: 'Run tests'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx test examples-modules-my-module-module',
+              successRegexp: 'Successfully ran target test for project examples-modules-my-module-module',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx lint examples-modules-my-module-module',
+              successRegexp: 'Successfully ran target lint for project examples-modules-my-module-module',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx e2e examples-modules-my-module-module-e2e --verbose',
+              successRegexp: 'Successfully ran target e2e for project examples-modules-my-module-module-e2e',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx test examples-components-my-components-ui',
+              successRegexp: 'Successfully ran target test for project examples-components-my-components-ui',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx lint examples-components-my-components-ui',
+              successRegexp: 'Successfully ran target lint for project examples-components-my-components-ui',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa && pnpm nx lint my-feature-services-my-data-service',
+              successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa && pnpm nx test my-feature-services-my-data-service',
+              successRegexp: 'Successfully ran target test for project my-feature-services-my-data-service',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa && pnpm nx lint my-feature-services-my-data-service',
+              successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa && pnpm nx test my-feature-services-my-data-service',
+              successRegexp: 'Successfully ran target test for project my-feature-services-my-data-service',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:nextjs-app --name=my-app --directory=example --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && NODE_OPTIONS="--max-old-space-size=8192" pnpm nx e2e example-my-app-e2e --verbose',
+              successRegexp: 'Successfully ran target e2e for project example-my-app-e2e',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:nextjs-app --name=my-app --directory=example --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx test example-my-app',
+              successRegexp: 'Successfully ran target test for project example-my-app',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly/gene-tools:nextjs-app --name=my-app --directory=example --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx lint example-my-app',
+              successRegexp: 'Successfully ran target lint for project example-my-app',
+            }
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # v2
+        with:
+          node-version: '18.20.0'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Restore cached Cypress binary
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Cypress binary
+        run: |
+          npx cypress install
+      - name: Cache npm dependencies
+        uses: actions/cache/save@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Cache Cypress binary
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Run script and check stdout
+        uses: ./.github/actions/generators-integration-tests
+        timeout-minutes: 10
+        with:
+          packageCommand: ${{ matrix.config.packageCommand }}
+          successRegexp: ${{ matrix.config.successRegexp }}
+
+  generators-integration-summary:
+    name: 'Summary check'
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - name: Successful Generator tests
+        if: ${{  !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+      - name: Failing Generator tests
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: |
+          echo "Some Generator tests failed - please look on particular job logs for more details."
+          exit 1

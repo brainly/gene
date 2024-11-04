@@ -1,0 +1,10 @@
+import {ApiResultType} from '@<%= npmScope %>/common';
+
+export type <%=pascalCaseFileName %>PostInputBody = Readonly<{
+  someValue?: string;
+}>;
+
+export type <%=pascalCaseFileName %>PostResultBody = Readonly<ApiResultType<{
+  id: number;
+  someResultValue: number;
+}>>;
