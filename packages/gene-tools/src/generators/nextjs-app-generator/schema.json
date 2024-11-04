@@ -15,6 +15,7 @@
     },
     "directory": {
       "type": "string",
+      "default": "",
       "description": "A directory where the application is placed",
       "x-prompt": "What is the application directory?"
     },

@@ -1,6 +1,6 @@
 {
   "name": "@brainly-gene/create",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "type": "commonjs",
   "bin": {
     "create-gene-workspace": "./bin/create-gene-workspace.js"
