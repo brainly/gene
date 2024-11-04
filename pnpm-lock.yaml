@@ -84,6 +84,9 @@ importers:
       classnames:
         specifier: 2.5.1
         version: 2.5.1
+      create-nx-workspace:
+        specifier: 15.8.9
+        version: 15.8.9
       deepmerge:
         specifier: 4.2.2
         version: 4.2.2
@@ -5634,6 +5637,10 @@ packages:
   create-jest@29.7.0:
     resolution: {integrity: sha512-Adz2bdH0Vq3F53KEMJOoftQFutWCukm6J24wbPWRO4k1kMY7gS7ds/uoJkNuV8wDCtWWnuwGcJwpWcih+zEW1Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    hasBin: true
+
+  create-nx-workspace@15.8.9:
+    resolution: {integrity: sha512-jykzQyiuUOlEj9NKLwvWdtnGiAkInzObyPQgAoo0BI++4sXgSeRZrLFzDTty/Op51gAwAGBAwP6Cm2K2s4R7WA==}
     hasBin: true
 
   create-react-context@0.3.0:
@@ -22113,6 +22120,19 @@ snapshots:
       - supports-color
       - ts-node
 
+  create-nx-workspace@15.8.9:
+    dependencies:
+      axios: 1.7.3
+      chalk: 4.1.2
+      enquirer: 2.3.6
+      flat: 5.0.2
+      ora: 5.3.0
+      tmp: 0.2.3
+      tslib: 2.3.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - debug
+
   create-react-context@0.3.0(prop-types@15.8.1)(react@18.3.1):
     dependencies:
       gud: 1.0.0
@@ -24059,7 +24079,7 @@ snapshots:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
-      mime-types: 2.1.28
+      mime-types: 2.1.35
 
   format@0.2.2: {}
 
