@@ -69,7 +69,7 @@ const config: DocsThemeConfig = {
     <Link href="/">
       <>
         <Image src="/logo.svg" alt="Gene" width={30} height={30} />
-        <span className="ml-2 text-2xl font-barlow font-black">Gene</span>
+        <span className="ml-2 text-2xl font-barlow font-black">Brainly Gene</span>
       </>
     </Link>
   ),
