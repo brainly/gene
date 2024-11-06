@@ -114,6 +114,13 @@ async function runCommands() {
       'g',
       '@brainly-gene/tools:gene-workspace',
     ]);
+
+    console.log('Generating e2e testing providers');
+    await execCommand('pnpm', [
+      'nx',
+      'g',
+      '@brainly-gene/tools:e2e-provider',
+    ]);
   } catch (error) {
     console.error(error);
   }

@@ -1,6 +1,7 @@
 import { logger, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import moduleGenerator from './index';
+import e2eTestsProvider from '../e2e-providers-generator';
 import { applicationGenerator } from '@nrwl/next';
 import { Linter } from '@nrwl/linter';
 
@@ -14,7 +15,7 @@ describe('Module generator', () => {
   beforeEach(async () => {
     projectName = 'my-lib';
     expectedModuleFolder = 'libs/my-app/app-modules';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     createdProjectName = 'my-app-app-modules';
     domainTag = 'domain:test';
 
@@ -27,6 +28,8 @@ describe('Module generator', () => {
       js: false,
       e2eTestRunner: 'none',
     });
+
+    await e2eTestsProvider(appTree);
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);
