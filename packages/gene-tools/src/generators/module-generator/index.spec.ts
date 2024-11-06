@@ -1,14 +1,8 @@
 import { logger, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import moduleGenerator from './index';
-import e2eTestsProvider from '../e2e-providers-generator';
 import { applicationGenerator } from '@nrwl/next';
 import { Linter } from '@nrwl/linter';
-
-jest.mock('@nrwl/workspace', () => ({
-  ...jest.requireActual('@nrwl/workspace'),
-  getNpmScope: jest.fn().mockReturnValue('@brainly-gene'),
-}));
 
 describe('Module generator', () => {
   let expectedModuleFolder: string;

@@ -18,7 +18,7 @@
       "@brainly-gene/apollo": ["packages/gene-apollo/src/index.ts"],
       "@brainly-gene/core": ["packages/gene/src/index.ts"],
       "@brainly-gene/create": ["packages/create/src/index.ts"],
-      "@brainly/e2e-testing-providers": [
+      "@brainly-gene/e2e-testing-providers": [
         "libs/e2e-testing-providers/src/index.ts"
       ],
       "@brainly-gene/next": ["packages/gene-next/src/index.ts"],

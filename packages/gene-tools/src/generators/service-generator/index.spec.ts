@@ -1,11 +1,6 @@
-import { logger, readJson, Tree } from '@nrwl/devkit';
+import { logger, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import serviceGenerator from './index';
-
-jest.mock('@nrwl/workspace', () => ({
-  ...jest.requireActual('@nrwl/workspace'),
-  getNpmScope: jest.fn().mockReturnValue('@brainly-gene'),
-}));
 
 describe('Service generator', () => {
   let appTree: Tree;
