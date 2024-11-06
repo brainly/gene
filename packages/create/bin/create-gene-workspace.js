@@ -89,7 +89,10 @@ async function runCommands() {
       'install',
       `@brainly-gene/core@${packageVersion}`,
       `@brainly-gene/next@${packageVersion}`,
-      `@brainly-gene/apollo@${packageVersion}`,
+      `next@12.3.4`,
+      `ramda@0.30.1`,
+      `react@18.3.1`,
+      `react-dom@18.3.1`,
       'brainly-style-guide',
     ]);
 
@@ -98,6 +101,10 @@ async function runCommands() {
       'install',
       `@brainly-gene/tools@${packageVersion}`,
       `@brainly-gene/eslint-plugin@${packageVersion}`,
+      `eslint@8.44.0`,
+      `@types/react@18.3.12`,
+      `@types/ramda@0.30.2`,
+      `@types/node@18.19.55`,
       '-D',
     ]);
 

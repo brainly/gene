@@ -19,13 +19,14 @@ export default async function (tree: Tree) {
   await generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
 
   // Update .eslintrc.json
-  const eslintJson = tree.read('.eslintrc.json', 'utf-8');
-  const updatedEslintJson = eslintJson.replace(
-    'plugin:@nrwl/nx/typescript',
-    'plugin:@brainly-gene/gene/basic'
-  );
+  // TODO once eslint plugin will be stablized enable it again
+  // const eslintJson = tree.read('.eslintrc.json', 'utf-8');
+  // const updatedEslintJson = eslintJson.replace(
+  //   'plugin:@nrwl/nx/typescript',
+  //   'plugin:@brainly-gene/eslint-plugin/basic'
+  // );
 
-  tree.write('.eslintrc.json', updatedEslintJson);
+  // tree.write('.eslintrc.json', updatedEslintJson);
 
   return () => {
     installPackagesTask(tree);
