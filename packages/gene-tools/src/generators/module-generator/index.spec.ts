@@ -5,6 +5,11 @@ import e2eTestsProvider from '../e2e-providers-generator';
 import { applicationGenerator } from '@nrwl/next';
 import { Linter } from '@nrwl/linter';
 
+jest.mock('@nrwl/workspace', () => ({
+  ...jest.requireActual('@nrwl/workspace'),
+  getNpmScope: jest.fn().mockReturnValue('@brainly-gene'),
+}));
+
 describe('Module generator', () => {
   let expectedModuleFolder: string;
   let appTree: Tree;
@@ -28,8 +33,6 @@ describe('Module generator', () => {
       js: false,
       e2eTestRunner: 'none',
     });
-
-    await e2eTestsProvider(appTree);
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);

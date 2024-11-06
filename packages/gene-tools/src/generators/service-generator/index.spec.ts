@@ -4,7 +4,7 @@ import serviceGenerator from './index';
 
 jest.mock('@nrwl/workspace', () => ({
   ...jest.requireActual('@nrwl/workspace'),
-  getNpmScope: jest.fn().mockReturnValue('myorg'),
+  getNpmScope: jest.fn().mockReturnValue('@brainly-gene'),
 }));
 
 describe('Service generator', () => {
