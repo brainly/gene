@@ -6,7 +6,7 @@
     "jsxImportSource": "react",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["node", "jest"],
+    "types": ["node"],
     "strict": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
