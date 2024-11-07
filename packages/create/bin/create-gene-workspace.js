@@ -119,7 +119,7 @@ async function runCommands() {
     await execCommand('pnpm', [
       'nx',
       'g',
-      '@brainly-gene/tools:e2e-provider',
+      '@brainly-gene/tools:e2e-providers',
     ]);
   } catch (error) {
     console.error(error);
