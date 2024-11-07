@@ -94,18 +94,26 @@ async function runCommands() {
       `react@18.3.1`,
       `react-dom@18.3.1`,
       'brainly-style-guide',
+      `inversify@5.1.1`,
+      `@tanstack/react-query@5.55.4`,
     ]);
 
     // Install dev dependencies
     await execCommand('pnpm', [
       'install',
+      '-D',
       `@brainly-gene/tools@${packageVersion}`,
       `@brainly-gene/eslint-plugin@${packageVersion}`,
       `eslint@8.44.0`,
       `@types/react@18.3.12`,
       `@types/ramda@0.30.2`,
       `@types/node@18.19.55`,
-      '-D',
+      'eslint-plugin-cypress@2.10.3',
+      '@nrwl/eslint-plugin-nx@15.8.9',
+      'eslint-plugin-react-hooks@4.6.0',
+      'eslint-plugin-jsx-a11y@6.6.1',
+      'eslint-plugin-react@7.31.11',
+      'eslint-config-next@13.1.1',
     ]);
 
     console.log('Generating gene-workspace with pnpm nx');
@@ -116,11 +124,7 @@ async function runCommands() {
     ]);
 
     console.log('Generating e2e testing providers');
-    await execCommand('pnpm', [
-      'nx',
-      'g',
-      '@brainly-gene/tools:e2e-providers',
-    ]);
+    await execCommand('pnpm', ['nx', 'g', '@brainly-gene/tools:e2e-providers']);
   } catch (error) {
     console.error(error);
   }
