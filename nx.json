@@ -1,6 +1,6 @@
 {
   "extends": "nx/presets/core.json",
-  "npmScope": "brainly",
+  "npmScope": "brainly-gene",
   "affected": {
     "defaultBase": "master"
   },

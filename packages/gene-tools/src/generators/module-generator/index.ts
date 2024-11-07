@@ -126,7 +126,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
         tmpl: '',
         errorBoundary,
-        npmScope
+        npmScope,
       }
     );
 
@@ -159,7 +159,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
             .camelize(moduleDisplayName)
             .toLocaleLowerCase(),
           tmpl: '',
-          npmScope
+          npmScope,
         }
       );
     }
@@ -186,7 +186,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
             .camelize(moduleDisplayName)
             .toLocaleLowerCase(),
           tmpl: '',
-          npmScope
+          npmScope,
         }
       );
 
@@ -283,7 +283,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
       tmpl: '',
       errorBoundary,
-      npmScope
+      npmScope,
     }
   );
 
@@ -315,7 +315,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           .camelize(moduleDisplayName)
           .toLocaleLowerCase(),
         tmpl: '',
-        npmScope
+        npmScope,
       }
     );
 

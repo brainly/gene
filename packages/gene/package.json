@@ -2,5 +2,12 @@
   "name": "@brainly-gene/core",
   "version": "0.1.2",
   "license": "Apache-2.0",
-  "main": "./src/index.js"
+  "main": "./src/index.js",
+  "dependencies": {
+    "@tanstack/react-query": "5.55.4",
+    "inversify": "5.1.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0 <=18.3.1"
+  }
 }

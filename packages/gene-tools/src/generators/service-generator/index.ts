@@ -30,6 +30,7 @@ function createFiles(
     options.targetLocation,
     {
       ...schema,
+      npmScope: options.npmScope,
       fileName: stringUtils.classify(schema.name),
       lowerCaseFileName: stringUtils.camelize(schema.name),
       tmpl: '',
@@ -95,6 +96,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   /** @ts-ignore */
   const npmScope = getNpmScope(tree);
+
   /**
    * @description
    * Generating proper files based on the service type

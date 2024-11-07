@@ -3,6 +3,13 @@
   "version": "0.1.2",
   "license": "Apache-2.0",
   "dependencies": {
-    "@next/bundle-analyzer": "12.3.4"
+    "@next/bundle-analyzer": "12.3.4",
+    "tslib": "2.8.1"
+  },
+  "devDependencies": {
+    "eslint-config-next": "12.3.1"
+  },
+  "peerDependencies": {
+    "next": "12.3.4"
   }
 }
