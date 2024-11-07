@@ -1,4 +1,4 @@
-import { logger, readJson, Tree } from '@nrwl/devkit';
+import { logger, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import serviceGenerator from './index';
 
@@ -8,7 +8,7 @@ describe('Service generator', () => {
 
   beforeEach(async () => {
     projectName = 'my-service';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);

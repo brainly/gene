@@ -14,7 +14,7 @@ describe('Module generator', () => {
   beforeEach(async () => {
     projectName = 'my-lib';
     expectedModuleFolder = 'libs/my-app/app-modules';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     createdProjectName = 'my-app-app-modules';
     domainTag = 'domain:test';
 
