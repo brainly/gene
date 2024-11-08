@@ -96,6 +96,7 @@ async function runCommands() {
       'brainly-style-guide',
       `inversify@5.1.1`,
       `@tanstack/react-query@5.55.4`,
+      '@nrwl/next@15.8.6',
     ]);
 
     // Install dev dependencies
@@ -114,6 +115,7 @@ async function runCommands() {
       'eslint-plugin-jsx-a11y@6.6.1',
       'eslint-plugin-react@7.31.11',
       'eslint-config-next@13.1.1',
+      '@nrwl/jest@15.8.9',
     ]);
 
     console.log('Generating gene-workspace with pnpm nx');
