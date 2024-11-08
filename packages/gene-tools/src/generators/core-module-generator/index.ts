@@ -157,6 +157,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
             files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
             rules: {
               'babel/new-cap': 'off',
+              'import/no-extraneous-dependencies': 'off',
             },
           },
         ],
