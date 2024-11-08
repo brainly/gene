@@ -6,6 +6,7 @@ export const validateCypressCode = async (code: string) => {
       extends: ['plugin:cypress/recommended'],
       rules: {
         'babel/new-cap': 'off',
+        'import/no-extraneous-dependencies': 'off',
       },
       env: {
         'cypress/globals': true,
