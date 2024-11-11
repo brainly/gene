@@ -11,7 +11,7 @@ const pkg = JSON.parse(
   readFileSync(resolve(__dirname, '../package.json'), 'utf8')
 );
 
-const pluginName = pkg.name.replace('eslint-plugin-', '');
+const pluginName = pkg.name.replace('/eslint-plugin', '');
 
 const basicRules = {
   ...basic,
