@@ -20,6 +20,7 @@ jobs:
           - gene-next
           - gene-sentry
           - gene-tools
+
     runs-on: ubuntu-latest
 
     steps:
@@ -43,4 +44,9 @@ jobs:
       - run: pnpm nx run-many --target=test --all
       - run: pnpm nx run-many --target=build --all
 
-      - run: npm publish --access public --dry-run dist/packages/${{ matrix.packages_to_publish }}
+      - run: npm whoami
+
+      - run: |
+          cd dist/packages/${{ matrix.packages_to_publish }}
+          npm version ${{ github.event.release.tag_name }} --no-git-tag-version
+          npm publish --access public --dry-run
