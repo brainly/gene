@@ -19,14 +19,23 @@ export default async function (tree: Tree) {
   await generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
 
   // Update .eslintrc.json
-  // TODO once eslint plugin will be stablized enable it again
-  // const eslintJson = tree.read('.eslintrc.json', 'utf-8');
-  // const updatedEslintJson = eslintJson.replace(
-  //   'plugin:@nrwl/nx/typescript',
-  //   'plugin:@brainly-gene/eslint-plugin/basic'
-  // );
+  const eslintJson = tree.read('.eslintrc.json', 'utf-8');
+  const updatedEslintJson = eslintJson
+    .replace(
+      'plugin:@nrwl/nx/typescript',
+      'plugin:@brainly-gene/eslint-plugin/basic'
+    )
+    .replace(
+      '"plugins": ["@nrwl/nx"]',
+      '"plugins": ["@nrwl/nx", "@brainly-gene"]'
+    );
 
-  // tree.write('.eslintrc.json', updatedEslintJson);
+  tree.write('.eslintrc.json', updatedEslintJson);
+
+  // Update .gitignore to ignore .storybook/assets
+  const gitignore = tree.read('.gitignore', 'utf-8');
+  const updatedGitignore = gitignore + '\n.storybook/assets';
+  tree.write('.gitignore', updatedGitignore);
 
   return () => {
     installPackagesTask(tree);
