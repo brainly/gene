@@ -1,0 +1,46 @@
+name: Publish to NPM on GH Release Publish
+
+on:
+  release:
+    types: [published]
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  publish:
+    if: github.repository == 'brainly/gene'
+    strategy:
+      matrix:
+        packages_to_publish:
+          - create
+          - eslint-plugin
+          - gene
+          - gene-apollo
+          - gene-next
+          - gene-sentry
+          - gene-tools
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3
+        with:
+          node-version: '18.20.0'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm nx run-many --target=lint --all
+      - run: pnpm nx run-many --target=test --all
+      - run: pnpm nx run-many --target=build --all
+
+      - run: npm publish --access public --dry-run dist/packages/${{ matrix.packages_to_publish }}
