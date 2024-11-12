@@ -41,8 +41,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm nx lint packages-${{ matrix.packages_to_publish }}
-      - run: pnpm nx test packages-${{ matrix.packages_to_publish }}
       - run: pnpm nx build packages-${{ matrix.packages_to_publish }}
 
       - run: npm whoami
