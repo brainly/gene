@@ -38,7 +38,7 @@ export default async function (tree: Tree) {
   tree.write('.gitignore', updatedGitignore);
 
   // Create empty jest.setup.js file in the root
-  tree.write('jest.setup.js', '');
+  tree.write('jest.setup.js', 'export {};');
 
   return () => {
     installPackagesTask(tree);
