@@ -37,6 +37,9 @@ export default async function (tree: Tree) {
   const updatedGitignore = gitignore + '\n.storybook/assets';
   tree.write('.gitignore', updatedGitignore);
 
+  // Create empty jest.setup.js file in the root
+  tree.write('jest.setup.js', '');
+
   return () => {
     installPackagesTask(tree);
   };

@@ -135,7 +135,10 @@ async function runCommands() {
       "@storybook/builder-webpack5@6.5.16",
       "@storybook/manager-webpack5@6.5.16",
       "@storybook/react@6.5.16",
-      "@storybook/theming@6.5.16"
+      "@storybook/theming@6.5.16",
+      "@testing-library/dom@8.20.1",
+      "@testing-library/jest-dom@5.14.1",
+      "@testing-library/react@16.0.0"
     ]);
 
     console.log('Generating gene-workspace with pnpm nx');
