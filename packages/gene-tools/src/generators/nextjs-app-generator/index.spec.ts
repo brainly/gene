@@ -256,6 +256,7 @@ describe('NextJS App generator', () => {
           files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
           rules: {
             'babel/new-cap': 'off',
+            'import/no-extraneous-dependencies': 'off',
           },
         },
       ])
