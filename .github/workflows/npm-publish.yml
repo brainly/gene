@@ -45,7 +45,8 @@ jobs:
 
       - run: npm whoami
 
-      - run: |
+      - name: Publish to NPM
+        run: |
           cd dist/packages/${{ matrix.packages_to_publish }}
           npm version ${{ github.event.release.tag_name }} --no-git-tag-version
-          npm publish --access public --dry-run
+          npm publish --access public
