@@ -21,7 +21,7 @@
       "type": "boolean",
       "default": true,
       "description": "Indicator on whether to wrap imodule with error boundary or not. Boundary name will be inherited from module name",
-      "x-prompt": "Should module be wrapped with error boundary? It is suggested to wrap all modules with error boundary. Read more: https://github.io/brainly/error-boundaries"
+      "x-prompt": "Should module be wrapped with error boundary? It is suggested to wrap all modules with error boundary."
     },
     "e2e": {
       "type": "boolean",
