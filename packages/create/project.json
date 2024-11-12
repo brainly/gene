@@ -1,5 +1,5 @@
 {
-  "name": "create",
+  "name": "packages-create",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/create/src",
   "projectType": "library",

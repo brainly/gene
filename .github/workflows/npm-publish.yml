@@ -35,14 +35,15 @@ jobs:
         uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3
         with:
           node-version: '18.20.0'
+          registry-url: https://registry.npmjs.org
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm nx run-many --target=lint --all
-      - run: pnpm nx run-many --target=test --all
-      - run: pnpm nx run-many --target=build --all
+      - run: pnpm nx lint packages-${{ matrix.packages_to_publish }}
+      - run: pnpm nx test packages-${{ matrix.packages_to_publish }}
+      - run: pnpm nx build packages-${{ matrix.packages_to_publish }}
 
       - run: npm whoami
 
