@@ -85,6 +85,7 @@ async function runCommands() {
 
     console.log('Installing dependencies with pnpm');
 
+    // Install dependencies
     await execCommand('pnpm', [
       'install',
       `@brainly-gene/core@${packageVersion}`,
@@ -97,6 +98,11 @@ async function runCommands() {
       `inversify@5.1.1`,
       `@tanstack/react-query@5.55.4`,
       '@nrwl/next@15.8.6',
+      'style-loader@2.0.0',
+      'css-loader@3.6.0',
+      'sass@1.55.0',
+      'sass-loader@9.0.2',
+      '@apollo/client@3.6.9',
     ]);
 
     // Install dev dependencies
@@ -116,6 +122,20 @@ async function runCommands() {
       'eslint-plugin-react@7.31.11',
       'eslint-config-next@13.1.1',
       '@nrwl/jest@15.8.9',
+      "msw@0.49.2",
+      "msw-storybook-addon@1.6.3",
+      "@storybook/addon-actions@6.5.16",
+      "@storybook/core-server@6.5.16",
+      "@storybook/addon-backgrounds@6.3.8",
+      "@storybook/addon-knobs@6.3.1",
+      "@storybook/addon-links@6.3.8",
+      "@storybook/addon-storysource@6.3.8",
+      "@storybook/addon-viewport@6.3.8",
+      "@storybook/addons@6.3.8",
+      "@storybook/builder-webpack5@6.5.16",
+      "@storybook/manager-webpack5@6.5.16",
+      "@storybook/react@6.5.16",
+      "@storybook/theming@6.5.16"
     ]);
 
     console.log('Generating gene-workspace with pnpm nx');
