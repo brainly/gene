@@ -157,8 +157,8 @@ importers:
         specifier: 2.13.4
         version: 2.13.4(next@12.3.4(@babel/core@7.16.7)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.55.0))(nextra@2.13.4(next@12.3.4(@babel/core@7.16.7)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.55.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       node-fetch:
-        specifier: 2.6.1
-        version: 2.6.1
+        specifier: 2.6.7
+        version: 2.6.7
       nx:
         specifier: 15.8.9
         version: 15.8.9
@@ -9825,8 +9825,8 @@ packages:
     resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
     engines: {node: 4.x || >=6.0.0}
 
-  node-fetch@2.7.0:
-    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+  node-fetch@2.6.7:
+    resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
       encoding: ^0.1.0
@@ -16024,6 +16024,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
+      - encoding
       - utf-8-validate
 
   '@graphql-tools/utils@7.10.0(graphql@15.8.0)':
@@ -18827,7 +18828,7 @@ snapshots:
       globby: 11.1.0
       ip: 2.0.1
       lodash: 4.17.21
-      node-fetch: 2.7.0
+      node-fetch: 2.6.7
       open: 8.4.2
       pretty-hrtime: 1.0.3
       prompts: 2.4.2
@@ -18946,7 +18947,7 @@ snapshots:
       find-up: 5.0.0
       fs-extra: 9.1.0
       html-webpack-plugin: 4.5.2(webpack@4.47.0)
-      node-fetch: 2.7.0
+      node-fetch: 2.6.7
       pnp-webpack-plugin: 1.6.4(typescript@4.7.4)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -18994,7 +18995,7 @@ snapshots:
       find-up: 5.0.0
       fs-extra: 9.1.0
       html-webpack-plugin: 5.6.0(webpack@5.93.0(esbuild@0.17.17))
-      node-fetch: 2.7.0
+      node-fetch: 2.6.7
       process: 0.11.10
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -19288,6 +19289,7 @@ snapshots:
       read-pkg-up: 7.0.1
       regenerator-runtime: 0.13.7
     transitivePeerDependencies:
+      - encoding
       - eslint
       - react
       - react-dom
@@ -23297,6 +23299,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
+      - encoding
       - typescript
       - utf-8-validate
 
@@ -24406,6 +24409,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
+      - encoding
       - typescript
       - utf-8-validate
 
@@ -25439,8 +25443,10 @@ snapshots:
 
   isomorphic-unfetch@3.1.0:
     dependencies:
-      node-fetch: 2.6.1
+      node-fetch: 2.6.7
       unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
 
   isomorphic-ws@4.0.1(ws@7.4.5):
     dependencies:
@@ -27561,7 +27567,7 @@ snapshots:
       inquirer: 8.2.6
       is-node-process: 1.2.0
       js-levenshtein: 1.1.6
-      node-fetch: 2.7.0
+      node-fetch: 2.6.7
       outvariant: 1.4.3
       path-to-regexp: 6.3.0
       strict-event-emitter: 0.2.8
@@ -27759,7 +27765,7 @@ snapshots:
 
   node-fetch@2.6.1: {}
 
-  node-fetch@2.7.0:
+  node-fetch@2.6.7:
     dependencies:
       whatwg-url: 5.0.0
 
@@ -30512,7 +30518,9 @@ snapshots:
   sync-fetch@0.3.0:
     dependencies:
       buffer: 5.7.1
-      node-fetch: 2.6.1
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
 
   synchronous-promise@2.0.17: {}
 
