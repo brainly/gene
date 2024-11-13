@@ -137,11 +137,12 @@ async function runCommands() {
       '@storybook/react@6.5.16',
       '@storybook/theming@6.5.16',
       '@testing-library/dom@8.20.1',
-      '@testing-library/jest-dom@5.14.1',
+      '@testing-library/jest-dom@6.2.1',
       '@testing-library/react@16.0.0',
       '@nrwl/cypress@15.8.9',
       '@nrwl/react@15.8.9',
       '@nrwl/web@15.8.9',
+      "@types/jest@29.4.4"
     ]);
 
     console.log('Generating gene-workspace with pnpm nx');
