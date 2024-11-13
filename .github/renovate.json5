@@ -14,10 +14,11 @@
   internalChecksFilter: 'strict', // required for packageRules[].stabilityDays
   dependencyDashboard: true,
   dependencyDashboardApproval: true, // require approval for all updates initially
+  addLabels: ['type: dependencies'],
   pin: {
     dependencyDashboardApproval: false,
     automerge: false, // let's test it and change to true later
-    rebaseWhen: 'never', //
+    rebaseWhen: 'never',
   },
   separateMinorPatch: true,
   separateMajorMinor: true,
