@@ -383,8 +383,8 @@ importers:
         specifier: 1.14.2
         version: 1.14.2
       ejs:
-        specifier: 3.1.7
-        version: 3.1.7
+        specifier: 3.1.10
+        version: 3.1.10
       eslint-config-next:
         specifier: 13.1.1
         version: 13.1.1(eslint@8.7.0)(typescript@4.7.4)
@@ -6328,8 +6328,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  ejs@3.1.7:
-    resolution: {integrity: sha512-BIar7R6abbUxDA3bfXrO4DSgwo8I+fB5/1zgujl3HLLjwd6+9iOnrT+t3grn2qbk9vOgBubXOFwX2m9axoFaGw==}
+  ejs@3.1.10:
+    resolution: {integrity: sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA==}
     engines: {node: '>=0.10.0'}
     hasBin: true
 
@@ -6776,6 +6776,7 @@ packages:
   eslint@8.7.0:
     resolution: {integrity: sha512-ifHYzkBGrzS2iDU7KjhCAVMGCvF6M3Xfs8X8b37cgrUlDt6bWRTpRh6T/gtSXv1HJ/BUGgmjvNvOEGu85Iif7w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   esniff@2.0.1:
@@ -16730,7 +16731,7 @@ snapshots:
   '@nrwl/devkit@15.8.6(nx@15.8.6)(typescript@4.7.4)':
     dependencies:
       '@phenomnomnominal/tsquery': 4.1.1(typescript@4.7.4)
-      ejs: 3.1.7
+      ejs: 3.1.10
       ignore: 5.3.1
       nx: 15.8.6
       semver: 7.3.4
@@ -16742,7 +16743,7 @@ snapshots:
   '@nrwl/devkit@15.8.6(nx@15.8.9)(typescript@4.7.4)':
     dependencies:
       '@phenomnomnominal/tsquery': 4.1.1(typescript@4.7.4)
-      ejs: 3.1.7
+      ejs: 3.1.10
       ignore: 5.3.1
       nx: 15.8.9
       semver: 7.3.4
@@ -16754,7 +16755,7 @@ snapshots:
   '@nrwl/devkit@15.8.9(nx@15.8.9)(typescript@4.7.4)':
     dependencies:
       '@phenomnomnominal/tsquery': 4.1.1(typescript@4.7.4)
-      ejs: 3.1.7
+      ejs: 3.1.10
       ignore: 5.3.1
       nx: 15.8.9
       semver: 7.3.4
@@ -22883,7 +22884,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  ejs@3.1.7:
+  ejs@3.1.10:
     dependencies:
       jake: 10.9.2
 
