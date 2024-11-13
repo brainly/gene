@@ -6,12 +6,12 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nrwl/linter": "^15.0.3",
+    "@nrwl/linter": "15.9.7",
     "@nrwl/eslint-plugin-nx": "15.8.9",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-regexp": "^2.6.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^28.8.3",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-regexp": "2.6.0",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-jest": "28.9.0",
     "@typescript-eslint/eslint-plugin": "5.62.0"
   },
   "peerDependencies": {
