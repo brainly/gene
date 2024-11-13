@@ -102,7 +102,6 @@ async function runCommands() {
       'css-loader@3.6.0',
       'sass@1.55.0',
       'sass-loader@9.0.2',
-      '@apollo/client@3.6.9',
       'classnames@2.5.1',
     ]);
 
