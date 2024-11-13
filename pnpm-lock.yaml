@@ -166,8 +166,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       path-to-regexp:
-        specifier: 6.2.0
-        version: 6.2.0
+        specifier: 6.3.0
+        version: 6.3.0
       prettier:
         specifier: 2.8.8
         version: 2.8.8
@@ -10303,8 +10303,8 @@ packages:
   path-to-regexp@0.1.7:
     resolution: {integrity: sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==}
 
-  path-to-regexp@6.2.0:
-    resolution: {integrity: sha512-f66KywYG6+43afgE/8j/GoiNyygk/bnoCbps++3ErRKsIYkGGupyv07R2Ok5m9i67Iqc+T2g1eAUGUPzWhYTyg==}
+  path-to-regexp@6.3.0:
+    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   path-type@1.1.0:
     resolution: {integrity: sha512-S4eENJz1pkiQn9Znv33Q+deTOKmbl+jj1Fl+qiP/vYezj+S8x+J3Uo0ISrx/QoEvIlOaDWJhPaRd1flJ9HXZqg==}
@@ -27563,7 +27563,7 @@ snapshots:
       js-levenshtein: 1.1.6
       node-fetch: 2.7.0
       outvariant: 1.4.3
-      path-to-regexp: 6.2.0
+      path-to-regexp: 6.3.0
       strict-event-emitter: 0.2.8
       type-fest: 2.19.0
       yargs: 17.7.2
@@ -28381,7 +28381,7 @@ snapshots:
 
   path-to-regexp@0.1.7: {}
 
-  path-to-regexp@6.2.0: {}
+  path-to-regexp@6.3.0: {}
 
   path-type@1.1.0:
     dependencies:
