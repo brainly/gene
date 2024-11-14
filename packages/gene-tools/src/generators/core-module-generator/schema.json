@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "core-module-generator",
   "type": "object",
   "properties": {
@@ -30,5 +29,8 @@
       "x-prompt": "Should module be wrapped with error boundary? It is suggested to wrap all modules with error boundary."
     }
   },
-  "required": ["name", "tags"]
+  "required": [
+    "name",
+    "tags"
+  ]
 }

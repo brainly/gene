@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "bff-app-generator",
   "type": "object",
   "properties": {
@@ -59,5 +58,8 @@
       "default": true
     }
   },
-  "required": ["name", "directory"]
+  "required": [
+    "name",
+    "directory"
+  ]
 }
