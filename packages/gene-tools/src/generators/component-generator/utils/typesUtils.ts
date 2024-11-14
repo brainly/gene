@@ -1,4 +1,4 @@
-import { classify } from '@nrwl/workspace/src/utils/strings';
+import { classify } from '@nx/workspace/src/utils/strings';
 import { map, uniq, pipe, ifElse, append, identity } from 'ramda';
 
 export const splitStringToArray = (str: string | undefined) =>

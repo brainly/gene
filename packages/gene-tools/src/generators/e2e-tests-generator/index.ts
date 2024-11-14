@@ -5,10 +5,10 @@ import {
   readJson,
   Tree,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { promptSelectModuleName } from '../utilities';
 import { findModuleComponents } from './utils/findModuleComponents';
-import { stringUtils } from '@nrwl/workspace';
+import { stringUtils } from '@nx/workspace';
 import * as inquirer from 'inquirer';
 import { findDataTestIds, processResults } from './utils/findDataTestIds';
 import {

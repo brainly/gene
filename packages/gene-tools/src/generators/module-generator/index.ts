@@ -11,13 +11,13 @@ import {
   ProjectConfiguration,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { cypressProjectGenerator } from '@nrwl/storybook';
+import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
-import { Linter } from '@nrwl/linter';
+import { getNpmScope, stringUtils } from '@nx/workspace';
+import { Linter } from '@nx/linter';
 import {
   promptBoolean,
   promptSelectAppName,
@@ -208,7 +208,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
             },
           },
           'e2e-base': {
-            executor: '@nrwl/cypress:cypress',
+            executor: '@nx/cypress:cypress',
             options: {
               cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
             },
@@ -337,7 +337,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           },
         },
         'e2e-base': {
-          executor: '@nrwl/cypress:cypress',
+          executor: '@nx/cypress:cypress',
           options: {
             cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
           },

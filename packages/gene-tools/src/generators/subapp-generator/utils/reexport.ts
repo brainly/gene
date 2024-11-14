@@ -1,5 +1,5 @@
 import * as jscodeshift from 'jscodeshift';
-import {Tree} from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
 const j = jscodeshift.withParser('tsx');
 
@@ -21,7 +21,7 @@ export const reexport = ({
 
   const exports = ast
     .find(j.ExportAllDeclaration)
-    .filter(({node}) => String(node.source.value).endsWith(`/${subappName}`))
+    .filter(({ node }) => String(node.source.value).endsWith(`/${subappName}`))
     .nodes()[0];
 
   if (exports) {
@@ -38,5 +38,5 @@ export const reexport = ({
       j.exportAllDeclaration(j.stringLiteral(path), null)
     );
 
-  tree.write(reexportIndexPath, ast.toSource({quote: 'single'}));
+  tree.write(reexportIndexPath, ast.toSource({ quote: 'single' }));
 };

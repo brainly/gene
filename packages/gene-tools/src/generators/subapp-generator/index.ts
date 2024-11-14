@@ -7,15 +7,15 @@ import {
   Tree,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
-import {SubappGenerator} from './schema';
-import {getNpmScope, stringUtils} from '@nrwl/workspace';
+} from '@nx/devkit';
+import { SubappGenerator } from './schema';
+import { getNpmScope, stringUtils } from '@nx/workspace';
 import * as inquirer from 'inquirer';
 import libraryGenerator from '../library-generator';
-import {reexport} from './utils/reexport';
+import { reexport } from './utils/reexport';
 
 export default async function (tree: Tree, schema: SubappGenerator) {
-  const {name, library, directory} = schema;
+  const { name, library, directory } = schema;
   const currentPackageJson = readJson(tree, 'package.json');
 
   let projects = getProjects(tree);
@@ -37,7 +37,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
       throw new Error(`Library "${library}" was not found`);
     }
 
-    const {libDirectory} = await inquirer.prompt([
+    const { libDirectory } = await inquirer.prompt([
       {
         type: 'input',
         name: 'libDirectory',
@@ -79,7 +79,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
       camelCaseFileName: stringUtils.camelize(name),
       fileName: name,
       tmpl: '',
-      npmScope
+      npmScope,
     }
   );
 

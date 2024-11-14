@@ -7,12 +7,12 @@ import {
   Tree,
   updateJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import {BrainlyComponentLibraryGenerator} from './schema';
+import { BrainlyComponentLibraryGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import {dasherize} from '@nrwl/workspace/src/utils/strings';
-import {resolveTags} from './utils/resolveTags';
+import { dasherize } from '@nx/workspace/src/utils/strings';
+import { resolveTags } from './utils/resolveTags';
 
 const getDirectoryPath = (
   schema: BrainlyComponentLibraryGenerator,
@@ -63,11 +63,11 @@ export default async function (
    * @description
    * configure storybook for generated library
    */
-  await storybookConfigurationGenerator(tree, {name: moduleProjectName});
+  await storybookConfigurationGenerator(tree, { name: moduleProjectName });
 
   const tsconfigPath = `libs/${directoryPath}/${nameWithSuffix}/tsconfig.json`;
 
-  updateJson(tree, tsconfigPath, currentTsconfig => {
+  updateJson(tree, tsconfigPath, (currentTsconfig) => {
     return {
       ...currentTsconfig,
       compilerOptions: {

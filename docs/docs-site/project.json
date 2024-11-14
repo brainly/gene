@@ -1,4 +1,5 @@
 {
+  "name": "docs-docs-site",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "docs/docs-site",
   "projectType": "application",
@@ -56,7 +57,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/docs/docs-site"],
       "options": {
         "jestConfig": "docs/docs-site/jest.config.ts",
@@ -65,13 +66,12 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["docs/docs-site/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
-  "tags": [],
-  "name": "docs-docs-site"
+  "tags": []
 }

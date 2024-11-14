@@ -1,8 +1,8 @@
-import { logger, readJson, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, readJson, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import apiRouteGenerator from './index';
 import * as inquirer from 'inquirer';
-import { applicationGenerator } from '@nrwl/next';
+import { applicationGenerator } from '@nx/next';
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
 describe('Subapp generator', () => {

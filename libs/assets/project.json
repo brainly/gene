@@ -1,18 +1,19 @@
 {
+  "name": "assets",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/assets/src",
   "projectType": "library",
   "tags": ["type:utility"],
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/assets/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/assets"],
       "options": {
         "jestConfig": "libs/assets/jest.config.ts",
@@ -27,9 +28,7 @@
         "{options.projectRoot}/public/nx-static"
       ],
       "options": {
-        "commands": [
-          "pnpm gene-tools copy-assets-to-app {args.projectName}"
-        ]
+        "commands": ["pnpm gene-tools copy-assets-to-app {args.projectName}"]
       }
     },
     "copy-assets-to-storybook": {
@@ -43,6 +42,5 @@
         "command": "pnpm gene-tools prepare-storybook-root-assets --includeBrainlyStyleGuide && pnpm gene-tools copy-assets-to-storybook"
       }
     }
-  },
-  "name": "assets"
+  }
 }

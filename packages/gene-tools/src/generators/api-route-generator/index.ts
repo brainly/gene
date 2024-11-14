@@ -7,9 +7,9 @@ import {
   Tree,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { APIRouteGenerator } from './schema';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
+import { getNpmScope, stringUtils } from '@nx/workspace';
 
 import { promptSelectAppName, getAllAppKeys } from '../utilities';
 

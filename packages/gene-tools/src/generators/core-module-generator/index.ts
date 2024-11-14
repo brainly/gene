@@ -10,13 +10,13 @@ import {
   updateProjectConfiguration,
   writeJson,
   getNpmPackageSharedConfig,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { cypressProjectGenerator } from '@nrwl/storybook';
+import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyCoreModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
-import { Linter } from '@nrwl/linter';
+import { getNpmScope, stringUtils } from '@nx/workspace';
+import { Linter } from '@nx/linter';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 import { resolveTags } from './utils/resolveTags';
 
@@ -84,7 +84,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
       dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
       tmpl: '',
       errorBoundary,
-      npmScope
+      npmScope,
     }
   );
 
@@ -137,7 +137,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
         },
       },
       'e2e-base': {
-        executor: '@nrwl/cypress:cypress',
+        executor: '@nx/cypress:cypress',
         options: {
           cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
         },

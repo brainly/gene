@@ -1,10 +1,11 @@
 {
+  "name": "packages-gene-next",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/gene-next/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/gene-next",
@@ -15,14 +16,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/gene-next/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-next"],
       "options": {
         "jestConfig": "packages/gene-next/jest.config.ts",
@@ -30,6 +31,5 @@
       }
     }
   },
-  "tags": ["type:public"],
-  "name": "packages-gene-next"
+  "tags": ["type:public"]
 }

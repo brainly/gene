@@ -1,5 +1,5 @@
-import { logger, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
 
 describe('Core module generator', () => {
@@ -12,7 +12,7 @@ describe('Core module generator', () => {
   beforeEach(async () => {
     projectName = 'my-lib';
     expectedModuleFolder = 'libs/my-lib/modules';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     createdProjectName = 'my-lib-modules-my-lib-module';
     domainTag = 'domain:test';
 
@@ -110,7 +110,7 @@ describe('Core module generator', () => {
             'babel/new-cap': 'off',
             'import/no-extraneous-dependencies': 'off',
           },
-        }
+        },
       ])
     );
   });

@@ -3,7 +3,7 @@ import {
   joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { render } from 'ejs';
 import { readFileSync } from 'fs';
 

@@ -9,17 +9,17 @@ import {
   offsetFromRoot,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { BrainlyNextJSAppGenerator } from './schema';
-import { applicationGenerator } from '@nrwl/next';
+import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
-import { Linter } from '@nrwl/linter';
+import { Linter } from '@nx/linter';
 import { maybeExcludeRewrites } from './utils/maybeExcludeRewrites';
 import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
+import { getNpmScope, stringUtils } from '@nx/workspace';
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { cleanupFiles } from './utils/cleanupFiles';
 import { updateJestConfig } from '../utilities';
@@ -56,7 +56,6 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   /* @ts-ignore */
   const npmScope = getNpmScope(tree);
 
-
   generateFiles(tree, joinPathFragments(__dirname, './files/app'), appDir, {
     ...schema,
     tmpl: '',
@@ -68,7 +67,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     offsetFromRoot: offsetFromRoot(appDir),
     title: schema.title,
     description: schema.description,
-    npmScope
+    npmScope,
   });
 
   if (e2e !== false) {
@@ -108,7 +107,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
                 'babel/new-cap': 'off',
                 'import/no-extraneous-dependencies': 'off',
               },
-            }
+            },
           ],
         };
       }

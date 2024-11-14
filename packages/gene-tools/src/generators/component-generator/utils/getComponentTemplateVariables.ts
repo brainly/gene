@@ -14,7 +14,7 @@ import {
   underscore,
   camelize,
   capitalize,
-} from '@nrwl/workspace/src/utils/strings';
+} from '@nx/workspace/src/utils/strings';
 
 export const getComponentTemplateVariables = (
   _options: Record<string, unknown>

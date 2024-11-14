@@ -1,5 +1,5 @@
-import {readJson, Tree, writeJson} from '@nrwl/devkit';
-import {NormalizedOptions} from '../schema';
+import { readJson, Tree, writeJson } from '@nx/devkit';
+import { NormalizedOptions } from '../schema';
 
 export function excludeStoriesFromProjectTsConfig(
   tree: Tree,

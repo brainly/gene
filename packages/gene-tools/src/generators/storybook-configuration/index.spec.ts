@@ -1,9 +1,9 @@
-import * as devkit from '@nrwl/devkit';
-import { readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Linter } from '@nrwl/linter';
-import { applicationGenerator } from '@nrwl/next';
-import { libraryGenerator } from '@nrwl/react';
+import * as devkit from '@nx/devkit';
+import { readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { Linter } from '@nx/linter';
+import { applicationGenerator } from '@nx/next';
+import { libraryGenerator } from '@nx/react';
 import { storybookConfigurationGenerator } from './index';
 
 describe('storybookConfiguration generator', () => {
@@ -11,7 +11,7 @@ describe('storybookConfiguration generator', () => {
 
   beforeEach(() => {
     // Create a tree with an empty workspace
-    tree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
   });
 
   describe('application', () => {

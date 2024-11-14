@@ -5,7 +5,7 @@ import {
   joinPathFragments,
   Tree,
   workspaceRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import assetsLibraryGenerator from '../assets-library-generator';
 import translationsLibraryGenerator from '../translations-library-generator';
 

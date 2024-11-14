@@ -1,4 +1,4 @@
-import { detectPackageManager, ExecutorContext } from '@nrwl/devkit';
+import { detectPackageManager, ExecutorContext } from '@nx/devkit';
 
 import { spawn } from 'child_process';
 
@@ -11,7 +11,6 @@ export async function storybookExecutor(
   options: SecureServeExecutorOptions,
   context: ExecutorContext
 ) {
-
   if (!context.projectName) {
     return {
       success: false,

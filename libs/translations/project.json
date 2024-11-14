@@ -1,18 +1,19 @@
 {
+  "name": "translations",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/translations/src",
   "projectType": "library",
   "tags": ["type:utility"],
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/translations/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/translations"],
       "options": {
         "jestConfig": "libs/translations/jest.config.ts",
@@ -39,6 +40,5 @@
         "command": "echo 'Create your own script to fetch translations and save them in the libs/translations/src/locales folder'"
       }
     }
-  },
-  "name": "translations"
+  }
 }

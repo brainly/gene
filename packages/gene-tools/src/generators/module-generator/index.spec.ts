@@ -1,8 +1,8 @@
-import { logger, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
-import { applicationGenerator } from '@nrwl/next';
-import { Linter } from '@nrwl/linter';
+import { applicationGenerator } from '@nx/next';
+import { Linter } from '@nx/linter';
 
 describe('Module generator', () => {
   let expectedModuleFolder: string;

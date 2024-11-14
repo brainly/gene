@@ -1,4 +1,4 @@
-import { Tree, updateJson } from '@nrwl/devkit';
+import { Tree, updateJson } from '@nx/devkit';
 
 export const updateCypressTsConfig = (tree: Tree, e2ePath: string) => {
   updateJson(tree, `${e2ePath}/tsconfig.json`, (json) => {

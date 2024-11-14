@@ -8,8 +8,8 @@ const path = require('path');
 function getNxVersion() {
   const packageJsonPath = path.resolve(__dirname, '..', 'package.json');
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-  return packageJson.dependencies && packageJson.dependencies['@nrwl/workspace']
-    ? packageJson.dependencies['@nrwl/workspace']
+  return packageJson.dependencies && packageJson.dependencies['@nx/workspace']
+    ? packageJson.dependencies['@nx/workspace']
     : null;
 }
 
@@ -97,7 +97,7 @@ async function runCommands() {
       'brainly-style-guide',
       `inversify@5.1.1`,
       `@tanstack/react-query@5.55.4`,
-      '@nrwl/next@15.8.6',
+      '@nx/next@15.8.6',
       'style-loader@2.0.0',
       'css-loader@3.6.0',
       'sass@1.55.0',
@@ -116,12 +116,12 @@ async function runCommands() {
       `@types/ramda@0.30.2`,
       `@types/node@18.19.55`,
       'eslint-plugin-cypress@2.10.3',
-      '@nrwl/eslint-plugin-nx@15.8.9',
+      '@nx/eslint-plugin@15.8.9',
       'eslint-plugin-react-hooks@4.6.0',
       'eslint-plugin-jsx-a11y@6.6.1',
       'eslint-plugin-react@7.31.11',
       'eslint-config-next@13.1.1',
-      '@nrwl/jest@15.8.9',
+      '@nx/jest@15.8.9',
       'msw@0.49.2',
       'msw-storybook-addon@1.6.3',
       '@storybook/addon-actions@6.5.16',
@@ -139,10 +139,10 @@ async function runCommands() {
       '@testing-library/dom@8.20.1',
       '@testing-library/jest-dom@6.2.1',
       '@testing-library/react@16.0.0',
-      '@nrwl/cypress@15.8.9',
-      '@nrwl/react@15.8.9',
-      '@nrwl/web@15.8.9',
-      "@types/jest@29.4.4"
+      '@nx/cypress@15.8.9',
+      '@nx/react@15.8.9',
+      '@nx/web@15.8.9',
+      '@types/jest@29.4.4',
     ]);
 
     console.log('Generating gene-workspace with pnpm nx');

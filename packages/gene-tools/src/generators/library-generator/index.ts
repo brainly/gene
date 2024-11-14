@@ -6,9 +6,9 @@ import {
   updateJson,
   workspaceRoot,
   writeJson,
-} from '@nrwl/devkit';
-import { Linter } from '@nrwl/linter';
-import { libraryGenerator } from '@nrwl/react';
+} from '@nx/devkit';
+import { Linter } from '@nx/linter';
+import { libraryGenerator } from '@nx/react';
 import { GeneLibraryGenerator } from './schema';
 import { updateJestConfig } from '../utilities';
 import { relative } from 'path';
