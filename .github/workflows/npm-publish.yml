@@ -1,18 +1,27 @@
 name: Publish to NPM on GH Release Publish
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Alpha version to publish, e.g. 0.1.4-alpha.0'
+        required: true
+      ref:
+        description: 'Branch or tag to publish, e.g. feature/branch or v0.1.4'
+        required: true
   release:
     types: [published]
 
 env:
   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  VERSION_TO_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version || github.event.release.tag_name }}
 
 jobs:
   publish:
     if: github.repository == 'brainly/gene'
     strategy:
       matrix:
-        packages_to_publish:
+        package_to_publish:
           - create
           - eslint-plugin
           - gene
@@ -25,6 +34,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        if: github.event_name != 'workflow_dispatch'
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          ref: ${{ github.event.inputs.ref }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -41,12 +56,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm nx build packages-${{ matrix.packages_to_publish }}
+      - run: pnpm nx build packages-${{ matrix.package_to_publish }}
 
       - run: npm whoami
 
-      - name: Publish to NPM
+      - name: Publish to NPM (stable)
+        if: github.event_name != 'workflow_dispatch'
         run: |
-          cd dist/packages/${{ matrix.packages_to_publish }}
+          cd dist/packages/${{ matrix.package_to_publish }}
           npm version ${{ github.event.release.tag_name }} --no-git-tag-version
           npm publish --access public
+
+      - name: Publish to NPM (alpha)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          cd dist/packages/${{ matrix.package_to_publish }}
+          npm version ${{ env.VERSION_TO_PUBLISH }} --no-git-tag-version
+          npm publish --access public --tag alpha
