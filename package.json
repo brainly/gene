@@ -18,7 +18,7 @@
     "@apollo/client": "3.6.9",
     "@cucumber/gherkin": "27.0.0",
     "@cucumber/messages": "19.1.4",
-    "@nrwl/tao": "16.7.0",
+    "@nrwl/tao": "16.8.0",
     "@sentry/react": "7.77.0",
     "@storybook/addon-actions": "7.6.9",
     "@storybook/builder-webpack5": "6.5.4",
@@ -52,7 +52,7 @@
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
     "node-fetch": "2.6.7",
-    "nx": "16.7.0",
+    "nx": "16.8.0",
     "openai": "3.3.0",
     "path-to-regexp": "6.3.0",
     "prettier": "2.8.8",
@@ -68,14 +68,14 @@
     "zen-observable": "0.8.15",
     "zen-observable-ts": "1.1.0",
     "nx-cloud": "19.1.0",
-    "@nx/devkit": "16.7.0",
-    "@nx/workspace": "16.7.0",
-    "@nx/js": "16.7.0",
-    "@nx/linter": "16.7.0",
-    "@nx/storybook": "16.7.0",
-    "@nx/eslint-plugin": "16.7.0",
-    "@nx/plugin": "16.7.0",
-    "@nx/node": "16.7.0"
+    "@nx/devkit": "16.8.0",
+    "@nx/workspace": "16.8.0",
+    "@nx/js": "16.8.0",
+    "@nx/linter": "16.8.0",
+    "@nx/storybook": "16.8.0",
+    "@nx/eslint-plugin": "16.8.0",
+    "@nx/plugin": "16.8.0",
+    "@nx/node": "16.8.0"
   },
   "devDependencies": {
     "@actions/core": "1.10.1",
@@ -174,11 +174,11 @@
     "typescript": "4.7.4",
     "zod": "3.22.3",
     "zod-to-ts": "1.2.0",
-    "@nx/cypress": "16.7.0",
-    "@nx/web": "16.7.0",
-    "@nx/react": "16.7.0",
-    "@nx/jest": "16.7.0",
-    "@nx/next": "16.7.0"
+    "@nx/cypress": "16.8.0",
+    "@nx/web": "16.8.0",
+    "@nx/react": "16.8.0",
+    "@nx/jest": "16.8.0",
+    "@nx/next": "16.8.0"
   },
   "msw": {
     "workerDirectory": ".storybook/msw"
