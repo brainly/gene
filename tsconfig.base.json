@@ -28,5 +28,9 @@
     },
     "types": ["node", "jest"]
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "cypress",
+    "**/*.cy.tsx"
+  ]
 }

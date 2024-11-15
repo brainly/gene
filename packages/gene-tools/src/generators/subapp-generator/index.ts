@@ -9,10 +9,11 @@ import {
   writeJson,
 } from '@nx/devkit';
 import { SubappGenerator } from './schema';
-import { getNpmScope, stringUtils } from '@nx/workspace';
+import { stringUtils } from '@nx/workspace';
 import * as inquirer from 'inquirer';
 import libraryGenerator from '../library-generator';
 import { reexport } from './utils/reexport';
+import { getNpmScope } from '../utilities';
 
 export default async function (tree: Tree, schema: SubappGenerator) {
   const { name, library, directory } = schema;
@@ -65,8 +66,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
       throw new Error(`Error while creating new library.`);
     }
   }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
+
   const npmScope = getNpmScope(tree);
 
   generateFiles(

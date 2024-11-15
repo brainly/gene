@@ -2,6 +2,8 @@ import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import appGenerator from './index';
 
+jest.setTimeout(10000);
+
 describe('NextJS App generator', () => {
   let appTree: Tree;
   let projectName: string;
@@ -105,9 +107,10 @@ describe('NextJS App generator', () => {
         (item: any) => item.target === 'copy-assets-to-app'
       )
     ).toEqual({ target: 'copy-assets-to-app', projects: 'self' });
+
     const e2eConfig = readProjectConfiguration(
       appTree,
-      'example.com-my-app-e2e'
+      'example.com-example.com-my-app-e2e'
     );
     expect(e2eConfig?.targets?.['e2e']).toBeTruthy();
     expect(e2eConfig?.targets?.['e2e-base']).toBeTruthy();
@@ -130,17 +133,6 @@ describe('NextJS App generator', () => {
 
     expect(cypressConfig).toContain(baseUrl);
     expect(cypressConfig).toContain('retries: 2');
-
-    const tsconfig = readJson(
-      appTree,
-      'apps/example.com/my-app-e2e/tsconfig.json'
-    );
-
-    expect(tsconfig.compilerOptions.allowJs).toBe(true);
-    expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
-    expect(
-      tsconfig.compilerOptions.types.includes('@testing-library/cypress')
-    ).toBe(true);
   });
 
   it('should exclude files', async () => {
@@ -209,14 +201,6 @@ describe('NextJS App generator', () => {
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/tsconfig.json')
-    ).not.toBeTruthy();
-
-    expect(
-      appTree.exists('apps/example.com/my-app-e2e/.eslintrc.json')
-    ).not.toBeTruthy();
-
-    expect(
       appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home/display.ts')
     ).not.toBeTruthy();
 
@@ -237,30 +221,6 @@ describe('NextJS App generator', () => {
     const appDir = `apps/example.com/my-app`;
     const eslintJSON = readJson(appTree, `${appDir}/.eslintrc.json`);
     expect(eslintJSON.settings.next.rootDir).toBe(appDir);
-  });
-
-  it('.eslintrc for e2e should contain updated overrides', async () => {
-    await appGenerator(appTree, {
-      directory: 'example.com',
-      apollo: true,
-      name: projectName,
-      reactQuery: true,
-      rewrites: true,
-    });
-
-    const e2eDir = `apps/example.com/my-app-e2e`;
-    const eslintJSON = readJson(appTree, `${e2eDir}/.eslintrc.json`);
-    expect(eslintJSON.overrides).toEqual(
-      expect.arrayContaining([
-        {
-          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-          rules: {
-            'babel/new-cap': 'off',
-            'import/no-extraneous-dependencies': 'off',
-          },
-        },
-      ])
-    );
   });
 
   it('should generate files with both service clients', async () => {

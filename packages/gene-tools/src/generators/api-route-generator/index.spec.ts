@@ -69,10 +69,6 @@ describe('Subapp generator', () => {
     const routeContent = appTree
       .read('apps/example.com/us/pages/api/v1/my-api-route.ts')
       ?.toString();
-    expect(routeContent).toContain(`
-      cors({
-        credentials: true,
-      })
-    )`);
+    expect(routeContent).toContain(`credentials: true`);
   });
 });

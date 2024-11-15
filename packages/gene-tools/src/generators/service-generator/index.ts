@@ -10,7 +10,8 @@ import {
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { BrainlyServiceGenerator } from './schema';
-import { getNpmScope, stringUtils } from '@nx/workspace';
+import { stringUtils } from '@nx/workspace';
+import { getNpmScope } from '../utilities';
 
 type GeneratorOptions = {
   name: string;
@@ -93,8 +94,6 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     name: name,
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /** @ts-ignore */
   const npmScope = getNpmScope(tree);
 
   /**

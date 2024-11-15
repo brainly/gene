@@ -19,14 +19,14 @@ import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
-import { getNpmScope, stringUtils } from '@nx/workspace';
+import { stringUtils } from '@nx/workspace';
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { cleanupFiles } from './utils/cleanupFiles';
-import { updateJestConfig } from '../utilities';
+import { getNpmScope, updateJestConfig } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory, e2e } = schema;
-
+  
   const currentPackageJson = readJson(tree, 'package.json');
 
   await applicationGenerator(tree, {
@@ -45,15 +45,13 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     ? `${normalizedDirectory}-${name}`
     : name;
   const projectPath = `${directory}/${name}`;
-  await updateWorkspaceTarget({ tree, projectPath, projectName, e2e });
+  await updateWorkspaceTarget({ tree, projectPath, projectName, e2e, directory: normalizedDirectory });
 
   const { appsDir } = getWorkspaceLayout(tree);
   const appDir = `${appsDir}/${projectPath}`;
   const e2eDir = `${appsDir}/${projectPath}-e2e`;
   const initialPage = 'Home';
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
   const npmScope = getNpmScope(tree);
 
   generateFiles(tree, joinPathFragments(__dirname, './files/app'), appDir, {
@@ -81,10 +79,6 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     });
   }
 
-  if (e2e !== false) {
-    updateCypressTsConfig(tree, e2eDir);
-  }
-
   maybeExcludeRewrites(tree, schema);
 
   if (e2e !== false) {
@@ -92,28 +86,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   }
 
   updateEslint(tree, appDir);
-
-  if (e2e !== false) {
-    updateJson(
-      tree,
-      joinPathFragments(e2eDir, './.eslintrc.json'),
-      (eslintConfig) => {
-        return {
-          ...eslintConfig,
-          overrides: [
-            {
-              files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-              rules: {
-                'babel/new-cap': 'off',
-                'import/no-extraneous-dependencies': 'off',
-              },
-            },
-          ],
-        };
-      }
-    );
-  }
-
+  
   await storybookConfigurationGenerator(tree, {
     name: projectName,
   });

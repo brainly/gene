@@ -75,7 +75,7 @@ describe('Library generator', () => {
       .read('libs/my-library/jest.config.ts')
       ?.toString();
     expect(jestConfigContent).toContain(
-      `"transform":{"^.+\\\\.[tj]sx?$":"ts-jest"}`
+      `transform: { '^.+\\\\.[tj]sx?$': 'ts-jest' }`
     );
   });
 
@@ -89,7 +89,7 @@ describe('Library generator', () => {
     const jestConfigContent = appTree
       .read('libs/my-library/jest.config.ts')
       ?.toString();
-    expect(jestConfigContent).toContain('"isolatedModules": true');
+    expect(jestConfigContent).toContain('isolatedModules: true');
   });
 
   it('jest.config should exclude diagnostics for all test files', async () => {
@@ -102,6 +102,6 @@ describe('Library generator', () => {
     const jestConfigContent = appTree
       .read('libs/my-library/jest.config.ts')
       ?.toString();
-    expect(jestConfigContent).toContain('"exclude": ["**"]');
+    expect(jestConfigContent).toContain(`exclude: ['**']`);
   });
 });

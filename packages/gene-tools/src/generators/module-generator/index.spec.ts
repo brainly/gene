@@ -77,7 +77,7 @@ describe('Module generator', () => {
       .read('libs/my-app/app-modules/src/lib/my-lib-module/index.ts')
       ?.toString();
     expect(moduleContent).toMatch(
-      /export {MyAppMyLibModule} from ".\/MyAppMyLibModule"/
+      /export { MyAppMyLibModule } from '.\/MyAppMyLibModule'/
     );
 
     const appConfig = readProjectConfiguration(appTree, createdProjectName);
@@ -198,7 +198,7 @@ describe('Module generator', () => {
       .read(expectedModuleFolder + '/src/lib/my-second-lib-module/index.ts')
       ?.toString();
     expect(moduleContent).toMatch(
-      /export {MyAppMySecondLibModule} from ".\/MyAppMySecondLibModule"/
+      /export { MyAppMySecondLibModule } from '.\/MyAppMySecondLibModule';/
     );
   });
 

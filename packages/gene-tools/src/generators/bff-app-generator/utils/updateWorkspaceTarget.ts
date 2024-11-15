@@ -1,5 +1,6 @@
 import {
   Tree,
+  getProjects,
   joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,
@@ -12,11 +13,13 @@ export const updateWorkspaceTarget = async ({
   projectPath,
   projectName,
   e2e,
+  directory,
 }: {
   tree: Tree;
   projectPath: string;
   projectName: string;
   e2e?: boolean;
+  directory: string;
 }) => {
   const appTargetsTemplate = readFileSync(
     joinPathFragments(__dirname, './workspaceAppTargetTemplate.ejs')
@@ -40,7 +43,8 @@ export const updateWorkspaceTarget = async ({
     projectPath,
   });
 
-  const e2eProjectName = `${projectName}-e2e`;
+  const dirPrefix = directory ? `${directory}-` : '';
+  const e2eProjectName = `${dirPrefix}${projectName}-e2e`;
 
   const currentProjectConfig = readProjectConfiguration(tree, projectName);
 

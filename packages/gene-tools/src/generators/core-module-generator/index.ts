@@ -15,10 +15,11 @@ import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyCoreModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { getNpmScope, stringUtils } from '@nx/workspace';
+import { stringUtils } from '@nx/workspace';
 import { Linter } from '@nx/linter';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 import { resolveTags } from './utils/resolveTags';
+import { getNpmScope } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
   if (!schema.name) {
@@ -26,8 +27,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
   }
 
   const providedTags = resolveTags(schema);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
+
   const npmScope = getNpmScope(tree);
 
   if (!providedTags.includes('domain:')) {

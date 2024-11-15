@@ -16,9 +16,10 @@ import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { getNpmScope, stringUtils } from '@nx/workspace';
+import { stringUtils } from '@nx/workspace';
 import { Linter } from '@nx/linter';
 import {
+  getNpmScope,
   promptBoolean,
   promptSelectAppName,
   updateCypressTsConfig,
@@ -31,8 +32,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
     throw Error('Module name is required.');
   }
   const currentPackageJson = readJson(tree, 'package.json');
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
+
   const npmScope = getNpmScope(tree);
 
   const workspaceJsonProjects = [...getProjects(tree)].map(
