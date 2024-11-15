@@ -2,19 +2,55 @@
   "migrations": [
     {
       "cli": "nx",
-      "version": "16.9.0-beta.1",
-      "description": "Replace imports of Module Federation utils frm @nx/devkit to @nx/webpack",
-      "implementation": "./src/migrations/update-16-9-0/migrate-mf-util-usage",
-      "package": "@nx/devkit",
-      "name": "update-16-9-0-migrate-mf-usage-to-webpack"
+      "version": "17.3.0-beta.6",
+      "description": "Updates the nx wrapper.",
+      "implementation": "./src/migrations/update-17-3-0/update-nxw",
+      "package": "nx",
+      "name": "17.3.0-update-nx-wrapper"
+    },
+    {
+      "version": "17.1.0-beta.1",
+      "description": "Updates for @typescript-utils/utils v6.9.1+",
+      "implementation": "./src/migrations/update-17-1-0/update-typescript-eslint",
+      "package": "@nx/linter",
+      "name": "update-typescript-eslint"
+    },
+    {
+      "version": "17.2.0-beta.0",
+      "description": "Simplify eslintFilePatterns",
+      "implementation": "./src/migrations/update-17-2-0/simplify-eslint-patterns",
+      "package": "@nx/linter",
+      "name": "simplify-eslint-patterns"
+    },
+    {
+      "version": "17.2.9",
+      "description": "Move executor options to target defaults",
+      "implementation": "./src/migrations/update-17-2-9/move-options-to-target-defaults",
+      "package": "@nx/linter",
+      "name": "move-options-to-target-defaults"
     },
     {
       "cli": "nx",
-      "version": "16.8.2-beta.0",
-      "description": "Remove invalid options (strict, noInterop) for ES6 type modules.",
-      "factory": "./src/migrations/update-16-8-2/update-swcrc",
-      "package": "@nx/js",
-      "name": "16-8-2-update-swcrc"
+      "version": "17.2.7",
+      "description": "Remove patched eslint rule for @next/next/no-html-link-for-pages",
+      "implementation": "./src/migrations/update-17-2-7/remove-eslint-rules-patch",
+      "package": "@nx/next",
+      "name": "update-17-2-7"
+    },
+    {
+      "version": "17.1.0-beta.2",
+      "description": "Move jest executor options to nx.json targetDefaults",
+      "implementation": "./src/migrations/update-17-1-0/move-options-to-target-defaults",
+      "package": "@nx/jest",
+      "name": "move-options-to-target-defaults"
+    },
+    {
+      "cli": "nx",
+      "version": "17.2.1-beta.0",
+      "description": "Add webpack.config.js file when webpackConfig is not defined",
+      "implementation": "./src/migrations/update-17-2-1/webpack-config-setup",
+      "package": "@nx/webpack",
+      "name": "update-17-2-1-webpack-config-setup"
     }
   ]
 }

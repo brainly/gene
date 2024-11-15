@@ -11,8 +11,7 @@
         "outputPath": "dist/packages/gene-apollo",
         "main": "packages/gene-apollo/src/index.ts",
         "tsConfig": "packages/gene-apollo/tsconfig.lib.json",
-        "assets": ["packages/gene-apollo/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene-apollo/*.md"]
       }
     },
     "lint": {
@@ -26,8 +25,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-apollo"],
       "options": {
-        "jestConfig": "packages/gene-apollo/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-apollo/jest.config.ts"
       }
     }
   },

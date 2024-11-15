@@ -15,7 +15,7 @@ import * as inquirer from 'inquirer';
 import * as fs from 'fs';
 import { camelCase, upperFirst } from 'lodash';
 import { promptSelectAppName } from '../utilities/getAppName';
-import { classify } from '@nx/workspace/src/utils/strings';
+import {classify} from '@nx/devkit/src/utils/string-utils';
 import { getComponentTemplateVariables } from './utils/getComponentTemplateVariables';
 
 export default async function (tree: Tree, schema: BrainlyComponentGenerator) {

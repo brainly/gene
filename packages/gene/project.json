@@ -11,8 +11,7 @@
         "outputPath": "dist/packages/gene",
         "main": "packages/gene/src/index.ts",
         "tsConfig": "packages/gene/tsconfig.lib.json",
-        "assets": ["packages/gene/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene/*.md"]
       }
     },
     "lint": {
@@ -26,8 +25,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene"],
       "options": {
-        "jestConfig": "packages/gene/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene/jest.config.ts"
       }
     }
   },

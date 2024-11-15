@@ -16,8 +16,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/translations"],
       "options": {
-        "jestConfig": "libs/translations/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/translations/jest.config.ts"
       }
     },
     "copy-translations-to-app": {

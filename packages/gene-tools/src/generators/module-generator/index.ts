@@ -16,7 +16,7 @@ import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { stringUtils } from '@nx/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 import { Linter } from '@nx/linter';
 import {
   getNpmScope,

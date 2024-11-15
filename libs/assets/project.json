@@ -16,8 +16,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/assets"],
       "options": {
-        "jestConfig": "libs/assets/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/assets/jest.config.ts"
       }
     },
     "copy-assets-to-app": {

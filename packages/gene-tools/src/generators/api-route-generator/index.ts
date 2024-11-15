@@ -9,7 +9,7 @@ import {
   writeJson,
 } from '@nx/devkit';
 import { APIRouteGenerator } from './schema';
-import { stringUtils } from '@nx/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 
 import { promptSelectAppName, getAllAppKeys, getNpmScope } from '../utilities';
 

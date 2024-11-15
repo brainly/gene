@@ -6,6 +6,13 @@ import { applicationGenerator } from '@nx/next';
 import { libraryGenerator } from '@nx/react';
 import { storybookConfigurationGenerator } from './index';
 
+jest.mock('@nx/devkit', () => {
+  return {
+    __esModule: true, // Fix for TypeError: Cannot redefine property: formatFiles
+    ...jest.requireActual('@nx/devkit'),
+  };
+});
+
 describe('storybookConfiguration generator', () => {
   let tree: Tree;
 

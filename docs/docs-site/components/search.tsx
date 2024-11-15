@@ -20,14 +20,14 @@ function useDebounceValue<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-type ItemProps = {
+interface ItemProps {
   title: string;
   route: string;
   content: string;
   type: 'title' | 'content';
   searchValue: string | undefined;
   handleClick: () => void;
-};
+}
 
 const Item = ({
   title,

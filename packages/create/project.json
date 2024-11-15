@@ -11,8 +11,7 @@
         "outputPath": "dist/packages/create",
         "main": "packages/create/src/index.ts",
         "tsConfig": "packages/create/tsconfig.lib.json",
-        "assets": ["packages/create/*.md", "packages/create/**/*.js"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/create/*.md", "packages/create/**/*.js"]
       }
     },
     "lint": {

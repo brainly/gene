@@ -9,14 +9,13 @@ import {
   updateJson,
   updateProjectConfiguration,
   writeJson,
-  ,
 } from '@nx/devkit';
 import { getNpmPackageSharedConfig } from '@nx/webpack';
 import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyCoreModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { stringUtils } from '@nx/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 import { Linter } from '@nx/linter';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 import { resolveTags } from './utils/resolveTags';

@@ -11,7 +11,9 @@ import {
 import libraryGenerator from '../library-generator';
 import { BrainlyComponentLibraryGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { dasherize } from '@nx/workspace/src/utils/strings';
+
+import { dasherize } from '@nx/devkit/src/utils/string-utils';
+
 import { resolveTags } from './utils/resolveTags';
 
 const getDirectoryPath = (

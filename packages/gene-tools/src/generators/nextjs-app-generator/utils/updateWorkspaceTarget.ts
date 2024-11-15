@@ -43,8 +43,7 @@ export const updateWorkspaceTarget = async ({
     projectPath,
   });
 
-  const dirPrefix = directory ? `${directory}-` : '';
-  const e2eProjectName = `${dirPrefix}${projectName}-e2e`;
+  const e2eProjectName = `${projectName}-e2e`;
 
   const currentProjectConfig = readProjectConfiguration(tree, projectName);
 

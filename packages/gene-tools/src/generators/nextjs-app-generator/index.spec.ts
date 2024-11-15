@@ -110,7 +110,7 @@ describe('NextJS App generator', () => {
 
     const e2eConfig = readProjectConfiguration(
       appTree,
-      'example.com-example.com-my-app-e2e'
+      'example.com-my-app-e2e'
     );
     expect(e2eConfig?.targets?.['e2e']).toBeTruthy();
     expect(e2eConfig?.targets?.['e2e-base']).toBeTruthy();

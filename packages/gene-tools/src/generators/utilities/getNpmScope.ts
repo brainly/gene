@@ -1,7 +1,9 @@
-import { readNxJson, Tree } from '@nx/devkit';
+import { readJson, Tree } from '@nx/devkit';
 
-export const getNpmScope = (tree: Tree) => {
-  const nxJson = readNxJson(tree);
+export function getNpmScope(tree: Tree): string | undefined {
+  const { name } = tree.exists('package.json')
+    ? readJson<{ name?: string }>(tree, 'package.json')
+    : { name: null };
 
-  return nxJson.npmScope;
-};
+  return name;
+}

@@ -10,7 +10,8 @@ import {
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { BrainlyServiceGenerator } from './schema';
-import { stringUtils } from '@nx/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+
 import { getNpmScope } from '../utilities';
 
 type GeneratorOptions = {

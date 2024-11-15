@@ -19,7 +19,9 @@ import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
-import { stringUtils } from '@nx/workspace';
+
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {

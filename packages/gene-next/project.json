@@ -11,8 +11,7 @@
         "outputPath": "dist/packages/gene-next",
         "main": "packages/gene-next/src/index.ts",
         "tsConfig": "packages/gene-next/tsconfig.lib.json",
-        "assets": ["packages/gene-next/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene-next/*.md"]
       }
     },
     "lint": {
@@ -26,8 +25,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-next"],
       "options": {
-        "jestConfig": "packages/gene-next/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-next/jest.config.ts"
       }
     }
   },

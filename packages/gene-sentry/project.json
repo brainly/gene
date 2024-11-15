@@ -11,8 +11,7 @@
         "outputPath": "dist/packages/gene-sentry",
         "main": "packages/gene-sentry/src/index.ts",
         "tsConfig": "packages/gene-sentry/tsconfig.lib.json",
-        "assets": ["packages/gene-sentry/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene-sentry/*.md"]
       }
     },
     "lint": {
@@ -26,8 +25,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-sentry"],
       "options": {
-        "jestConfig": "packages/gene-sentry/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-sentry/jest.config.ts"
       }
     }
   },

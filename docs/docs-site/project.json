@@ -60,9 +60,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/docs/docs-site"],
       "options": {
-        "jestConfig": "docs/docs-site/jest.config.ts",
-        "passWithNoTests": true,
-        "updateBuildableProjectDepsInPackageJson": true
+        "jestConfig": "docs/docs-site/jest.config.ts"
       }
     },
     "lint": {

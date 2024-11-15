@@ -7,7 +7,7 @@ export default function EnlargableContent({ children }) {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
 
   useEffect(() => {
     if (isOpen) {

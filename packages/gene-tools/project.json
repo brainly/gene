@@ -23,8 +23,7 @@
           "packages/gene-tools/**/*.crt",
           "packages/gene-tools/**/*.key",
           "packages/gene-tools/**/.gitkeep"
-        ],
-        "updateBuildableProjectDepsInPackageJson": true
+        ]
       }
     },
     "lint": {
@@ -38,8 +37,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-tools"],
       "options": {
-        "jestConfig": "packages/gene-tools/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-tools/jest.config.ts"
       }
     }
   },
