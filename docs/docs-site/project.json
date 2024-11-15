@@ -12,12 +12,12 @@
           "next build",
           "nx run docs-docs-site:build-styles"
         ],
-        "cwd": "docs/docs-site",
-        "outputPath": "dist/docs/docs-site"
+        "cwd": "docs/docs-site"
       },
       "configurations": {
         "production": {}
-      }
+      },
+      "outputs": ["{workspaceRoot}/dist/docs/docs-site"]
     },
     "serve": {
       "executor": "nx:run-commands",
