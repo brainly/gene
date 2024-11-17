@@ -32,7 +32,7 @@ export function useTranslation(): TranslationServiceType {
 
       const value = t(key, params);
       if (typeof window === 'undefined') {
-        let fallback = ssrFallback(key, params);
+        let fallback = ssrFallback(key);
         Object.entries(params || {}).forEach(([key, value]) => {
           const regex = new RegExp(`%${key}%`, 'g');
           fallback = fallback.replace(regex, String(value));
