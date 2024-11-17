@@ -12,13 +12,13 @@ import {
   FetchPropsType,
 } from '@brainly-gene/core';
 
-type PropsType<TData, TVariables> = {
+interface PropsType<TData, TVariables> {
   apolloClient: ApolloClient<NormalizedCacheObject>;
   queryFn: (
     client: ApolloClient<NormalizedCacheObject>,
     variables: TVariables
   ) => Promise<ApolloQueryResult<TData>>;
-};
+}
 
 export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
   apolloClient,

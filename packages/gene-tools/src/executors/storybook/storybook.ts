@@ -2,10 +2,10 @@ import { detectPackageManager, ExecutorContext } from '@nx/devkit';
 
 import { spawn } from 'child_process';
 
-export type SecureServeExecutorOptions = {
+export interface SecureServeExecutorOptions {
   command: 'start' | 'build';
   e2e?: boolean;
-};
+}
 
 export async function storybookExecutor(
   options: SecureServeExecutorOptions,

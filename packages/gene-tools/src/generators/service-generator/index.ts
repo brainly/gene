@@ -14,12 +14,12 @@ import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 
 import { getNpmScope } from '../utilities';
 
-type GeneratorOptions = {
+interface GeneratorOptions {
   name: string;
   targetLocation: string;
   filesLocation: string;
   npmScope: string;
-};
+}
 
 function createFiles(
   tree: Tree,

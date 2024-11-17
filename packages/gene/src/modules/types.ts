@@ -14,9 +14,9 @@ export type EventHandler<T extends Record<string, unknown> = any> = (
   props: unknown
 ) => void;
 
-type InjectableFactory = {
+interface InjectableFactory {
   factory: (props: any) => any;
-};
+}
 
 export type MediatorDeclarationsType = [
   symbol,
@@ -29,20 +29,20 @@ export type ComponentDeclarationType = [
 
 export type EventHandlersType = [symbol, EventHandler][];
 
-export type DefaultDeclarationsType = {
+export interface DefaultDeclarationsType {
   mediators?: MediatorDeclarationsType;
   components?: ComponentDeclarationType;
   contextProviders?: React.ComponentType<{ children?: React.ReactNode }>[];
   containers?: Container[];
   eventHandlers?: EventHandlersType;
   errorBoundary?: ErrorBoundaryDeclarationType;
-};
+}
 
-export type ModuleComponentPropsType<T = Record<string, any>, U extends string = string> = {
+export interface ModuleComponentPropsType<T = Record<string, any>, U extends string = string> {
   serverProps?: Record<string, any>;
   renderChildren?: (props: T) => JSX.Element;
   slots?: Record<U, JSX.Element | null>;
-};
+}
 
 export type ModuleComponentType<RenderChildrenProps = Record<string, any>, SlotsLabels extends string = string> = (
   props: ModuleComponentPropsType<RenderChildrenProps, SlotsLabels>

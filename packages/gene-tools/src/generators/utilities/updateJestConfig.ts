@@ -11,9 +11,7 @@ type JSONValue =
 
 type JSONArray = JSONValue[];
 
-export interface JSONObject {
-  [key: string]: JSONValue;
-}
+export type JSONObject = Record<string, JSONValue>;
 
 export const updateJestConfig = (
   tree: Tree,

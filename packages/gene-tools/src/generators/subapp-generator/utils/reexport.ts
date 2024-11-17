@@ -3,12 +3,12 @@ import { Tree } from '@nx/devkit';
 
 const j = jscodeshift.withParser('tsx');
 
-type PropsType = {
+interface PropsType {
   tree: Tree;
   subappName: string;
   reexportIndexPath: string;
   reexportRelativePath: string;
-};
+}
 
 export const reexport = ({
   tree,

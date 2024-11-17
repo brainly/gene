@@ -5,14 +5,14 @@ import { createServer } from 'http-proxy';
 import Server = require('http-proxy');
 import { join, resolve } from 'path';
 
-export type ServeOptions = {
+export interface ServeOptions {
   host: string;
   port: number;
   serveTarget: string;
   targetHost: string;
   targetPort: number;
   noOutput: boolean;
-};
+}
 
 export function createProxy({
   host,

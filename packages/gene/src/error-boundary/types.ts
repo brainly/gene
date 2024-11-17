@@ -1,8 +1,8 @@
-export type ErrorBoundaryPropsType = {
+export interface ErrorBoundaryPropsType {
   children: React.ReactNode;
   boundaryName: string;
   fallback?: React.ReactElement<Record<string, unknown>, string>;
-};
+}
 
 export type ErrorBoundaryComponentType = (
   props: ErrorBoundaryPropsType

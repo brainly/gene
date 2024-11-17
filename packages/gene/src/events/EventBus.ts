@@ -1,15 +1,15 @@
 import {Observable} from 'zen-observable-ts';
 import * as R from 'ramda';
 
-export type AbstractEventBusEventType<PayloadType = unknown> = {
+export interface AbstractEventBusEventType<PayloadType = unknown> {
   payload?: PayloadType;
   type: string;
-};
+}
 // TODO fix any[]
 const subscriberMap = new Map<string, any[]>();
 // used to intercept events, cause side effects, and forward to subscribers
 // SHOULD BE INTERNAL ONLY! Do not expose this to the public.
-const interceptors: Array<(value: AbstractEventBusEventType) => typeof value> =
+const interceptors: ((value: AbstractEventBusEventType) => typeof value)[] =
   [];
 // singletons
 let observer: ZenObservable.Observer<AbstractEventBusEventType>;

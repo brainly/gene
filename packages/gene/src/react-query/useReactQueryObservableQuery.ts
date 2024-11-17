@@ -26,7 +26,7 @@ type ObservableType<TData> =
   | QueryObserver<TData>
   | InfiniteQueryObserver<TData>;
 
-type ReturnType<TData, TObservable> = {
+interface ReturnType<TData, TObservable> {
   error: string | null;
   data: ObserverResultData<TData, TObservable> | undefined;
   loading: boolean;
@@ -42,7 +42,7 @@ type ReturnType<TData, TObservable> = {
     options?: FetchNextPageOptions
   ) => Promise<InfiniteQueryObserverResult<unknown, Error>>;
   hasNextPage: boolean;
-};
+}
 
 /**
  *

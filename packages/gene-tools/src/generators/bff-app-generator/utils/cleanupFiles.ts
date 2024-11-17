@@ -1,7 +1,7 @@
 import { Tree } from '@nx/devkit';
 import { BrainlyNextJSAppGenerator } from '../schema';
 
-export const cleanupFiles = (tree: Tree, filesToRemove: Array<string>) => {
+export const cleanupFiles = (tree: Tree, filesToRemove: string[]) => {
   filesToRemove &&
     tree
       .listChanges()
