@@ -4,9 +4,9 @@ export type TestIntersectionType = Readonly<{
   foo: string;
 }>;
 
-export interface TestLiteralType {
+export type TestLiteralType = {
   bar: number;
-}
+};
 
 export type TestIntersectionTypeWithCallback = Readonly<{
   onClick: () => 1;
