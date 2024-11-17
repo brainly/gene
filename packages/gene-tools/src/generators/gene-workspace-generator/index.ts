@@ -17,16 +17,52 @@ export default async function (tree: Tree) {
   await generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
 
   // Update .eslintrc.json
-  const eslintJson = tree.read('.eslintrc.json', 'utf-8');
-  const updatedEslintJson = eslintJson
-    .replace(
-      'plugin:@nrwl/nx/typescript',
-      'plugin:@brainly-gene/eslint-plugin/basic'
-    )
-    .replace(
-      '"plugins": ["@nrwl/nx"]',
-      '"plugins": ["@nrwl/nx", "@brainly-gene"]'
-    );
+  const updatedEslintJson = `
+  {
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx", "@brainly-gene"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@brainly-gene/eslint-plugin/basic"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {
+        "@nx/enforce-module-boundaries": ["off"]
+      }
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    }
+  ]
+}
+`;
 
   tree.write('.eslintrc.json', updatedEslintJson);
 
