@@ -1,17 +1,10 @@
 import { Tree } from '@nx/devkit';
 
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | JSONObject
-  | JSONArray
-  | null
-  | undefined;
+type JSONValue = string | number | boolean | JSONArray | null | undefined;
 
 type JSONArray = JSONValue[];
 
-export type JSONObject = Record<string, JSONValue>;
+export type JSONObject = Record<string, JSONValue | Record<string, JSONValue>>;
 
 export const updateJestConfig = (
   tree: Tree,

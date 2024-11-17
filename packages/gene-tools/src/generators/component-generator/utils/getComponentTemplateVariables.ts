@@ -17,7 +17,7 @@ import {
 } from '@nx/devkit/src/utils/string-utils';
 
 export const getComponentTemplateVariables = (
-  _options: Record<string, unknown>
+  _options: Record<string, any>
 ) => {
   const {
     props,
