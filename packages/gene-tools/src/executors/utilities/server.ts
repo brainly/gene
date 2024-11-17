@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { readFileSync } from 'fs';
 import { createServer } from 'http-proxy';
 import Server = require('http-proxy');
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 
 export interface ServeOptions {
   host: string;

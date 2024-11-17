@@ -71,7 +71,8 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
 
   const directoryPath = `${root.replace('apps/', '')}`;
 
-  const moduleLibrary = workspaceJsonProjects.find(([_name, project]) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const moduleLibrary = workspaceJsonProjects.find(([_, project]) => {
     return project.root.endsWith(`${directoryPath}/${APP_MODULES_LIB_SUFFIX}`);
   });
 

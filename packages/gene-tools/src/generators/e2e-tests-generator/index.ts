@@ -117,23 +117,19 @@ export default async function (tree: Tree) {
     },
   ]);
 
-  let spinner = ora('Analyzing components inside ' + moduleComponent).start();
+  ora('Analyzing components inside ' + moduleComponent).start();
 
   const dataTestIds = processResults(
     await findDataTestIds(`${modulePath}/${moduleComponent}`)
   );
 
-  // spinner.stop();
-  spinner = ora('Generating Gherkin Scenarios').start();
+  ora('Generating Gherkin Scenarios').start();
 
   const gherkinScenarios = await generateGherkin(
     JSON.stringify(dataTestIds),
     moduleDescription
   );
-
-  // spinner.stop();
-
-  spinner = ora('Generating Cypress code').start();
+  ora('Generating Cypress code').start();
 
   const cypressCode = await generateCypress(
     gherkinScenarios,

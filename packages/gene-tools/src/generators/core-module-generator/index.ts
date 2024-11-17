@@ -10,7 +10,6 @@ import {
   updateProjectConfiguration,
   writeJson,
 } from '@nx/devkit';
-import { getNpmPackageSharedConfig } from '@nx/webpack';
 import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyCoreModuleGenerator } from './schema';

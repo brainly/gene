@@ -5,7 +5,6 @@ import {
   generateFiles,
   joinPathFragments,
   getWorkspaceLayout,
-  updateJson,
   offsetFromRoot,
   readJson,
   writeJson,
@@ -18,7 +17,6 @@ import { maybeExcludeRewrites } from './utils/maybeExcludeRewrites';
 import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
-import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 
 import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 

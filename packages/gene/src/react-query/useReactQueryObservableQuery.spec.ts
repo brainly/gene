@@ -28,7 +28,7 @@ describe('useReactQueryObservableQuery', () => {
     const $reactQueryObservable =
       createTestObservable() as unknown as QueryObserver<ExampleResponse>;
 
-    const { result, rerender, unmount } = renderHook(() =>
+    const { result, unmount } = renderHook(() =>
       useReactQueryObservableQuery<ExampleResponse>($reactQueryObservable)
     );
 

@@ -29,7 +29,7 @@ export const i18nConfig = {
     // this is temporary to load only empty file as lib required to load file
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    loadPath: ([lang]: string[]) => `/nx-locales/empty.json`,
+    loadPath: () => `/nx-locales/empty.json`,
     requestOptions: {
       cache: 'force-cache',
     },

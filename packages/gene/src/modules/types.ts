@@ -10,9 +10,7 @@ export type MediatorFactory<T extends Record<string, unknown> = any> = (
   props: MediatorPropsType<T>
 ) => void;
 
-export type EventHandler<T extends Record<string, unknown> = any> = (
-  props: unknown
-) => void;
+export type EventHandler = (props: unknown) => void;
 
 interface InjectableFactory {
   factory: (props: any) => any;
@@ -38,12 +36,18 @@ export interface DefaultDeclarationsType {
   errorBoundary?: ErrorBoundaryDeclarationType;
 }
 
-export interface ModuleComponentPropsType<T = Record<string, any>, U extends string = string> {
+export interface ModuleComponentPropsType<
+  T = Record<string, any>,
+  U extends string = string
+> {
   serverProps?: Record<string, any>;
   renderChildren?: (props: T) => JSX.Element;
   slots?: Record<U, JSX.Element | null>;
 }
 
-export type ModuleComponentType<RenderChildrenProps = Record<string, any>, SlotsLabels extends string = string> = (
+export type ModuleComponentType<
+  RenderChildrenProps = Record<string, any>,
+  SlotsLabels extends string = string
+> = (
   props: ModuleComponentPropsType<RenderChildrenProps, SlotsLabels>
 ) => JSX.Element | null;

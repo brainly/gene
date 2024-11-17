@@ -1,4 +1,3 @@
-import { Tree } from '@nx/devkit';
 import {
   PromptsProfileDefaultValueKeyType,
   resolveGeneratorOptions,

@@ -1,10 +1,8 @@
 import {
-  formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   Tree,
-  workspaceRoot,
 } from '@nx/devkit';
 import assetsLibraryGenerator from '../assets-library-generator';
 import translationsLibraryGenerator from '../translations-library-generator';

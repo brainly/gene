@@ -1,6 +1,5 @@
 import {
   RuleModule,
-  RuleListener,
 } from '@typescript-eslint/utils/eslint-utils';
 import { USE_LISTENER_RULE_NAME, useListenerRule } from './use-listener';
 

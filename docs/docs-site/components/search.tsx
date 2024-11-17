@@ -20,15 +20,6 @@ function useDebounceValue<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-interface ItemProps {
-  title: string;
-  route: string;
-  content: string;
-  type: 'title' | 'content';
-  searchValue: string | undefined;
-  handleClick: () => void;
-}
-
 const Item = ({
   title,
   route,
@@ -36,7 +27,14 @@ const Item = ({
   searchValue,
   type,
   handleClick,
-}: ItemProps) => {
+}: {
+  title: string;
+  route: string;
+  content: string;
+  type: 'title' | 'content';
+  searchValue: string | undefined;
+  handleClick: () => void;
+}) => {
   const index =
     type === 'title'
       ? title.toLowerCase().indexOf(searchValue.toLowerCase())

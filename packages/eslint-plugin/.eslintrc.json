@@ -1,5 +1,5 @@
 {
-  "extends": ["../../.eslintrc.json", "plugin:eslint-plugin/all-type-checked"],
+  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {

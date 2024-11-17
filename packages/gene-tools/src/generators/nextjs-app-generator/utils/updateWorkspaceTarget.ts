@@ -1,6 +1,5 @@
 import {
   Tree,
-  getProjects,
   joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,
@@ -13,7 +12,6 @@ export const updateWorkspaceTarget = async ({
   projectPath,
   projectName,
   e2e,
-  directory,
 }: {
   tree: Tree;
   projectPath: string;

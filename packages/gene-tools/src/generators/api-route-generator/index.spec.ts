@@ -1,4 +1,4 @@
-import { logger, readJson, Tree } from '@nx/devkit';
+import { logger, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import apiRouteGenerator from './index';
 import * as inquirer from 'inquirer';

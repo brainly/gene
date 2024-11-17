@@ -3,13 +3,11 @@ import {
   ApolloClient,
   ApolloQueryResult,
   NormalizedCacheObject,
-  RefetchQueriesInclude,
 } from '@apollo/client';
 import { transformApolloResponse } from './transformApolloResponse';
 import {
   CommonFetchFn,
   CommonServiceType,
-  FetchPropsType,
 } from '@brainly-gene/core';
 
 interface PropsType<TData, TVariables> {
@@ -32,7 +30,6 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
     async (options) => {
       const {
         variables,
-        ignoreCache,
         optimisticResponse,
         refetchQueries,
         updates,
