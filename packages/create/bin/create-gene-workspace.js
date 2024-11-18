@@ -4,15 +4,25 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// Function to read dependencies and devDependencies from package.json
+// Function to read dependencies and devDependencies from versions.json
 function getPackageVersion(packageName) {
-  const packageJsonPath = path.resolve(__dirname, '..', 'package.json');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const versionsJsonPath = path.resolve(__dirname, 'versions.json');
+  const versionsJson = JSON.parse(fs.readFileSync(versionsJsonPath, 'utf8'));
 
-  const dependencies = packageJson.dependencies || {};
-  const devDependencies = packageJson.devDependencies || {};
+  const dependencies = versionsJson.dependencies || {};
+  const devDependencies = versionsJson.devDependencies || {};
 
   return dependencies[packageName] || devDependencies[packageName] || 'latest';
+}
+
+// Function to load the dependencies list from the external file
+function loadDependencies() {
+  const dependenciesFilePath = path.resolve(__dirname, 'dependencies.json');
+  if (!fs.existsSync(dependenciesFilePath)) {
+    console.error('dependencies.json file not found.');
+    process.exit(1);
+  }
+  return JSON.parse(fs.readFileSync(dependenciesFilePath, 'utf8'));
 }
 
 // Function to execute a command and display its output in real-time
@@ -54,6 +64,9 @@ console.log(`Creating workspace ${name} with NX version ${nxVersion}...`);
 // Define an async function to run multiple commands in sequence
 async function runCommands() {
   try {
+    // Load dependencies and devDependencies from the external file
+    const { dependencies, devDependencies } = loadDependencies();
+
     // Use the NX version and name argument in the command
     await execCommand('npx', [
       `create-nx-workspace@${nxVersion}`,
@@ -73,70 +86,14 @@ async function runCommands() {
 
     console.log('Installing dependencies with pnpm');
 
-    // List of dependencies to install
-    const dependencies = [
-      '@brainly-gene/core',
-      '@brainly-gene/next',
-      'next',
-      'ramda',
-      'react',
-      'react-dom',
-      'brainly-style-guide',
-      'inversify',
-      '@tanstack/react-query',
-      '@nx/next',
-      'style-loader',
-      'css-loader',
-      'sass',
-      'sass-loader',
-      'classnames',
-    ];
-
+    // Install dependencies
     const dependencyArgs = dependencies.map(
       (pkg) => `${pkg}@${getPackageVersion(pkg)}`
     );
     await execCommand('pnpm', ['install', ...dependencyArgs]);
 
-    // List of devDependencies to install
+    // Install devDependencies
     console.log('Installing dev dependencies with pnpm');
-    const devDependencies = [
-      '@brainly-gene/tools',
-      '@brainly-gene/eslint-plugin',
-      'eslint',
-      '@types/react',
-      '@types/ramda',
-      '@types/node',
-      'eslint-plugin-cypress',
-      '@nx/eslint-plugin',
-      'eslint-plugin-react-hooks',
-      'eslint-plugin-jsx-a11y',
-      'eslint-plugin-react',
-      'eslint-config-next',
-      '@nx/jest',
-      'msw',
-      'msw-storybook-addon',
-      '@storybook/addon-actions',
-      '@storybook/core-server',
-      '@storybook/addon-backgrounds',
-      '@storybook/addon-knobs',
-      '@storybook/addon-links',
-      '@storybook/addon-storysource',
-      '@storybook/addon-viewport',
-      '@storybook/addons',
-      '@storybook/builder-webpack5',
-      '@storybook/manager-webpack5',
-      '@storybook/react',
-      '@storybook/theming',
-      '@testing-library/dom',
-      '@testing-library/jest-dom',
-      '@testing-library/react',
-      '@nx/cypress',
-      '@nx/react',
-      '@nx/web',
-      '@types/jest',
-      'cypress'
-    ];
-
     const devDependencyArgs = devDependencies.map(
       (pkg) => `${pkg}@${getPackageVersion(pkg)}`
     );
