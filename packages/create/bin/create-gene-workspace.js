@@ -4,25 +4,14 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// Function to read dependencies and devDependencies from versions.json
-function getPackageVersion(packageName) {
-  const versionsJsonPath = path.resolve(__dirname, 'versions.json');
-  const versionsJson = JSON.parse(fs.readFileSync(versionsJsonPath, 'utf8'));
-
-  const dependencies = versionsJson.dependencies || {};
-  const devDependencies = versionsJson.devDependencies || {};
-
-  return dependencies[packageName] || devDependencies[packageName] || 'latest';
-}
-
-// Function to load the dependencies list from the external file
-function loadDependencies() {
-  const dependenciesFilePath = path.resolve(__dirname, 'dependencies.json');
-  if (!fs.existsSync(dependenciesFilePath)) {
-    console.error('dependencies.json file not found.');
+// Function to load dependencies and devDependencies from versions.json
+function loadVersions() {
+  const versionsFilePath = path.resolve(__dirname, 'versions.json');
+  if (!fs.existsSync(versionsFilePath)) {
+    console.error('versions.json file not found.');
     process.exit(1);
   }
-  return JSON.parse(fs.readFileSync(dependenciesFilePath, 'utf8'));
+  return JSON.parse(fs.readFileSync(versionsFilePath, 'utf8'));
 }
 
 // Function to execute a command and display its output in real-time
@@ -51,22 +40,21 @@ if (!name) {
   process.exit(1);
 }
 
-// Retrieve the NX version
-const nxVersion = getPackageVersion('@nx/workspace');
+// Load versions.json
+const { dependencies, devDependencies } = loadVersions();
 
-if (nxVersion === 'latest') {
-  console.error('NX version not found in package.json.');
+if (!dependencies['@nx/workspace']) {
+  console.error('NX version not found in versions.json.');
   process.exit(1);
 }
+
+const nxVersion = dependencies['@nx/workspace'];
 
 console.log(`Creating workspace ${name} with NX version ${nxVersion}...`);
 
 // Define an async function to run multiple commands in sequence
 async function runCommands() {
   try {
-    // Load dependencies and devDependencies from the external file
-    const { dependencies, devDependencies } = loadDependencies();
-
     // Use the NX version and name argument in the command
     await execCommand('npx', [
       `create-nx-workspace@${nxVersion}`,
@@ -87,15 +75,15 @@ async function runCommands() {
     console.log('Installing dependencies with pnpm');
 
     // Install dependencies
-    const dependencyArgs = dependencies.map(
-      (pkg) => `${pkg}@${getPackageVersion(pkg)}`
+    const dependencyArgs = Object.entries(dependencies).map(
+      ([pkg, version]) => `${pkg}@${version}`
     );
     await execCommand('pnpm', ['install', ...dependencyArgs]);
 
     // Install devDependencies
     console.log('Installing dev dependencies with pnpm');
-    const devDependencyArgs = devDependencies.map(
-      (pkg) => `${pkg}@${getPackageVersion(pkg)}`
+    const devDependencyArgs = Object.entries(devDependencies).map(
+      ([pkg, version]) => `${pkg}@${version}`
     );
     await execCommand('pnpm', ['install', '-D', ...devDependencyArgs]);
 
