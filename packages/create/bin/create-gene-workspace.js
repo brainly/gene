@@ -62,7 +62,7 @@ async function runCommands() {
       '--preset=apps',
       '--workspaceType=integrated',
       '--interactive=false',
-      '--nxCloud=false',
+      '--nxCloud=skip',
     ]);
 
     console.log(
