@@ -70,6 +70,7 @@
     "ts-jest",
     "jest-environment-jsdom",
     "@nx/devkit",
-    "@nx/linter"
+    "@nx/linter",
+    "@nx/workspace"
   ]
 }
