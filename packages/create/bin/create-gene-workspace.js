@@ -43,12 +43,12 @@ if (!name) {
 // Load versions.json
 const { dependencies, devDependencies } = loadVersions();
 
-if (!dependencies['@nx/workspace']) {
+if (!devDependencies['@nx/workspace']) {
   console.error('NX version not found in versions.json.');
   process.exit(1);
 }
 
-const nxVersion = dependencies['@nx/workspace'];
+const nxVersion = devDependencies['@nx/workspace'];
 
 console.log(`Creating workspace ${name} with NX version ${nxVersion}...`);
 
