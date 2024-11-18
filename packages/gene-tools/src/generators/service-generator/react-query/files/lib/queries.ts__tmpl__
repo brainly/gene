@@ -4,10 +4,10 @@ import {
 } from '@brainly-gene/core';
 import nodeFetch from 'node-fetch';
 
-export type <%= fileName %>DataTypeAPI = {
+export interface <%= fileName %>DataTypeAPI {
   title: string;
 };
-export type VariablesType = {
+export interface VariablesType {
   id: number
 };
 
