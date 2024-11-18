@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0-alpha.10",
+  "version": "0.2.0-alpha.11",
   "license": "Apache-2.0",
   "name": "brainly-gene",
   "scripts": {
@@ -94,7 +94,7 @@
     "@babel/runtime": "7.16.7",
     "@badeball/cypress-cucumber-preprocessor": "13.0.2",
     "@bahmutov/cypress-esbuild-preprocessor": "2.1.5",
-    "@next/bundle-analyzer": "12.3.4",
+    "@next/bundle-analyzer": "14.0.4",
     "@nx/cypress": "17.3.0",
     "@nx/jest": "17.3.0",
     "@nx/next": "17.3.0",
