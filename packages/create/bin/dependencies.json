@@ -51,7 +51,10 @@
       "@nx/react",
       "@nx/web",
       "@nx/workspace",
-      "@types/jest"
+      "@types/jest",
+      "inquirer-search-list",
+      "@typescript-eslint/parser",
+      "inquirer-search-checkbox"
     ]
   }
   
