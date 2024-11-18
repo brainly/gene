@@ -1,6 +1,6 @@
 {
   "name": "@brainly-gene/core",
-  "version": "0.2.0-alpha.7",
+  "version": "0.2.0-alpha.8",
   "license": "Apache-2.0",
   "main": "./src/index.js",
   "dependencies": {
