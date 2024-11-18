@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@brainly-gene/core": "0.2.0-alpha.8",
-    "@brainly-gene/next": "0.2.0-alpha.8",
+    "@brainly-gene/core": "0.2.0-alpha.11",
+    "@brainly-gene/next": "0.2.0-alpha.11",
     "next": "14.0.4",
     "ramda": "0.27.1",
     "react": "18.3.1",
@@ -17,8 +17,8 @@
     "classnames": "2.5.1"
   },
   "devDependencies": {
-    "@brainly-gene/tools": "0.2.0-alpha.8",
-    "@brainly-gene/eslint-plugin": "0.2.0-alpha.8",
+    "@brainly-gene/tools": "0.2.0-alpha.11",
+    "@brainly-gene/eslint-plugin": "0.2.0-alpha.11",
     "eslint": "8.48.0",
     "@types/react": "18.2.33",
     "@types/ramda": "0.27.1",
@@ -50,10 +50,22 @@
     "@nx/cypress": "17.3.0",
     "@nx/react": "17.3.0",
     "@nx/web": "17.3.0",
-    "@nx/workspace": "17.3.0",
     "@types/jest": "29.4.4",
     "inquirer-search-list": "1.2.6",
     "@typescript-eslint/parser": "6.21.0",
-    "inquirer-search-checkbox": "1.0.0"
+    "inquirer-search-checkbox": "1.0.0",
+    "@next/bundle-analyzer": "14.0.4",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-regexp": "2.6.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jest": "28.8.3",
+    "@typescript-eslint/eslint-plugin": "6.21.0",
+    "@nx/linter": "17.3.0",
+    "@angular-devkit/core": "11.2.0",
+    "@angular-devkit/schematics": "11.2.0",
+    "jest": "29.4.3",
+    "ts-jest": "29.1.5",
+    "jest-environment-jsdom": "29.4.3",
+    "@nx/devkit": "17.3.0"
   }
 }

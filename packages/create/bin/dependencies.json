@@ -51,7 +51,6 @@
     "@nx/cypress",
     "@nx/react",
     "@nx/web",
-    "@nx/workspace",
     "@types/jest",
     "inquirer-search-list",
     "@typescript-eslint/parser",
@@ -71,7 +70,6 @@
     "ts-jest",
     "jest-environment-jsdom",
     "@nx/devkit",
-    "@nx/js",
     "@nx/linter"
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0-alpha.11",
+  "version": "0.2.0-alpha.12",
   "license": "Apache-2.0",
   "name": "brainly-gene",
   "scripts": {
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@angular-devkit/schematics": "11.2.0",
+    "@angular-devkit/core": "11.2.0",
     "@apollo/client": "3.6.9",
     "@cucumber/gherkin": "27.0.0",
     "@cucumber/messages": "19.1.4",

@@ -43,10 +43,7 @@ const getVersions = (packages, source) => {
       return versions;
     }
 
-    console.warn(`Version for package "${pkg}" not found.`);
-    versions[pkg] = null;
-
-    return versions;
+    throw new Error(`Version not found for ${pkg}`);
   });
   return versions;
 };
