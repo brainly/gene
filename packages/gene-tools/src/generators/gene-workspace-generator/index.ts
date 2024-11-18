@@ -74,6 +74,10 @@ export default async function (tree: Tree) {
   // Create empty jest.setup.js file in the root
   tree.write('jest.setup.js', 'module.exports = {};');
 
+  // Create empty apps and libs directories
+  tree.write('apps/.gitkeep', '');
+  tree.write('libs/.gitkeep', '');
+
   return () => {
     installPackagesTask(tree);
   };

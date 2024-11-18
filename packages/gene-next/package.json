@@ -1,6 +1,6 @@
 {
   "name": "@brainly-gene/next",
-  "version": "0.2.0-alpha.2",
+  "version": "0.2.0-alpha.7",
   "license": "Apache-2.0",
   "dependencies": {
     "@next/bundle-analyzer": "12.3.4",

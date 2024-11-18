@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@brainly-gene/core": "0.2.0-alpha.2",
-    "@brainly-gene/next": "0.2.0-alpha.2",
+    "@brainly-gene/core": "0.2.0-alpha.7",
+    "@brainly-gene/next": "0.2.0-alpha.7",
     "next": "14.0.4",
     "ramda": "0.27.1",
     "react": "18.3.1",
@@ -17,8 +17,8 @@
     "classnames": "2.5.1"
   },
   "devDependencies": {
-    "@brainly-gene/tools": "0.2.0-alpha.2",
-    "@brainly-gene/eslint-plugin": "0.2.0-alpha.2",
+    "@brainly-gene/tools": "0.2.0-alpha.7",
+    "@brainly-gene/eslint-plugin": "0.2.0-alpha.7",
     "eslint": "8.48.0",
     "@types/react": "18.2.33",
     "@types/ramda": "0.27.1",
@@ -51,6 +51,9 @@
     "@nx/react": "17.3.0",
     "@nx/web": "17.3.0",
     "@nx/workspace": "17.3.0",
-    "@types/jest": "29.4.4"
+    "@types/jest": "29.4.4",
+    "inquirer-search-list": "1.2.6",
+    "@typescript-eslint/parser": "6.21.0",
+    "inquirer-search-checkbox": "1.0.0"
   }
 }
