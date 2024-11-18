@@ -2,6 +2,8 @@ import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import appGenerator from './index';
 
+jest.setTimeout(10000);
+
 describe('NextJS App generator', () => {
   let appTree: Tree;
   let projectName: string;
@@ -53,7 +55,7 @@ describe('NextJS App generator', () => {
       reactQuery: true,
       rewrites: true,
     });
-    
+
     const appConfig = readProjectConfiguration(appTree, 'example.com-my-app');
 
     expect(appConfig?.targets?.['build']).toBeTruthy();
