@@ -12,7 +12,7 @@
       "@nx/next",
       "style-loader",
       "css-loader",
-      "sass",
+      "sass", 
       "sass-loader",
       "classnames"
     ],
@@ -50,6 +50,7 @@
       "@nx/cypress",
       "@nx/react",
       "@nx/web",
+      "@nx/workspace",
       "@types/jest"
     ]
   }
