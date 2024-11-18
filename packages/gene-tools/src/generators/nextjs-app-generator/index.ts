@@ -74,6 +74,9 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
 
   maybeExcludeRewrites(tree, schema);
 
+  //Remove src/app directory
+  tree.delete(`${appDir}/src/app`);
+
   if (e2e !== false) {
     excludeTestsBoilerplate(tree);
   }

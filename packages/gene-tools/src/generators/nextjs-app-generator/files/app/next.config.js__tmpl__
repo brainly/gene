@@ -22,7 +22,7 @@ const plugins = [withNodeModulesCSS, withBundleAnalyzer, withNx].concat(
 const domains = [
 ];
 
-module.exports = () => {
+const getConfig = () => {
   return plugins.reduce(
     (acc, next) => {
       if (typeof next !== 'function') {
@@ -74,3 +74,6 @@ module.exports = () => {
     }
   );
 };
+
+
+module.exports = getConfig();
