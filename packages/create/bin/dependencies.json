@@ -32,6 +32,7 @@
     "openai",
     "path-to-regexp",
     "prettier",
+    "reflect-metadata",
     "ramda",
     "react",
     "react-dom",
@@ -45,7 +46,9 @@
     "unist-util-visit",
     "yaml",
     "zen-observable",
-    "zen-observable-ts"
+    "zen-observable-ts",
+    "find-up",
+    "mini-css-extract-plugin"
   ],
   "devDependencies": [
     "@brainly-gene/eslint-plugin",
@@ -95,6 +98,7 @@
     "jest-environment-jsdom",
     "msw",
     "msw-storybook-addon",
-    "ts-jest"
+    "ts-jest",
+    "@next/bundle-analyzer"
   ]
 }
