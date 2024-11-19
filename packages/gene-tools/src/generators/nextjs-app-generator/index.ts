@@ -8,6 +8,7 @@ import {
   offsetFromRoot,
   readJson,
   writeJson,
+  updateJson,
 } from '@nx/devkit';
 import { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
@@ -21,6 +22,7 @@ import { updateEslint } from './utils/updateEslint';
 import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
+import { updateCypressTsConfig } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory = '', e2e } = schema;
@@ -81,8 +83,38 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     excludeTestsBoilerplate(tree);
   }
 
+  if (e2e !== false) {
+    updateCypressTsConfig(tree, e2eDir);
+  }
+
+  maybeExcludeRewrites(tree, schema);
+
+  if (e2e !== false) {
+    excludeTestsBoilerplate(tree);
+  }
+
   updateEslint(tree, appDir);
 
+  if (e2e !== false) {
+    updateJson(
+      tree,
+      joinPathFragments(e2eDir, './.eslintrc.json'),
+      (eslintConfig) => {
+        return {
+          ...eslintConfig,
+          overrides: [
+            {
+              files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+              rules: {
+                'babel/new-cap': 'off',
+                'import/no-extraneous-dependencies': 'off',
+              },
+            },
+          ],
+        };
+      }
+    );
+  }
   await storybookConfigurationGenerator(tree, {
     name: projectName,
   });

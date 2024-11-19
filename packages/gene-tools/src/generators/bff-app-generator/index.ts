@@ -8,6 +8,7 @@ import {
   offsetFromRoot,
   readJson,
   writeJson,
+  updateJson,
 } from '@nx/devkit';
 import { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
@@ -20,7 +21,7 @@ import { updateEslint } from './utils/updateEslint';
 import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { cleanupFiles } from './utils/cleanupFiles';
-import { getNpmScope, updateJestConfig } from '../utilities';
+import { getNpmScope, updateCypressTsConfig, updateJestConfig } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory, e2e } = schema;
@@ -83,6 +84,10 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     });
   }
 
+  if (e2e !== false) {
+    updateCypressTsConfig(tree, e2eDir);
+  }
+
   maybeExcludeRewrites(tree, schema);
 
   if (e2e !== false) {
@@ -90,6 +95,27 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   }
 
   updateEslint(tree, appDir);
+
+  if (e2e !== false) {
+    updateJson(
+      tree,
+      joinPathFragments(e2eDir, './.eslintrc.json'),
+      (eslintConfig) => {
+        return {
+          ...eslintConfig,
+          overrides: [
+            {
+              files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+              rules: {
+                'babel/new-cap': 'off',
+                'import/no-extraneous-dependencies': 'off',
+              },
+            },
+          ],
+        };
+      }
+    );
+  }
 
   await storybookConfigurationGenerator(tree, {
     name: projectName,
