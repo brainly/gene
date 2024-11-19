@@ -99,6 +99,15 @@
     "msw",
     "msw-storybook-addon",
     "ts-jest",
-    "@next/bundle-analyzer"
+    "@next/bundle-analyzer",
+    "tsconfig-paths-webpack-plugin",
+    "cypress",
+    "@badeball/cypress-cucumber-preprocessor",
+    "@bahmutov/cypress-esbuild-preprocessor",
+    "@cypress/browserify-preprocessor",
+    "cypress-iframe",
+    "cypress-network-idle",
+    "@nx/storybook",
+    "@testing-library/cypress"
   ]
 }
