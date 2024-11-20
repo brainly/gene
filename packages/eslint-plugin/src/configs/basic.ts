@@ -1,7 +1,7 @@
 export default {
   // plugins: ['@typescript-eslint'],
   extends: [
-    'plugin:@nrwl/nx/typescript',
+    'plugin:@nx/typescript',
     // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // 'plugin:import/typescript',
   ],
@@ -11,7 +11,7 @@ export default {
     // '@typescript-eslint/consistent-type-exports': 'error',
     // '@typescript-eslint/consistent-type-imports': 'error',
     // '@typescript-eslint/prefer-nullish-coalescing': 'error',
-    '@nrwl/nx/enforce-module-boundaries': [
+    '@nx/enforce-module-boundaries': [
       'error',
       {
         enforceBuildableLibDependency: true,
