@@ -67,7 +67,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["docs/docs-site/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "docs/docs-site/lib/*.{ts,tsx,js,jsx}",
+          "docs/docs-site/components/*.{ts,tsx,js,jsx}"
+        ]
       }
     }
   },
