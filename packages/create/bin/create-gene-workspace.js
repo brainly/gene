@@ -78,21 +78,26 @@ async function runCommands() {
     const dependencyArgs = Object.entries(dependencies).map(
       ([pkg, version]) => `${pkg}@${version}`
     );
-    await execCommand('npm', ['install', ...dependencyArgs]);
+    await execCommand('npm', [
+      'install',
+      ...dependencyArgs,
+      '--legacy-peer-deps',
+    ]);
 
     // Install devDependencies
     console.log('Installing dev dependencies with npm');
     const devDependencyArgs = Object.entries(devDependencies).map(
       ([pkg, version]) => `${pkg}@${version}`
     );
-    await execCommand('npm', ['install', '-D', ...devDependencyArgs]);
+    await execCommand('npm', [
+      'install',
+      '-D',
+      ...devDependencyArgs,
+      '--legacy-peer-deps',
+    ]);
 
     console.log('Generating gene-workspace with npm nx');
-    await execCommand('npm', [
-      'nx',
-      'g',
-      '@brainly-gene/tools:gene-workspace',
-    ]);
+    await execCommand('npm', ['nx', 'g', '@brainly-gene/tools:gene-workspace']);
 
     console.log('Generating e2e testing providers');
     await execCommand('npm', ['nx', 'g', '@brainly-gene/tools:e2e-providers']);
