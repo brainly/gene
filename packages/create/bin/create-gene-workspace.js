@@ -96,11 +96,13 @@ async function runCommands() {
       '--legacy-peer-deps',
     ]);
 
-    console.log('Generating gene-workspace with npm nx');
-    await execCommand('npm', ['nx', 'g', '@brainly-gene/tools:gene-workspace']);
+    // We should be able to remove `--legacy-peer-deps` once storybook is updated to v7
+
+    console.log('Generating gene-workspace with nx');
+    await execCommand('nx', ['g', '@brainly-gene/tools:gene-workspace']);
 
     console.log('Generating e2e testing providers');
-    await execCommand('npm', ['nx', 'g', '@brainly-gene/tools:e2e-providers']);
+    await execCommand('nx', ['g', '@brainly-gene/tools:e2e-providers']);
   } catch (error) {
     console.error(error);
   }
