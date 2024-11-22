@@ -72,30 +72,30 @@ async function runCommands() {
     console.log(`Changing directory to ${name}`);
     process.chdir(name);
 
-    console.log('Installing dependencies with pnpm');
+    console.log('Installing dependencies with npm');
 
     // Install dependencies
     const dependencyArgs = Object.entries(dependencies).map(
       ([pkg, version]) => `${pkg}@${version}`
     );
-    await execCommand('pnpm', ['install', ...dependencyArgs]);
+    await execCommand('npm', ['install', ...dependencyArgs]);
 
     // Install devDependencies
-    console.log('Installing dev dependencies with pnpm');
+    console.log('Installing dev dependencies with npm');
     const devDependencyArgs = Object.entries(devDependencies).map(
       ([pkg, version]) => `${pkg}@${version}`
     );
-    await execCommand('pnpm', ['install', '-D', ...devDependencyArgs]);
+    await execCommand('npm', ['install', '-D', ...devDependencyArgs]);
 
-    console.log('Generating gene-workspace with pnpm nx');
-    await execCommand('pnpm', [
+    console.log('Generating gene-workspace with npm nx');
+    await execCommand('npm', [
       'nx',
       'g',
       '@brainly-gene/tools:gene-workspace',
     ]);
 
     console.log('Generating e2e testing providers');
-    await execCommand('pnpm', ['nx', 'g', '@brainly-gene/tools:e2e-providers']);
+    await execCommand('npm', ['nx', 'g', '@brainly-gene/tools:e2e-providers']);
   } catch (error) {
     console.error(error);
   }
