@@ -37,6 +37,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     linter: Linter.EsLint,
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
+    appDir: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');
@@ -155,7 +156,6 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   await formatFiles(tree);
 
   cleanupFiles(tree, [
-    'src/app',
     'pages/_app.tsx',
     'pages/index.tsx',
     'pages/styles.css',

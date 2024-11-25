@@ -37,6 +37,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     linter: Linter.EsLint,
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
+    appDir: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');
@@ -44,7 +45,13 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     ? `${normalizedDirectory}-${name}`
     : name;
   const projectPath = `${directory}/${name}`;
-  await updateWorkspaceTarget({ tree, projectPath, projectName, e2e, directory: normalizedDirectory });
+  await updateWorkspaceTarget({
+    tree,
+    projectPath,
+    projectName,
+    e2e,
+    directory: normalizedDirectory,
+  });
 
   const { appsDir } = getWorkspaceLayout(tree);
   const appDir = `${appsDir}/${projectPath}`;
@@ -73,11 +80,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     });
   }
 
-
   maybeExcludeRewrites(tree, schema);
-
-  //Remove src/app directory
-  tree.delete(`${appDir}/src/app`);
 
   if (e2e !== false) {
     excludeTestsBoilerplate(tree);
