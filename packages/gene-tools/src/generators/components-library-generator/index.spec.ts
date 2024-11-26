@@ -1,5 +1,5 @@
-import { logger, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import componentsLibraryGenerator from './index';
 import * as inquirer from 'inquirer';
 import componentGenerator from '../component-generator';
@@ -18,7 +18,7 @@ describe('Components library generator', () => {
 
   beforeEach(async () => {
     projectName = 'answer-box';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);

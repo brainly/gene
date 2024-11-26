@@ -2,7 +2,7 @@ import {
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { NormalizedOptions } from '../schema';
 
 export function addStorybookTargets(
@@ -39,7 +39,7 @@ export function addStorybookTargets(
       executor: '@brainly-gene/tools:copy-translations-to-storybook',
     },
     'nrwl-storybook': {
-      executor: '@nrwl/storybook:storybook',
+      executor: '@nx/storybook:storybook',
       dependsOn: [
         {
           target: 'copy-storybook-images',
@@ -62,7 +62,7 @@ export function addStorybookTargets(
       configurations: { ci: { quiet: true } },
     },
     'build-nrwl-storybook': {
-      executor: '@nrwl/storybook:build',
+      executor: '@nx/storybook:build',
       dependsOn: [
         {
           target: 'copy-storybook-images',

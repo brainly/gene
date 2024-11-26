@@ -1,19 +1,10 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | JSONObject
-  | JSONArray
-  | null
-  | undefined;
+type JSONValue = string | number | boolean | JSONArray | null | undefined;
 
 type JSONArray = JSONValue[];
 
-export interface JSONObject {
-  [key: string]: JSONValue;
-}
+export type JSONObject = Record<string, JSONValue | Record<string, JSONValue>>;
 
 export const updateJestConfig = (
   tree: Tree,
@@ -46,8 +37,10 @@ export const updateJestConfig = (
   tree.write(filePath, content);
 };
 
-
-function addLiteralEntry(addLiteral: () => string, updatedString: string): string {
+function addLiteralEntry(
+  addLiteral: () => string,
+  updatedString: string
+): string {
   const lastClosingBracketIndex = updatedString.lastIndexOf('}');
   const literalEntry = addLiteral();
 
@@ -57,9 +50,9 @@ function addLiteralEntry(addLiteral: () => string, updatedString: string): strin
   // Construct the updated string by inserting the literal entry before the last closing bracket.
   const updatedStringWithLiteral = [
     updatedString.slice(0, lastClosingBracketIndex), // Part of the string before the last closing bracket.
-    comma,                                           // Comma if needed.
-    literalEntry,                                    // Literal entry to be added.
-    updatedString.slice(lastClosingBracketIndex)     // Part of the string after the last closing bracket.
+    comma, // Comma if needed.
+    literalEntry, // Literal entry to be added.
+    updatedString.slice(lastClosingBracketIndex), // Part of the string after the last closing bracket.
   ].join('');
 
   return updatedStringWithLiteral;

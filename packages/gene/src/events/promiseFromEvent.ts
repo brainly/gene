@@ -1,6 +1,6 @@
 declare let window: any;
 
-type ListenableElementType<T> = {
+interface ListenableElementType<T> {
   readonly addEventListener?: (
     label: string,
     callback: (event: T) => unknown
@@ -9,7 +9,7 @@ type ListenableElementType<T> = {
     label: string,
     callback: (event: T) => unknown
   ) => unknown;
-};
+}
 
 // Transform listening for event for Promise, use only for single time listeners
 export function promiseFromEvent<

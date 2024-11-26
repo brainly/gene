@@ -1,18 +1,18 @@
-import { logger } from '@nrwl/devkit';
+import { logger } from '@nx/devkit';
 import chalk from 'chalk';
 import { readFileSync } from 'fs';
 import { createServer } from 'http-proxy';
 import Server = require('http-proxy');
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 
-export type ServeOptions = {
+export interface ServeOptions {
   host: string;
   port: number;
   serveTarget: string;
   targetHost: string;
   targetPort: number;
   noOutput: boolean;
-};
+}
 
 export function createProxy({
   host,
@@ -26,14 +26,8 @@ export function createProxy({
     server = createServer({
       target: { host: targetHost, port: targetPort },
       ssl: {
-        key: readFileSync(
-          resolve('certs', 'server.key'),
-          'utf8'
-        ),
-        cert: readFileSync(
-          resolve('certs', 'server.crt'),
-          'utf8'
-        ),
+        key: readFileSync(resolve('certs', 'server.key'), 'utf8'),
+        cert: readFileSync(resolve('certs', 'server.crt'), 'utf8'),
       },
     })
       .on('error', function (e: any) {

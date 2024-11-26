@@ -12,7 +12,7 @@ import {TranslationParamsType} from '../types';
  * transChoiceHelper function will modify given key with proper index based on given number.
  */
 
-export type TransChoiceHelperFnType = {
+export interface TransChoiceHelperFnType {
   translator: {
     trans: (
       string: string,
@@ -23,7 +23,7 @@ export type TransChoiceHelperFnType = {
   number?: number;
   locale?: string;
   params?: TranslationParamsType;
-};
+}
 
 export function transChoiceHelper({
   translationKey,

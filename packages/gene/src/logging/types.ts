@@ -18,11 +18,11 @@ export enum Severity {
   LOW = 'low',
 }
 
-export type Message = {
+export interface Message {
   type: LogLevel;
   severity: Severity;
   message: ErrorMessage;
-};
+}
 
 export type LogType = (message: Message) => void;
 

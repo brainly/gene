@@ -70,6 +70,13 @@ module.exports = {
         ...config.resolve,
         extensions: ['.mjs', '.ts', '.tsx', '.js', '.jsx'],
         plugins: [...(config.resolve.plugins ?? []), tsPaths],
+        fallback: {
+          ...(config.resolve || {}).fallback,
+          fs: false,
+          stream: false,
+          os: false,
+          zlib: false
+        },
       },
       module: {
         ...config.module,

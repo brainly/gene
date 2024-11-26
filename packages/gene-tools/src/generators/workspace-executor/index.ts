@@ -1,4 +1,4 @@
-import {formatFiles, names, Tree} from '@nrwl/devkit';
+import { formatFiles, names, Tree } from '@nx/devkit';
 import {
   addExecutor,
   generateExecutorFiles,
@@ -14,10 +14,10 @@ export default async function workspaceExecutorGenerator(
   tree: Tree,
   rawOptions: WorkspaceExecutorOptions
 ): Promise<void> {
-  const {className, fileName: name} = names(rawOptions.name);
+  const { className, fileName: name } = names(rawOptions.name);
   validateExecutor(tree, name);
 
-  generateExecutorFiles(tree, {className, name});
+  generateExecutorFiles(tree, { className, name });
   addExecutor(tree, name);
   updateReadmeExecutorList(tree, name);
 

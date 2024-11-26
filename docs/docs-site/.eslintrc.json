@@ -1,6 +1,6 @@
 {
   "extends": [
-    "plugin:@nrwl/nx/react-typescript",
+    "plugin:@nx/react-typescript",
     "../../.eslintrc.json",
     "next",
     "next/core-web-vitals"
@@ -9,10 +9,14 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
+      "parserOptions": {
+        "project": ["docs/docs-site/tsconfig(.*)?.json"]
+      },
       "rules": {
         "@next/next/no-html-link-for-pages": [
           "error",
-          "packages/docs-site/pages"
+          "docs/docs-site/pages"
         ]
       }
     },

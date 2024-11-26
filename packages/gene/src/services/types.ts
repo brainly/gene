@@ -1,10 +1,10 @@
-export type CommonServiceType<
+export interface CommonServiceType<
   T,
   TVariables = Record<string, any>,
   TRefetch = (variables: TVariables) => Promise<void>,
   TFetchMore = (variables: TVariables) => Promise<void>,
   TFetchPreviousPage = (variables: TVariables) => Promise<void>
-> = {
+> {
   loading: boolean;
   error: Error | string | null;
   data: T | undefined;
@@ -12,9 +12,9 @@ export type CommonServiceType<
   fetchMore?: TFetchMore;
   fetchPreviousPage?: TFetchPreviousPage;
   hasMore?: boolean;
-};
+}
 
-export type FetchPropsType<TData, TVariables, TQueryKey> = {
+export interface FetchPropsType<TData, TVariables, TQueryKey> {
   ignoreCache?: boolean;
   variables?: TVariables;
   refetchQueries?: TQueryKey[];
@@ -23,7 +23,7 @@ export type FetchPropsType<TData, TVariables, TQueryKey> = {
     queryKey: TQueryKey;
     updateFn: (queryData: any, currentQueryResponse: TData) => any;
   }[];
-};
+}
 
 export type CommonFetchFn<
   TData,

@@ -17,7 +17,7 @@ import { emit, EventBusContextProvider, register } from '@brainly-gene/core';
 
 type OverwritableContainerKeys = 'adsContainer';
 
-export type StorybookProvidersPropsType = {
+export interface StorybookProvidersPropsType {
   children: React.ReactNode;
   additionalContainers?: interfaces.Container[];
   overwriteContainers?: Partial<
@@ -27,7 +27,7 @@ export type StorybookProvidersPropsType = {
   initialAppContext?: AppStoreType;
   appContextReducer?: ReducerType;
   locale?: Locale;
-};
+}
 
 export function StorybookProviders({
   children,

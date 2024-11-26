@@ -1,8 +1,8 @@
-type EdgeNode = {
+interface EdgeNode {
   node: {
     __ref: string;
   };
-};
+}
 
 /**
  * During hot reload, paginated edges are duplicated,

@@ -1,16 +1,15 @@
-import {Observable} from 'zen-observable-ts';
+import { Observable } from 'zen-observable-ts';
 import * as R from 'ramda';
 
-export type AbstractEventBusEventType<PayloadType = unknown> = {
+export interface AbstractEventBusEventType<PayloadType = unknown> {
   payload?: PayloadType;
   type: string;
-};
+}
 // TODO fix any[]
 const subscriberMap = new Map<string, any[]>();
 // used to intercept events, cause side effects, and forward to subscribers
 // SHOULD BE INTERNAL ONLY! Do not expose this to the public.
-const interceptors: Array<(value: AbstractEventBusEventType) => typeof value> =
-  [];
+const interceptors: ((value: AbstractEventBusEventType) => typeof value)[] = [];
 // singletons
 let observer: ZenObservable.Observer<AbstractEventBusEventType>;
 let observable: Observable<AbstractEventBusEventType>;
@@ -22,7 +21,7 @@ const multicast = function (event: AbstractEventBusEventType) {
   let transformedEvent = event;
 
   // will cause side effects by design!
-  interceptors.forEach(interceptor => {
+  interceptors.forEach((interceptor) => {
     transformedEvent = interceptor(transformedEvent);
   });
   subscriberMap
@@ -37,7 +36,7 @@ const zenObservable = function <T extends AbstractEventBusEventType>() {
   if (observable) {
     return observable;
   }
-  observable = new Observable<T>(o => {
+  observable = new Observable<T>((o) => {
     observer = o;
     // TODO figure out cleanup when the observable is destroyed
     return () => null;
@@ -49,9 +48,7 @@ const zenObservable = function <T extends AbstractEventBusEventType>() {
   return observable;
 };
 
-const registerFactory = function <T extends AbstractEventBusEventType>(
-  observable: Observable<T>
-) {
+const registerFactory = function <T extends AbstractEventBusEventType>() {
   return (event: T, onNext: (value: T) => void) => {
     let subscriber = subscriberMap.get(event.type);
 
@@ -79,16 +76,14 @@ const registerFactory = function <T extends AbstractEventBusEventType>(
         this.closed = true;
         subscriberMap.set(
           event.type,
-          subscriber.filter(payload => payload !== onNext)
+          subscriber.filter((payload) => payload !== onNext)
         );
       },
     };
   };
 };
 
-const emitFactory = function <T extends AbstractEventBusEventType>(
-  observable: Observable<T>
-) {
+const emitFactory = function () {
   return async function <T extends AbstractEventBusEventType>(
     event: T | Promise<T>
   ) {

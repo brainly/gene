@@ -24,16 +24,14 @@ exports[`storybookConfiguration generator application should generate configurat
 module.exports = {
   ...rootMain,
   stories: [
-    
     '../components/**/*.stories.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
-    
   ],
 
-  webpackFinal: async (config, {configType}) => {
+  webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js
     if (rootMain.webpackFinal) {
-      config = await rootMain.webpackFinal(config, {configType});
+      config = await rootMain.webpackFinal(config, { configType });
     }
 
     // add your own webpack tweaks if needed
@@ -50,17 +48,17 @@ exports[`storybookConfiguration generator application should generate configurat
 `;
 
 exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 3`] = `
-"import {workerPath} from '../../../.storybook/preview';
-import {initialize} from 'msw-storybook-addon';
-const {use} = initialize({
+"import { workerPath } from '../../../.storybook/preview';
+import { initialize } from 'msw-storybook-addon';
+const { use } = initialize({
   serviceWorker: {
     url: workerPath,
   },
 });
 
-export {use};
+export { use };
 
-export {decorators, parameters} from '../../../.storybook/preview';
+export { decorators, parameters } from '../../../.storybook/preview';
 "
 `;
 
@@ -95,16 +93,14 @@ exports[`storybookConfiguration generator application should generate the .story
 module.exports = {
   ...rootMain,
   stories: [
-    
     '../components/**/*.stories.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
-    
   ],
 
-  webpackFinal: async (config, {configType}) => {
+  webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js
     if (rootMain.webpackFinal) {
-      config = await rootMain.webpackFinal(config, {configType});
+      config = await rootMain.webpackFinal(config, { configType });
     }
 
     // add your own webpack tweaks if needed
@@ -121,17 +117,17 @@ exports[`storybookConfiguration generator application should generate the .story
 `;
 
 exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 3`] = `
-"import {workerPath} from '../../../.storybook/preview';
-import {initialize} from 'msw-storybook-addon';
-const {use} = initialize({
+"import { workerPath } from '../../../.storybook/preview';
+import { initialize } from 'msw-storybook-addon';
+const { use } = initialize({
   serviceWorker: {
     url: workerPath,
   },
 });
 
-export {use};
+export { use };
 
-export {decorators, parameters} from '../../../.storybook/preview';
+export { decorators, parameters } from '../../../.storybook/preview';
 "
 `;
 
@@ -183,17 +179,12 @@ exports[`storybookConfiguration generator library should generate the .storybook
 
 module.exports = {
   ...rootMain,
-  stories: [
-    
-    '../src/**/*.stories.mdx',
-    '../src/**/*.stories.@(js|jsx|ts|tsx)',
-    
-  ],
+  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
-  webpackFinal: async (config, {configType}) => {
+  webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js
     if (rootMain.webpackFinal) {
-      config = await rootMain.webpackFinal(config, {configType});
+      config = await rootMain.webpackFinal(config, { configType });
     }
 
     // add your own webpack tweaks if needed
@@ -210,17 +201,17 @@ exports[`storybookConfiguration generator library should generate the .storybook
 `;
 
 exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 3`] = `
-"import {workerPath} from '../../../.storybook/preview';
-import {initialize} from 'msw-storybook-addon';
-const {use} = initialize({
+"import { workerPath } from '../../../.storybook/preview';
+import { initialize } from 'msw-storybook-addon';
+const { use } = initialize({
   serviceWorker: {
     url: workerPath,
   },
 });
 
-export {use};
+export { use };
 
-export {decorators, parameters} from '../../../.storybook/preview';
+export { decorators, parameters } from '../../../.storybook/preview';
 "
 `;
 

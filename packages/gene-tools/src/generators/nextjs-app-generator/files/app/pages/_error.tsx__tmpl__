@@ -1,7 +1,7 @@
 import { getHttpProtocol } from '@brainly-gene/next';
 import { NextPageContext } from 'next';
 
-type CustomErrorProps = {
+interface CustomErrorProps {
   errorCode: number;
   redirectUrl: string;
   copy: Record<string, string>;
@@ -17,7 +17,7 @@ const CustomError = ({errorCode, redirectUrl, copy}: CustomErrorProps) => {
   );
 }
 
-type PropsType = {
+interface PropsType {
   statusCode?: number;
   host: string;
 };

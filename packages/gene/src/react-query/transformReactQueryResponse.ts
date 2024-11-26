@@ -1,7 +1,6 @@
 import {
   InfiniteQueryObserverResult,
   QueryObserverResult,
-  InfiniteData,
   UseQueryResult,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
