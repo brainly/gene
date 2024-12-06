@@ -176,7 +176,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
         );
       })
       .map(({ path }) => path);
-    console.log({ findNotNeededServiceHooks, crudFunctions });
+
     findNotNeededServiceHooks.forEach((path) => tree.delete(path));
 
     // Update exports
@@ -186,7 +186,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     });
     tree.write(`${baseOptions.targetLocation}/index.ts`, lines.join('\n'));
   }
-  
+
   await formatFiles(tree);
   // revert possible changes to package.json
   writeJson(tree, 'package.json', currentPackageJson);
