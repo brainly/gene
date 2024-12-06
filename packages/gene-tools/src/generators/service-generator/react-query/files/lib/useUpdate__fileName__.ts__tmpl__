@@ -1,0 +1,56 @@
+import {
+  useInjectedReactQueryClient,
+  useReactQueryLazy,
+} from '@brainly-gene/core';
+
+import {QueryFunctionContext} from '@tanstack/react-query';
+import {
+  reactQueryFetchWrapper,
+} from '@brainly-gene/core';
+import nodeFetch from 'node-fetch';
+
+// Change this to match output of your API
+export type Update<%= fileName %>APIType = {
+  id: number,
+  userId: number,
+  title: string,
+  body: string,
+};
+
+// Change this to match input of your API
+export type VariablesType = {
+  title: string,
+  body: string,
+  userId: number,
+};
+
+export const queryKey = (variables?: VariablesType) => [
+  'update-<%= lowerCaseFileName %>-key',
+  variables,
+];
+
+export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
+  const url = `https://jsonplaceholder.typicode.com/posts/${variables.id}`;
+  const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
+  return reactQueryFetchWrapper<Update<%= fileName %>APIType>(() =>
+    fetchMethod(url, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          ...variables
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+  );
+}
+
+export function useUpdate<%= fileName %>() {
+  const queryClient = useInjectedReactQueryClient();
+
+  return useReactQueryLazy<Update<%= fileName %>APIType, VariablesType>({
+    reactQueryClient: queryClient,
+    queryFn: (_client, variables) => defaultQueryFn(variables),
+    queryKey,
+  })
+}
