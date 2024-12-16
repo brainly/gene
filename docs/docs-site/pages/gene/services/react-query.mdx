@@ -287,4 +287,79 @@ export function useCharacters(props: { variables: VariablesType }) {
 }
 ```
 
+
+## Crud Operations and strategies for data synchronization
+
+- **Optimistic Updates**: Provide a simulated response (`optimisticResponse`) for immediate visual feedback in the UI, assuming the mutation will succeed.
+- **Manual Cache Updates (`updates`)**: Directly modify the cache after a mutation using the provided update functions.
+- **Automated Query Refetching (`refetchQueries`)**: Specify which queries to rerun after a successful mutation for automatic data sync.
+
+### Practical Examples
+
+#### Modifying an Existing TODO Item
+
+```tsx
+import { getTodosQueryKey } from '@acme/todo/services/todo-service';
+import { useUpdateTodo } from '@acme/todo/services/todo-service';
+
+const {fetch: updateTodo} = useUpdateTodo()
+
+function updateTodoItem(todoId, updatedDetails) {
+  updateTodo({
+    variables: { id: todoId, ...updatedDetails },
+    optimisticResponse: {
+      // Construct the optimistic UI update here...
+      ...updatedDetails,
+    },
+    updates: [
+      {
+        queryKey: getTodoListQueryKey({ userId }),
+        updateFn: (existingTodos, updatedTodo) => ({
+          ...existingTodos,
+          todos: existingTodos.todos.map((todo) =>
+            todo.id === todoId ? { ...todo, ...updatedTodo } : todo
+          ),
+        }),
+      },
+    ],
+    refetchQueries: [
+      // Alternatively, refetch the query for automatic updates
+      getTodosQueryKey({ userId }),
+    ],
+  });
+}
+```
+
+#### Adding a New TODO Item
+
+```tsx
+import { getTodosQueryKey } from '@acme/todo/services/todo-service';
+import { useCreateTodo } from '@acme/todo/services/todo-service';
+
+const { fetch: addTodo } = useCreateTodo();
+
+function addNewTodoItem(todoDetails) {
+  addTodo({
+    variables: { ...todoDetails },
+    optimisticResponse: {
+      id: 'temp-id', // Temporary ID until backend confirmation
+      ...todoDetails,
+    },
+    updates: [
+      {
+        queryKey: getTodoListQueryKey(),
+        updateFn: (existingTodos, newTodo) => ({
+          ...existingTodos,
+          todos: [...existingTodos.todos, newTodo],
+        }),
+      },
+    ],
+    refetchQueries: [
+      // Alternatively, refetch the query for automatic updates
+      getTodosQueryKey({ userId }),
+    ],
+  });
+}
+```
+
 For more information on React Query, see the [React Query documentation](https://tanstack.com/query/v5/docs/framework/react/overview).

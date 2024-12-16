@@ -22,7 +22,7 @@ export type VariablesType = {
   postId: number
 };
 
-export const queryKey = (variables?: VariablesType) => [
+export const get<%= fileName %>QueryKey = (variables?: VariablesType) => [
   'get-<%= lowerCaseFileName %>-key',
   variables,
 ];
@@ -39,7 +39,7 @@ export function defaultQueryFn(variables: VariablesType, context?: QueryFunction
 export async function query<%= fileName %>(client: QueryClient, variables: VariablesType, queryFn = defaultQueryFn) {
   return client.fetchQuery({
     queryFn: () => queryFn(variables),
-    queryKey: queryKey(variables),
+    queryKey: get<%= fileName %>QueryKey(variables),
   });
 }
 
@@ -49,7 +49,7 @@ export function use<%= fileName %>(props: {variables: VariablesType}) {
   // useInfiniteQuery if paging is needed
   const result = useQuery(
     {
-      queryKey: queryKey(props.variables),
+      queryKey: get<%= fileName %>QueryKey(props.variables),
       queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
     },
     queryClient

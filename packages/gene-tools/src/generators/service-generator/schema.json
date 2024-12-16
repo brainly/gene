@@ -40,8 +40,7 @@
     "useDefaultCrudFunctions": {
       "type": "boolean",
       "description": "Use default CRUD functions",
-      "default": true,
-      "x-prompt": "Do you want to use default CRUD functions?"
+      "default": false
     }
   },
   "required": ["name"]
