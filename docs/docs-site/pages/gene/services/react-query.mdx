@@ -286,7 +286,27 @@ export function useCharacters(props: { variables: VariablesType }) {
   return transformReactQueryResponse(result);
 }
 ```
+## Fetch on demand
+You can fetch data on demand by utilizing `enabled` property of `useQuery` or `useInfiniteQuery` hooks:
 
+```tsx {1, 9}
+export function useTodos(props: { variables: VariablesType }, skip = false) {
+  const queryClient = useInjectedReactQueryClient();
+
+  // useInfiniteQuery if paging is needed
+  const result = useQuery(
+    {
+      queryKey: getTodosQueryKey(props.variables),
+      queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
+      enabled: !skip,
+    },
+    queryClient
+  );
+
+  return transformReactQueryResponse(result);
+}
+
+```
 
 ## Crud Operations and strategies for data synchronization
 

@@ -43,7 +43,7 @@ export async function query<%= fileName %>(client: QueryClient, variables: Varia
   });
 }
 
-export function use<%= fileName %>(props: {variables: VariablesType}) {
+export function use<%= fileName %>(props: {variables: VariablesType}, skip = false) {
   const queryClient = useInjectedReactQueryClient();
 
   // useInfiniteQuery if paging is needed
@@ -51,6 +51,7 @@ export function use<%= fileName %>(props: {variables: VariablesType}) {
     {
       queryKey: get<%= fileName %>QueryKey(props.variables),
       queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
+      enabled: !skip
     },
     queryClient
   );
