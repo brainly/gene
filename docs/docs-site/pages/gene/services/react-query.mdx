@@ -11,48 +11,114 @@ import { Callout } from 'nextra-theme-docs';
 [Generator code](https://github.com/brainly/gene/blob/master/packages/gene-tools/src/generators/service-generator/README.md)
 
 ```bash
-nx generate @brainly-gene/tools:service --name=myData --directory=my-feature/services --serviceType=react-query
+nx generate @brainly-gene/tools:service --name=post --directory=my-blog/services --serviceType=react-query --tags=domain:my-blog
 ```
 
-Running this command will generate the following files:
+After running this command you will be additionally prompted to provide the CRUD operations for the service:
 
+```sh
+>  NX  Generating @brainly-gene/tools:service
+
+✔ What is the service name? (the name should be an entity name in singular form - for example post, user, book, etc.) · post
+✔ What is the service directory? · my-blog/services
+✔ What are the service tags? · domain:my-blog
+✔ What is the service type? · react-query
+? Select CRUD functions you want to generate
+ ◉ usePosts - to get multiple posts
+ ◯ useCreatePost - to create a new post
+ ◉ useUpdatePost - to update a single post
+ ◯ useDeletePost - to delete a single post
+❯◉ usePost - to get a single post
 ```
-CREATE libs/my-feature/services/myData-service/README.md
-CREATE libs/my-feature/services/myData-service/.babelrc
-CREATE libs/my-feature/services/myData-service/src/index.ts
-CREATE libs/my-feature/services/myData-service/tsconfig.json
-CREATE libs/my-feature/services/myData-service/tsconfig.lib.json
+
+After selecting desired CRUD operations, the generator will create the following files:
+
+```sh {11,12,13}
+CREATE libs/my-blog/services/post-service/project.json
+CREATE libs/my-blog/services/post-service/.eslintrc.json
+CREATE libs/my-blog/services/post-service/.babelrc
+CREATE libs/my-blog/services/post-service/src/index.ts
+CREATE libs/my-blog/services/post-service/tsconfig.lib.json
+CREATE libs/my-blog/services/post-service/tsconfig.json
+CREATE libs/my-blog/services/post-service/jest.config.ts
+CREATE libs/my-blog/services/post-service/tsconfig.spec.json
 UPDATE tsconfig.base.json
-UPDATE nx.json
-CREATE libs/my-feature/services/myData-service/.eslintrc.json
-CREATE libs/my-feature/services/myData-service/jest.config.js
-CREATE libs/my-feature/services/myData-service/tsconfig.spec.json
-CREATE libs/my-feature/services/myData-service/src/lib/queries.ts
-CREATE libs/my-feature/services/myData-service/src/lib/useMyData.ts
-CREATE libs/my-feature/services/myData-service/src/lib/useMyDataStatic.ts
+CREATE libs/my-blog/services/post-service/src/README.md
+CREATE libs/my-blog/services/post-service/src/lib/useUpdatePost.ts
+CREATE libs/my-blog/services/post-service/src/lib/usePost.ts
+CREATE libs/my-blog/services/post-service/src/lib/usePosts.ts
 ```
 
-This generator creates a React Query service in the specified directory and updates all NX configuration files accordingly. After generation, update the endpoint in the `query` function in `queries.ts`:
+This generator creates a React Query service in the specified directory with the provided CRUD operations.
+Each service hook comes with example API calls and types:
 
 ```tsx
-export type MyDataTypeAPI = {
-  content: string; // SET UP YOUR API RESPONSE TYPE <-------
+// Change this to match output of your API
+export type PostsAPIType = {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+}[];
+
+// Change this to match input of your API
+export type VariablesType = {
+  userId: number;
 };
 
-function queryFn(variables?: VariablesType, context?: QueryFunctionContext) {
-  const url = variables?.url || 'https://jsonplaceholder.typicode.com/todos/1'; // CHANGE URL <------
+export const queryKey = (variables?: VariablesType) => [
+  'get-posts-key',
+  variables,
+];
+
+export function defaultQueryFn(
+  variables: VariablesType,
+  context?: QueryFunctionContext
+) {
+  const url = `https://jsonplaceholder.typicode.com/posts?userId=${variables.userId}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
-  return reactQueryFetchWrapper<MyDataTypeAPI>(() => fetchMethod(url));
+  return reactQueryFetchWrapper<PostsAPIType>(() => fetchMethod(url));
+}
+
+// Use this function to run this query on SSR, pass the subapp as queryFn
+export async function queryPosts(
+  client: QueryClient,
+  variables: VariablesType,
+  queryFn = defaultQueryFn
+) {
+  return client.fetchQuery({
+    queryFn: () => queryFn(variables),
+    queryKey: queryKey(variables),
+  });
+}
+
+export function usePosts(props: { variables: VariablesType }) {
+  const queryClient = useInjectedReactQueryClient();
+
+  // useInfiniteQuery if paging is needed
+  const result = useQuery(
+    {
+      queryKey: queryKey(props.variables),
+      queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
+    },
+    queryClient
+  );
+
+  return transformReactQueryResponse(result);
 }
 ```
 
 ## Usage in a Module
 
 ```tsx
-import { useMyData } from '@acme/my-feature/services/myData';
+import { usePosts } from '@acme/my-blog/services/post-service';
 
 function MyModule() {
-  const { data, loading, error } = useMyData();
+  const { data, error, loading } = usePosts({
+    variables: {
+      userId: 1,
+    },
+  });
 
   if (loading) {
     return <Spinner />;
@@ -75,29 +141,41 @@ To hydrate your query using server-side rendering, run the query on the page in 
 Example page with SSR:
 
 ```tsx filename=pages/example.tsx
+import { compose } from 'ramda';
+import { getRequestHeaders } from '@brainly-gene/next';
+import { getHomePageContainer } from '../ioc/getHomePageIoc';
+import { GetServerSideProps } from 'next/types';
 
-import {compose} from 'ramda';
-import {getRequestHeaders} from '@brainly-gene/next';
-import {getHomePageContainer} from '../ioc/getHomePageIoc';
-import {GetServerSideProps} from 'next/types';
-
-import {withIoc, reactQueryFactory} from '@brainly-gene/core';
+import { withIoc, reactQueryFactory } from '@brainly-gene/core';
 
 import { QueryClient } from '@tanstack/react-query';
-import { queryMyTest } from '@acme/services/my-test-service';
+import { queryPosts } from '@acme/my-blog/services/post-service';
+import { getPosts } from '@acme/my-blog/api/post-api';
 
 function HomePage() {
   return <div>Hello ExamplePage!</div>;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({req}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const reactQueryClient = reactQueryFactory(() => new QueryClient());
   const reactQueryClientInstance = reactQueryClient.getClient();
 
   const reqHeaders = getRequestHeaders(req);
 
   // Invoke service queries here:
-  await queryMyTest(reactQueryClientInstance);
+  await queryPosts(reactQueryClientInstance, { userId: 1 });
+
+  // You can also pass custom query function to fetch the data directly, 
+  // without calling external endpoint
+  await queryPosts(reactQueryClientInstance, { userId: 1 }, () => {
+    return getPosts({ userId: 1 });
+  });
+
+  // IF you have multiple queries, you can (and you should) run them in parallel
+  await Promise.all([
+    queryPosts(),
+    queryFunnyCats()
+  ]);
 
   // End of queries invokes
 
@@ -110,19 +188,25 @@ export const getServerSideProps: GetServerSideProps = async ({req}) => {
 };
 
 export default compose(withIoc(getHomePageContainer))(HomePage);
-
 ```
 
-Bind the Query client in the IOC container:
+<Callout emoji="⚠️">
+  The variables passed to `queryPosts` must be consistent between the
+  server and client. Cache keys depend on these elements. If they differ between
+  client and server, hydration will not work and the query will be re-executed on the client.
+</Callout>
+
+
+Query client is hydrated in the IOC container:
 
 ```tsx filename=/ioc/getHomePageIoc.ts
-import {Container} from 'inversify';
-import {getBaseContainer} from './baseIoc';
-import {HomePagePropsType} from '../types/types';
-import {ServiceTypes} from '@brainly-gene/core';
+import { Container } from 'inversify';
+import { getBaseContainer } from './baseIoc';
+import { HomePagePropsType } from '../types/types';
+import { ServiceTypes } from '@brainly-gene/core';
 
-import {Factory, factory} from '@brainly-gene/core';
-import {ReactQueryClientType} from '@brainly-gene/core';
+import { Factory, factory } from '@brainly-gene/core';
+import { ReactQueryClientType } from '@brainly-gene/core';
 
 export function getHomePageContainer(props?: HomePagePropsType) {
   const baseContainer = getBaseContainer();
@@ -144,122 +228,56 @@ export function getHomePageContainer(props?: HomePagePropsType) {
 
   return container;
 }
-
 ```
-
-Then in your service, you can use the injected React Query client:
-
-```tsx my-test-service/src/lib/useMyTest.ts
-import {queryFn, queryKey, VariablesType} from './queries';
-import {
-  transformReactQueryResponse,
-  useInjectedReactQueryClient,
-} from '@brainly-gene/core';
-import {useQuery} from '@tanstack/react-query';
-
-export function useMyTest(props?: {variables: VariablesType}) {
-  const queryClient = useInjectedReactQueryClient();
-
-  // useInfiniteQuery if paging is needed
-  const result = useQuery(
-    {
-      queryKey: queryKey(props?.variables),
-      queryFn: ctx => queryFn(props?.variables, ctx),
-    },
-    queryClient
-  );
-
-  return transformReactQueryResponse(result);
-}
-
-```
-
-### Stale Time
-
-To avoid fetching data on the first render and utilize cached data from the server, set `staleTime` in `getMyDataObservable` within `queries.ts`. By default, `staleTime` is `0`, which refetches queries on page load. Setting `staleTime` to `5000` milliseconds (5 seconds) is recommended to avoid double fetching. Setting it to `Infinity` prevents refetching altogether.
-
-```tsx {9}
-export function useMyData(props?: { variables: VariablesType }) {
-  const queryClient = useInjectedReactQueryClient();
-
-  // useInfiniteQuery if paging is needed
-  const result = useQuery(
-    {
-      queryKey: queryKey(props?.variables),
-      queryFn: (ctx) => queryFn(props?.variables, ctx),
-      staleTime: 0,
-    },
-    queryClient
-  );
-
-  return transformReactQueryResponse(result);
-}
-```
-
-### Adding Query for an Existing Page
-
-Once the above setup is ready, add your query to the server as follows:
-
-```tsx
-export async function getServerSideProps() {
-  const reactQueryClient = clients.getReactQueryClient();
-  const reactQueryClientInstance = reactQueryClient.getClient();
-
-  await Promise.all([
-    queryMyData(),
-    // ADD YOUR QUERY FUNCTION HERE <--------
-  ]);
-
-  return {
-    props: {
-      dehydratedQueryClient: reactQueryClient.dehydrate(),
-    },
-  };
-}
-```
-
-<Callout emoji="⚠️">
-  The URL and variables passed to `queryFn` must be consistent between the
-  server and client. Cache keys depend on these elements. If they differ between
-  client and server, hydration will not work and the query will be re-executed.
-</Callout>
 
 ## Pagination
 
-To implement pagination, call `fetchMore` from the service API:
+To implement pagination, use `useInfiniteQuery` instead of `useQuery`. Here is an example of how to implement pagination:
 
-```tsx
-function MyModule() {
-  const { data, loading, error, fetchMore } = useMyData({ page: 1 });
-  const ref = useRef();
+```tsx {27, 35, 39...45}
+export type CharactersAPIType = {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+  results: Character[];
+};
 
-  useMediator('onNextPageButtonClick', (page) => fetchMore({ page }), ref);
+type Character = {
+  id: number;
+  name: string;
+};
 
-  if (loading) {
-    return <Spinner />;
-  }
+export type VariablesType = {};
 
-  if (error) {
-    return <MyErrorUi message={error} />;
-  }
+export const queryKey = (variables?: VariablesType) => [
+  'get-characters-key',
+  variables,
+];
 
-  return <MyUIComponent data={data} />;
+export function defaultQueryFn(
+  variables: VariablesType,
+  context?: QueryFunctionContext
+) {
+  const url = context.pageParam as string; // use the pageParam to get the next page
+  const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
+  return reactQueryFetchWrapper<CharactersAPIType>(() => fetchMethod(url));
 }
-```
 
-Update the service hook:
-
-```tsx {4, 8..11}
-export function useMyData(props?: { variables: VariablesType }) {
+export function useCharacters(props: { variables: VariablesType }) {
   const queryClient = useInjectedReactQueryClient();
 
-  const result = useInfiniteQuery( // Change useQuery to useInfiniteQuery
+  const result = useInfiniteQuery( // useInfiniteQuery instead of useQuery
     {
-      queryKey: queryKey(props?.variables),
-      queryFn: (ctx) => queryFn(props?.variables, ctx),
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) => {
-        return 2; // Modify to return the next page number based on lastPage
+      queryKey: queryKey(props.variables),
+      queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
+      initialPageParam: 'https://rickandmortyapi.com/api/character?page=1', // set the initial page
+      getNextPageParam: (lastPage) => {
+        // get the next page param based on the last page response, 
+        // this can be page number, cursor or whole URL
+        return lastPage.info.next; 
       },
     },
     queryClient
@@ -268,3 +286,5 @@ export function useMyData(props?: { variables: VariablesType }) {
   return transformReactQueryResponse(result);
 }
 ```
+
+For more information on React Query, see the [React Query documentation](https://tanstack.com/query/v5/docs/framework/react/overview).
