@@ -273,7 +273,7 @@ export function useCharacters(props: { variables: VariablesType }) {
     {
       queryKey: queryKey(props.variables),
       queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
-      initialPageParam: 'https://rickandmortyapi.com/api/character?page=1', // set the initial page
+      initialPageParam: 'https://rickandmortyapi.com/api/character?page=1', // set the initial page param
       getNextPageParam: (lastPage) => {
         // get the next page param based on the last page response, 
         // this can be page number, cursor or whole URL
