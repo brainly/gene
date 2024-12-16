@@ -39,19 +39,19 @@ jobs:
               successRegexp: 'Successfully ran target lint for project examples-components-my-components-ui',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa && pnpm nx lint my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-feature-services-my-data-service',
               successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa && pnpm nx test my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx test my-feature-services-my-data-service',
               successRegexp: 'Successfully ran target test for project my-feature-services-my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa && pnpm nx lint my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-feature-services-my-data-service',
               successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa && pnpm nx test my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx test my-feature-services-my-data-service',
               successRegexp: 'Successfully ran target test for project my-feature-services-my-data-service',
             }
           - {

@@ -52,8 +52,16 @@ const getDirectoryPath = (
   return `${schema.directory}`;
 };
 
-const promptCrudFunctions = async (serviceName: string) => {
+const promptCrudFunctions = async (
+  serviceName: string,
+  useDefaultCrudFunctions: boolean
+) => {
   const classifiedName = stringUtils.classify(serviceName);
+
+  if (useDefaultCrudFunctions) {
+    return [`use${classifiedName}s`];
+  }
+  
   const { crudFunctions } = await inquirer.prompt([
     {
       type: 'checkbox',
@@ -96,7 +104,10 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   let crudFunctions: string[] = [];
 
   if (schema.serviceType === 'react-query') {
-    crudFunctions = await promptCrudFunctions(name);
+    crudFunctions = await promptCrudFunctions(
+      name,
+      schema.useDefaultCrudFunctions
+    );
   }
 
   await libraryGenerator(tree, {
