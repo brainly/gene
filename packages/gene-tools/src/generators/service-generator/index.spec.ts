@@ -141,10 +141,10 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toContain(
-      "export { useQuestions, queryQuestions } from './lib/useQuestions';"
+      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';"
     );
     expect(indexFile).toContain(
-      "export { useQuestion, queryQuestion } from './lib/useQuestion';"
+      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';"
     );
     expect(indexFile).toContain(
       "export { useCreateQuestion } from './lib/useCreateQuestion';"
@@ -214,10 +214,10 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toContain(
-      "export { useQuestions, queryQuestions } from './lib/useQuestions';"
+      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';"
     );
     expect(indexFile).not.toContain(
-      "export { useQuestion, queryQuestion } from './lib/useQuestion';"
+      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';"
     );
     expect(indexFile).not.toContain(
       "export { useCreateQuestion } from './lib/useCreateQuestion';"

@@ -57,9 +57,7 @@ const promptCrudFunctions = async (
   useDefaultCrudFunctions: boolean
 ) => {
   const classifiedName = stringUtils.classify(serviceName);
-  console.log({ useDefaultCrudFunctions });
   if (useDefaultCrudFunctions) {
-    console.log('useDefaultCrudFunctions', useDefaultCrudFunctions);
     return [`use${classifiedName}s`];
   }
 
