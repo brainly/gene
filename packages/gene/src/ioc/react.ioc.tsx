@@ -108,11 +108,11 @@ export function useCallbackInjection<T, R = void>(
   }
 }
 
-export function withIoc<T extends JSX.IntrinsicAttributes>(
-  getContainer: (props: T) => interfaces.Container
+export function withIoc<Props extends Record<string, any>>(
+  getContainer: (props: Props) => interfaces.Container
 ) {
-  return (Page: React.ComponentType<T>) => {
-    return (props: T) => {
+  return (Page: React.ComponentType<Props>) => {
+    return (props: Props) => {
       const container = getContainer(props);
 
       return (
