@@ -1,12 +1,12 @@
-import {formatFiles, logger, Tree} from '@nrwl/devkit';
-import {Options} from './schema';
+import { formatFiles, logger, Tree } from '@nx/devkit';
+import { Options } from './schema';
 import {
   addStorybookTargets,
   excludeStoriesFromProjectTsConfig,
   generateConfigurationFiles,
   normalizeOptions,
 } from './utilities';
-import {hasFilesInTheFolder} from '../utilities'
+import { hasFilesInTheFolder } from '../utilities';
 
 export async function storybookConfigurationGenerator(
   tree: Tree,

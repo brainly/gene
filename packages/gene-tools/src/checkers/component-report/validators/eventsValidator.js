@@ -6,7 +6,7 @@ const {
   getWorkspaceLibConfigByPath,
   tsPathToWebpackAliases,
 } = require('../../../scripts');
-const { workspaceRoot } = require('@nrwl/devkit');
+const { workspaceRoot } = require('@nx/devkit');
 
 const j = jscodeshift.withParser('tsx');
 

@@ -1,5 +1,4 @@
 import type { DocsThemeConfig } from 'nextra-theme-docs';
-import { Github, Star, GitFork, Users, Dna } from 'lucide-react';
 import Search from './components/search';
 import Image from 'next/image';
 import Link from 'next/link';

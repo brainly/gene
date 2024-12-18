@@ -1,4 +1,4 @@
-const withNx = require('@nrwl/next/plugins/with-nx');
+const withNx = require('@nx/next/plugins/with-nx');
 const withNodeModulesCSS = require('./withNodeModulesCSS');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -22,7 +22,7 @@ const plugins = [withNodeModulesCSS, withBundleAnalyzer, withNx].concat(
 const domains = [
 ];
 
-module.exports = () => {
+const getConfig = () => {
   return plugins.reduce(
     (acc, next) => {
       if (typeof next !== 'function') {
@@ -74,3 +74,6 @@ module.exports = () => {
     }
   );
 };
+
+
+module.exports = getConfig();

@@ -1,5 +1,5 @@
-import {Tree} from '@nrwl/devkit';
-import {BrainlyNextJSAppGenerator} from '../schema';
+import { Tree } from '@nx/devkit';
+import { BrainlyNextJSAppGenerator } from '../schema';
 
 export const maybeExcludeRewrites = (
   tree: Tree,
@@ -8,9 +8,9 @@ export const maybeExcludeRewrites = (
   if (!schema.rewrites) {
     const rewriteFilePath = tree
       .listChanges()
-      .map(({path}) => path)
+      .map(({ path }) => path)
       .find(
-        path =>
+        (path) =>
           path.endsWith('rewrites.json') || path.endsWith('loadRewrites.js')
       );
 

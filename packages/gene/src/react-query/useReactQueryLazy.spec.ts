@@ -4,7 +4,12 @@ import { reactQueryFetchWrapper } from './reactQueryFetchWrapper';
 import { useReactQueryLazy } from './useReactQueryLazy';
 import { QueryClient } from '@tanstack/react-query';
 import { waitFor } from '@testing-library/react';
-import { ExampleResponse, mockFetch, mockFetchWithDelay, mockFetchWithError } from '../services';
+import {
+  ExampleResponse,
+  mockFetch,
+  mockFetchWithDelay,
+  mockFetchWithError,
+} from '../services';
 
 let queryClient: QueryClient;
 
@@ -119,7 +124,7 @@ describe('useReactQueryLazy', () => {
   it('updates other queries based on provided updaters', async () => {
     queryClient.setQueryData(['otherKey'], { value: 'original' });
 
-    const updateFn = (currentData: any, newQueryResponse: any) => {
+    const updateFn = (currentData: any) => {
       return { ...currentData, value: 'updated' };
     };
 
@@ -143,7 +148,7 @@ describe('useReactQueryLazy', () => {
   });
 
   it('does not update if query key does not exist', async () => {
-    const updateFn = (currentData: any, newQueryResponse: any) => {
+    const updateFn = (currentData: any) => {
       return { ...currentData, value: 'updated' };
     };
 
@@ -171,7 +176,7 @@ describe('useReactQueryLazy', () => {
 
     queryClient.setQueryData(['otherKey'], { value: 'original' });
 
-    const updateFn = (currentData: any, newQueryResponse: any) => {
+    const updateFn = (currentData: any) => {
       return { ...currentData, value: 'should revert' };
     };
 

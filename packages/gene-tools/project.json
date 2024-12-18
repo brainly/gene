@@ -1,10 +1,11 @@
 {
+  "name": "packages-gene-tools",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/gene-tools/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/gene-tools",
@@ -22,26 +23,23 @@
           "packages/gene-tools/**/*.crt",
           "packages/gene-tools/**/*.key",
           "packages/gene-tools/**/.gitkeep"
-        ],
-        "updateBuildableProjectDepsInPackageJson": true
+        ]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/gene-tools/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-tools"],
       "options": {
-        "jestConfig": "packages/gene-tools/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-tools/jest.config.ts"
       }
     }
   },
-  "tags": ["type:public"],
-  "name": "packages-gene-tools"
+  "tags": ["type:public"]
 }

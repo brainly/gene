@@ -6,11 +6,11 @@ import { QueryClient as LegacyQueryClient } from '@tanstack/react-query';
 
 type QueryClient = TanstackQueryClient | LegacyQueryClient;
 
-export type ReactQueryClientType = {
+export interface ReactQueryClientType {
   hydrate: (initialState?: DehydratedState) => void;
   dehydrate: () => DehydratedState;
   getClient: () => QueryClient;
-};
+}
 
 export function reactQueryFactory(createReactQueryClient: () => QueryClient) {
   const client = createReactQueryClient();

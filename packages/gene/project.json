@@ -1,35 +1,33 @@
 {
+  "name": "packages-gene",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/gene/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/gene",
         "main": "packages/gene/src/index.ts",
         "tsConfig": "packages/gene/tsconfig.lib.json",
-        "assets": ["packages/gene/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene/*.md"]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/gene/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene"],
       "options": {
-        "jestConfig": "packages/gene/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene/jest.config.ts"
       }
     }
   },
-  "tags": ["type:public"],
-  "name": "packages-gene"
+  "tags": ["type:public"]
 }

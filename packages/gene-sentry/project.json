@@ -1,35 +1,33 @@
 {
+  "name": "packages-gene-sentry",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/gene-sentry/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/gene-sentry",
         "main": "packages/gene-sentry/src/index.ts",
         "tsConfig": "packages/gene-sentry/tsconfig.lib.json",
-        "assets": ["packages/gene-sentry/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene-sentry/*.md"]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/gene-sentry/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-sentry"],
       "options": {
-        "jestConfig": "packages/gene-sentry/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-sentry/jest.config.ts"
       }
     }
   },
-  "tags": ["type:public"],
-  "name": "packages-gene-sentry"
+  "tags": ["type:public"]
 }

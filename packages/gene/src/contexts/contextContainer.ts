@@ -24,7 +24,7 @@ const defaultAppReducer: AppReducerType = (
   }
 };
 
-export const useAppContextContainer = <T>(
+export const useAppContextContainer = (
   appInitialState: AppStoreType,
   appReducer?: AppReducerType
 ) => {

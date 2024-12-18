@@ -4,7 +4,7 @@ import {
   TSESTree,
 } from '@typescript-eslint/utils';
 
-type Options = [
+export type Options = [
   {
     ignorePaths?: string[];
   }
@@ -14,8 +14,7 @@ type MessageIds = 'useListenerInModule';
 export const USE_LISTENER_RULE_NAME = 'use-listener';
 
 export const useListenerRule = ESLintUtils.RuleCreator(
-  () =>
-    `https://brainly.github.io/gene/gene/components/hooks/useListener`
+  () => `https://brainly.github.io/gene/gene/components/hooks/useListener`
 )<Options, MessageIds>({
   name: USE_LISTENER_RULE_NAME,
   meta: {
@@ -25,7 +24,7 @@ export const useListenerRule = ESLintUtils.RuleCreator(
             useListener is designed for rare cases when we need to listen to events before it reaches the mediator.
             There should be always one mediator that should listen to event.
             There can be zero or more listeners that can listen to the event before it reaches the mediator`,
-      recommended: false,
+      recommended: 'recommended',
     },
     fixable: 'code',
     schema: [],

@@ -1,10 +1,10 @@
-import {joinPathFragments, Tree, updateJson} from '@nrwl/devkit';
+import { joinPathFragments, Tree, updateJson } from '@nx/devkit';
 
 export const updateEslint = (tree: Tree, appDir: string) => {
   updateJson(
     tree,
     joinPathFragments(appDir, './.eslintrc.json'),
-    eslintConfig => {
+    (eslintConfig) => {
       return {
         ...eslintConfig,
         settings: {

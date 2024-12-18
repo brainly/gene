@@ -1,10 +1,10 @@
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   runExecutor: jest.fn(),
 }));
 jest.mock('http-proxy');
 
-import { ExecutorContext, logger, runExecutor } from '@nrwl/devkit';
+import { ExecutorContext, logger, runExecutor } from '@nx/devkit';
 
 import { createServer } from 'http-proxy';
 import {

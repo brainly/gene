@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "service-generator",
   "type": "object",
   "examples": [
@@ -31,11 +30,16 @@
     },
     "serviceType": {
       "type": "string",
-      "enum": ["apollo", "react-query"],
+      "enum": [
+        "apollo",
+        "react-query"
+      ],
       "description": "Service type to create",
       "default": "apollo",
       "x-prompt": "What is the service type?"
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }

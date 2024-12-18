@@ -1,4 +1,4 @@
-const { workspaceRoot } = require('@nrwl/devkit');
+const { workspaceRoot } = require('@nx/devkit');
 const { resolve } = require('path');
 
 /**

@@ -1,4 +1,4 @@
-const withNx = require('@nrwl/next/plugins/with-nx');
+const withNx = require('@nx/next/plugins/with-nx');
 const withNodeModulesCSS = require('./withNodeModulesCSS');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -44,7 +44,7 @@ const domains = [
   'srv-supersonic-images.z-dn.net',
 ];
 
-module.exports = () => {
+const getConfig = () => {
   return plugins.reduce(
     (acc, next) => {
       if (typeof next !== 'function') {
@@ -96,3 +96,5 @@ module.exports = () => {
     }
   );
 };
+
+module.exports = getConfig();

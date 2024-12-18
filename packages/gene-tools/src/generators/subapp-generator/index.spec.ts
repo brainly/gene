@@ -1,5 +1,5 @@
-import { logger, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from '../library-generator';
 import subappGenerator from './index';
 import * as inquirer from 'inquirer';
@@ -12,7 +12,7 @@ describe('Subapp generator', () => {
 
   beforeEach(async () => {
     projectName = 'my-subapp';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);

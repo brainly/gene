@@ -1,11 +1,11 @@
 export const wait = async (time = 0) =>
   new Promise((resolve) => setTimeout(resolve, time));
 
-export type ExampleResponse = { data: { hello: string }; headers?: Headers };
-export type ExamplePaginatedResponse = {
+export interface ExampleResponse { data: { hello: string }; headers?: Headers }
+export interface ExamplePaginatedResponse {
   data: { page: number };
   headers?: Headers;
-};
+}
 
 export function mockFetch() {
   const res = { data: { hello: { world: 'value' } } };

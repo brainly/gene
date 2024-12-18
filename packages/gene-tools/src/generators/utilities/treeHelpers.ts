@@ -1,4 +1,4 @@
-import {Tree, getProjects} from '@nrwl/devkit';
+import { Tree, getProjects } from '@nx/devkit';
 
 export const getAllAppKeys = (tree: Tree) => {
   const projects = getProjects(tree);
