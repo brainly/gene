@@ -1,4 +1,5 @@
-export {use<%= fileName %>} from './lib/use<%= fileName %>';
-export {use<%= fileName %>Lazy} from './lib/use<%= fileName %>Lazy';
-export type {<%= fileName %>DataTypeAPI} from './lib/queries';
-export { query<%= fileName %> } from './lib/queries';
+export { use<%= fileName %>, query<%= fileName %>, get<%= fileName %>QueryKey } from './lib/use<%= fileName %>';
+export { use<%= fileName %>s, query<%= fileName %>s, get<%= fileName %>sQueryKey } from './lib/use<%= fileName %>s';
+export { useCreate<%= fileName %> } from './lib/useCreate<%= fileName %>';
+export { useUpdate<%= fileName %> } from './lib/useUpdate<%= fileName %>';
+export { useDelete<%= fileName %> } from './lib/useDelete<%= fileName %>';
