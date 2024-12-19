@@ -2,7 +2,6 @@ const { join } = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  stories: [],
   core: {
     builder: 'webpack5',
   },

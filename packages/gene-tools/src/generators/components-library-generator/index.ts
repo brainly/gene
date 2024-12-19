@@ -73,6 +73,7 @@ export default async function (
       compilerOptions: {
         ...currentTsconfig.compilerOptions,
         isolatedModules: true,
+        esModuleInterop: true
       },
     };
   });
