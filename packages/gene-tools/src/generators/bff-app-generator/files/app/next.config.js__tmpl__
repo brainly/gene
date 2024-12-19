@@ -31,8 +31,8 @@ const devPlugins = [];
 const plugins = [
   withNodeModulesCSS,
   withBundleAnalyzer,
-  withNx,
   withBuildId,
+  withNx,
 ].concat(
   process.env.NEXT_PUBLIC_ENV === 'local' ? devPlugins : productionPlugins
 );
@@ -44,7 +44,7 @@ const domains = [
   'srv-supersonic-images.z-dn.net',
 ];
 
-module.exports = () => {
+const getConfig = () => {
   return plugins.reduce(
     (acc, next) => {
       if (typeof next !== 'function') {
@@ -96,3 +96,5 @@ module.exports = () => {
     }
   );
 };
+
+module.exports = getConfig();
