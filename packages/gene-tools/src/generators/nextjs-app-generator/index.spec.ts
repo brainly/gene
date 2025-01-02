@@ -109,8 +109,21 @@ describe('NextJS App generator', () => {
       appTree,
       'example.com-my-app-e2e'
     );
-    expect(e2eConfig?.targets?.['e2e']).toBeTruthy();
-    expect(e2eConfig?.targets?.['e2e-base']).toBeTruthy();
+    expect(e2eConfig?.targets?.['e2e']).toMatchInlineSnapshot(`
+      Object {
+        "configurations": Object {
+          "production": Object {
+            "devServerTarget": "example.com-my-app:serve-base:production",
+          },
+        },
+        "executor": "@nx/cypress:cypress",
+        "options": Object {
+          "cypressConfig": "apps/example.com/my-app-e2e/cypress.config.ts",
+          "devServerTarget": "example.com-my-app:serve-base",
+          "testingType": "e2e",
+        },
+      }
+    `);
   });
 
   it('should update cypress configs', async () => {
