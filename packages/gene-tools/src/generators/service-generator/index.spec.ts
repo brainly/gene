@@ -140,21 +140,13 @@ describe('Service generator', () => {
       .read('libs/question/services/question-service/src/index.ts')
       ?.toString();
 
-    expect(indexFile).toContain(
-      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';"
-    );
-    expect(indexFile).toContain(
-      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';"
-    );
-    expect(indexFile).toContain(
-      "export { useCreateQuestion } from './lib/useCreateQuestion';"
-    );
-    expect(indexFile).toContain(
-      "export { useDeleteQuestion } from './lib/useDeleteQuestion';"
-    );
-    expect(indexFile).toContain(
-      "export { useUpdateQuestion } from './lib/useUpdateQuestion';"
-    );
+    expect(indexFile).toMatchInlineSnapshot(`
+      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';
+      export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';
+      export { useCreateQuestion } from './lib/useCreateQuestion';
+      export { useUpdateQuestion } from './lib/useUpdateQuestion';
+      export { useDeleteQuestion } from './lib/useDeleteQuestion';"
+    `);
   });
 
   it('should generate react-query service with only selected crud operations', async () => {
@@ -213,21 +205,10 @@ describe('Service generator', () => {
       .read('libs/question/services/question-service/src/index.ts')
       ?.toString();
 
-    expect(indexFile).toContain(
-      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';"
-    );
-    expect(indexFile).not.toContain(
-      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';"
-    );
-    expect(indexFile).not.toContain(
-      "export { useCreateQuestion } from './lib/useCreateQuestion';"
-    );
-    expect(indexFile).not.toContain(
-      "export { useDeleteQuestion } from './lib/useDeleteQuestion';"
-    );
-    expect(indexFile).toContain(
-      "export { useUpdateQuestion } from './lib/useUpdateQuestion';"
-    );
+    expect(indexFile).toMatchInlineSnapshot(`
+      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';
+      export { useUpdateQuestion } from './lib/useUpdateQuestion';"
+    `);
   });
 
   it('should camelize query name if service name includes "-"', async () => {
