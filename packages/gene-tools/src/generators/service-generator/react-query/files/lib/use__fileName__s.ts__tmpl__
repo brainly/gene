@@ -10,46 +10,46 @@ import {
 import nodeFetch from 'node-fetch';
 
 // Change this to match output of your API
-export type <%= fileName %>APIType = {
+export type <%= fileName %>sAPIType = {
   id: number,
   userId: number,
   title: string,
   body: string,
-};
+}[];
 
 // Change this to match input of your API
 export type VariablesType = {
-  postId: number
+  userId: number
 };
 
-export const get<%= fileName %>QueryKey = (variables?: VariablesType) => [
-  'get-<%= lowerCaseFileName %>-key',
+export const get<%= fileName %>sQueryKey = (variables?: VariablesType) => [
+  'get-<%= lowerCaseFileName %>s-key',
   variables,
 ];
 
 export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
-  const url = `https://jsonplaceholder.typicode.com/posts/${variables.postId}`;
+  const url = `https://jsonplaceholder.typicode.com/posts?userId=${variables.userId}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
-  return reactQueryFetchWrapper<<%= fileName %>APIType>(() =>
+  return reactQueryFetchWrapper<<%= fileName %>sAPIType>(() =>
     fetchMethod(url)
   );
 }
 
 // Use this function to run this query on SSR, pass the subapp as queryFn
-export async function query<%= fileName %>(client: QueryClient, variables: VariablesType, queryFn = defaultQueryFn) {
+export async function query<%= fileName %>s(client: QueryClient, variables: VariablesType, queryFn = defaultQueryFn) {
   return client.fetchQuery({
     queryFn: () => queryFn(variables),
-    queryKey: get<%= fileName %>QueryKey(variables),
+    queryKey: get<%= fileName %>sQueryKey(variables),
   });
 }
 
-export function use<%= fileName %>(props: {variables: VariablesType}, skip = false) {
+export function use<%= fileName %>s(props: {variables: VariablesType}, skip = false) {
   const queryClient = useInjectedReactQueryClient();
 
   // useInfiniteQuery if paging is needed
   const result = useQuery(
     {
-      queryKey: get<%= fileName %>QueryKey(props.variables),
+      queryKey: get<%= fileName %>sQueryKey(props.variables),
       queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
       enabled: !skip
     },

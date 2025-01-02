@@ -1,0 +1,45 @@
+import {
+  useInjectedReactQueryClient,
+  useReactQueryLazy,
+} from '@brainly-gene/core';
+
+import {QueryFunctionContext} from '@tanstack/react-query';
+import {
+  reactQueryFetchWrapper,
+} from '@brainly-gene/core';
+import nodeFetch from 'node-fetch';
+
+// Change this to match output of your API
+export type Delete<%= fileName %>APIType = {
+
+};
+
+// Change this to match input of your API
+export type VariablesType = {
+  id: number
+};
+
+export const queryKey = (variables?: VariablesType) => [
+  'delete-<%= lowerCaseFileName %>-key',
+  variables,
+];
+
+export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
+  const url = `https://jsonplaceholder.typicode.com/posts/${variables.id}`;
+  const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
+  return reactQueryFetchWrapper<Delete<%= fileName %>APIType>(() =>
+    fetchMethod(url, {
+        method: 'DELETE'
+    })
+  );
+}
+
+export function useDelete<%= fileName %>() {
+  const queryClient = useInjectedReactQueryClient();
+
+  return useReactQueryLazy<Delete<%= fileName %>APIType, VariablesType>({
+    reactQueryClient: queryClient,
+    queryFn: (_client, variables) => defaultQueryFn(variables),
+    queryKey,
+  })
+}

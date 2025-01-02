@@ -5,4 +5,5 @@ export interface BrainlyServiceGenerator {
   directory: string;
   tags: string;
   serviceType: ServiceType;
+  useDefaultCrudFunctions?: boolean
 }

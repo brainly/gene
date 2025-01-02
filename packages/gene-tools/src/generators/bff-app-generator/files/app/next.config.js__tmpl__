@@ -31,8 +31,8 @@ const devPlugins = [];
 const plugins = [
   withNodeModulesCSS,
   withBundleAnalyzer,
-  withNx,
   withBuildId,
+  withNx,
 ].concat(
   process.env.NEXT_PUBLIC_ENV === 'local' ? devPlugins : productionPlugins
 );

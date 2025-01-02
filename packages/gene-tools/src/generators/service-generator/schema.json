@@ -12,11 +12,12 @@
     "name": {
       "type": "string",
       "description": "Service name",
+      "default": "post",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What is the service name? (without -service suffix)"
+      "x-prompt": "What is the service name? (the name should be an entity name in singular form - for example post, user, book, etc.)"
     },
     "directory": {
       "type": "string",
@@ -30,13 +31,15 @@
     },
     "serviceType": {
       "type": "string",
-      "enum": [
-        "apollo",
-        "react-query"
-      ],
+      "enum": ["react-query", "apollo"],
       "description": "Service type to create",
-      "default": "apollo",
+      "default": "react-query",
       "x-prompt": "What is the service type?"
+    },
+    "useDefaultCrudFunctions": {
+      "type": "boolean",
+      "description": "Use default CRUD functions",
+      "default": false
     }
   },
   "required": [
