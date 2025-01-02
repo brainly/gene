@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1-alpha.0",
+  "version": "0.3.1-alpha.0",
   "license": "Apache-2.0",
   "scripts": {
     "generate-package": "nx generate library --publishable --buildable",
