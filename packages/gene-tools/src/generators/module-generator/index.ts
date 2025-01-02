@@ -201,11 +201,11 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         targets: {
           ...e2eProjectConfig.targets,
           e2e: {
-            executor: '@brainly-gene/tools:e2e-with-serve',
+            executor: '@nx/cypress:cypress',
             options: {
-              e2eTests: [`${moduleProjectE2EName}:e2e-base`],
-              serve: `${moduleProjectName}:storybook-e2e`,
-              proxy: false,
+              cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
+              testingType: 'e2e',
+              devServerTarget: `${moduleProjectName}:storybook-e2e`,
             },
           },
           'e2e-base': {
@@ -330,17 +330,11 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       targets: {
         ...e2eProjectConfig.targets,
         e2e: {
-          executor: '@brainly-gene/tools:e2e-with-serve',
-          options: {
-            e2eTests: [`${moduleProjectE2EName}:e2e-base`],
-            serve: `${moduleProjectName}:storybook-e2e`,
-            proxy: false,
-          },
-        },
-        'e2e-base': {
           executor: '@nx/cypress:cypress',
           options: {
             cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
+            testingType: 'e2e',
+            devServerTarget: `${moduleProjectName}:storybook-e2e`,
           },
         },
       },
