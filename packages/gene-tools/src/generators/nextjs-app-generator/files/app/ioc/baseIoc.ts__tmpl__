@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { useDispatch, useStore, AppStoreType } from '../context/appContext';
+import { dispatchContext, storeContext, AppStoreType } from '../context/appContext';
 
 <% if (apollo) { %>
 
