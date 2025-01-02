@@ -1,8 +1,8 @@
 const {
   isWorkspaceProject,
   readCachedProjectGraph,
-} = require('@nrwl/workspace/src/core/project-graph');
-const {execSync} = require('child_process');
+} = require('@nx/workspace/src/core/project-graph');
+const { execSync } = require('child_process');
 
 /**
  * Gets a list of projects affected by changes.
@@ -24,11 +24,11 @@ function getAffectedProjects(baseCommitHash) {
 
   const affectedProjects = affectedProjectsOutput
     .split(',')
-    .map(project => project.trim())
+    .map((project) => project.trim())
     .filter(Boolean)
-    .filter(project => isWorkspaceProject(projectGraph.nodes[project]));
+    .filter((project) => isWorkspaceProject(projectGraph.nodes[project]));
 
   return affectedProjects;
 }
 
-module.exports = {getAffectedProjects};
+module.exports = { getAffectedProjects };

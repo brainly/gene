@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "nextjs-app-generator",
   "type": "object",
   "properties": {
@@ -48,5 +47,7 @@
       "default": true
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }

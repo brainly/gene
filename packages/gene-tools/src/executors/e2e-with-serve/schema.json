@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "type": "object",
-  "cli": "nx",
   "properties": {
     "e2eTests": {
       "type": "array",
@@ -50,5 +49,8 @@
     }
   },
   "additionalProperties": false,
-  "required": ["serve", "e2eTests"]
+  "required": [
+    "serve",
+    "e2eTests"
+  ]
 }

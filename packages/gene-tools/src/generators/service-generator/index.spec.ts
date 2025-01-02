@@ -1,5 +1,5 @@
-import { logger, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import serviceGenerator from './index';
 import * as inquirer from 'inquirer';
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
@@ -141,11 +141,20 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
-      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';
-      export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';
+      "export {
+        useQuestion,
+        queryQuestion,
+        getQuestionQueryKey,
+      } from './lib/useQuestion';
+      export {
+        useQuestions,
+        queryQuestions,
+        getQuestionsQueryKey,
+      } from './lib/useQuestions';
       export { useCreateQuestion } from './lib/useCreateQuestion';
       export { useUpdateQuestion } from './lib/useUpdateQuestion';
-      export { useDeleteQuestion } from './lib/useDeleteQuestion';"
+      export { useDeleteQuestion } from './lib/useDeleteQuestion';
+      "
     `);
   });
 
@@ -206,8 +215,13 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
-      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';
-      export { useUpdateQuestion } from './lib/useUpdateQuestion';"
+      "export {
+        useQuestions,
+        queryQuestions,
+        getQuestionsQueryKey,
+      } from './lib/useQuestions';
+      export { useUpdateQuestion } from './lib/useUpdateQuestion';
+      "
     `);
   });
 

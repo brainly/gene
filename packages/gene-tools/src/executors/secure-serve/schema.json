@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "type": "object",
-  "cli": "nx",
   "properties": {
     "host": {
       "type": "string",
@@ -30,5 +29,11 @@
     }
   },
   "additionalProperties": false,
-  "required": ["host", "port", "serveTarget", "targetHost", "targetPort"]
+  "required": [
+    "host",
+    "port",
+    "serveTarget",
+    "targetHost",
+    "targetPort"
+  ]
 }

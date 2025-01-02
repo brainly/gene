@@ -7,18 +7,20 @@ import {
   joinPathFragments,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { BrainlyServiceGenerator } from './schema';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 import inquirer = require('inquirer');
 
-type GeneratorOptions = {
+import { getNpmScope } from '../utilities';
+
+interface GeneratorOptions {
   name: string;
   targetLocation: string;
   filesLocation: string;
   npmScope: string;
-};
+}
 
 function createFiles(
   tree: Tree,
@@ -146,8 +148,6 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     name: name,
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /** @ts-ignore */
   const npmScope = getNpmScope(tree);
 
   /**

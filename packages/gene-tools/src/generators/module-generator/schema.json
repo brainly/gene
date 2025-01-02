@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "module-generator",
   "type": "object",
   "properties": {
@@ -34,5 +33,7 @@
       "description": "Indicator on whether to add autoprefixer to the module name, based on the application name"
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }

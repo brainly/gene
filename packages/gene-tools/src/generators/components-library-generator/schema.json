@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "components-library-generator",
   "type": "object",
   "properties": {
@@ -24,5 +23,8 @@
       "x-prompt": "What are the module tags?"
     }
   },
-  "required": ["name", "directory"]
+  "required": [
+    "name",
+    "directory"
+  ]
 }

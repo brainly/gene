@@ -28,7 +28,7 @@ describe('useReactQueryObservableQuery', () => {
     const $reactQueryObservable =
       createTestObservable() as unknown as QueryObserver<ExampleResponse>;
 
-    const { result, rerender, unmount } = renderHook(() =>
+    const { result, unmount } = renderHook(() =>
       useReactQueryObservableQuery<ExampleResponse>($reactQueryObservable)
     );
 
@@ -100,7 +100,7 @@ describe('useReactQueryObservableQuery', () => {
   it('returns new data when using refetch with same variables', async () => {
     mockFetchChangingData();
 
-    const { result, rerender, unmount } = renderHook(() =>
+    const { result, unmount } = renderHook(() =>
       useTestQuery({ foo: 1 })
     );
 

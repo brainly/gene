@@ -5,25 +5,27 @@ import {
   generateFiles,
   joinPathFragments,
   getWorkspaceLayout,
-  updateJson,
   offsetFromRoot,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+  updateJson,
+} from '@nx/devkit';
 import { BrainlyNextJSAppGenerator } from './schema';
-import { applicationGenerator } from '@nrwl/next';
+import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
-import { Linter } from '@nrwl/linter';
+import { Linter } from '@nx/linter';
 import { maybeExcludeRewrites } from './utils/maybeExcludeRewrites';
 import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
-import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
-import { addDepsToPackageJson, stringUtils } from '@nrwl/workspace';
+
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
+import { updateCypressTsConfig } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
-  const { name, directory, e2e } = schema;
+  const { name, directory = '', e2e } = schema;
   const currentPackageJson = readJson(tree, 'package.json');
 
   await applicationGenerator(tree, {
@@ -35,6 +37,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     linter: Linter.EsLint,
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
+    appDir: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');
@@ -42,7 +45,13 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     ? `${normalizedDirectory}-${name}`
     : name;
   const projectPath = `${directory}/${name}`;
-  await updateWorkspaceTarget({ tree, projectPath, projectName, e2e });
+  await updateWorkspaceTarget({
+    tree,
+    projectPath,
+    projectName,
+    e2e,
+    directory: normalizedDirectory,
+  });
 
   const { appsDir } = getWorkspaceLayout(tree);
   const appDir = `${appsDir}/${projectPath}`;
@@ -71,6 +80,12 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     });
   }
 
+  maybeExcludeRewrites(tree, schema);
+
+  if (e2e !== false) {
+    excludeTestsBoilerplate(tree);
+  }
+
   if (e2e !== false) {
     updateCypressTsConfig(tree, e2eDir);
   }
@@ -97,13 +112,12 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
                 'babel/new-cap': 'off',
                 'import/no-extraneous-dependencies': 'off',
               },
-            }
+            },
           ],
         };
       }
     );
   }
-
   await storybookConfigurationGenerator(tree, {
     name: projectName,
   });

@@ -11,5 +11,5 @@
     "skipLibCheck": true,
     "strictNullChecks": false
   },
-  "include": ["**/*.spec.ts", "jest.config.ts"]
+  "include": ["**/*.spec.ts", "jest.config.ts"],
 }

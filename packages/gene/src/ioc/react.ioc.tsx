@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { PropsWithChildren, useContext, useMemo } from 'react';
 
 import { interfaces } from 'inversify';
 
@@ -42,7 +42,7 @@ export function useInjection<T>(identifier: interfaces.ServiceIdentifier<T>) {
 
   const value = container.get<InjectionType<T>>(identifier);
 
-  if ('factory' in value) {
+  if (value && typeof value === 'object' && 'factory' in value) {
     return value.factory() as T;
   }
 

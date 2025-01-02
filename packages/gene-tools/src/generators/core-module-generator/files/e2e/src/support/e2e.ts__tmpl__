@@ -19,7 +19,7 @@ import '@testing-library/cypress/add-commands';
 import 'cypress-iframe';
 import 'cypress-network-idle';
 
-Cypress.on('uncaught:exception', err => {
+Cypress.on('uncaught:exception', () => {
   // returning false here prevents Cypress from
   // failing the test
   return false;

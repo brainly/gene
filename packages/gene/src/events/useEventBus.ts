@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { AbstractEventBusEventType, register, emit } from './EventBus';
 
-type PropsType<T> = {
+interface PropsType<T> {
   eventName: string;
   initialValue?: T;
-};
+}
 
-type EventBusContextType = {
+interface EventBusContextType {
   emit: typeof emit;
   register: typeof register;
-};
+}
 
 const eventBusContext = React.createContext<EventBusContextType | null>(null);
 

@@ -5,13 +5,13 @@ import {
   EventHandlersType,
 } from './types';
 
-type BindModulePropsType = {
+interface BindModulePropsType {
   components?: ComponentDeclarationType;
   mediators?: MediatorDeclarationsType;
   eventHandlers?: EventHandlersType;
   parentContainer?: Container;
   containers?: Container[];
-};
+}
 
 export function getModuleContainer({
   components = [],

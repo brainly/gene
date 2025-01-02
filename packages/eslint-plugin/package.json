@@ -1,20 +1,8 @@
 {
   "name": "@brainly-gene/eslint-plugin",
-  "version": "0.1.3-rc.4",
+  "version": "0.2.0-alpha.8",
   "license": "Apache-2.0",
   "main": "src/index.js",
   "generators": "./generators.json",
-  "executors": "./executors.json",
-  "dependencies": {
-    "@nrwl/linter": "15.9.7",
-    "@nrwl/eslint-plugin-nx": "15.8.9",
-    "eslint-plugin-eslint-comments": "3.2.0",
-    "eslint-plugin-regexp": "2.6.0",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-jest": "28.9.0",
-    "@typescript-eslint/eslint-plugin": "5.62.0"
-  },
-  "peerDependencies": {
-    "eslint": ">=8.0.0"
-  }
+  "executors": "./executors.json"
 }

@@ -1,11 +1,10 @@
-import {Tree} from '@nrwl/devkit';
-import {BrainlyNextJSAppGenerator} from '../schema';
+import { Tree } from '@nx/devkit';
 
-export const cleanupFiles = (tree: Tree, filesToRemove: Array<string>) => {
+export const cleanupFiles = (tree: Tree, filesToRemove: string[]) => {
   filesToRemove &&
     tree
       .listChanges()
-      .map(({path}) => path)
-      .filter(path => filesToRemove.some(e => path.endsWith(e)))
-      .forEach(path => tree.delete(path));
+      .map(({ path }) => path)
+      .filter((path) => filesToRemove.some((e) => path.endsWith(e)))
+      .forEach((path) => tree.delete(path));
 };

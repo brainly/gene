@@ -1,6 +1,6 @@
 import { Observable } from 'zen-observable-ts';
 
-export type NavigateOptions = {
+export interface NavigateOptions {
   /**
    * @description
    * Says whether scroll to top after navigation
@@ -23,21 +23,21 @@ export type NavigateOptions = {
    * undefined
    */
   as?: string;
-};
+}
 
-export type UrlObject = {
+export interface UrlObject {
   pathname: string;
-  query?: { [key: string]: string | number };
-};
+  query?: Record<string, string | number>;
+}
 
-export type RouterEvent = {
+export interface RouterEvent {
   type: 'routeChanged';
   payload: {
     currentPathname: string;
   };
-};
+}
 
-export type Router = {
+export interface Router {
   pathname: string | undefined;
   query: Record<string, string>;
   basePath: string | undefined;
@@ -50,8 +50,8 @@ export type Router = {
   generate: (route: string) => string;
   $routeChanged: Observable<RouterEvent>;
   back: () => void;
-};
+}
 
-export type RouterAppContextType = {
+export interface RouterAppContextType {
   originUrl?: URL;
-};
+}

@@ -1,5 +1,5 @@
-import { logger, readJson, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, readJson, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from './index';
 
 describe('Library generator', () => {
@@ -8,7 +8,7 @@ describe('Library generator', () => {
 
   beforeEach(async () => {
     projectName = 'my-library';
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);
@@ -75,7 +75,7 @@ describe('Library generator', () => {
       .read('libs/my-library/jest.config.ts')
       ?.toString();
     expect(jestConfigContent).toContain(
-      `"transform":{"^.+\\\\.[tj]sx?$":"ts-jest"}`
+      `transform: { '^.+\\\\.[tj]sx?$': 'ts-jest' }`
     );
   });
 
@@ -89,7 +89,7 @@ describe('Library generator', () => {
     const jestConfigContent = appTree
       .read('libs/my-library/jest.config.ts')
       ?.toString();
-    expect(jestConfigContent).toContain('"isolatedModules": true');
+    expect(jestConfigContent).toContain('isolatedModules: true');
   });
 
   it('jest.config should exclude diagnostics for all test files', async () => {
@@ -102,6 +102,6 @@ describe('Library generator', () => {
     const jestConfigContent = appTree
       .read('libs/my-library/jest.config.ts')
       ?.toString();
-    expect(jestConfigContent).toContain('"exclude": ["**"]');
+    expect(jestConfigContent).toContain(`exclude: ['**']`);
   });
 });

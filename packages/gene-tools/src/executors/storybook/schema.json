@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "type": "object",
-  "cli": "nx",
   "properties": {
     "command": {
       "type": "string",
@@ -14,6 +13,8 @@
       "default": false
     }
   },
-  "required": ["command"],
+  "required": [
+    "command"
+  ],
   "additionalProperties": false
 }

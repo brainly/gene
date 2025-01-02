@@ -1,20 +1,15 @@
 {
   "e2e": {
-    "executor": "@brainly-gene/tools:e2e-with-serve",
+    "executor": "@nx/cypress:cypress",
     "options": {
-      "e2eTests": ["<%= projectName %>-e2e:e2e-base"],
-      "serve": "<%= projectName %>:serve-base"
+      "cypressConfig": "apps/<%= projectPath %>-e2e/cypress.config.ts",
+      "testingType": "e2e",
+      "devServerTarget": "<%= projectName %>:serve-base"
     },
     "configurations": {
       "production": {
-        "serveTarget": "<%= projectName %>:serve-base:production"
+        "devServerTarget": "<%= projectName %>:serve-base:production"
       }
-    }
-  },
-  "e2e-base": {
-    "executor": "@nrwl/cypress:cypress",
-    "options": {
-      "cypressConfig": "apps/<%= projectPath %>-e2e/cypress.config.ts"
     }
   }
 }

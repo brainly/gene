@@ -5,10 +5,12 @@ import {
   readJson,
   Tree,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { promptSelectModuleName } from '../utilities';
 import { findModuleComponents } from './utils/findModuleComponents';
-import { stringUtils } from '@nrwl/workspace';
+
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+
 import * as inquirer from 'inquirer';
 import { findDataTestIds, processResults } from './utils/findDataTestIds';
 import {
@@ -115,23 +117,19 @@ export default async function (tree: Tree) {
     },
   ]);
 
-  let spinner = ora('Analyzing components inside ' + moduleComponent).start();
+  ora('Analyzing components inside ' + moduleComponent).start();
 
   const dataTestIds = processResults(
     await findDataTestIds(`${modulePath}/${moduleComponent}`)
   );
 
-  // spinner.stop();
-  spinner = ora('Generating Gherkin Scenarios').start();
+  ora('Generating Gherkin Scenarios').start();
 
   const gherkinScenarios = await generateGherkin(
     JSON.stringify(dataTestIds),
     moduleDescription
   );
-
-  // spinner.stop();
-
-  spinner = ora('Generating Cypress code').start();
+  ora('Generating Cypress code').start();
 
   const cypressCode = await generateCypress(
     gherkinScenarios,

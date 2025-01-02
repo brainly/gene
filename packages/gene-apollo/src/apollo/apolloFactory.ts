@@ -1,11 +1,11 @@
 import merge from 'deepmerge';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-export type ApolloClientType = {
+export interface ApolloClientType {
   hydrate: (initialState?: NormalizedCacheObject) => void;
   dehydrate: () => unknown;
   dehydrateAndClearStore: () => Promise<unknown>;
   getClient: () => ApolloClient<NormalizedCacheObject>;
-};
+}
 
 function isEqual(value: any, other: any): boolean {
   // Get the value type
