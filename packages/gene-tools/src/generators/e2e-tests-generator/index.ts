@@ -22,6 +22,8 @@ import {
 
 import { Configuration, OpenAIApi } from 'openai';
 import { findStorybookData } from './utils/findStorybookData';
+import inquirerSearchList from 'inquirer-search-list';
+inquirer.registerPrompt('search-list', inquirerSearchList);
 
 // import ora from 'ora';
 

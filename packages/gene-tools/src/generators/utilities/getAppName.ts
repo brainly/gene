@@ -6,14 +6,14 @@ import * as inquirer from 'inquirer';
 // https://github.com/robin-rpr/inquirer-search-list
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import * as inquirerSearchList from 'inquirer-search-list';
+import inquirerSearchList from 'inquirer-search-list';
 inquirer.registerPrompt('search-list', inquirerSearchList);
 
 // inquirer-search-checkbox has no type declaration
 // https://github.com/robin-rpr/inquirer-search-list
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import * as inquirerSearchCheckbox from 'inquirer-search-checkbox';
+import inquirerSearchCheckbox from 'inquirer-search-checkbox';
 import { getListOfAllProjectKeys } from './treeHelpers';
 inquirer.registerPrompt('search-checkbox', inquirerSearchCheckbox);
 
