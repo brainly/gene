@@ -141,11 +141,20 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
-      "export { useQuestion, queryQuestion, getQuestionQueryKey } from './lib/useQuestion';
-      export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';
+      "export {
+        useQuestion,
+        queryQuestion,
+        getQuestionQueryKey,
+      } from './lib/useQuestion';
+      export {
+        useQuestions,
+        queryQuestions,
+        getQuestionsQueryKey,
+      } from './lib/useQuestions';
       export { useCreateQuestion } from './lib/useCreateQuestion';
       export { useUpdateQuestion } from './lib/useUpdateQuestion';
-      export { useDeleteQuestion } from './lib/useDeleteQuestion';"
+      export { useDeleteQuestion } from './lib/useDeleteQuestion';
+      "
     `);
   });
 
@@ -206,8 +215,13 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
-      "export { useQuestions, queryQuestions, getQuestionsQueryKey } from './lib/useQuestions';
-      export { useUpdateQuestion } from './lib/useUpdateQuestion';"
+      "export {
+        useQuestions,
+        queryQuestions,
+        getQuestionsQueryKey,
+      } from './lib/useQuestions';
+      export { useUpdateQuestion } from './lib/useUpdateQuestion';
+      "
     `);
   });
 
