@@ -7,7 +7,7 @@ import {
   joinPathFragments,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { BrainlyComponentGenerator } from './schema';
 import { resolveDynamicOptions } from './utils/resolveDynamicOptions';
 import { reexport } from './utils/reexport';
@@ -15,7 +15,7 @@ import * as inquirer from 'inquirer';
 import * as fs from 'fs';
 import { camelCase, upperFirst } from 'lodash';
 import { promptSelectAppName } from '../utilities/getAppName';
-import { classify } from '@nrwl/workspace/src/utils/strings';
+import {classify} from '@nx/devkit/src/utils/string-utils';
 import { getComponentTemplateVariables } from './utils/getComponentTemplateVariables';
 
 export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
@@ -57,10 +57,11 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
       {
         type: 'list',
         name: 'chosenVariant',
-        message:
-          isModuleLibrary ? 'In which module the component should be created?' : 'Module inheritors encountered. In which module variation the component should be created?',
-        choices: variants
-      }
+        message: isModuleLibrary
+          ? 'In which module the component should be created?'
+          : 'Module inheritors encountered. In which module variation the component should be created?',
+        choices: variants,
+      },
     ]);
 
     directory = `lib/${chosenVariant}/components`;

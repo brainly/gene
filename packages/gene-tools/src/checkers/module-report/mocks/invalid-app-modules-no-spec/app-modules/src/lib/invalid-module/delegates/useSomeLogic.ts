@@ -11,9 +11,9 @@ import {
   RouterIocType,
 } from '@brainly-gene/core';
 
-type PropsType = {
+interface PropsType {
   ref: React.MutableRefObject<HTMLDivElement | null>;
-};
+}
 
 export function useSomeLogic({ref}: PropsType) {
   const {query} = useInjection<RouterIocType>(ROUTER_SERVICE_IDENTIFIER)();

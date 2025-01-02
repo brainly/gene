@@ -1,6 +1,6 @@
-import { Tree } from '@nrwl/devkit';
-import * as devkit from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { Tree } from '@nx/devkit';
+import * as devkit from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import workspaceExecutorGenerator from './index';
 
 describe('workspaceExecutor generator', () => {
@@ -9,7 +9,7 @@ describe('workspaceExecutor generator', () => {
   const expectedExecutorName = 'foo-bar';
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     tree.write(
       'tools/executors/executors.json',

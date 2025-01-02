@@ -14,7 +14,7 @@
         "projects": "dependencies"
       }
     ],
-    "executor": "@nrwl/next:build",
+    "executor": "@nx/next:build",
     "outputs": ["{options.outputPath}"],
     "options": {
       "root": "apps/<%= projectPath %>",
@@ -35,7 +35,7 @@
           "projects": "self"
         }
     ],
-    "executor": "@nrwl/next:server",
+    "executor": "@nx/next:server",
     "options": {
       "buildTarget": "<%= projectName %>:build",
       "dev": true

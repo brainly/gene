@@ -6,15 +6,19 @@ import {
   updateJson,
   workspaceRoot,
   writeJson,
-} from '@nrwl/devkit';
-import { Linter } from '@nrwl/linter';
-import { libraryGenerator } from '@nrwl/react';
+} from '@nx/devkit';
+import { Linter } from '@nx/linter';
+import { libraryGenerator } from '@nx/react';
 import { GeneLibraryGenerator } from './schema';
-import { updateJestConfig } from '../utilities';
+import { getNpmScope, updateJestConfig } from '../utilities';
 import { relative } from 'path';
 
 export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
+  const npmScope = getNpmScope(tree);
+
+  const directory = schema.directory ? `${schema.directory}/` : '';
+
   await libraryGenerator(tree, {
     name: schema.name,
     directory: schema.directory,
@@ -25,6 +29,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
     style: 'scss',
     compiler: 'babel',
     unitTestRunner: 'jest',
+    importPath: `@${npmScope}/${directory}${schema.name}`,
   });
 
   const pathToProject = `libs/${schema.directory || ''}/${schema.name}`;

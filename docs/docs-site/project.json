@@ -1,4 +1,5 @@
 {
+  "name": "docs-docs-site",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "docs/docs-site",
   "projectType": "application",
@@ -11,12 +12,12 @@
           "next build",
           "nx run docs-docs-site:build-styles"
         ],
-        "cwd": "docs/docs-site",
-        "outputPath": "dist/docs/docs-site"
+        "cwd": "docs/docs-site"
       },
       "configurations": {
         "production": {}
-      }
+      },
+      "outputs": ["{workspaceRoot}/dist/docs/docs-site"]
     },
     "serve": {
       "executor": "nx:run-commands",
@@ -56,22 +57,22 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/docs/docs-site"],
       "options": {
-        "jestConfig": "docs/docs-site/jest.config.ts",
-        "passWithNoTests": true,
-        "updateBuildableProjectDepsInPackageJson": true
+        "jestConfig": "docs/docs-site/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["docs/docs-site/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "docs/docs-site/lib/*.{ts,tsx,js,jsx}",
+          "docs/docs-site/components/*.{ts,tsx,js,jsx}"
+        ]
       }
     }
   },
-  "tags": [],
-  "name": "docs-docs-site"
+  "tags": []
 }

@@ -6,7 +6,7 @@ import {
   readJson,
   Tree,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { AssetsLibraryGenerator } from './schema';
 
 import libraryGenerator from '../library-generator';

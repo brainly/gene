@@ -11,14 +11,15 @@ import {
   ProjectConfiguration,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { cypressProjectGenerator } from '@nrwl/storybook';
+import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
-import { Linter } from '@nrwl/linter';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { Linter } from '@nx/linter';
 import {
+  getNpmScope,
   promptBoolean,
   promptSelectAppName,
   updateCypressTsConfig,
@@ -31,8 +32,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
     throw Error('Module name is required.');
   }
   const currentPackageJson = readJson(tree, 'package.json');
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
+
   const npmScope = getNpmScope(tree);
 
   const workspaceJsonProjects = [...getProjects(tree)].map(
@@ -71,7 +71,8 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
 
   const directoryPath = `${root.replace('apps/', '')}`;
 
-  const moduleLibrary = workspaceJsonProjects.find(([_name, project]) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const moduleLibrary = workspaceJsonProjects.find(([_, project]) => {
     return project.root.endsWith(`${directoryPath}/${APP_MODULES_LIB_SUFFIX}`);
   });
 
@@ -200,15 +201,15 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         targets: {
           ...e2eProjectConfig.targets,
           e2e: {
-            executor: '@brainly-gene/tools:e2e-with-serve',
+            executor: '@nx/cypress:cypress',
             options: {
-              e2eTests: [`${moduleProjectE2EName}:e2e-base`],
-              serve: `${moduleProjectName}:storybook-e2e`,
-              proxy: false,
+              cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
+              testingType: 'e2e',
+              devServerTarget: `${moduleProjectName}:storybook-e2e`,
             },
           },
           'e2e-base': {
-            executor: '@nrwl/cypress:cypress',
+            executor: '@nx/cypress:cypress',
             options: {
               cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
             },
@@ -329,17 +330,11 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       targets: {
         ...e2eProjectConfig.targets,
         e2e: {
-          executor: '@brainly-gene/tools:e2e-with-serve',
-          options: {
-            e2eTests: [`${moduleProjectE2EName}:e2e-base`],
-            serve: `${moduleProjectName}:storybook-e2e`,
-            proxy: false,
-          },
-        },
-        'e2e-base': {
-          executor: '@nrwl/cypress:cypress',
+          executor: '@nx/cypress:cypress',
           options: {
             cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
+            testingType: 'e2e',
+            devServerTarget: `${moduleProjectName}:storybook-e2e`,
           },
         },
       },

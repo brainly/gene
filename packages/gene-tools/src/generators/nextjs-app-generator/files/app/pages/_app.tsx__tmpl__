@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import type {ReactElement} from 'react';
 import {AppProps} from 'next/app';
 import Head from 'next/head';
 import {compose} from 'ramda';

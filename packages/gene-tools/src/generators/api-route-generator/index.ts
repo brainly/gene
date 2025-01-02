@@ -7,11 +7,11 @@ import {
   Tree,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { APIRouteGenerator } from './schema';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 
-import { promptSelectAppName, getAllAppKeys } from '../utilities';
+import { promptSelectAppName, getAllAppKeys, getNpmScope } from '../utilities';
 
 export default async function (tree: Tree, schema: APIRouteGenerator) {
   const { name, directory } = schema;
@@ -32,8 +32,6 @@ export default async function (tree: Tree, schema: APIRouteGenerator) {
     throw new Error(`App "${app}" was not found`);
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
   const npmScope = getNpmScope(tree);
 
   generateFiles(

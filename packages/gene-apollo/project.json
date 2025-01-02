@@ -1,35 +1,33 @@
 {
+  "name": "packages-gene-apollo",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/gene-apollo/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/gene-apollo",
         "main": "packages/gene-apollo/src/index.ts",
         "tsConfig": "packages/gene-apollo/tsconfig.lib.json",
-        "assets": ["packages/gene-apollo/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
+        "assets": ["packages/gene-apollo/*.md"]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/gene-apollo/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-apollo"],
       "options": {
-        "jestConfig": "packages/gene-apollo/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/gene-apollo/jest.config.ts"
       }
     }
   },
-  "tags": ["type:public"],
-  "name": "packages-gene-apollo"
+  "tags": ["type:public"]
 }

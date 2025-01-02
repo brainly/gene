@@ -8,8 +8,8 @@ export type SentryErrorMessage = ErrorMessage &
     };
   }>;
 
-export type SentryMessage = {
+export interface SentryMessage {
   type: LogLevel;
   severity: Severity;
   message: SentryErrorMessage;
-};
+}

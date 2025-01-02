@@ -6,7 +6,7 @@ import {
   Tree,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 
 export default async function (tree: Tree) {

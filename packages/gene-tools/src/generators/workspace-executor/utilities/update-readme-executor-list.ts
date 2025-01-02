@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 import { MDAST } from 'mdast';
 import { UNIST } from 'unist';
 import visit = require('unist-util-visit');

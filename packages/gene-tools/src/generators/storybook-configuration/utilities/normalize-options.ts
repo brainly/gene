@@ -1,5 +1,5 @@
-import {getProjects, Tree} from '@nrwl/devkit';
-import {NormalizedOptions, Options} from '../schema';
+import { getProjects, Tree } from '@nx/devkit';
+import { NormalizedOptions, Options } from '../schema';
 
 export function normalizeOptions(
   tree: Tree,

@@ -10,17 +10,13 @@ export const isValidGherkin = ({
   gherkinString,
 }: {
   gherkinString: string;
-}): {isValid: boolean; error?: string} => {
+}): { isValid: boolean; error?: string } => {
   try {
     const gherkinDocument = parser.parse(gherkinString);
-    const pickles = Gherkin.compile(
-      gherkinDocument,
-      'uri_of_the_feature.feature',
-      uuidFn
-    );
+    Gherkin.compile(gherkinDocument, 'uri_of_the_feature.feature', uuidFn);
 
-    return {isValid: true};
+    return { isValid: true };
   } catch (error: any) {
-    return {isValid: false, error: error.message};
+    return { isValid: false, error: error.message };
   }
 };
