@@ -7,7 +7,9 @@ export type ActionType = {
 
 export const APP_CONTEXT_IDENTIFIER = Symbol.for('appContext');
 
-export type AppContextType<T, A = undefined> = {
-  useDispatch: () => React.Dispatch<A extends undefined ? ActionType : A>;
-  useStore: () => T;
+export type AppContextType<S, A = undefined> = {
+  dispatchContext: React.Context<
+    (action: A extends undefined ? ActionType : A) => void
+  >;
+  storeContext: React.Context<S>;
 };
