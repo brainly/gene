@@ -1,12 +1,7 @@
-import {Container} from 'inversify';
-import {
-  AppContextType,
-  APP_CONTEXT_IDENTIFIER,
-} from '@brainly-gene/core';
+import { Container } from 'inversify';
+import { AppContextType, APP_CONTEXT_IDENTIFIER } from '@brainly-gene/core';
 
-import {ActionType, makeStore} from '@brainly-gene/core';
-
-
+import { ActionType, makeStore } from '@brainly-gene/core';
 
 export type AppStoreType = Partial<{
   test: string;
@@ -23,19 +18,17 @@ const defaultAppReducer: ReducerType = (
 ) => {
   switch (action.type) {
     default:
-      return {...state, ...action.value};
+      return { ...state, ...action.value };
   }
 };
 
-const defaultAppInitialState = {
- 
-};
+const defaultAppInitialState = {};
 
 export const useAppContextContainer = (
   appInitialState: AppStoreType,
   appReducer?: ReducerType
 ) => {
-  const [Provider, useDispatch, useStore] = makeStore<AppStoreType, ActionType>(
+  const [Provider, dispatchContext, storeContext] = makeStore<AppStoreType, ActionType>(
     {
       ...defaultAppInitialState,
       ...appInitialState,
@@ -47,8 +40,8 @@ export const useAppContextContainer = (
   container
     .bind<AppContextType<AppStoreType>>(APP_CONTEXT_IDENTIFIER)
     .toConstantValue({
-      useDispatch,
-      useStore,
+      dispatchContext,
+      storeContext,
     });
 
   return {

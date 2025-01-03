@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { useInjection } from '../../ioc'
-import {
-  APP_CONTEXT_IDENTIFIER,
-  AppContextType,
-} from '../../contexts'
+import { useInjection } from '../../ioc';
+import { APP_CONTEXT_IDENTIFIER, AppContextType } from '../../contexts';
 interface WithOriginURLProps {
   originURL: string;
   imgproxyLoaderBaseUrl: string;
@@ -13,14 +10,14 @@ export const withLoaderUrls = <P extends object>(
   WrappedComponent: React.FC<P & WithOriginURLProps>
 ): React.FC<P> => {
   return (props: P) => {
-    const { useStore } = useInjection<
+    const { storeContext } = useInjection<
       AppContextType<{
         originUrl: URL;
         imgproxyLoaderBaseUrl: string;
       }>
     >(APP_CONTEXT_IDENTIFIER);
 
-    const { originUrl, imgproxyLoaderBaseUrl } = useStore();
+    const { originUrl, imgproxyLoaderBaseUrl } = React.useContext(storeContext);
 
     return (
       <WrappedComponent

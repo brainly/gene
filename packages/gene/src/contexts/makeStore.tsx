@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useReducer} from 'react';
+import React, { createContext, useReducer } from 'react';
 
 export type DispatchType<A> = (action: A) => void;
 export type ReducerType<S, A> = (state: S, action: A) => S;
@@ -10,7 +10,11 @@ type PropsType<S> = {
 export function makeStore<S, A>(
   initialState: S,
   reducer: ReducerType<S, A>
-): [(props: PropsType<S>) => JSX.Element, () => DispatchType<A>, () => S] {
+): [
+  (props: PropsType<S>) => JSX.Element,
+  React.Context<(action: A) => void>,
+  React.Context<S>
+] {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const dispatchContext = createContext((action: A) => {});
   const storeContext = createContext<S>(initialState);
@@ -31,13 +35,5 @@ export function makeStore<S, A>(
     );
   };
 
-  function useDispatch() {
-    return useContext(dispatchContext);
-  }
-
-  function useStore() {
-    return useContext(storeContext);
-  }
-
-  return [StoreProvider, useDispatch, useStore];
+  return [StoreProvider, dispatchContext, storeContext];
 }
