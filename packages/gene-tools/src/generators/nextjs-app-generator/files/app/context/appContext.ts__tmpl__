@@ -16,9 +16,9 @@ const appReducer = (state: AppStoreType, action: ActionType) => {
   }
 };
 
-const [Provider, useDispatch, useStore] = makeStore<AppStoreType, ActionType>(
+const [Provider, getDispatch, getStore] = makeStore<AppStoreType, ActionType>(
   appInitialState,
   appReducer
 );
 
-export { Provider, useDispatch, useStore };
+export { Provider, getDispatch, getStore };

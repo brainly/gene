@@ -13,14 +13,14 @@ export const withLoaderUrls = <P extends object>(
   WrappedComponent: React.FC<P & WithOriginURLProps>
 ): React.FC<P> => {
   return (props: P) => {
-    const { useStore } = useInjection<
+    const { getStore } = useInjection<
       AppContextType<{
         originUrl: URL;
         imgproxyLoaderBaseUrl: string;
       }>
     >(APP_CONTEXT_IDENTIFIER);
 
-    const { originUrl, imgproxyLoaderBaseUrl } = useStore();
+    const { originUrl, imgproxyLoaderBaseUrl } = getStore();
 
     return (
       <WrappedComponent

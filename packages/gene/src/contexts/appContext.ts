@@ -8,6 +8,6 @@ export type ActionType = {
 export const APP_CONTEXT_IDENTIFIER = Symbol.for('appContext');
 
 export type AppContextType<T, A = undefined> = {
-  useDispatch: () => React.Dispatch<A extends undefined ? ActionType : A>;
-  useStore: () => T;
+  getDispatch: () => React.Dispatch<A extends undefined ? ActionType : A>;
+  getStore: () => T;
 };

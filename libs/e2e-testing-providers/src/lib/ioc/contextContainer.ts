@@ -35,7 +35,7 @@ export const useAppContextContainer = (
   appInitialState: AppStoreType,
   appReducer?: ReducerType
 ) => {
-  const [Provider, useDispatch, useStore] = makeStore<AppStoreType, ActionType>(
+  const [Provider, getDispatch, getStore] = makeStore<AppStoreType, ActionType>(
     {
       ...defaultAppInitialState,
       ...appInitialState,
@@ -47,8 +47,8 @@ export const useAppContextContainer = (
   container
     .bind<AppContextType<AppStoreType>>(APP_CONTEXT_IDENTIFIER)
     .toConstantValue({
-      useDispatch,
-      useStore,
+      getDispatch,
+      getStore,
     });
 
   return {

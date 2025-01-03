@@ -63,12 +63,12 @@ function reducer(state: StateType, action: ActionType) {
   }
 }
 
-const [StoreProvider, useDispatch, useStore] = makeStore<StateType, ActionType>(
+const [StoreProvider, getDispatch, getStore] = makeStore<StateType, ActionType>(
   initialState,
   reducer
 );
 
-export {StoreProvider, useStore, useDispatch};
+export {StoreProvider, getStore, getDispatch};
 ```
 
 ## Add context provider
@@ -95,7 +95,7 @@ with that you will be able to use context on module level, i.e:
 
 ```jsx
 function MyModule() {
-  const store = useStore()
+  const store = getStore()
   const anotherStore = useAnotherStore()
   ...
   return (

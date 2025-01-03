@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { useDispatch, useStore, AppStoreType } from '../context/appContext';
+import { getDispatch, getStore, AppStoreType } from '../context/appContext';
 
 <% if (apollo) { %>
 
@@ -75,8 +75,8 @@ export function getBaseContainer() {
   container
     .bind<AppContextType<AppStoreType>>(APP_CONTEXT_IDENTIFIER)
     .toConstantValue({
-      useDispatch,
-      useStore,
+      getDispatch,
+      getStore,
     });
 
   /** Use your own translator if needed */

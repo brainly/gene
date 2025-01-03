@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useReducer} from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 export type DispatchType<A> = (action: A) => void;
 export type ReducerType<S, A> = (state: S, action: A) => S;
@@ -31,13 +31,13 @@ export function makeStore<S, A>(
     );
   };
 
-  function useDispatch() {
+  function getDispatch() {
     return useContext(dispatchContext);
   }
 
-  function useStore() {
+  function getStore() {
     return useContext(storeContext);
   }
 
-  return [StoreProvider, useDispatch, useStore];
+  return [StoreProvider, getDispatch, getStore];
 }
