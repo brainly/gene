@@ -5,12 +5,10 @@ import {
   readJson,
   Tree,
   writeJson,
-} from '@nx/devkit';
+} from '@nrwl/devkit';
 import { promptSelectModuleName } from '../utilities';
 import { findModuleComponents } from './utils/findModuleComponents';
-
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
-
+import { stringUtils } from '@nrwl/workspace';
 import * as inquirer from 'inquirer';
 import { findDataTestIds, processResults } from './utils/findDataTestIds';
 import {
@@ -24,8 +22,6 @@ import {
 
 import { Configuration, OpenAIApi } from 'openai';
 import { findStorybookData } from './utils/findStorybookData';
-import inquirerSearchList from 'inquirer-search-list';
-inquirer.registerPrompt('search-list', inquirerSearchList);
 
 // import ora from 'ora';
 
@@ -119,19 +115,23 @@ export default async function (tree: Tree) {
     },
   ]);
 
-  ora('Analyzing components inside ' + moduleComponent).start();
+  let spinner = ora('Analyzing components inside ' + moduleComponent).start();
 
   const dataTestIds = processResults(
     await findDataTestIds(`${modulePath}/${moduleComponent}`)
   );
 
-  ora('Generating Gherkin Scenarios').start();
+  // spinner.stop();
+  spinner = ora('Generating Gherkin Scenarios').start();
 
   const gherkinScenarios = await generateGherkin(
     JSON.stringify(dataTestIds),
     moduleDescription
   );
-  ora('Generating Cypress code').start();
+
+  // spinner.stop();
+
+  spinner = ora('Generating Cypress code').start();
 
   const cypressCode = await generateCypress(
     gherkinScenarios,

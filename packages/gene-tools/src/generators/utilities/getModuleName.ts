@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import { Tree } from '@nrwl/devkit';
 
 import * as inquirer from 'inquirer';
 
