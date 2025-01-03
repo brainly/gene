@@ -1,13 +1,15 @@
 import React from 'react';
 
-export type ActionType = {
+export interface ActionType {
   type: string;
   value?: Record<string, unknown>;
-};
+}
 
 export const APP_CONTEXT_IDENTIFIER = Symbol.for('appContext');
 
-export type AppContextType<T, A = undefined> = {
-  useDispatch: () => React.Dispatch<A extends undefined ? ActionType : A>;
-  useStore: () => T;
-};
+export interface AppContextType<S, A = undefined> {
+  dispatchContext: React.Context<
+    (action: A extends undefined ? ActionType : A) => void
+  >;
+  storeContext: React.Context<S>;
+}
