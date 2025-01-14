@@ -1,4 +1,4 @@
-import {generateFiles, joinPathFragments, Tree} from '@nrwl/devkit';
+import { generateFiles, joinPathFragments, Tree } from '@nx/devkit';
 
 interface Names {
   className: string;
@@ -10,6 +10,6 @@ export function generateExecutorFiles(tree: Tree, options: Names): void {
     tree,
     joinPathFragments(__dirname, '../files'),
     joinPathFragments('tools/executors', options.name),
-    {...options, tmpl: ''}
+    { ...options, tmpl: '' }
   );
 }

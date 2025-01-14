@@ -7,8 +7,8 @@ import {
   Tree,
   updateProjectConfiguration,
   readJson,
-  writeJson
-} from '@nrwl/devkit';
+  writeJson,
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 
 export default async function (tree: Tree) {
@@ -35,12 +35,13 @@ export default async function (tree: Tree) {
     ...projectConfig,
     targets: {
       ...projectConfig.targets,
-      "fetch": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "echo 'Create your own script to fetch translations and save them in the libs/translations/src/locales folder'"
-        }
-      }
+      fetch: {
+        executor: 'nx:run-commands',
+        options: {
+          command:
+            "echo 'Create your own script to fetch translations and save them in the libs/translations/src/locales folder'",
+        },
+      },
     },
   });
 

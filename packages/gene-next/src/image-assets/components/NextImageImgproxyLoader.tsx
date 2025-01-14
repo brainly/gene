@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Image, { ImageProps } from 'next/future/image';
+import Image, { ImageLoaderProps, ImageProps } from 'next/image';
 import { GeneImagePropsType } from '@brainly-gene/core';
 
 const normalizeSrc = (src: string) => {
@@ -49,7 +49,7 @@ export const NextImageImgproxyLoader = ({
 
   return (
     <Image
-      loader={(loaderProps) =>
+      loader={(loaderProps: ImageLoaderProps) =>
         imgproxyLoader({
           ...loaderProps,
           origin: props?.originURL,

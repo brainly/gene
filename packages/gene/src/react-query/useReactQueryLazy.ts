@@ -8,11 +8,11 @@ import {
 } from '@tanstack/react-query';
 import { CommonServiceType, CommonFetchFn } from '../services';
 
-type PropsType<TData, TVariables> = {
+interface PropsType<TData, TVariables> {
   reactQueryClient: QueryClient;
   queryFn: (client: QueryClient, variables: TVariables) => Promise<TData>;
   queryKey: (variables?: TVariables) => QueryKey;
-};
+}
 
 export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
   reactQueryClient,

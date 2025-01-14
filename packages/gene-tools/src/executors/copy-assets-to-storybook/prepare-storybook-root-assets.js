@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-const { detectPackageManager } = require('@nrwl/devkit');
+const { detectPackageManager } = require('@nx/devkit');
 const { existsSync } = require('fs');
 const { toAbsolute } = require('../utilities/path');
 const { copySync, removeSync, ensureDirSync } = require('fs-extra');

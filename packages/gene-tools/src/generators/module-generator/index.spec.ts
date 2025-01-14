@@ -1,8 +1,8 @@
-import { logger, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
-import { applicationGenerator } from '@nrwl/next';
-import { Linter } from '@nrwl/linter';
+import { applicationGenerator } from '@nx/next';
+import { Linter } from '@nx/linter';
 
 describe('Module generator', () => {
   let expectedModuleFolder: string;
@@ -77,7 +77,7 @@ describe('Module generator', () => {
       .read('libs/my-app/app-modules/src/lib/my-lib-module/index.ts')
       ?.toString();
     expect(moduleContent).toMatch(
-      /export {MyAppMyLibModule} from ".\/MyAppMyLibModule"/
+      /export { MyAppMyLibModule } from '.\/MyAppMyLibModule'/
     );
 
     const appConfig = readProjectConfiguration(appTree, createdProjectName);
@@ -198,7 +198,7 @@ describe('Module generator', () => {
       .read(expectedModuleFolder + '/src/lib/my-second-lib-module/index.ts')
       ?.toString();
     expect(moduleContent).toMatch(
-      /export {MyAppMySecondLibModule} from ".\/MyAppMySecondLibModule"/
+      /export { MyAppMySecondLibModule } from '.\/MyAppMySecondLibModule';/
     );
   });
 

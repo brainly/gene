@@ -2,16 +2,16 @@ import * as fs from 'fs';
 import * as jscodeshift from 'jscodeshift';
 import * as glob from 'glob';
 
-type Result = {
+interface Result {
   componentName: string;
   dataTestId: string;
   dataTestIdElementName: string;
-};
+}
 
-type FileToProcess = {
+interface FileToProcess {
   path: string;
   depth: number;
-};
+}
 
 function isFirstLetterCapital(str: string | null) {
   // Check if the string is empty

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useEffect} from 'react';
 
-type EventHandlerArgsType<T, PayloadT> = {
+interface EventHandlerArgsType<T, PayloadT> {
   type: T;
   payload: PayloadT;
-};
+}
 
 type ListenerType = [any, any?];
 

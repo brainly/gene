@@ -1,5 +1,4 @@
 import { defineConfig } from 'cypress';
-import {nxE2EPreset} from '@nrwl/cypress/plugins/cypress-preset';
 import {setupNodeEvents} from './src/plugins';
 
 export default defineConfig({

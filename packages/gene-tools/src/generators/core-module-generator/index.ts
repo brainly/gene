@@ -9,16 +9,16 @@ import {
   updateJson,
   updateProjectConfiguration,
   writeJson,
-  getNpmPackageSharedConfig,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { cypressProjectGenerator } from '@nrwl/storybook';
+import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyCoreModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
-import { Linter } from '@nrwl/linter';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { Linter } from '@nx/linter';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 import { resolveTags } from './utils/resolveTags';
+import { getNpmScope } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
   if (!schema.name) {
@@ -26,8 +26,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
   }
 
   const providedTags = resolveTags(schema);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
+
   const npmScope = getNpmScope(tree);
 
   if (!providedTags.includes('domain:')) {
@@ -84,7 +83,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
       dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
       tmpl: '',
       errorBoundary,
-      npmScope
+      npmScope,
     }
   );
 
@@ -129,17 +128,11 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
     targets: {
       ...e2eProjectConfig.targets,
       e2e: {
-        executor: '@brainly-gene/tools:e2e-with-serve',
-        options: {
-          e2eTests: [`${moduleProjectE2EName}:e2e-base`],
-          serve: `${moduleProjectName}:storybook-e2e`,
-          proxy: false,
-        },
-      },
-      'e2e-base': {
-        executor: '@nrwl/cypress:cypress',
+        executor: '@nx/cypress:cypress',
         options: {
           cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
+          testingType: 'e2e',
+          devServerTarget: `${moduleProjectName}:storybook-e2e`,
         },
       },
     },

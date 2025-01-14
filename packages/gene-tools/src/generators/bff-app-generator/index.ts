@@ -5,24 +5,23 @@ import {
   generateFiles,
   joinPathFragments,
   getWorkspaceLayout,
-  updateJson,
   offsetFromRoot,
   readJson,
   writeJson,
-} from '@nrwl/devkit';
+  updateJson,
+} from '@nx/devkit';
 import { BrainlyNextJSAppGenerator } from './schema';
-import { applicationGenerator } from '@nrwl/next';
+import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
-import { Linter } from '@nrwl/linter';
+import { Linter } from '@nx/linter';
 import { maybeExcludeRewrites } from './utils/maybeExcludeRewrites';
 import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
-import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
-import { getNpmScope, stringUtils } from '@nrwl/workspace';
+import * as stringUtils from '@nx/devkit/src/utils/string-utils';
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { cleanupFiles } from './utils/cleanupFiles';
-import { updateJestConfig } from '../utilities';
+import { getNpmScope, updateCypressTsConfig, updateJestConfig } from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory, e2e } = schema;
@@ -38,6 +37,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     linter: Linter.EsLint,
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
+    appDir: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');
@@ -45,17 +45,20 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     ? `${normalizedDirectory}-${name}`
     : name;
   const projectPath = `${directory}/${name}`;
-  await updateWorkspaceTarget({ tree, projectPath, projectName, e2e });
+  await updateWorkspaceTarget({
+    tree,
+    projectPath,
+    projectName,
+    e2e,
+    directory: normalizedDirectory,
+  });
 
   const { appsDir } = getWorkspaceLayout(tree);
   const appDir = `${appsDir}/${projectPath}`;
   const e2eDir = `${appsDir}/${projectPath}-e2e`;
   const initialPage = 'Home';
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  /* @ts-ignore */
   const npmScope = getNpmScope(tree);
-
 
   generateFiles(tree, joinPathFragments(__dirname, './files/app'), appDir, {
     ...schema,
@@ -68,7 +71,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     offsetFromRoot: offsetFromRoot(appDir),
     title: schema.title,
     description: schema.description,
-    npmScope
+    npmScope,
   });
 
   if (e2e !== false) {
@@ -108,7 +111,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
                 'babel/new-cap': 'off',
                 'import/no-extraneous-dependencies': 'off',
               },
-            }
+            },
           ],
         };
       }
@@ -152,7 +155,11 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
 
   await formatFiles(tree);
 
-  cleanupFiles(tree, ['pages/_app.tsx', 'pages/index.tsx', 'pages/styles.css']);
+  cleanupFiles(tree, [
+    'pages/_app.tsx',
+    'pages/index.tsx',
+    'pages/styles.css',
+  ]);
 
   // revert possible changes to package.json
   writeJson(tree, 'package.json', currentPackageJson);

@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "graphql"],
+  "plugins": ["@nx", "graphql"],
   "rules": {
     "graphql/template-strings": "off",
     "graphql/named-operations": "off"
@@ -10,7 +10,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -27,13 +27,17 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "warn"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {}
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {
+        "@nx/enforce-module-boundaries": ["off"]
+      }
     },
     {
       "files": "*.json",

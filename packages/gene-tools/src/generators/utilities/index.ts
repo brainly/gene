@@ -8,3 +8,4 @@ export * from './update-cypress-json-config';
 export * from './visit-files';
 export * from './hasFilesInTheFolder';
 export * from './promptBoolean';
+export * from './getNpmScope';

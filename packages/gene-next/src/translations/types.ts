@@ -4,10 +4,10 @@ export type TranslateFunctionType = (
   transChoiceHelper?: {basedOnParam: number}
 ) => string;
 
-export type TranslationServiceType = {
+export interface TranslationServiceType {
   translate: TranslateFunctionType;
   locale: string;
-};
+}
 
 export type TranslationParamsType = Record<string, string | number>;
 

@@ -4,7 +4,7 @@ import {
   parseTargetString,
   runExecutor,
   Target,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 
 import { createProxy, ServeOptions } from '../utilities/server';
 import Server = require('http-proxy');

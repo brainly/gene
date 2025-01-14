@@ -36,7 +36,7 @@ In the project configuration, add a `serve-base` target that serves the Next.js 
               "projects": "self"
             }
           ],
-          "executor": "@nrwl/next:server",
+          "executor": "@nx/next:server",
           "options": {
             "buildTarget": "app1:build",
             "dev": true

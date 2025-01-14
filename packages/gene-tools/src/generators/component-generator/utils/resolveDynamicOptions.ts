@@ -1,4 +1,3 @@
-import { Tree } from '@nrwl/devkit';
 import {
   PromptsProfileDefaultValueKeyType,
   resolveGeneratorOptions,
@@ -6,7 +5,7 @@ import {
 
 export type ComponentPromptsProfileType = 'basic' | 'sample' | 'advanced';
 
-export type ComponentSchemaType = {
+export interface ComponentSchemaType {
   ['prompts-profile']: ComponentPromptsProfileType;
   name?: string;
   props?: string;
@@ -23,7 +22,7 @@ export type ComponentSchemaType = {
   reexportIndexPath?: string;
   reexportRelativePath?: string;
   libraryShortName?: string;
-};
+}
 
 export const ComponentPromptsProfileMapping: Readonly<
   Record<ComponentPromptsProfileType, (keyof ComponentSchemaType)[]>

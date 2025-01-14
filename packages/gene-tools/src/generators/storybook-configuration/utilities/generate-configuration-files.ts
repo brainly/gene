@@ -3,8 +3,8 @@ import {
   joinPathFragments,
   offsetFromRoot,
   Tree,
-} from '@nrwl/devkit';
-import {NormalizedOptions} from '../schema';
+} from '@nx/devkit';
+import { NormalizedOptions } from '../schema';
 
 export function generateConfigurationFiles(
   tree: Tree,

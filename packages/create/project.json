@@ -4,18 +4,33 @@
   "sourceRoot": "packages/create/src",
   "projectType": "library",
   "targets": {
+    "prepare-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "node packages/create/bin/sync-deps.js"
+          }
+        ]
+      }
+    },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
+      "dependsOn": ["prepare-build"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/create",
         "main": "packages/create/src/index.ts",
         "tsConfig": "packages/create/tsconfig.lib.json",
-        "assets": ["packages/create/*.md", "packages/create/**/*.js"]
+        "assets": [
+          "packages/create/*.md",
+          "packages/create/bin/create-gene-workspace.js",
+          "packages/create/bin/versions.json"
+        ]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/create/**/*.{ts,js}"]

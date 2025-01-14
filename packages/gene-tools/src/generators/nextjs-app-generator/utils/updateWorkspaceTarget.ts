@@ -3,7 +3,7 @@ import {
   joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { render } from 'ejs';
 import { readFileSync } from 'fs';
 
@@ -17,6 +17,7 @@ export const updateWorkspaceTarget = async ({
   projectPath: string;
   projectName: string;
   e2e?: boolean;
+  directory: string;
 }) => {
   const appTargetsTemplate = readFileSync(
     joinPathFragments(__dirname, './workspaceAppTargetTemplate.ejs')

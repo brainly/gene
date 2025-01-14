@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "storybook-configuration",
   "type": "object",
   "properties": {
@@ -15,5 +14,7 @@
     }
   },
   "additionalProperties": false,
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }
