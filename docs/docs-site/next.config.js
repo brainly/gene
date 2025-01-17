@@ -5,6 +5,7 @@ const withNextra = require('nextra')({
 });
 const nextConfig = {
   ...withNextra(),
+  output: 'export',
   distDir: '../../dist/docs/docs-site/.next',
   images: {
     unoptimized: true,
