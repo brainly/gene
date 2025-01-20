@@ -1,10 +1,14 @@
+// @ts-expect-error TS7016
 import { copySync } from 'fs-extra';
 import { join } from 'path';
 
-async function executor(options, context) {
+async function executor(
+  options: any,
+  context: { projectName: any; root: any; workspace: any }
+) {
   const projectName = context.projectName;
   const appRootPath = context.root;
-  
+
   if (!projectName) {
     throw new Error('No project specified.');
   }
@@ -49,7 +53,7 @@ async function executor(options, context) {
   copySync(imageFrom, imageTo, {
     recursive: true,
     overwrite: true,
-    filter: (src) => {
+    filter: (src: string | string[]) => {
       if (src.includes('.svg')) {
         throw new Error(
           `'Please put SVG files into "nx-static" folder instead of "nx-images": ${src}`

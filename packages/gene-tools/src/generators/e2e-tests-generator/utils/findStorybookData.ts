@@ -15,11 +15,12 @@ function extractStories(fileContent: string): Record<string, string> {
 
     let scenarioMatch;
     while ((scenarioMatch = scenarioRegex.exec(fileContent)) !== null) {
-      const scenario = scenarioMatch[1];
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const scenario = scenarioMatch[1]!;
 
       console.log('scenario', scenario, feature);
 
-      const scenarioId = `${feature.toLowerCase()}--${scenario
+      const scenarioId = `${feature?.toLowerCase()}--${scenario
         .replace(/\s+/g, '-')
         .toLowerCase()}`;
       stories[scenario] = `/iframe.html?id=${scenarioId}`;
@@ -33,7 +34,7 @@ function getStorybookFilesFromDir(root: string): string[] {
   const files: string[] = [];
 
   function traverse(dir: string): void {
-    fs.readdirSync(dir).forEach(file => {
+    fs.readdirSync(dir).forEach((file) => {
       const fullPath = path.join(dir, file);
       if (fs.statSync(fullPath).isDirectory()) {
         traverse(fullPath);
@@ -58,7 +59,7 @@ export function findStorybookData(sourceRoot: string): Record<string, string> {
   for (const file of storybookFiles) {
     const fileContent = fs.readFileSync(file, 'utf-8');
     const stories = extractStories(fileContent);
-    allStories = {...allStories, ...stories};
+    allStories = { ...allStories, ...stories };
   }
 
   return allStories;

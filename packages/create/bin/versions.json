@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@brainly-gene/core": "0.2.0-alpha.18",
-    "@brainly-gene/next": "0.2.0-alpha.18",
+    "@brainly-gene/core": "0.2.0-alpha.20",
+    "@brainly-gene/next": "0.2.0-alpha.20",
     "@nx/next": "17.3.2",
     "@sentry/react": "7.77.0",
     "@storybook/addon-actions": "6.5.16",
@@ -51,8 +51,8 @@
     "mini-css-extract-plugin": "2.2.0"
   },
   "devDependencies": {
-    "@brainly-gene/eslint-plugin": "0.2.0-alpha.18",
-    "@brainly-gene/tools": "0.2.0-alpha.18",
+    "@brainly-gene/eslint-plugin": "0.2.0-alpha.20",
+    "@brainly-gene/tools": "0.2.0-alpha.20",
     "@nx/cypress": "17.3.2",
     "@nx/devkit": "17.3.2",
     "@nx/eslint-plugin": "17.3.2",
@@ -70,7 +70,7 @@
     "@storybook/addons": "6.3.8",
     "@storybook/builder-webpack5": "6.5.4",
     "@storybook/core-server": "6.5.16",
-    "@storybook/manager-webpack5": "6.5.4",
+    "@storybook/manager-webpack5": "6.5.16",
     "@storybook/react": "6.5.16",
     "@storybook/theming": "6.5.16",
     "@testing-library/dom": "8.20.1",

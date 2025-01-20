@@ -12,7 +12,12 @@
     "downlevelIteration": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": ["**/*.spec.ts", "node_modules", "**/mocks/**", "jest.config.ts"]

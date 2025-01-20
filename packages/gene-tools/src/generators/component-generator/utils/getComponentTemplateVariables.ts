@@ -38,13 +38,15 @@ export const getComponentTemplateVariables = (
   const stylesExtension = 'scss';
 
   const propsArray = pipe(
-    splitStringToEntries(defaultPropsType),
+    splitStringToEntries(defaultPropsType) as any,
     map(
       parsePropsEntries({
         defaultValue: defaultPropsType,
         shouldAddFlowDeclaration,
       })
     )
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
   )(props as string);
   const eventsArray = splitStringToArray(events as string);
   const copyArray = splitStringToArray(copy as string);

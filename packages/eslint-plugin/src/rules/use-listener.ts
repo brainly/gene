@@ -46,7 +46,7 @@ export const useListenerRule = ESLintUtils.RuleCreator(
   create(context, [{ ignorePaths }]) {
     return {
       CallExpression(node: TSESTree.CallExpression) {
-        const isPathIgnored = ignorePaths.some((path) =>
+        const isPathIgnored = ignorePaths?.some((path) =>
           context.getFilename().includes(path)
         );
 

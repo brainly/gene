@@ -69,8 +69,8 @@ export default async function (tree: Tree) {
     'Which module library do you want to generate e2e tests for?'
   );
 
-  const moduleProject = workspaceJsonProjects[moduleName];
-  const e2eTestsProject = workspaceJsonProjects[moduleName + '-e2e'];
+  const moduleProject = workspaceJsonProjects.get(moduleName);
+  const e2eTestsProject = workspaceJsonProjects.get(moduleName + '-e2e');
 
   if (!moduleProject || !e2eTestsProject) {
     throw new Error(
@@ -88,7 +88,7 @@ export default async function (tree: Tree) {
 
   const storybookData = findStorybookData(modulePath + '/lib');
 
-  let moduleComponent: string;
+  let moduleComponent: string | undefined
 
   const modulesWithinLibrary = findModuleComponents(modulePath);
 

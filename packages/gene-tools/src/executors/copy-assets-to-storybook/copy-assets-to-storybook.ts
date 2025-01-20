@@ -1,10 +1,10 @@
 import { prepareStorybookRootAssets } from './prepare-storybook-root-assets';
-
+// @ts-expect-error TS7016
 import { copySync, removeSync } from 'fs-extra';
 import { join } from 'path';
 import { toAbsolute } from '../utilities/path';
 
-async function executor(options, context) {
+async function executor(options: any, context: { root: any; workspace: any; }) {
   const workspaceRoot = context.root;
   const assetsProject = 'assets';
   const workspace = context.workspace;
@@ -47,7 +47,7 @@ async function executor(options, context) {
   copySync(imagesFrom, imagesTo, {
     recursive: true,
     overwrite: true,
-    filter: (src) => {
+    filter: (src: string | string[]) => {
       if (src.includes('.svg')) {
         throw new Error(
           `Please put SVG files into "nx-static" folder instead of "nx-images": ${src}`

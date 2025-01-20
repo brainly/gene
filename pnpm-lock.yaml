@@ -328,6 +328,9 @@ importers:
       '@types/eslint':
         specifier: 8.56.10
         version: 8.56.10
+      '@types/glob':
+        specifier: 7.2.0
+        version: 7.2.0
       '@types/http-proxy':
         specifier: 1.17.7
         version: 1.17.7

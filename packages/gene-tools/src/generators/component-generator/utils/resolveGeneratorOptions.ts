@@ -1,4 +1,4 @@
-import {bind, fromPairs, pipe, prop, toPairs} from 'ramda';
+import { bind, fromPairs, pipe, prop, toPairs } from 'ramda';
 import * as inquirer from 'inquirer';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -19,13 +19,13 @@ type SchemaPropertyType = Readonly<{
   'x-custom-sample'?: string;
 }>;
 
-export type FileUtilsSaveOptsType = Readonly<{newFileContent: string}> &
+export type FileUtilsSaveOptsType = Readonly<{ newFileContent: string }> &
   FileUtilsReadOptsType;
 
-export type FileUtilsReadOptsType = Readonly<{fileContent: string}> &
+export type FileUtilsReadOptsType = Readonly<{ fileContent: string }> &
   FileUtilsInputOptsType;
 
-export type FileUtilsInputOptsType = Readonly<{filePath: string}>;
+export type FileUtilsInputOptsType = Readonly<{ filePath: string }>;
 
 export type InquirerPromptType =
   | 'input'
@@ -43,7 +43,7 @@ export type PromptsProfileDefaultValueKeyType =
   | 'x-custom-sample';
 
 type PromptOutputType =
-  | {choice?: string; list?: string; input?: string; confirm?: boolean}
+  | { choice?: string; list?: string; input?: string; confirm?: boolean }
   | undefined;
 
 const resolvePromptOutput = (promptOutput: PromptOutputType) =>
@@ -61,7 +61,7 @@ export async function getUserPromptInput({
   defaultAnswer,
   choices,
 }: {
-  promptType: InquirerPromptType;
+  promptType?: InquirerPromptType;
   question: string;
   defaultAnswer?: string;
   choices?: string[];
@@ -86,7 +86,7 @@ export async function getUserPromptInput({
 }
 
 export const getElementFileContent = (opts: FileUtilsInputOptsType) => {
-  const {filePath} = opts;
+  const { filePath } = opts;
 
   const fileContent = fs
     .readFileSync(path.join(__dirname, filePath))
@@ -109,7 +109,7 @@ const getSchemaPropertiesEntries = pipe(
   prop('fileContent'),
   bind(JSON.parse, JSON),
   prop('properties'),
-  toPairs
+  toPairs as any
 );
 
 const isPropertyIncludedInPromptsProfile = <
@@ -256,7 +256,7 @@ export const resolveGeneratorOptions = async <
   schemaPath: string;
 }): Promise<TSchemaType> => {
   try {
-    const {'prompts-profile': promptsProfile} = initialOptions;
+    const { 'prompts-profile': promptsProfile } = initialOptions;
     const schemaPropertiesEntries = getSchemaPropertiesEntries({
       filePath: schemaPath,
     }) as SchemaPropertiesEntryType<TSchemaType>[];
