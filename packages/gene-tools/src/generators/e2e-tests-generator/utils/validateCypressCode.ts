@@ -1,4 +1,4 @@
-import {ESLint} from 'eslint';
+import { ESLint } from 'eslint';
 
 export const validateCypressCode = async (code: string) => {
   const eslint = new ESLint({
@@ -14,14 +14,14 @@ export const validateCypressCode = async (code: string) => {
     },
   });
 
-  const results = await eslint.lintText(code, {filePath: 'fakepath.ts'});
+  const results = await eslint.lintText(code, { filePath: 'fakepath.ts' });
 
   if (results && results.length > 0) {
-    const errors = results[0].messages.map(
-      msg => `${msg.line}:${msg.column} - ${msg.message} (${msg.ruleId})`
+    const errors = results[0]?.messages.map(
+      (msg) => `${msg.line}:${msg.column} - ${msg.message} (${msg.ruleId})`
     );
-    return {isValid: false, errors: JSON.stringify(errors)};
+    return { isValid: false, errors: JSON.stringify(errors) };
   } else {
-    return {isValid: true, errors: ''};
+    return { isValid: true, errors: '' };
   }
 };

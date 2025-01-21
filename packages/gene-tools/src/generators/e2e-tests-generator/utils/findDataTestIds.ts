@@ -24,8 +24,8 @@ function isFirstLetterCapital(str: string | null) {
 
   // Check if the first character is the same as its uppercase version and different from its lowercase version
   return (
-    firstChar === firstChar.toUpperCase() &&
-    firstChar !== firstChar.toLowerCase()
+    firstChar === firstChar?.toUpperCase() &&
+    firstChar !== firstChar?.toLowerCase()
   );
 }
 
@@ -44,7 +44,7 @@ async function extractDataTestIdsFromFile(
         name: 'data-testid',
       },
     })
-    .forEach(attrPath => {
+    .forEach((attrPath) => {
       if (
         attrPath.parentPath.node.type === 'JSXOpeningElement' &&
         attrPath.parentPath.node.name.type === 'JSXIdentifier'
@@ -68,7 +68,7 @@ async function extractDataTestIdsFromFile(
 export function processResults(results: Result[]): Result[] {
   // Filter out components with 'Module' in the name
   const filteredResults = results.filter(
-    result => !result.componentName.includes('Module') && !!result.dataTestId
+    (result) => !result.componentName.includes('Module') && !!result.dataTestId
   );
 
   // Remove duplicates based on dataTestId
@@ -90,7 +90,7 @@ export async function findDataTestIds(
   maxDepth = 2
 ): Promise<Result[]> {
   const processedFiles: string[] = [];
-  const toProcess: FileToProcess[] = [{path: componentPath, depth: 0}];
+  const toProcess: FileToProcess[] = [{ path: componentPath, depth: 0 }];
   const results: Result[] = [];
 
   while (toProcess.length > 0) {
@@ -115,7 +115,7 @@ export async function findDataTestIds(
     const root = j(content);
 
     // Find components returned by the render function
-    root.find(j.JSXElement).forEach(path => {
+    root.find(j.JSXElement).forEach((path) => {
       const openingElement = path.node.openingElement;
       if (openingElement && openingElement.name.type === 'JSXIdentifier') {
         const componentName = openingElement.name.name;
@@ -133,7 +133,7 @@ export async function findDataTestIds(
         const componentFiles = glob.sync(globPattern);
 
         toProcess.push(
-          ...componentFiles.map(filePath => ({
+          ...componentFiles.map((filePath: string) => ({
             path: filePath,
             depth: currentDepth + 1,
           }))

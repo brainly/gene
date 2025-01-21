@@ -1,4 +1,4 @@
-import {OpenAIApi} from 'openai';
+import { OpenAIApi } from 'openai';
 // import {validateCypressCode} from '../utils/validateCypressCode';
 
 const getCypressCodeReflectionPrompt = (
@@ -191,7 +191,7 @@ const generateCypressCode = async (
     temperature: 0.1,
   });
 
-  const content = completion.data.choices[0].message?.content;
+  const content = completion.data.choices[0]?.message?.content;
 
   if (!content) {
     throw new Error('No content');
@@ -234,7 +234,7 @@ const reflectOnCypressCode = async (
           storybookData
         ),
       },
-      {role: 'assistant', content: previousContent},
+      { role: 'assistant', content: previousContent },
       {
         role: 'user',
         content: getCypressCodeReflectionPrompt(
@@ -251,7 +251,7 @@ const reflectOnCypressCode = async (
     temperature: 0.1,
   });
 
-  const content = reflectionCompletion.data.choices[0].message?.content;
+  const content = reflectionCompletion.data.choices[0]?.message?.content;
 
   if (!content) {
     throw new Error('No content');
@@ -260,4 +260,4 @@ const reflectOnCypressCode = async (
   return content;
 };
 
-export {generateCypressCode, reflectOnCypressCode};
+export { generateCypressCode, reflectOnCypressCode };

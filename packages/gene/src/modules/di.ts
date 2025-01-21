@@ -4,6 +4,7 @@ import {
   ComponentDeclarationType,
   EventHandlersType,
 } from './types';
+import { isNonEmptyArray } from '../utils/isNonEmptyArray';
 
 interface BindModulePropsType {
   components?: ComponentDeclarationType;
@@ -33,7 +34,7 @@ export function getModuleContainer({
       ...containers
     ) as Container;
   } else {
-    if (containers.length) {
+    if (isNonEmptyArray(containers)) {
       const [firstContainer, ...restContainers] = containers;
 
       mergedContainer = Container.merge(

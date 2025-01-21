@@ -15,6 +15,7 @@ import {
   ErrorWithModuleBoundaryLoggingFunctionType,
   Message,
 } from '../logging';
+import { isNonEmptyArray } from '../utils/isNonEmptyArray';
 
 function EmptyContext({ children }: { children?: React.ReactNode }) {
   return <>{children}</>;
@@ -100,7 +101,7 @@ export function decorateModule<
     }, [context.container, getContainerWithModuleBoundaryTrackErrorFunction]);
 
     const ContextTree = React.useMemo(() => {
-      if (!Array.isArray(contexts) || !contexts.length) {
+      if (!Array.isArray(contexts) || !isNonEmptyArray(contexts)) {
         return EmptyContext;
       }
 

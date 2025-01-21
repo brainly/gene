@@ -19,7 +19,7 @@ interface GeneratorOptions {
   name: string;
   targetLocation: string;
   filesLocation: string;
-  npmScope: string;
+  npmScope?: string | null;
 }
 
 function createFiles(
@@ -56,7 +56,7 @@ const getDirectoryPath = (
 
 const promptCrudFunctions = async (
   serviceName: string,
-  useDefaultCrudFunctions: boolean
+  useDefaultCrudFunctions?: boolean
 ) => {
   const classifiedName = stringUtils.classify(serviceName);
   if (useDefaultCrudFunctions) {
@@ -177,12 +177,12 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
       .listChanges()
       .filter(({ path }) => {
         const filename = path.split('/').pop();
-        if (!filename.startsWith('use')) {
+        if (!filename?.startsWith('use')) {
           return false;
         }
 
         return !crudFunctions.find((crudFunction) =>
-          filename.includes(crudFunction)
+          filename?.includes(crudFunction)
         );
       })
       .map(({ path }) => path);
@@ -191,10 +191,13 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
 
     // Update exports
     const index = tree.read(`${baseOptions.targetLocation}/index.ts`, 'utf-8');
-    const lines = index.split('\n').filter((line) => {
+    const lines = index?.split('\n').filter((line) => {
       return crudFunctions.find((crudFunction) => line.includes(crudFunction));
     });
-    tree.write(`${baseOptions.targetLocation}/index.ts`, lines.join('\n'));
+    tree.write(
+      `${baseOptions.targetLocation}/index.ts`,
+      lines?.join('\n') || ''
+    );
   }
 
   await formatFiles(tree);

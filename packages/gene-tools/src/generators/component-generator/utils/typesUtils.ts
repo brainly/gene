@@ -5,13 +5,13 @@ import { map, uniq, pipe, ifElse, append, identity } from 'ramda';
 export const splitStringToArray = (str: string | undefined) =>
   str ? str.split(',') : [];
 
-export const getEntry = (defaultValue: string) => (strPiece: string) => {
+export const getEntry = (defaultValue?: string) => (strPiece: string) => {
   const [key, value] = strPiece.split(':');
 
   return [key, value || defaultValue];
 };
 
-export const splitStringToEntries = (defaultValue: string) =>
+export const splitStringToEntries = (defaultValue?: string) =>
   pipe(splitStringToArray, map(getEntry(defaultValue)));
 
 // Parse props entries name
@@ -89,7 +89,7 @@ const maybeIncludeCopyType = ifElse(
 );
 
 export const getStorybookKnobs: (
-  propsArray: string[][],
+  propsArray: (string | undefined)[][],
   copyArray: string[]
 ) => string[] = pipe(
   maybeIncludeCopyType,

@@ -4,8 +4,14 @@
   "include": [],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "lib": ["es2020", "dom"]
-
+    "lib": ["es2020", "dom"],
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true
   },
   "references": [
     {

@@ -1,4 +1,4 @@
-import {curry} from 'ramda';
+import { curry } from 'ramda';
 
 export type Factory<T = any> = (key: string) => (config: ConfigType) => T;
 
@@ -17,6 +17,9 @@ export default curry(
   ) => {
     const el = map[key] || map['fallback'];
 
-    return el(config) as ReturnType<M[string]>;
+    if (el) {
+      return el(config) as ReturnType<M[string]>;
+    }
+    throw new Error(`No mapping found for key: ${key}`);
   }
 ) as CurriedFunction;

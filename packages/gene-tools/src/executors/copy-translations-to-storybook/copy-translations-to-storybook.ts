@@ -1,8 +1,9 @@
+// @ts-expect-error TS7016
 import { copySync, removeSync } from 'fs-extra';
 import { join } from 'path';
 import { toAbsolute } from '../utilities/path';
 
-async function executor(options, context) {
+async function executor(options: any, context: { root: any; workspace: any }) {
   const appRootPath = context.root;
   const translationsProject = 'translations';
   const workspace = context.workspace;

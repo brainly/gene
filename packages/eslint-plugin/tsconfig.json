@@ -3,6 +3,13 @@
   "compilerOptions": {
     "module": "node16",
     "moduleResolution": "node16",
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true
   },
   "files": [],
   "include": [],
