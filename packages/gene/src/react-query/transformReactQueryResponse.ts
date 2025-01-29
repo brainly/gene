@@ -42,6 +42,9 @@ export function transformReactQueryResponse<TData = null, TVariables = null>(
 
   const hasMore = 'hasNextPage' in response ? response.hasNextPage : undefined;
 
+  const isFetchingNextPage =
+    'isFetchingNextPage' in response ? response.isFetchingNextPage : undefined;
+
   return {
     error: response.error || null,
     data: response.data,
@@ -50,5 +53,6 @@ export function transformReactQueryResponse<TData = null, TVariables = null>(
     fetchPreviousPage,
     hasMore,
     refetch,
+    isFetchingNextPage,
   };
 }
