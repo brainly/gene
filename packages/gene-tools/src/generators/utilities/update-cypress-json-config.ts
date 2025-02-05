@@ -8,6 +8,11 @@ export const updateCypressTsConfig = (tree: Tree, e2ePath: string) => {
       compilerOptions: {
         allowJs: true,
         isolatedModules: false,
+        strict: true,
+        strictNullChecks: true,
+        noUncheckedIndexedAccess: true,
+        noFallthroughCasesInSwitch: true,
+        forceConsistentCasingInFileNames: true,
         types: [
           ...(json?.compilerOptions?.types || []),
           '@testing-library/cypress',
