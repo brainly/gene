@@ -193,7 +193,7 @@
     "workerDirectory": ".storybook/msw"
   },
   "engines": {
-    "node": ">=18.20.0 <19",
+    "node": ">=18.20.0 <23",
     "pnpm": ">=9.12.0 <10",
     "yarn": "\n╔═════════════════════════════════════════════════════════════╗\n║                                                             ║\n║   Use 'pnpm install' for installation in this project.      ║\n║                                                             ║\n║   If you don't have pnpm, install it via 'npm i -g pnpm'.   ║\n║   For more details, go to https://pnpm.js.org/              ║\n║                                                             ║\n╚═════════════════════════════════════════════════════════════╝\n",
     "npm": "\n╔═════════════════════════════════════════════════════════════╗\n║                                                             ║\n║   Use 'pnpm install' for installation in this project.      ║\n║                                                             ║\n║   If you don't have pnpm, install it via 'npm i -g pnpm'.   ║\n║   For more details, go to https://pnpm.js.org/              ║\n║                                                             ║\n╚═════════════════════════════════════════════════════════════╝\n"
