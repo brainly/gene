@@ -38,7 +38,7 @@ export function useApolloObservableQuery<TData, TVariables>(
     newObservable
   );
 
-  const isRouterEvent = response?.type === 'routeChanged';
+  const isRouterEvent = response?.type === 'routeChangeComplete';
   const isServerValueOrRouterEventOrObservableValueIsEmpty =
     isRouterEvent || isServer() || !response?.data;
 
