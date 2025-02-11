@@ -36,19 +36,46 @@ export function useTransformedNextRouter(): Router {
   const $routeChanged = React.useMemo(
     () =>
       new Observable<RouterEvent>((observer) => {
-        const handler = ([currentPathname]: [string]) => {
+        const handleStart = (path: string, options?: NavigateOptions) => {
           observer.next({
-            type: 'routeChanged',
+            type: 'routeChangeStart',
             payload: {
-              currentPathname,
+              path,
+              options
+            },
+          });
+        };
+
+        const handleComplete = (path: string, options?: NavigateOptions) => {
+          observer.next({
+            type: 'routeChangeComplete',
+            payload: {
+              path,
+              options
+            },
+          });
+        };
+
+        const handleError = (path: string, options?: NavigateOptions) => {
+          observer.next({
+            type: 'routeChangeError',
+            payload: {
+              path,
+              options
             },
           });
         };
 
         if (events) {
-          events.on('routeChangeComplete', handler);
+          events.on('routeChangeStart', handleStart);
+          events.on('routeChangeComplete', handleComplete);
+          events.on('routeChangeError', handleError);
 
-          return () => events.off('routeChangeComplete', handler);
+          return () => {
+            events.off('routeChangeStart', handleStart);
+            events.off('routeChangeComplete', handleComplete);
+            events.off('routeChangeError', handleError);
+          }
         }
         return () => null;
       }),

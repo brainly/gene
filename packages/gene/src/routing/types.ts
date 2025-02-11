@@ -31,9 +31,10 @@ export interface UrlObject {
 }
 
 export interface RouterEvent {
-  type: 'routeChanged';
+  type: 'routeChangeStart' | 'routeChangeComplete' | 'routeChangeError';
   payload: {
-    currentPathname: string;
+    path: string;
+    options?: NavigateOptions;
   };
 }
 
