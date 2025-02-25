@@ -1,4 +1,3 @@
-'use client';
 export * from './utils';
 export * from './events';
 export * from './contexts';
