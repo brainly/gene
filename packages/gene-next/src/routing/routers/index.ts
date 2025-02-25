@@ -3,3 +3,4 @@ export * from './native';
 export * from './getOriginURL';
 export * from './attachQueryParams';
 export * from './getHttpProtocol';
+export * from './generate';
