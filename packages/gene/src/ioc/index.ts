@@ -5,4 +5,3 @@ export {
   useComponentInjection,
   useInjection,
 } from './react.ioc';
-export { withIoc } from './withIoc';
