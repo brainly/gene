@@ -1,12 +1,12 @@
 import React from 'react';
-import {useSSR} from 'react-i18next';
-import {SSRStore} from '../i18n';
+import { useSSR } from 'react-i18next';
+import { SSRStore } from './ssrStore';
 
 export function withSSRTranslations<T>(
   language: string = process.env.NEXT_PUBLIC_BUILD_LANG || 'en-US'
 ) {
   return (Page: React.ComponentType<T>) => {
-    return (props: T & {pageProps: Record<string, any>}) => {
+    return (props: T & { pageProps: Record<string, any> }) => {
       const translations = props.pageProps.translations;
       const serverTranslations = React.useMemo(() => {
         if (translations) {
