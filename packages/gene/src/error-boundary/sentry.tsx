@@ -1,6 +1,7 @@
+'use client';
 import * as React from 'react';
 import * as Sentry from '@sentry/react';
-import {ErrorBoundaryPropsType} from './types';
+import { ErrorBoundaryPropsType } from './types';
 
 export const SentryErrorBoundary = ({
   children,
@@ -10,7 +11,7 @@ export const SentryErrorBoundary = ({
   return (
     <Sentry.ErrorBoundary
       fallback={fallback}
-      beforeCapture={scope => {
+      beforeCapture={(scope) => {
         scope.setTag('boundaryName', boundaryName);
       }}
     >
