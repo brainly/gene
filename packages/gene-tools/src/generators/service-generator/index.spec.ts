@@ -6,11 +6,9 @@ import { prompt } from 'inquirer';
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
 const mockCrudOptions = (options: string[]) => {
-  (prompt as unknown as jest.Mock).mockImplementationOnce(
-    ([{ name }]) => {
-      return { crudFunctions: options };
-    }
-  );
+  (prompt as unknown as jest.Mock).mockImplementationOnce(() => {
+    return { crudFunctions: options };
+  });
 };
 
 describe('Service generator', () => {
