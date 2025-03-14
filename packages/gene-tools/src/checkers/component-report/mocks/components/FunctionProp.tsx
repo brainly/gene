@@ -7,7 +7,7 @@ type PropsType = Readonly<{
   doQuickMath: (a: number) => number;
 }>;
 
-const FunctionProp = ({id, content, items}: PropsType) => {
+const FunctionProp = ({ id, content, items }: PropsType) => {
   return null;
 };
 

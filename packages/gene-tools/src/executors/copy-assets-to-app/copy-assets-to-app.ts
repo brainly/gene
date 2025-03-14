@@ -4,7 +4,7 @@ import { join } from 'path';
 
 async function executor(
   options: any,
-  context: { projectName: any; root: any; workspace: any }
+  context: { projectName: any; root: any; workspace: any },
 ) {
   const projectName = context.projectName;
   const appRootPath = context.root;
@@ -19,7 +19,7 @@ async function executor(
 
   if (!workspace.projects[assetsProject]) {
     throw new Error(
-      `Project "${assetsProject}" not found in workspace. You can generate it using "nx g @brainly-gene/tools:assets-library".`
+      `Project "${assetsProject}" not found in workspace. You can generate it using "nx g @brainly-gene/tools:assets-library".`,
     );
   }
 
@@ -30,21 +30,21 @@ async function executor(
   const fontFrom = join(
     appRootPath,
     workspace.projects[assetsProject].sourceRoot,
-    'nx-fonts'
+    'nx-fonts',
   );
   const fontTo = join(appRootPath, project.root, 'public', 'nx-fonts');
 
   const imageFrom = join(
     appRootPath,
     workspace.projects[assetsProject].sourceRoot,
-    'nx-images'
+    'nx-images',
   );
   const imageTo = join(appRootPath, project.root, 'public', 'nx-images');
 
   const staticFrom = join(
     appRootPath,
     workspace.projects[assetsProject].sourceRoot,
-    'nx-static'
+    'nx-static',
   );
   const staticTo = join(appRootPath, project.root, 'public', 'nx-static');
 
@@ -56,7 +56,7 @@ async function executor(
     filter: (src: string | string[]) => {
       if (src.includes('.svg')) {
         throw new Error(
-          `'Please put SVG files into "nx-static" folder instead of "nx-images": ${src}`
+          `'Please put SVG files into "nx-static" folder instead of "nx-images": ${src}`,
         );
       }
       return true;

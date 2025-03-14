@@ -9,7 +9,7 @@ import type Observable from 'zen-observable';
  */
 export function useObservableQueryV2<T>(
   observable: Observable<T>,
-  queryHash: string
+  queryHash: string,
 ) {
   // we call rerender() to force component update
   // whenever we get a new observable value

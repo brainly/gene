@@ -1,6 +1,6 @@
 const path = require('path');
 
-const {extractTestCoverage} = require('./testCoverage');
+const { extractTestCoverage } = require('./testCoverage');
 
 describe('extractTestCoverage()', () => {
   it('works with a single component', () => {
@@ -12,7 +12,7 @@ describe('extractTestCoverage()', () => {
       extractTestCoverage({
         truncatedPath: path.resolve(__dirname, '../mocks/ValidProps'),
         jestOutput,
-      })
+      }),
     ).toEqual('20%');
   });
 
@@ -26,7 +26,7 @@ describe('extractTestCoverage()', () => {
       extractTestCoverage({
         truncatedPath: path.resolve(__dirname, '../mocks/ValidProps'),
         jestOutput,
-      })
+      }),
     ).toEqual('duplicated name');
   });
 });

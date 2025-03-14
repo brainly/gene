@@ -5,8 +5,7 @@ import type { QueryObserver } from '@tanstack/react-query';
 import { QueryClient } from '@tanstack/react-query';
 
 import { createTestObservable } from './test-utils';
-import type {
-  ExampleResponse} from '../services';
+import type { ExampleResponse } from '../services';
 import {
   mockFetch,
   mockFetchBasedOnParam,
@@ -31,7 +30,7 @@ describe('useReactQueryObservableQuery', () => {
       createTestObservable() as unknown as QueryObserver<ExampleResponse>;
 
     const { result, unmount } = renderHook(() =>
-      useReactQueryObservableQuery<ExampleResponse>($reactQueryObservable)
+      useReactQueryObservableQuery<ExampleResponse>($reactQueryObservable),
     );
 
     expect(result.current.data).toBe(undefined);
@@ -102,9 +101,7 @@ describe('useReactQueryObservableQuery', () => {
   it('returns new data when using refetch with same variables', async () => {
     mockFetchChangingData();
 
-    const { result, unmount } = renderHook(() =>
-      useTestQuery({ foo: 1 })
-    );
+    const { result, unmount } = renderHook(() => useTestQuery({ foo: 1 }));
 
     let initialValue = result.current;
     await waitFor(() => {
@@ -136,7 +133,7 @@ describe('useReactQueryObservableQuery', () => {
     let foo = 1;
 
     const { result, rerender, unmount } = renderHook(() =>
-      useTestQuery({ foo })
+      useTestQuery({ foo }),
     );
 
     let initialValue = result.current;

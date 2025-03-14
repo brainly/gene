@@ -18,7 +18,7 @@ export const validateCypressCode = async (code: string) => {
 
   if (results && results.length > 0) {
     const errors = results[0]?.messages.map(
-      (msg) => `${msg.line}:${msg.column} - ${msg.message} (${msg.ruleId})`
+      (msg) => `${msg.line}:${msg.column} - ${msg.message} (${msg.ruleId})`,
     );
     return { isValid: false, errors: JSON.stringify(errors) };
   } else {

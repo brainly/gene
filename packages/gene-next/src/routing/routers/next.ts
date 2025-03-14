@@ -41,7 +41,7 @@ export function useTransformedNextRouter(): Router {
             type: 'routeChangeStart',
             payload: {
               path,
-              options
+              options,
             },
           });
         };
@@ -51,7 +51,7 @@ export function useTransformedNextRouter(): Router {
             type: 'routeChangeComplete',
             payload: {
               path,
-              options
+              options,
             },
           });
         };
@@ -61,7 +61,7 @@ export function useTransformedNextRouter(): Router {
             type: 'routeChangeError',
             payload: {
               path,
-              options
+              options,
             },
           });
         };
@@ -75,24 +75,24 @@ export function useTransformedNextRouter(): Router {
             events.off('routeChangeStart', handleStart);
             events.off('routeChangeComplete', handleComplete);
             events.off('routeChangeError', handleError);
-          }
+          };
         }
         return () => null;
       }),
-    [events]
+    [events],
   );
 
   const navigate = React.useCallback(
     (path: string | UrlObject, options?: NavigateOptions) => {
       return push(path, options?.as ?? undefined, options);
     },
-    [push]
+    [push],
   );
 
   const replace = React.useCallback(
     (path: string | UrlObject, options?: NavigateOptions) =>
       nativeReplace(path, undefined, options),
-    [nativeReplace]
+    [nativeReplace],
   );
 
   return {

@@ -2,14 +2,19 @@
 title: useListener API
 ---
 
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 
 # useListener API
 
 The `useListener` hook enables you to perform actions in response to an event without stopping the event's propagation. This hook is useful when you want child component events to continue propagating to the application, while also updating the state of the parent component.
 
-<Image src="/useListener.jpg" width={551} height={521} alt="useListener example" />
+<Image
+  src="/useListener.jpg"
+  width={551}
+  height={521}
+  alt="useListener example"
+/>
 
 The `useListener` hook functions similarly to `useMediator` but allows event propagation. It is intended for use at the component level to manage internal state changes, such as UI updates. **Do not use `useListener` for handling events at the application level**; in those cases, use `useMediator`.
 
@@ -18,25 +23,25 @@ The `useListener` hook functions similarly to `useMediator` but allows event pro
 The `useListener` hook accepts three arguments:
 
 ```jsx
-useListener(eventName, eventHandler, HTMLElement)
+useListener(eventName, eventHandler, HTMLElement);
 ```
 
 - **eventName**: The name of the event to listen for.
 - **eventHandler**: A function that processes the event payload. For example:
 
   ```jsx
-  function handleMyEvent(payload) { 
+  function handleMyEvent(payload) {
     console.log(payload);
   }
   ```
 
 - **HTMLElement**: The HTML element to which the event listener is attached.
 
-| Parameter      | Description       |
-|----------------|-------------------|
-| `eventName`    | Name of the event to listen for. |
+| Parameter      | Description                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| `eventName`    | Name of the event to listen for.                                    |
 | `eventHandler` | Function to handle the event, accepting the payload as an argument. |
-| `HTMLElement`  | HTML element where the listener will be attached. |
+| `HTMLElement`  | HTML element where the listener will be attached.                   |
 
 ### Example Usage
 

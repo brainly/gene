@@ -1,4 +1,9 @@
-import { AstBuilder, GherkinClassicTokenMatcher, Parser, compile } from '@cucumber/gherkin';
+import {
+  AstBuilder,
+  GherkinClassicTokenMatcher,
+  Parser,
+  compile,
+} from '@cucumber/gherkin';
 import { IdGenerator } from '@cucumber/messages';
 
 const uuidFn = IdGenerator.uuid();

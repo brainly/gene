@@ -26,7 +26,7 @@ export const reexport = ({
 
   if (exports) {
     throw new Error(
-      `Sub app with name ${subappName} already exists in this library`
+      `Sub app with name ${subappName} already exists in this library`,
     );
   }
 
@@ -35,7 +35,7 @@ export const reexport = ({
   ast
     .get()
     .node.program.body.push(
-      j.exportAllDeclaration(j.stringLiteral(path), null)
+      j.exportAllDeclaration(j.stringLiteral(path), null),
     );
 
   tree.write(reexportIndexPath, ast.toSource({ quote: 'single' }));

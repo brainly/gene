@@ -20,7 +20,7 @@ function execCommand(command, args = []) {
     const cmd = spawn(command, args, { stdio: 'inherit', shell: true });
 
     cmd.on('error', (error) =>
-      reject(`Error executing command: ${error.message}`)
+      reject(`Error executing command: ${error.message}`),
     );
     cmd.on('close', (code) => {
       if (code !== 0) {
@@ -66,7 +66,7 @@ async function runCommands() {
     ]);
 
     console.log(
-      `Workspace ${name} created successfully with NX version ${nxVersion}!`
+      `Workspace ${name} created successfully with NX version ${nxVersion}!`,
     );
 
     console.log(`Changing directory to ${name}`);
@@ -76,7 +76,7 @@ async function runCommands() {
 
     // Install dependencies
     const dependencyArgs = Object.entries(dependencies).map(
-      ([pkg, version]) => `${pkg}@${version}`
+      ([pkg, version]) => `${pkg}@${version}`,
     );
     await execCommand('npm', [
       'install',
@@ -87,7 +87,7 @@ async function runCommands() {
     // Install devDependencies
     console.log('Installing dev dependencies with npm');
     const devDependencyArgs = Object.entries(devDependencies).map(
-      ([pkg, version]) => `${pkg}@${version}`
+      ([pkg, version]) => `${pkg}@${version}`,
     );
     await execCommand('npm', [
       'install',

@@ -1,5 +1,4 @@
-import type {
-  Tree} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   installPackagesTask,
@@ -52,7 +51,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
 
   const pathToSetupFile = relative(
     pathToProject,
-    `${workspaceRoot}/jest.setup.js`
+    `${workspaceRoot}/jest.setup.js`,
   );
 
   updateJestConfig(
@@ -76,7 +75,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
       }
       //#endregion
     },
-  },`
+  },`,
   );
 
   await formatFiles(tree);

@@ -11,7 +11,7 @@ import { hasFilesInTheFolder } from '../utilities';
 
 export async function storybookConfigurationGenerator(
   tree: Tree,
-  rawOptions: Options
+  rawOptions: Options,
 ) {
   const options = normalizeOptions(tree, rawOptions);
 
@@ -20,7 +20,7 @@ export async function storybookConfigurationGenerator(
     hasFilesInTheFolder(tree, options.storybookDir)
   ) {
     logger.warn(
-      `The ".storybook" folder already exists for "${options.name}"! Skipping configuration.`
+      `The ".storybook" folder already exists for "${options.name}"! Skipping configuration.`,
     );
     return;
   }

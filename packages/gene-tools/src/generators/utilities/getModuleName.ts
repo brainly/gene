@@ -20,7 +20,7 @@ registerPrompt('search-checkbox', inquirerSearchCheckbox);
 export async function promptSelectModuleName(
   tree: Tree,
   question: string,
-  listOfSelectableProjects?: string[]
+  listOfSelectableProjects?: string[],
 ) {
   const projects = (
     listOfSelectableProjects ?? getListOfAllProjectKeys(tree)

@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const InlineArrowFunc = ({id, content, items}: PropsType) => {
+const InlineArrowFunc = ({ id, content, items }: PropsType) => {
   return (
     <>
       <div onClick={() => null}>click me</div>

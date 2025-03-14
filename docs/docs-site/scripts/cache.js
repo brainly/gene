@@ -4,10 +4,10 @@ const glob = require('glob');
 
 function getDocs() {
   // eslint-disable-next-line no-undef
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     glob('pages/**/*.mdx', function (err, fileNames) {
-      console.log({fileNames});
-      const docs = fileNames.map(fileName => {
+      console.log({ fileNames });
+      const docs = fileNames.map((fileName) => {
         const route = fileName
           .replace(/\.mdx$/, '')
           .replace('pages/', '/')
@@ -26,7 +26,7 @@ function getDocs() {
   });
 }
 
-getDocs().then(docs => {
+getDocs().then((docs) => {
   const fileContents = `${docs}`;
 
   try {

@@ -1,19 +1,17 @@
-import {Container} from 'inversify';
+import { Container } from 'inversify';
 import type {
   LogType,
   Message,
   ErrorWithModuleBoundaryLoggingFunctionType,
-  LoggerFunction} from './types';
-import {
-  Severity,
-  LogLevel
+  LoggerFunction,
 } from './types';
-import {baseErrorLog} from "./loggers";
+import { Severity, LogLevel } from './types';
+import { baseErrorLog } from './loggers';
 
 export const ERROR_LOGGING_SERVICE_IDENTIFIER = Symbol.for('errorLogging');
 
 export const ERROR_WITH_MODULE_BOUNDARY_LOGGING_IDENTIFIER = Symbol.for(
-  'errorWithModuleBoundaryLogging'
+  'errorWithModuleBoundaryLogging',
 );
 
 export function getErrorLoggingContainer(log: LoggerFunction) {
@@ -26,18 +24,18 @@ export function getErrorLoggingContainer(log: LoggerFunction) {
 
 export const getErrorLoggingFunction = (
   logger: LoggerFunction = baseErrorLog,
-  errorBoundaryName?: string
+  errorBoundaryName?: string,
 ): ErrorWithModuleBoundaryLoggingFunctionType => {
   return (e: Message | Error | string) => {
     const message: Message =
       e instanceof Error || typeof e === 'string'
         ? ({
-          message: {
-            error: new Error(e instanceof Error ? e.message : e),
-          },
-          severity: Severity.HIGH,
-          type: LogLevel.ERROR,
-        } as Message)
+            message: {
+              error: new Error(e instanceof Error ? e.message : e),
+            },
+            severity: Severity.HIGH,
+            type: LogLevel.ERROR,
+          } as Message)
         : e;
 
     const messageWithBoundaryName: Message = {
@@ -48,7 +46,7 @@ export const getErrorLoggingFunction = (
           ...message.message.options,
           tags: {
             ...message.message.options?.tags,
-            ...(errorBoundaryName && {boundaryName: errorBoundaryName}),
+            ...(errorBoundaryName && { boundaryName: errorBoundaryName }),
           },
         },
       },

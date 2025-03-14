@@ -8,7 +8,7 @@ type PropsType = Readonly<{
 }>;
 
 /* @private */
-const WildcardPropsPrivate = ({id, content, items}: PropsType) => {
+const WildcardPropsPrivate = ({ id, content, items }: PropsType) => {
   return null;
 };
 

@@ -13,7 +13,7 @@ export function useTranslation(): TranslationServiceType {
     const translate = (
       key: string,
       params?: TranslationParamsType,
-      transChoiceHelper?: { basedOnParam: number }
+      transChoiceHelper?: { basedOnParam: number },
     ) => {
       if (
         transChoiceHelper &&

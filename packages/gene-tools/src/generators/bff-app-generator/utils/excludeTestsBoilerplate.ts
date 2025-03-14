@@ -8,7 +8,7 @@ export const excludeTestsBoilerplate = (tree: Tree) => {
       (path) =>
         path.endsWith('support/app.po.ts') ||
         path.endsWith('integration/app.spec.ts') ||
-        path.endsWith('index.spec.tsx')
+        path.endsWith('index.spec.tsx'),
     );
 
   e2eBoilerplatePaths.forEach((path) => tree.delete(path));

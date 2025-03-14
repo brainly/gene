@@ -1,1 +1,1 @@
-export {useSomeLogic, InvalidModule} from './lib';
+export { useSomeLogic, InvalidModule } from './lib';

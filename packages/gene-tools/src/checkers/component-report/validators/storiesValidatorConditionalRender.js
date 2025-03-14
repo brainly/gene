@@ -2,26 +2,26 @@ const fs = require('fs');
 const path = require('path');
 const jscodeshift = require('jscodeshift');
 
-const {findExpressionDeclaration} = require('../../common/utils/ast');
-const {findPropTypesDeclaration} = require('../../common/utils/components');
+const { findExpressionDeclaration } = require('../../common/utils/ast');
+const { findPropTypesDeclaration } = require('../../common/utils/components');
 
-function getDeclaredProps({truncatedPath}) {
+function getDeclaredProps({ truncatedPath }) {
   const src = fs.readFileSync(`${truncatedPath}.tsx`).toString();
 
   const propsTypeDeclaration = findPropTypesDeclaration(
     src,
-    `${truncatedPath}.tsx`
+    `${truncatedPath}.tsx`,
   );
 
   if (!propsTypeDeclaration) {
     return [];
   }
 
-  const {typeParameters} = propsTypeDeclaration.typeAnnotation;
+  const { typeParameters } = propsTypeDeclaration.typeAnnotation;
 
   const propsMembers = typeParameters ? typeParameters.params[0].members : null;
 
-  return propsMembers ? propsMembers.map(member => member.key.name) : [];
+  return propsMembers ? propsMembers.map((member) => member.key.name) : [];
 }
 
 function recursiveFindLogicalExpressionProps(expression) {
@@ -41,20 +41,20 @@ function recursiveFindLogicalExpressionProps(expression) {
   }
 }
 
-function getExpressionsInView({truncatedPath}) {
+function getExpressionsInView({ truncatedPath }) {
   const src = fs.readFileSync(`${truncatedPath}.tsx`).toString();
 
   const expressions = findExpressionDeclaration(src);
 
   return expressions
-    .map(({test}) => {
+    .map(({ test }) => {
       return recursiveFindLogicalExpressionProps(test);
     })
     .flat()
     .filter(Boolean);
 }
 
-function getPositivePropsFromStories({truncatedPath, declaredProps}) {
+function getPositivePropsFromStories({ truncatedPath, declaredProps }) {
   const src = fs.readFileSync(`${truncatedPath}.stories.tsx`).toString();
 
   const baseName = path.basename(truncatedPath);
@@ -69,8 +69,10 @@ function getPositivePropsFromStories({truncatedPath, declaredProps}) {
   }
 
   return declaredProps
-    .map(item => {
-      const propNodes = ast.find(j.JSXAttribute, {name: {name: item}}).nodes();
+    .map((item) => {
+      const propNodes = ast
+        .find(j.JSXAttribute, { name: { name: item } })
+        .nodes();
 
       return propNodes.length ? propNodes : item;
     })
@@ -150,7 +152,7 @@ function getPositivePropsFromStories({truncatedPath, declaredProps}) {
 
 function getMessagesFromConditionalProps(propsDefs) {
   return Object.keys(propsDefs).reduce((acc, propName) => {
-    const {hasNegative, hasPositive} = propsDefs[propName];
+    const { hasNegative, hasPositive } = propsDefs[propName];
     let message = '';
 
     if (!acc && (!hasNegative || !hasPositive)) {

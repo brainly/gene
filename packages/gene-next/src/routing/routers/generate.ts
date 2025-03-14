@@ -18,7 +18,7 @@ export function useGenerator() {
 
       return url;
     },
-    [translateRoute, originUrl, getRedirect]
+    [translateRoute, originUrl, getRedirect],
   );
 
   return generate;

@@ -27,7 +27,7 @@ const splitMapAccesses = R.reduce((mapAccesses, accessMember) => {
 
 const getFirstNodeArgument = R.path(['arguments', 0]);
 const isNodeArgumentExisting = R.pipe(getFirstNodeArgument, R.isNil, R.not);
-const getNodeArgumentValueOrName = node => {
+const getNodeArgumentValueOrName = (node) => {
   if (node.type === 'Identifier') {
     return node.name;
   }
@@ -37,12 +37,12 @@ const getNodeArgumentValueOrName = node => {
 
 const getLengthAssertionArguments = R.pipe(
   R.filter(isNodeArgumentExisting),
-  R.map(R.pipe(getFirstNodeArgument, getNodeArgumentValueOrName))
+  R.map(R.pipe(getFirstNodeArgument, getNodeArgumentValueOrName)),
 );
 
 const getMapAccesses = R.map(R.prop('name'));
 
-const parseForCodeInvocationMarkup = code => `\`${code}(...)\``;
+const parseForCodeInvocationMarkup = (code) => `\`${code}(...)\``;
 
 const getMissingMapAccessesMessage = R.pipe(
   splitMapAccesses,
@@ -51,15 +51,15 @@ const getMissingMapAccessesMessage = R.pipe(
   R.map(parseForCodeInvocationMarkup),
   R.join(', '),
   R.concat(
-    'Some lists lengths assertions are missing, use both `.toHaveLength(0)` and `.toHaveLength(n)` for lists: '
-  )
+    'Some lists lengths assertions are missing, use both `.toHaveLength(0)` and `.toHaveLength(n)` for lists: ',
+  ),
 );
 
 /**
  * @description
  * Finds .map() invocation inside JSX expression (`{list.map(...)}`)
  */
-const getMapInvocations = ({src}) => {
+const getMapInvocations = ({ src }) => {
   const ast = j(src);
 
   return ast
@@ -72,12 +72,12 @@ const getMapInvocations = ({src}) => {
     .nodes();
 };
 
-const getListAssertions = src => {
+const getListAssertions = (src) => {
   const ast = j(src);
 
   return ast
     .find(j.CallExpression, {
-      callee: {property: {name: 'toHaveLength'}},
+      callee: { property: { name: 'toHaveLength' } },
     })
     .nodes();
 };
@@ -91,12 +91,12 @@ const isListCovered = R.pipe(
   getLengthAssertionArguments,
   R.both(
     R.any(R.equals(0)),
-    R.any(R.either(lengthAssertion => lengthAssertion > 1, R.is(String)))
-  )
+    R.any(R.either((lengthAssertion) => lengthAssertion > 1, R.is(String))),
+  ),
 );
 
-const getMissingListsCoverage = ({testsSrc, cmpSrc}) => {
-  const mapInvocations = getMapInvocations({src: cmpSrc});
+const getMissingListsCoverage = ({ testsSrc, cmpSrc }) => {
+  const mapInvocations = getMapInvocations({ src: cmpSrc });
 
   if (R.isEmpty(mapInvocations)) {
     return null;
@@ -111,4 +111,4 @@ const getMissingListsCoverage = ({testsSrc, cmpSrc}) => {
   return R.pipe(getMapAccesses, getMissingMapAccessesMessage)(mapInvocations);
 };
 
-module.exports = {getMissingListsCoverage};
+module.exports = { getMissingListsCoverage };

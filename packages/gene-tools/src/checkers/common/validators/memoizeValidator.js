@@ -6,13 +6,13 @@ const {
   findVariableDeclarator,
 } = require('../../common/utils/ast');
 
-const {shouldSkipNextLine} = require('../../common/utils/shouldSkipNextLine');
+const { shouldSkipNextLine } = require('../../common/utils/shouldSkipNextLine');
 
 const {
   GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
 } = require('.././constants/nextLineDisablers');
 
-const {getComponentName} = require('../../common/utils/meta');
+const { getComponentName } = require('../../common/utils/meta');
 
 const j = jscodeshift.withParser('tsx');
 
@@ -23,7 +23,7 @@ function isDeclaredOutsideComponent(componentName, declaration) {
 }
 
 function isMemoized(declaration) {
-  const {init} = declaration;
+  const { init } = declaration;
 
   if (init.type === 'ArrowFunctionExpression') {
     return false;
@@ -34,7 +34,7 @@ function isMemoized(declaration) {
   }
 
   if (init.type === 'CallExpression') {
-    const {callee} = init;
+    const { callee } = init;
 
     if (callee.type === 'Identifier') {
       return (
@@ -63,40 +63,43 @@ function validateMemoization(file) {
   const componentName = getComponentName(ast);
 
   const jsxAttributesCollection = ast.find(j.JSXAttribute, {
-    value: {type: 'JSXExpressionContainer'},
+    value: { type: 'JSXExpressionContainer' },
   });
 
   const styleGuideImportedElements = [];
 
   ast
     .find(j.ImportDeclaration)
-    .filter(path => {
+    .filter((path) => {
       return path.value.source.value === 'brainly-style-guide';
     })
-    .forEach(path => {
+    .forEach((path) => {
       const importedElements = path.value.specifiers.map(
-        el => el.imported.name
+        (el) => el.imported.name,
       );
 
       styleGuideImportedElements.push(...importedElements);
     });
 
   const jsxElementsWithoutStyleGuideElements = jsxAttributesCollection.filter(
-    element => {
+    (element) => {
       if (styleGuideImportedElements.length) {
         return !styleGuideImportedElements.includes(
-          element.parentPath.parentPath.value.name.name
+          element.parentPath.parentPath.value.name.name,
         );
       }
 
       return true;
-    }
+    },
   );
 
   for (const path of jsxElementsWithoutStyleGuideElements.paths()) {
-    const {name: valueExpressionName, type: valueExpressionType, callee: valueExpressionCallee} =
-      path.node.value.expression;
-    const {name: propName} = path.node.name;
+    const {
+      name: valueExpressionName,
+      type: valueExpressionType,
+      callee: valueExpressionCallee,
+    } = path.node.value.expression;
+    const { name: propName } = path.node.name;
 
     const arrayOfLines = path.node.loc.lines.infos;
     const lineNumberToCheck = path.node.loc.start.line;
@@ -108,7 +111,7 @@ function validateMemoization(file) {
     const skipNextLine = shouldSkipNextLine(
       arrayOfLines,
       lineNumberToCheck,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
     );
 
     if (skipNextLine.error) {
@@ -150,7 +153,7 @@ function validateMemoization(file) {
 
     const functionDeclaration = findFunctionDeclaration(
       path,
-      valueExpressionName
+      valueExpressionName,
     );
 
     if (functionDeclaration) {
@@ -162,7 +165,7 @@ function validateMemoization(file) {
 
     const variableDeclarator = findVariableDeclarator(
       path,
-      valueExpressionName
+      valueExpressionName,
     );
 
     if (!variableDeclarator) {
@@ -173,7 +176,7 @@ function validateMemoization(file) {
     const skipVariableDeclarator = shouldSkipNextLine(
       arrayOfLines,
       variableDeclarator.node.loc.start.line,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
     );
 
     if (skipVariableDeclarator.error) {
@@ -195,7 +198,7 @@ function validateMemoization(file) {
     }
   }
 
-  return {valid: true};
+  return { valid: true };
 }
 
-module.exports = {validateMemoization};
+module.exports = { validateMemoization };

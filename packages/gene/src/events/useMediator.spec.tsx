@@ -1,18 +1,18 @@
 import React from 'react';
 
-import {useMediator} from './useMediator';
-import {dispatch} from './dispatchBubbleEvent';
-import {render, screen, fireEvent} from '@testing-library/react';
+import { useMediator } from './useMediator';
+import { dispatch } from './dispatchBubbleEvent';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 function DummyComponent() {
   function handleClick(e: any) {
-    dispatch(e.target, ['ON_CLICK', {foo: 'bar'}]);
+    dispatch(e.target, ['ON_CLICK', { foo: 'bar' }]);
   }
 
   return <a onClick={handleClick}>Click me</a>;
 }
 
-function DummyMediator({handler}: any) {
+function DummyMediator({ handler }: any) {
   const ref = React.useRef(null);
 
   useMediator('ON_CLICK', handler, ref);
@@ -24,14 +24,14 @@ function DummyMediator({handler}: any) {
   );
 }
 
-function HandlerChangeMediatorWrapper({handler}: any) {
+function HandlerChangeMediatorWrapper({ handler }: any) {
   const [answer, setAnswer] = React.useState(42);
 
   function increment() {
-    setAnswer(a => a + 1);
+    setAnswer((a) => a + 1);
   }
 
-  function modifiedHandler({type, payload}: any) {
+  function modifiedHandler({ type, payload }: any) {
     handler({
       type,
       payload: {
@@ -60,7 +60,7 @@ describe('useMediator()', () => {
     expect(mockHandler).toBeCalledTimes(1);
     expect(mockHandler).toBeCalledWith({
       type: 'ON_CLICK',
-      payload: {foo: 'bar'},
+      payload: { foo: 'bar' },
     });
   });
 
@@ -87,7 +87,7 @@ describe('useMediator()', () => {
     expect(mockHandler).toBeCalledTimes(1);
     expect(mockHandler).toHaveBeenLastCalledWith({
       type: 'ON_CLICK',
-      payload: {answer: 42, foo: 'bar'},
+      payload: { answer: 42, foo: 'bar' },
     });
 
     fireEvent.click(screen.getByText('Increment'));
@@ -96,7 +96,7 @@ describe('useMediator()', () => {
     expect(mockHandler).toBeCalledTimes(2);
     expect(mockHandler).toHaveBeenLastCalledWith({
       type: 'ON_CLICK',
-      payload: {answer: 43, foo: 'bar'},
+      payload: { answer: 43, foo: 'bar' },
     });
   });
 });

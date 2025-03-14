@@ -22,10 +22,10 @@ import {
  * Do not use this. Regenerate the service with the new version of Gene.
  */
 export function useApolloObservableQuery<TData, TVariables>(
-  observable: ObservableQuery<TData, TVariables>
+  observable: ObservableQuery<TData, TVariables>,
 ) {
   const { $routeChanged } = useInjection<RouterIocType>(
-    ROUTER_SERVICE_IDENTIFIER
+    ROUTER_SERVICE_IDENTIFIER,
   )();
 
   /**
@@ -37,7 +37,7 @@ export function useApolloObservableQuery<TData, TVariables>(
     ApolloQueryResult<TData> & RouterEvent
   >;
   const response = useObservableQuery<ApolloQueryResult<TData> & RouterEvent>(
-    newObservable
+    newObservable,
   );
 
   const isRouterEvent = response?.type === 'routeChangeComplete';
@@ -48,12 +48,12 @@ export function useApolloObservableQuery<TData, TVariables>(
     ...transformApolloResponse<TData>(
       isServerValueOrRouterEventOrObservableValueIsEmpty
         ? observable.getCurrentResult()
-        : response
+        : response,
     ),
     refetch: async (variables?: TVariables) => observable.refetch(variables),
     fetchMore: async (
       variables: FetchMoreQueryOptions<TVariables, TData> &
-        FetchMoreOptions<TData, TVariables>
+        FetchMoreOptions<TData, TVariables>,
     ) => observable.fetchMore(variables),
   };
 }

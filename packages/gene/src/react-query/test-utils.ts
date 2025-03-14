@@ -13,7 +13,7 @@ import type { ExampleResponse, ExamplePaginatedResponse } from '../services';
  */
 export function createTestObservable(
   variables: { foo: number } = { foo: 1 },
-  client?: QueryClient
+  client?: QueryClient,
 ) {
   const _client = client || new QueryClient();
   return getReactQueryObservable(_client, {
@@ -21,7 +21,7 @@ export function createTestObservable(
     retry: false,
     queryFn: () =>
       reactQueryFetchWrapper<ExampleResponse>(() =>
-        fetch(`https://jsonplaceholder.typicode.com/todos/${variables.foo}`)
+        fetch(`https://jsonplaceholder.typicode.com/todos/${variables.foo}`),
       ),
     staleTime: 500,
   });
@@ -40,7 +40,7 @@ export function createPaginatedTestObservable() {
     retry: false,
     queryFn: () =>
       reactQueryFetchWrapper<ExamplePaginatedResponse>(() =>
-        fetch(`https://jsonplaceholder.typicode.com/todos/1`)
+        fetch(`https://jsonplaceholder.typicode.com/todos/1`),
       ),
     getNextPageParam: (lastPage) => {
       return lastPage.data.page + 1;

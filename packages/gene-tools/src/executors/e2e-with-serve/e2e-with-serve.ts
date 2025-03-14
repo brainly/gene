@@ -1,11 +1,5 @@
-import type {
-  ExecutorContext,
-  Target} from '@nx/devkit';
-import {
-  logger,
-  parseTargetString,
-  runExecutor
-} from '@nx/devkit';
+import type { ExecutorContext, Target } from '@nx/devkit';
+import { logger, parseTargetString, runExecutor } from '@nx/devkit';
 
 import type { ServeOptions } from '../utilities/server';
 import { createProxy } from '../utilities/server';
@@ -34,7 +28,7 @@ const runTests = async ({
     {
       watch,
     },
-    context
+    context,
   )) {
     success = resultInner.success;
 
@@ -50,7 +44,7 @@ const runTests = async ({
 
 const shutDownAfterTests = (
   server: Server | undefined,
-  childProcess?: { kill?: () => void }
+  childProcess?: { kill?: () => void },
 ) => {
   if (server) {
     server.close();
@@ -63,7 +57,7 @@ const shutDownAfterTests = (
 
 export async function e2eAppTestsExecutor(
   options: serveExecutorOptions,
-  context: ExecutorContext
+  context: ExecutorContext,
 ) {
   const serveTarget = parseTargetString(options.serve);
   const e2eTestsTargets = options.e2eTests.map(parseTargetString);
@@ -71,7 +65,7 @@ export async function e2eAppTestsExecutor(
   // @ts-expect-error
   if (options.cypressConfig) {
     throw new Error(
-      'cannot use cypressConfig as a cli flag. Declare cypressConfig in project.json'
+      'cannot use cypressConfig as a cli flag. Declare cypressConfig in project.json',
     );
   }
 
@@ -80,11 +74,11 @@ export async function e2eAppTestsExecutor(
   for await (const { success: serveSuccess, childProcess } of await runExecutor(
     serveTarget,
     options.serveOptions || {},
-    context
+    context,
   )) {
     if (!serveSuccess) {
       logger.error(
-        `Failed to run target ${serveTarget.target} for project ${serveTarget.project}`
+        `Failed to run target ${serveTarget.target} for project ${serveTarget.project}`,
       );
       return { success: false };
     }

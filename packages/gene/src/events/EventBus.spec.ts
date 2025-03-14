@@ -1,5 +1,5 @@
-import type { AbstractEventBusEventType} from './EventBus';
-import {register, emit} from './EventBus';
+import type { AbstractEventBusEventType } from './EventBus';
+import { register, emit } from './EventBus';
 
 describe('Test EventBus Core Features', () => {
   const eventType1 = 'testEvent1';
@@ -12,20 +12,20 @@ describe('Test EventBus Core Features', () => {
     let count = 0;
 
     const subscription = register(
-      {type: eventType1},
+      { type: eventType1 },
       (value: AbstractEventBusEventType) => {
         count++;
         expect(value.payload).toBe(eventPayload);
-      }
+      },
     );
     const subscription2 = register(
-      {type: eventType1},
+      { type: eventType1 },
       (value: AbstractEventBusEventType) => {
         count++;
         expect(value.payload).toBe(eventPayload);
-      }
+      },
     );
-    const subscription3 = register({type: 'different-event'}, () => count++);
+    const subscription3 = register({ type: 'different-event' }, () => count++);
 
     emit({
       type: eventType1,
@@ -43,8 +43,8 @@ describe('Test EventBus Core Features', () => {
   it('should remove the listener', () => {
     let count = 0;
 
-    const subscription = register({type: eventType1}, () => count++);
-    const subscription2 = register({type: eventType1}, () => count++);
+    const subscription = register({ type: eventType1 }, () => count++);
+    const subscription2 = register({ type: eventType1 }, () => count++);
 
     subscription.unsubscribe();
 
@@ -72,8 +72,8 @@ describe('Test EventBus Core Features', () => {
   it('should remove only listeners related with subscription', () => {
     let count = 0;
 
-    const subscription = register({type: eventType1}, () => count++);
-    const subscription2 = register({type: eventType1}, () => count++);
+    const subscription = register({ type: eventType1 }, () => count++);
+    const subscription2 = register({ type: eventType1 }, () => count++);
 
     subscription.unsubscribe();
     subscription.unsubscribe();
@@ -104,11 +104,11 @@ describe('Test EventBus Core Features', () => {
   it('should broadcast events to all subscriptions (even if listener is removed after first emit for one subscription)', () => {
     let count = 0;
 
-    const subscription = register({type: eventType1}, () => {
+    const subscription = register({ type: eventType1 }, () => {
       subscription.unsubscribe();
       count++;
     });
-    const subscription2 = register({type: eventType1}, () => count++);
+    const subscription2 = register({ type: eventType1 }, () => count++);
 
     emit({
       type: eventType1,
@@ -122,11 +122,11 @@ describe('Test EventBus Core Features', () => {
     cleanSubscriptions([subscription2]);
   });
 
-  it('should register a listener and receive a promise', done => {
+  it('should register a listener and receive a promise', (done) => {
     let count = 0;
 
     const subscription = register(
-      {type: asyncEventType},
+      { type: asyncEventType },
       (value: AbstractEventBusEventType) => {
         count++;
         expect(count).toBe(1);
@@ -134,7 +134,7 @@ describe('Test EventBus Core Features', () => {
         expect(value.payload).toBe(asyncEventPayload);
         cleanSubscriptions([subscription]);
         done();
-      }
+      },
     );
 
     const asyncEvent = createAsyncEvent({
@@ -148,7 +148,7 @@ describe('Test EventBus Core Features', () => {
   it('should remove the listener for async event', () => {
     let count = 0;
 
-    const subscription = register({type: asyncEventType}, () => count++);
+    const subscription = register({ type: asyncEventType }, () => count++);
 
     subscription.unsubscribe();
 
@@ -161,14 +161,14 @@ describe('Test EventBus Core Features', () => {
     expect(subscription.closed).toBe(true);
   });
 
-  function cleanSubscriptions(subscriptions: {unsubscribe: () => void}[]) {
-    subscriptions.forEach(sub => sub.unsubscribe());
+  function cleanSubscriptions(subscriptions: { unsubscribe: () => void }[]) {
+    subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   function createAsyncEvent(
-    event: AbstractEventBusEventType
+    event: AbstractEventBusEventType,
   ): Promise<AbstractEventBusEventType> {
-    return new Promise<AbstractEventBusEventType>(resolve => {
+    return new Promise<AbstractEventBusEventType>((resolve) => {
       setTimeout(() => {
         resolve(event);
       }, 10);

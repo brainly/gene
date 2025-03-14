@@ -33,7 +33,7 @@ describe('getUnnecessaryMocks', () => {
     `;
     const result = getUnnecessaryMocks({ testsSrc });
     expect(result).toBe(
-      'There are unnecessary mocks on modules: `@brainly-gene/core`'
+      'There are unnecessary mocks on modules: `@brainly-gene/core`',
     );
   });
 
@@ -50,7 +50,7 @@ describe('getUnnecessaryMocks', () => {
     `;
     const result = getUnnecessaryMocks({ testsSrc });
     expect(result).toBe(
-      'There are unnecessary mocks on modules: `@brainly-gene/core`'
+      'There are unnecessary mocks on modules: `@brainly-gene/core`',
     );
   });
 });

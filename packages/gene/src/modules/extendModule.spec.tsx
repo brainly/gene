@@ -6,7 +6,6 @@ import { extendGeneModule } from './extendModule';
 import { ModuleComponentType } from './types';
 import { createGeneModule } from './createModule';
 
-
 describe('extendModule', () => {
   const parentModuleComponent = () => (
     <div data-testid="parent-module">parent module</div>
@@ -18,10 +17,7 @@ describe('extendModule', () => {
   });
 
   it('should properly extend a module with no module component definition', () => {
-    const ChildModule = extendGeneModule(
-      defaultParentModule.declarations,
-      {}
-    );
+    const ChildModule = extendGeneModule(defaultParentModule.declarations, {});
 
     expect(ChildModule).not.toBeNull();
 

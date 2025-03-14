@@ -4,7 +4,7 @@ const jscodeshift = require('jscodeshift');
 
 const j = jscodeshift.withParser('tsx');
 
-const {findVariableDeclarator} = require('../../common/utils/ast');
+const { findVariableDeclarator } = require('../../common/utils/ast');
 const {
   getListsFromStories,
   getDeclaredLists,
@@ -17,7 +17,7 @@ const {
   getMessagesFromConditionalProps,
 } = require('./storiesValidatorConditionalRender');
 
-function getDeclaredEvents({truncatedPath}) {
+function getDeclaredEvents({ truncatedPath }) {
   const eventDeclarationPath = `${truncatedPath}EventsType.ts`;
 
   if (!fs.existsSync(eventDeclarationPath)) {
@@ -32,7 +32,7 @@ function getDeclaredEvents({truncatedPath}) {
 
   const eventExport = ast
     .find(j.ExportNamedDeclaration, {
-      declaration: {id: {name: `${baseName}EventsType`}},
+      declaration: { id: { name: `${baseName}EventsType` } },
     })
     .nodes()[0];
 
@@ -40,12 +40,12 @@ function getDeclaredEvents({truncatedPath}) {
     throw new Error(`${baseName}EventsType enum not found`);
   }
 
-  const declaredEvents = eventExport.declaration.members.map(m => m.id.name);
+  const declaredEvents = eventExport.declaration.members.map((m) => m.id.name);
 
   return declaredEvents;
 }
 
-function getEventsFromStories({truncatedPath}) {
+function getEventsFromStories({ truncatedPath }) {
   const storybookPath = `${truncatedPath}.stories.tsx`;
 
   if (!fs.existsSync(storybookPath)) {
@@ -66,7 +66,7 @@ function getEventsFromStories({truncatedPath}) {
   }
 
   const eventListExpression = storybookMediator.openingElement.attributes.find(
-    a => a.name.name === 'events'
+    (a) => a.name.name === 'events',
   ).value.expression;
 
   if (
@@ -78,7 +78,7 @@ function getEventsFromStories({truncatedPath}) {
 
   if (eventListExpression.type !== 'Identifier') {
     throw new Error(
-      `events prop should have type Identifier (found ${eventListExpression.type})`
+      `events prop should have type Identifier (found ${eventListExpression.type})`,
     );
   }
 
@@ -86,33 +86,33 @@ function getEventsFromStories({truncatedPath}) {
 
   const eventList = findVariableDeclarator(
     storybookMediatorCollection.paths()[0],
-    eventListVariableName
+    eventListVariableName,
   );
 
   const events = eventList.node.init.elements.map(
-    e => e.properties[0].value.property.name
+    (e) => e.properties[0].value.property.name,
   );
 
   return events;
 }
 
-function validateStories({truncatedPath}) {
+function validateStories({ truncatedPath }) {
   try {
-    const declaredEvents = new Set(getDeclaredEvents({truncatedPath}));
+    const declaredEvents = new Set(getDeclaredEvents({ truncatedPath }));
 
-    const eventsInStories = new Set(getEventsFromStories({truncatedPath}));
+    const eventsInStories = new Set(getEventsFromStories({ truncatedPath }));
 
-    const declaredLists = getDeclaredLists({truncatedPath});
+    const declaredLists = getDeclaredLists({ truncatedPath });
     const listsPropsFromStories = getListsFromStories({
       truncatedPath,
       declaredLists,
     });
 
-    const declaredProps = getDeclaredProps({truncatedPath});
-    const declaredExpressions = getExpressionsInView({truncatedPath});
+    const declaredProps = getDeclaredProps({ truncatedPath });
+    const declaredExpressions = getExpressionsInView({ truncatedPath });
 
-    const declaredConditionalPropsInComponent = declaredProps.filter(prop =>
-      declaredExpressions.includes(prop)
+    const declaredConditionalPropsInComponent = declaredProps.filter((prop) =>
+      declaredExpressions.includes(prop),
     );
 
     const declaredConditionalPropsFromStories = getPositivePropsFromStories({
@@ -120,11 +120,11 @@ function validateStories({truncatedPath}) {
       declaredProps: declaredConditionalPropsInComponent,
     });
 
-    const diff = [...declaredEvents].filter(e => !eventsInStories.has(e));
+    const diff = [...declaredEvents].filter((e) => !eventsInStories.has(e));
 
     const listPropMessages = getMessagesFromListProps(listsPropsFromStories);
     const conditionalPropMessages = getMessagesFromConditionalProps(
-      declaredConditionalPropsFromStories
+      declaredConditionalPropsFromStories,
     );
 
     if (diff.length !== 0) {
@@ -150,10 +150,10 @@ function validateStories({truncatedPath}) {
       };
     }
 
-    return {valid: true};
+    return { valid: true };
   } catch (e) {
-    return {valid: false, error: `Validation error: ${e.message}`};
+    return { valid: false, error: `Validation error: ${e.message}` };
   }
 }
 
-module.exports = {validateStories};
+module.exports = { validateStories };

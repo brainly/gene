@@ -11,7 +11,7 @@ interface PropsType<TData, TVariables> {
   apolloClient: ApolloClient<NormalizedCacheObject>;
   queryFn: (
     client: ApolloClient<NormalizedCacheObject>,
-    variables: TVariables
+    variables: TVariables,
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
@@ -43,7 +43,7 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
         const apolloResponse = await queryFn(apolloClient, variables || {});
 
         const transformedData = transformApolloResponse<TData, TVariables>(
-          apolloResponse
+          apolloResponse,
         );
 
         setQueryResults(transformedData);
@@ -73,11 +73,11 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
         return transformedData;
       }
     },
-    []
+    [],
   );
 
   return React.useMemo(
     () => ({ ...queryResults, fetch }),
-    [fetch, queryResults]
+    [fetch, queryResults],
   );
 }

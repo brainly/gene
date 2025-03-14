@@ -1,4 +1,4 @@
-import type {BrainlyCoreModuleGenerator} from '../schema';
+import type { BrainlyCoreModuleGenerator } from '../schema';
 
 export const resolveTags = (schema: BrainlyCoreModuleGenerator) => {
   if (!schema.tags) {

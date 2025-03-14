@@ -55,7 +55,7 @@ describe('useApolloObservableQuery', () => {
       () => useApolloObservableQuery(queryObservable),
       {
         wrapper: ContainerWrapper,
-      }
+      },
     );
 
     expect(result.current.error).toBe(null);
@@ -91,7 +91,7 @@ describe('useApolloObservableQuery', () => {
       () => useApolloObservableQuery(queryObservable),
       {
         wrapper: ContainerWrapper,
-      }
+      },
     );
 
     // test refetch works correctly
@@ -119,7 +119,7 @@ describe('useApolloObservableQuery', () => {
       () => useApolloObservableQuery(queryObservable),
       {
         wrapper: ContainerWrapper,
-      }
+      },
     );
 
     // test fetchMore works correctly

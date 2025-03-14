@@ -1,4 +1,4 @@
-const {generateComponentReport} = require('./index');
+const { generateComponentReport } = require('./index');
 const path = require('path');
 
 const pathPrefix = path.resolve(__dirname, 'mocks');
@@ -9,7 +9,7 @@ describe('generateComponentReport()', () => {
     SomeComponent.tsx    |       0 |        0 |       0 |       0 |
     ValidProps.tsx      |       10 |       20 |      30 |      40 |`;
 
-    const {report} = generateComponentReport({
+    const { report } = generateComponentReport({
       files: [path.resolve(__dirname, 'mocks/components/ValidProps.tsx')],
       pathPrefix,
       jestOutput,
@@ -24,7 +24,7 @@ compose(React.memo)(ValidProps) | :red_circle: | :red_circle: | :white_check_mar
   });
 
   it('renders error as string', () => {
-    const {report} = generateComponentReport({
+    const { report } = generateComponentReport({
       files: [path.resolve(__dirname, 'mocks/components/CallbackProp.tsx')],
       pathPrefix,
       jestOutput: '',
@@ -39,7 +39,7 @@ compose(React.memo)(CallbackProp) | :red_circle: | :red_circle: | :white_check_m
   });
 
   it('handles no components provided', () => {
-    const {report} = generateComponentReport({
+    const { report } = generateComponentReport({
       files: [path.resolve(__dirname, 'mocks/components/someUtil.ts')],
       pathPrefix,
     });
@@ -50,7 +50,7 @@ compose(React.memo)(CallbackProp) | :red_circle: | :red_circle: | :white_check_m
   });
 
   it('handles errors', () => {
-    const {report} = generateComponentReport({
+    const { report } = generateComponentReport({
       files: [path.resolve(__dirname, 'mocks/components/SomeType.tsx')],
       pathPrefix,
     });
@@ -62,14 +62,14 @@ Name | Specs | Stories | SCSS | Test coverage | Props | Memo | Events
 ## Errors
 * Could not process ${path.resolve(
       __dirname,
-      'mocks/components/SomeType.tsx'
+      'mocks/components/SomeType.tsx',
     )}: No default export found`;
 
     expect(report).toEqual(expectedResult);
   });
 
   it('handles private components that dont have tests', () => {
-    const {report} = generateComponentReport({
+    const { report } = generateComponentReport({
       files: [
         path.resolve(__dirname, 'mocks/components/CallbackPropPrivate.tsx'),
       ],

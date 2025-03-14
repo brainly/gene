@@ -51,11 +51,11 @@ const getVersions = (packages, source) => {
 const allVersions = {
   dependencies: getVersions(
     dependenciesData.dependencies || [],
-    rootPackageData
+    rootPackageData,
   ),
   devDependencies: getVersions(
     dependenciesData.devDependencies || [],
-    rootPackageData
+    rootPackageData,
   ),
 };
 

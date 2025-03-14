@@ -1,4 +1,4 @@
-const {getComponentMetadata} = require('./meta');
+const { getComponentMetadata } = require('./meta');
 
 describe('getComponentMetadata()', () => {
   it('extracts exported component name', () => {

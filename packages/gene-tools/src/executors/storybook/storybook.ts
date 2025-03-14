@@ -10,7 +10,7 @@ export interface SecureServeExecutorOptions {
 
 export async function storybookExecutor(
   options: SecureServeExecutorOptions,
-  context: ExecutorContext
+  context: ExecutorContext,
 ) {
   if (!context.projectName) {
     return {
@@ -29,7 +29,7 @@ export async function storybookExecutor(
     {
       env: { ...process.env, NODE_OPTIONS: '--openssl-legacy-provider' },
       shell: true,
-    }
+    },
   );
 
   let success = false;

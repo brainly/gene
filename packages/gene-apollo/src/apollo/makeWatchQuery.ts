@@ -8,7 +8,7 @@ import type {
 
 async function maybeWarmUpCache<TQuery, TVariables>(
   watchQuery: ObservableQuery<TQuery, TVariables>,
-  queryFn: () => Promise<ApolloQueryResult<TQuery>>
+  queryFn: () => Promise<ApolloQueryResult<TQuery>>,
 ) {
   watchQuery.result().then((results) => {
     /**
@@ -42,7 +42,7 @@ export function makeWatchQuery<TQuery, TVariables>({
   options: WatchQueryOptions<TVariables, TQuery>;
   queryFn: (
     client: ApolloClient<NormalizedCacheObject>,
-    variables: TVariables
+    variables: TVariables,
   ) => Promise<ApolloQueryResult<TQuery>>;
   ssr?: boolean;
 }) {
@@ -57,7 +57,7 @@ export function makeWatchQuery<TQuery, TVariables>({
   });
 
   maybeWarmUpCache(watchQuery, () =>
-    queryFn(client, options.variables as TVariables)
+    queryFn(client, options.variables as TVariables),
   );
 
   return watchQuery;

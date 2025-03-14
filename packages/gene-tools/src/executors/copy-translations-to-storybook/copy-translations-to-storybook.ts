@@ -10,14 +10,14 @@ async function executor(options: any, context: { root: any; workspace: any }) {
 
   if (!workspace.projects[translationsProject]) {
     throw new Error(
-      `Project "${translationsProject}" not found in workspace. You can generate it using "nx g @brainly-gene/tools:translations-library".`
+      `Project "${translationsProject}" not found in workspace. You can generate it using "nx g @brainly-gene/tools:translations-library".`,
     );
   }
 
   const from = join(
     appRootPath,
     workspace.projects[translationsProject].sourceRoot,
-    'locales'
+    'locales',
   );
 
   const to = toAbsolute('.storybook/assets/locales');

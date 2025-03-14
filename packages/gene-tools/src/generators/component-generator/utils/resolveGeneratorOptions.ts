@@ -5,7 +5,7 @@ import { join } from 'path';
 
 type SchemaPropertiesEntryType<TSchemaType> = [
   keyof TSchemaType,
-  SchemaPropertyType
+  SchemaPropertyType,
 ];
 
 type MinimaSchemaType<TPromptsProfile> = Readonly<{
@@ -88,8 +88,7 @@ export async function getUserPromptInput({
 export const getElementFileContent = (opts: FileUtilsInputOptsType) => {
   const { filePath } = opts;
 
-  const fileContent = readFileSync(join(__dirname, filePath))
-    .toString();
+  const fileContent = readFileSync(join(__dirname, filePath)).toString();
 
   return {
     ...opts,
@@ -108,12 +107,12 @@ const getSchemaPropertiesEntries = pipe(
   prop('fileContent'),
   bind(JSON.parse, JSON),
   prop('properties'),
-  toPairs as any
+  toPairs as any,
 );
 
 const isPropertyIncludedInPromptsProfile = <
   TPromptsProfile extends string,
-  TSchemaType extends MinimaSchemaType<TPromptsProfile>
+  TSchemaType extends MinimaSchemaType<TPromptsProfile>,
 >({
   promptsProfile,
   promptsProfileMapping,
@@ -138,7 +137,7 @@ const isPropertyIncludedInPromptsProfile = <
 
 const resolveOption = async <
   TPromptsProfile extends string,
-  TSchemaType extends MinimaSchemaType<TPromptsProfile>
+  TSchemaType extends MinimaSchemaType<TPromptsProfile>,
 >({
   schemaPropEntry,
   promptsProfile,
@@ -202,7 +201,7 @@ const resolveOption = async <
 
 const resolveAllOptions = async <
   TPromptsProfile extends string,
-  TSchemaType extends MinimaSchemaType<TPromptsProfile>
+  TSchemaType extends MinimaSchemaType<TPromptsProfile>,
 >({
   schemaPropertiesEntries,
   initialOptions,
@@ -226,7 +225,7 @@ const resolveAllOptions = async <
         promptsProfile,
         promptsProfileMapping,
         defaultValueKey,
-      })) as SchemaPropertiesEntryType<TSchemaType>
+      })) as SchemaPropertiesEntryType<TSchemaType>,
     );
   }
 
@@ -239,7 +238,7 @@ const resolveAllOptions = async <
 
 export const resolveGeneratorOptions = async <
   TPromptsProfile extends string,
-  TSchemaType extends MinimaSchemaType<TPromptsProfile>
+  TSchemaType extends MinimaSchemaType<TPromptsProfile>,
 >({
   initialOptions,
   promptsProfileMapping,
@@ -275,7 +274,7 @@ export const resolveGeneratorOptions = async <
     };
   } catch (e: any) {
     throw new Error(
-      `Failed to gather user options with error: ${e.message || e}`
+      `Failed to gather user options with error: ${e.message || e}`,
     );
   }
 };

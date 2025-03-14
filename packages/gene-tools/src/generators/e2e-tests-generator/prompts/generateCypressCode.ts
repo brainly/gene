@@ -8,7 +8,7 @@ const getCypressCodeReflectionPrompt = (
   cypressExamples: string,
   storybookData: string,
   considerations?: string,
-  error?: string
+  error?: string,
 ) => `
 Your task is to reflect on the <OUTPUT> according to <ORIGINAL PROMPT>.
 Return improved <OUTPUT> according to <ORIGINAL PROMPT> instruction and <CONSIDERATIONS>.
@@ -30,7 +30,7 @@ ${getCypressCodePrompt(
   gherkinScenarios,
   dictionaryOfElements,
   cypressExamples,
-  storybookData
+  storybookData,
 )}
 `;
 
@@ -38,7 +38,7 @@ const getCypressCodePrompt = (
   gherkinScenarios: string,
   dictionaryOfElements: string,
   cypressExamples: string,
-  storybookData: string
+  storybookData: string,
 ) => `
 <ROLE>: You are an expert in quality assurance and you are working on writing E2E test in Cypress based on given Gherkin Scenarios.
 
@@ -173,7 +173,7 @@ const generateCypressCode = async (
   openai: OpenAIApi,
   gherkinScenarios: string,
   dictionaryOfElements: string,
-  storybookData: string
+  storybookData: string,
 ): Promise<string> => {
   const completion = await openai.createChatCompletion({
     model: 'gpt-4-0613',
@@ -184,7 +184,7 @@ const generateCypressCode = async (
           gherkinScenarios,
           dictionaryOfElements,
           cypressExamples,
-          storybookData
+          storybookData,
         ),
       },
     ],
@@ -220,7 +220,7 @@ const reflectOnCypressCode = async (
   previousContent: string,
   storybookData: string,
   considerations?: string,
-  errors?: string
+  errors?: string,
 ): Promise<string> => {
   const reflectionCompletion = await openai.createChatCompletion({
     model: 'gpt-4-0613',
@@ -231,7 +231,7 @@ const reflectOnCypressCode = async (
           gherkinScenarios,
           dictionaryOfElements,
           cypressExamples,
-          storybookData
+          storybookData,
         ),
       },
       { role: 'assistant', content: previousContent },
@@ -244,7 +244,7 @@ const reflectOnCypressCode = async (
           cypressExamples,
           storybookData,
           considerations,
-          errors
+          errors,
         ),
       },
     ],

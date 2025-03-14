@@ -48,5 +48,5 @@ export function findModuleComponents(dirPath: string): string[] {
 
   return tsxFiles
     .filter(containsModuleComponent)
-    .map(filePath => filePath.replace(dirPath + '/', ''));
+    .map((filePath) => filePath.replace(dirPath + '/', ''));
 }

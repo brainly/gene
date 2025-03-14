@@ -3,7 +3,7 @@ import type { BrainlyNextJSAppGenerator } from '../schema';
 
 export const maybeExcludeRewrites = (
   tree: Tree,
-  schema: BrainlyNextJSAppGenerator
+  schema: BrainlyNextJSAppGenerator,
 ) => {
   if (!schema.rewrites) {
     const rewriteFilePath = tree
@@ -11,7 +11,7 @@ export const maybeExcludeRewrites = (
       .map(({ path }) => path)
       .find(
         (path) =>
-          path.endsWith('rewrites.json') || path.endsWith('loadRewrites.js')
+          path.endsWith('rewrites.json') || path.endsWith('loadRewrites.js'),
       );
 
     if (rewriteFilePath) {

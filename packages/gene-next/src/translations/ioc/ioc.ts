@@ -2,7 +2,6 @@ import { Container } from 'inversify';
 import type { TranslationServiceType } from '../types';
 import { useTranslation } from '../translators/react-i18n';
 
-
 export const TRANSLATION_SERVICE_IDENTIFIER = Symbol.for('translation');
 export const REACT_I18_NEXT = Symbol.for('reacti18next');
 
@@ -13,7 +12,7 @@ export type TranslationIocType = () => TranslationServiceType;
 const translators = new Map([[REACT_I18_NEXT, () => useTranslation()]]);
 
 function getTranslator(
-  translator: TranslatorTypes
+  translator: TranslatorTypes,
 ): () => TranslationServiceType {
   return translators.get(translator) || (() => useTranslation());
 }

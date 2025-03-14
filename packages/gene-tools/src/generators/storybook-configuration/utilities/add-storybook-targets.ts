@@ -1,5 +1,4 @@
-import type {
-  Tree} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   readProjectConfiguration,
   updateProjectConfiguration,
@@ -8,7 +7,7 @@ import type { NormalizedOptions } from '../schema';
 
 export function addStorybookTargets(
   tree: Tree,
-  options: NormalizedOptions
+  options: NormalizedOptions,
 ): void {
   const projectConfig = readProjectConfiguration(tree, options.name);
 

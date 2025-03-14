@@ -2,11 +2,9 @@ import type {
   InfiniteQueryObserverOptions,
   QueryClient,
   QueryObserverOptions,
-  QueryKey} from '@tanstack/react-query';
-import {
-  InfiniteQueryObserver,
-  QueryObserver
+  QueryKey,
 } from '@tanstack/react-query';
+import { InfiniteQueryObserver, QueryObserver } from '@tanstack/react-query';
 
 /**
  *
@@ -16,10 +14,10 @@ import {
 export const getReactQueryObservable = <
   TData = any,
   TError = any,
-  TQueryData = TData
+  TQueryData = TData,
 >(
   client: QueryClient,
-  opts: QueryObserverOptions<TData, TError, TData, TQueryData>
+  opts: QueryObserverOptions<TData, TError, TData, TQueryData>,
 ) => {
   const obs: QueryObserver<TData, TError, TData, TQueryData, QueryKey> =
     new QueryObserver<TData, TError, TData, TQueryData>(client, {
@@ -38,10 +36,10 @@ export const getReactQueryPaginatedObservable = <
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryData = TQueryFnData
+  TQueryData = TQueryFnData,
 >(
   client: QueryClient,
-  opts: InfiniteQueryObserverOptions<TQueryFnData, TError, TData, TQueryData>
+  opts: InfiniteQueryObserverOptions<TQueryFnData, TError, TData, TQueryData>,
 ) => {
   const obs: InfiniteQueryObserver<
     TQueryFnData,
@@ -52,7 +50,7 @@ export const getReactQueryPaginatedObservable = <
     unknown
   > = new InfiniteQueryObserver<TQueryFnData, TError, TData, TQueryData>(
     client,
-    opts
+    opts,
   );
 
   return obs;

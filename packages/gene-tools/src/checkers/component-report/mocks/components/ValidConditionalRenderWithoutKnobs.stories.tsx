@@ -1,6 +1,6 @@
 import React from 'react';
-import {storiesOf} from '@storybook/react';
-import {registerStoryInPackages} from '@brainly-gene/core';
+import { storiesOf } from '@storybook/react';
+import { registerStoryInPackages } from '@brainly-gene/core';
 import ValidConditionalRenderWithoutKnobs from './ValidConditionalRenderWithoutKnobs';
 
 storiesOf(registerStoryInPackages('components/ProgressTrackingItem'), module)

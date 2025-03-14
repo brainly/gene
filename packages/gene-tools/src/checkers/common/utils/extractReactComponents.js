@@ -2,11 +2,11 @@
   Right now we generate reports only for react components
   Regexp: https://regex101.com/r/Vhc8QA/1
 */
-function extractReactComponents({files}) {
+function extractReactComponents({ files }) {
   const truncatedPaths = files
-    .map(file => {
+    .map((file) => {
       const match = file.match(
-        /^(.*\/[A-Z][A-Za-z]+)(\.spec|\.stories)?\.tsx$/
+        /^(.*\/[A-Z][A-Za-z]+)(\.spec|\.stories)?\.tsx$/,
       );
 
       if (match) {
@@ -19,4 +19,4 @@ function extractReactComponents({files}) {
   return [...new Set(truncatedPaths)];
 }
 
-module.exports = {extractReactComponents};
+module.exports = { extractReactComponents };

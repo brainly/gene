@@ -1,11 +1,7 @@
 import { Container } from 'inversify';
 import { useTransformedNextRouter } from '../routing';
-import type {
-  Router,
-  RouterIocType} from '@brainly-gene/core';
-import {
-  ROUTER_SERVICE_IDENTIFIER
-} from '@brainly-gene/core';
+import type { Router, RouterIocType } from '@brainly-gene/core';
+import { ROUTER_SERVICE_IDENTIFIER } from '@brainly-gene/core';
 
 export const NEXT_ROUTER = Symbol.for('nextRouter');
 

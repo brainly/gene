@@ -33,7 +33,5 @@
       "description": "Indicator on whether to add autoprefixer to the module name, based on the application name"
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

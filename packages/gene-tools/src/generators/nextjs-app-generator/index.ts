@@ -1,5 +1,4 @@
-import type {
-  Tree} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   installPackagesTask,
@@ -117,7 +116,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
             },
           ],
         };
-      }
+      },
     );
   }
   await storybookConfigurationGenerator(tree, {

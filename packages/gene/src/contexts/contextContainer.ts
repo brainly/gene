@@ -1,23 +1,19 @@
 import { Container } from 'inversify';
 
-import type {
-  ActionType,
-  AppContextType} from './appContext';
-import {
-  APP_CONTEXT_IDENTIFIER
-} from './appContext';
+import type { ActionType, AppContextType } from './appContext';
+import { APP_CONTEXT_IDENTIFIER } from './appContext';
 import { makeStore } from './makeStore';
 
 export type AppStoreType = Record<string, unknown>;
 
 export type AppReducerType = (
   state: AppStoreType,
-  action: ActionType
+  action: ActionType,
 ) => AppStoreType;
 
 const defaultAppReducer: AppReducerType = (
   state: AppStoreType,
-  action: ActionType
+  action: ActionType,
 ) => {
   switch (action.type) {
     default:
@@ -27,13 +23,13 @@ const defaultAppReducer: AppReducerType = (
 
 export const useAppContextContainer = (
   appInitialState: AppStoreType,
-  appReducer?: AppReducerType
+  appReducer?: AppReducerType,
 ) => {
   const [Provider, useDispatch, useStore] = makeStore<AppStoreType, ActionType>(
     {
       ...appInitialState,
     },
-    appReducer || defaultAppReducer
+    appReducer || defaultAppReducer,
   );
 
   const container = new Container();

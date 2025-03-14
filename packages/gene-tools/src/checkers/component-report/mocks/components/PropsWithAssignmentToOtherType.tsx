@@ -1,5 +1,5 @@
 import React from 'react';
-import {TestImportedInterface} from '../types/TestTypes';
+import { TestImportedInterface } from '../types/TestTypes';
 
 type OneType = TestImportedInterface;
 
@@ -7,7 +7,7 @@ type TwoType = OneType;
 
 type PropsType = TwoType;
 
-const PropsWithInterfaceExtension = ({foo}: PropsType) => {
+const PropsWithInterfaceExtension = ({ foo }: PropsType) => {
   return null;
 };
 

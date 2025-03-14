@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingPrimitives = ({id, content, items}: PropsType) => {
+const PassingPrimitives = ({ id, content, items }: PropsType) => {
   const handler = React.useCallback(() => {
     return null;
   }, []);

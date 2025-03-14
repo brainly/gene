@@ -1,15 +1,10 @@
-import type {
-  Tree} from '@nx/devkit';
-import {
-  generateFiles,
-  joinPathFragments,
-  offsetFromRoot
-} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { generateFiles, joinPathFragments, offsetFromRoot } from '@nx/devkit';
 import type { NormalizedOptions } from '../schema';
 
 export function generateConfigurationFiles(
   tree: Tree,
-  options: NormalizedOptions
+  options: NormalizedOptions,
 ): void {
   generateFiles(
     tree,
@@ -19,6 +14,6 @@ export function generateConfigurationFiles(
       isLibrary: options.isLibrary,
       offsetFromRoot: offsetFromRoot(options.storybookDir),
       tmpl: '',
-    }
+    },
   );
 }

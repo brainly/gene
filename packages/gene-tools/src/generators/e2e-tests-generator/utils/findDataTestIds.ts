@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import type { Literal} from 'jscodeshift';
+import type { Literal } from 'jscodeshift';
 import { withParser } from 'jscodeshift';
 import { sync } from 'glob';
 
@@ -31,7 +31,7 @@ function isFirstLetterCapital(str: string | null) {
 }
 
 async function extractDataTestIdsFromFile(
-  componentPath: string
+  componentPath: string,
 ): Promise<Result[]> {
   const j = withParser('tsx');
   const content = readFileSync(componentPath, 'utf8');
@@ -68,7 +68,7 @@ async function extractDataTestIdsFromFile(
 export function processResults(results: Result[]): Result[] {
   // Filter out components with 'Module' in the name
   const filteredResults = results.filter(
-    (result) => !result.componentName.includes('Module') && !!result.dataTestId
+    (result) => !result.componentName.includes('Module') && !!result.dataTestId,
   );
 
   // Remove duplicates based on dataTestId
@@ -87,7 +87,7 @@ export function processResults(results: Result[]): Result[] {
 
 export async function findDataTestIds(
   componentPath: string,
-  maxDepth = 2
+  maxDepth = 2,
 ): Promise<Result[]> {
   const processedFiles: string[] = [];
   const toProcess: FileToProcess[] = [{ path: componentPath, depth: 0 }];
@@ -136,7 +136,7 @@ export async function findDataTestIds(
           ...componentFiles.map((filePath: string) => ({
             path: filePath,
             depth: currentDepth + 1,
-          }))
+          })),
         );
       }
     });

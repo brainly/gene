@@ -1,4 +1,4 @@
-import type {IncomingMessage} from 'http';
+import type { IncomingMessage } from 'http';
 
 /**
  *
@@ -8,7 +8,7 @@ import type {IncomingMessage} from 'http';
  */
 export function getOriginURL(
   headers?: Record<string, string | string[]>,
-  localhostAddress = 'localhost:4200'
+  localhostAddress = 'localhost:4200',
 ): URL {
   let host = localhostAddress;
   if (headers && headers.host && typeof headers.host === 'string') {
@@ -53,6 +53,6 @@ const ALLOWED_HEADERS = [
 
 export function getRequestHeaders(request?: IncomingMessage) {
   return Object.fromEntries(
-    ALLOWED_HEADERS.map(key => [key, request?.headers[key] || null])
+    ALLOWED_HEADERS.map((key) => [key, request?.headers[key] || null]),
   );
 }

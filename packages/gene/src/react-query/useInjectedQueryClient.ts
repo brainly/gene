@@ -6,6 +6,6 @@ import type { Factory } from '../utils';
 
 export function useInjectedReactQueryClient(): QueryClient {
   return useInjection<Factory>('serviceFactory')(ServiceTypes.reactQuery)(
-    {}
+    {},
   ) as QueryClient;
 }

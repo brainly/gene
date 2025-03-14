@@ -11,6 +11,6 @@ export function generateExecutorFiles(tree: Tree, options: Names): void {
     tree,
     joinPathFragments(__dirname, '../files'),
     joinPathFragments('tools/executors', options.name),
-    { ...options, tmpl: '' }
+    { ...options, tmpl: '' },
   );
 }

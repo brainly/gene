@@ -1,4 +1,4 @@
-import type { Tree} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import { getProjects } from '@nx/devkit';
 
 export const getAllAppKeys = (tree: Tree) => {

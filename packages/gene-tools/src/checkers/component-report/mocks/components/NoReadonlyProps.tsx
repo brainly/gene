@@ -6,7 +6,7 @@ type PropsType = {
   items: Array<unknown>;
 };
 
-const NoReadonlyProps = ({id, content, items}: PropsType) => {
+const NoReadonlyProps = ({ id, content, items }: PropsType) => {
   return null;
 };
 

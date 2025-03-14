@@ -3,10 +3,10 @@ title: Get Started
 ---
 
 import EnlargableContent from '@/components/enlargable-content';
-import { Steps } from 'nextra/components'
+import { Steps } from 'nextra/components';
 import Image from 'next/image';
-import { Cards } from 'nextra/components'
-import { Bleed  } from 'nextra-theme-docs'
+import { Cards } from 'nextra/components';
+import { Bleed } from 'nextra-theme-docs';
 
 # Intro to Gene 🧬
 
@@ -16,7 +16,7 @@ It highly leverages the power of **code generations** and **automation**. It is 
 
 <Bleed>
   <iframe
-    className='sm:px-6 md:px-8 w-full h-96 2xl:ml-16 2xl:pr-40'
+    className="sm:px-6 md:px-8 w-full h-96 2xl:ml-16 2xl:pr-40"
     src="https://www.youtube.com/embed/4A6s8aE_AzI"
     title="Brainly Gene Framework - high level overview"
     frameborder="0"
@@ -55,7 +55,7 @@ graph TD
 Though, they can communicate with each other, but more on that later.
 
 Important to mention: gene modules are
-framework agnostic thanks to ✨_Dependency Injection_✨ (that we will talk about in the following chapters),
+framework agnostic thanks to ✨*Dependency Injection*✨ (that we will talk about in the following chapters),
 thus they can be used in NextJS or pure React or any other react framework if we wanted to do so.
 
 **Let's see a "live" example!**
@@ -114,7 +114,7 @@ code .
 ### Generate a new Next.js app
 
 ```sh copy
-npm nx g @brainly-gene/tools:nextjs-app --name my-first-app --directory web --no-interactive 
+npm nx g @brainly-gene/tools:nextjs-app --name my-first-app --directory web --no-interactive
 ```
 
 ### Run the app 🥳
@@ -125,6 +125,4 @@ npm nx serve web-my-first-app
 
 </Steps>
 
-
 See [cheatsheet](/gene/cheatsheet) for more commands and tips.
-

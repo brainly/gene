@@ -2,7 +2,7 @@
 title: Modules Dependencies
 ---
 
-import Image from 'next/image'
+import Image from 'next/image';
 
 # Dependencies
 
@@ -44,22 +44,27 @@ export function SimpleModule() {
 This is how the module looks; now let's try to render it in a NextJS application:
 
 ```jsx filename="pages/simple.tsx"
-import {SimpleModule, SimpleRouter, RouterIdentifier} from '@acme/simple-module';
-import {Container} from 'inversify';
-import {withIoc} from '@brainly-gene/core';
-import {useRouter} from 'next/router';
+import {
+  SimpleModule,
+  SimpleRouter,
+  RouterIdentifier,
+} from '@acme/simple-module';
+import { Container } from 'inversify';
+import { withIoc } from '@brainly-gene/core';
+import { useRouter } from 'next/router';
 
 // we have to create container getter which will bind router
 const usePageContainer = function (nextRouter) {
-    const container = new Container();
+  const container = new Container();
 
-    const router = useRouter();
-    // now let's bind our app router
-    container.bind<MyRouter>(RouterIdentifier)
-        .toConstantValue({
-            // transform app router to module interface
-            navigate: path => router.push(path),
-        });
+  const router = useRouter();
+  // now let's bind our app router
+  container.bind <
+    MyRouter >
+    RouterIdentifier.toConstantValue({
+      // transform app router to module interface
+      navigate: (path) => router.push(path),
+    });
 };
 
 function SimplePage() {
@@ -74,16 +79,14 @@ function SimplePage() {
 export default withIoc(usePageContainer)(MyPage);
 ```
 
+```mermaid
 
+flowchart
+  1["container.bind('router').toConstantValue({navigate: window.location.assign})"]
+  2["const {navigate} = useInjection('router')"]
 
-  ```mermaid
-   
-  flowchart
-    1["container.bind('router').toConstantValue({navigate: window.location.assign})"]
-    2["const {navigate} = useInjection('router')"]
-
-    1 --> 2
-  ```
+  1 --> 2
+```
 
 As you can see, this is really powerful! With this, you can render this module in any other application. In the example above, we transformed the NextJS Router, but in the same manner, we could transform, for instance, React Router or create a custom router and bind it. With that, the module can be rendered anywhere and treated as a separate entity!
 
@@ -94,7 +97,7 @@ Gene's DI system is based on [Inversify.js](https://inversify.io/) - if you woul
 During Storybook development, you have to bind all interfaces because Storybook is just an isolated environment - it can be treated like the app that renders the module. To do that, we prepared a provider that implements a context provider, and all you need to do is provide a container in the props.
 
 ```jsx
-import {StorybookProviders} from '@acme/e2e-testing-providers';
+import { StorybookProviders } from '@acme/e2e-testing-providers';
 
 // create container like in the app
 
@@ -102,18 +105,18 @@ const getModuleContainer = function (nextRouter) {
   const container = new Container();
   // now let's bind our app router
   container.bind(RouterIdentifier).toConstantValue({
-    navigate: path => {
+    navigate: (path) => {
       console.log(`mock Storybook navigation to ${path}`);
     },
   });
 
-  return {container};
+  return { container };
 };
 
-const {container} = getModuleContainer();
+const { container } = getModuleContainer();
 
 storiesOf('SimpleModule', module)
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <StorybookProviders additionalContainers={[container]}>
       {storyFn()}
     </StorybookProviders>
@@ -191,40 +194,39 @@ To address this, it is recommended to separate a single item into a submodule na
 
 The diagram below illustrates how `NewsFeedModule` uses `NewsSlotSubmodule` as a submodule. `NewsSlotSubmodule` is responsible for rendering a single news item, while `NewsFeedSubmodule` is responsible for rendering a list of news items and handling the logic related to each item.
 
-  ```mermaid
-   
-  classDiagram
-    direction RL
+```mermaid
 
-    namespace news-module {
+classDiagram
+  direction RL
 
-
-        class NewsListModule {
-        }
-
-        class NewsSlotSubmodule {
-            +id
-        }
-
-        class useNewsList
-        class useNewsItemContent
-        class useNewsRating
-        class useNewsCommenting
+  namespace news-module {
 
 
-    }
+      class NewsListModule {
+      }
 
-    NewsListModule *-- useNewsList
-    News
+      class NewsSlotSubmodule {
+          +id
+      }
+
+      class useNewsList
+      class useNewsItemContent
+      class useNewsRating
+      class useNewsCommenting
+
+
+  }
+
+  NewsListModule *-- useNewsList
+  News
 
 ListModule *-- NewsSlotSubmodule
 
-    NewsSlotSubmodule *-- useNewsItemContent
-    NewsSlotSubmodule *-- useNewsRating
-    NewsSlotSubmodule *-- useNewsCommenting
+  NewsSlotSubmodule *-- useNewsItemContent
+  NewsSlotSubmodule *-- useNewsRating
+  NewsSlotSubmodule *-- useNewsCommenting
 
-  ```
-
+```
 
 Code for both entities is presented below:
 
@@ -267,16 +269,25 @@ export {NewsFeedModule, declarations};
 ```
 
 ```tsx filename="NewsSlotSubmodule.tsx" showLineNumbers
-import {NewsItem, NewsRating, NewsComments} from "@acme/components/news-list-ui";
-import {useNewsItemContent} from "./hooks/useNewsItemContent";
-import {useNewsRating} from "./hooks/useNewsRating";
-import {useNewsCommenting} from "./hooks/useNewsCommenting";
+import {
+  NewsItem,
+  NewsRating,
+  NewsComments,
+} from '@acme/components/news-list-ui';
+import { useNewsItemContent } from './hooks/useNewsItemContent';
+import { useNewsRating } from './hooks/useNewsRating';
+import { useNewsCommenting } from './hooks/useNewsCommenting';
 
-const useInit = ({id}: {id: string}) => {
+const useInit = ({ id }: { id: string }) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const {newsItemContentProps} = useNewsItemContent({id, ref});
-  const {newsRatingProps, useNewsRatingMediators} = useNewsRating({id, ref});
-  const {newsCommentingProps, useNewsCommentingMediators} = useNewsCommenting({id, ref});
+  const { newsItemContentProps } = useNewsItemContent({ id, ref });
+  const { newsRatingProps, useNewsRatingMediators } = useNewsRating({
+    id,
+    ref,
+  });
+  const { newsCommentingProps, useNewsCommentingMediators } = useNewsCommenting(
+    { id, ref },
+  );
 
   const useMediators = () => {
     useNewsRatingMediators();
@@ -289,10 +300,15 @@ const useInit = ({id}: {id: string}) => {
     newsCommentingProps,
     useMediators,
   };
-}
+};
 
-const NewsSlotSubmodule = ({id}: {id: string}) => {
-  const { newsItemContentProps, newsRatingProps, newsCommentingProps, useMediators } = useInit({id});
+const NewsSlotSubmodule = ({ id }: { id: string }) => {
+  const {
+    newsItemContentProps,
+    newsRatingProps,
+    newsCommentingProps,
+    useMediators,
+  } = useInit({ id });
 
   useMediators();
 
@@ -305,7 +321,7 @@ const NewsSlotSubmodule = ({id}: {id: string}) => {
   );
 };
 
-export {NewsSlotSubmodule};
+export { NewsSlotSubmodule };
 ```
 
 ### Complex Flows of Views
@@ -314,70 +330,73 @@ In some cases, a module may need to handle complex flows of views that cannot be
 
 As an example, the `RegistrationModule` implements several views that the user sees during the registration process. Each view is represented by a submodule. The parent module is responsible for managing the flow of views and passing data between them. Each submodule can implement one or more custom hooks, depending on the complexity of the view.
 
+```mermaid
+
+classDiagram
+  direction RL
+
+  namespace registration-module {
 
 
+      class RegistrationModule {
+      }
 
-  ```mermaid
-      
-  classDiagram
-    direction RL
+      class SsoSubmodule {
+          +stateMachine
+      }
 
-    namespace registration-module {
+      class UserDetailsSubmodule {
+          +stateMachine
+      }
 
+      class SuccessViewSubmodule {
+          +stateMachine
+      }
 
-        class RegistrationModule {
-        }
+      class useRegistrationProcess
+      class useSSO
+      class useUserDetails
+      class usePromo
+      class useSuccess
+  }
 
-        class SsoSubmodule {
-            +stateMachine
-        }
+  RegistrationModule *-- SsoSubmodule
+  RegistrationModule *-- UserDetailsSubmodule
+  RegistrationModule *-- SuccessViewSubmodule
 
-        class UserDetailsSubmodule {
-            +stateMachine
-        }
+  RegistrationModule *-- useRegistrationProcess
+  SsoSubmodule *-- useSSO
+  UserDetailsSubmodule *-- useUserDetails
+  UserDetailsSubmodule *-- usePromo
+  SuccessViewSubmodule *-- useSuccess
 
-        class SuccessViewSubmodule {
-            +stateMachine
-        }
-
-        class useRegistrationProcess
-        class useSSO
-        class useUserDetails
-        class usePromo
-        class useSuccess
-    }
-
-    RegistrationModule *-- SsoSubmodule
-    RegistrationModule *-- UserDetailsSubmodule
-    RegistrationModule *-- SuccessViewSubmodule
-
-    RegistrationModule *-- useRegistrationProcess
-    SsoSubmodule *-- useSSO
-    UserDetailsSubmodule *-- useUserDetails
-    UserDetailsSubmodule *-- usePromo
-    SuccessViewSubmodule *-- useSuccess
-
-  ```
-
+```
 
 Code of the registration module is presented below:
 
 ```tsx filename="RegistrationModule.tsx" showLineNumbers
-import {useRegistrationProcess, RegistrationProcessStateType} from "./hooks/useRegistrationProcess";
-import {SsoSubmodule} from "./SsoSubmodule";
-import {UserDetailsSubmodule} from "./UserDetailsSubmodule";
-import {SuccessViewSubmodule} from "./SuccessViewSubmodule";
-import {RegistrationLayout} from "@acme/components/registration-layout";
+import {
+  useRegistrationProcess,
+  RegistrationProcessStateType,
+} from './hooks/useRegistrationProcess';
+import { SsoSubmodule } from './SsoSubmodule';
+import { UserDetailsSubmodule } from './UserDetailsSubmodule';
+import { SuccessViewSubmodule } from './SuccessViewSubmodule';
+import { RegistrationLayout } from '@acme/components/registration-layout';
 
 const useInit = () => {
-  const {registrationProcessProps, registrationProcessMachine, useRegistrationProcessComponentMap} = useRegistrationProcess();
+  const {
+    registrationProcessProps,
+    registrationProcessMachine,
+    useRegistrationProcessComponentMap,
+  } = useRegistrationProcess();
 
   return {
     registrationProcessProps,
     registrationProcessMachine,
     useRegistrationProcessComponentMap,
   };
-}
+};
 
 const RegistrationProcessComponentMap = new Map([
   [RegistrationProcessStateType.SSO, SsoSubmodule],
@@ -386,17 +405,19 @@ const RegistrationProcessComponentMap = new Map([
 ]);
 
 const RawRegistrationModule = () => {
-  const { registrationProcessProps, registrationProcessMachine, useRegistrationProcessComponentMap} = useInit();
+  const {
+    registrationProcessProps,
+    registrationProcessMachine,
+    useRegistrationProcessComponentMap,
+  } = useInit();
 
-  const RegistrationProcessComponent = useRegistrationProcessComponentMap(RegistrationProcessComponentMap);
+  const RegistrationProcessComponent = useRegistrationProcessComponentMap(
+    RegistrationProcessComponentMap,
+  );
 
   return (
-    <RegistrationLayout
-      {...registrationProcessProps}
-    >
-      <RegistrationProcessComponent
-        machine={registrationProcessMachine}
-      />
+    <RegistrationLayout {...registrationProcessProps}>
+      <RegistrationProcessComponent machine={registrationProcessMachine} />
     </RegistrationLayout>
   );
 };
@@ -405,15 +426,18 @@ const RawRegistrationModule = () => {
 Then, for example, `UserDetailsSubmodule` could look like this:
 
 ```tsx filename="UserDetailsSubmodule.tsx" showLineNumbers
-import {UserDetailsForm} from "@acme/components/user-details-form";
-import {StateMachineType} from "./hooks/useRegistrationProcess";
-import {useUserDetails} from "./hooks/useUserDetails";
-import {usePromo} from "./hooks/usePromo";
+import { UserDetailsForm } from '@acme/components/user-details-form';
+import { StateMachineType } from './hooks/useRegistrationProcess';
+import { useUserDetails } from './hooks/useUserDetails';
+import { usePromo } from './hooks/usePromo';
 
-const useInit = ({stateMachine}: {stateMachine: StateMachineType}) => {
+const useInit = ({ stateMachine }: { stateMachine: StateMachineType }) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const {userDetailsProps, useUserDetailsMediators} = useUserDetails({ref, stateMachine});
-  const {promoProps, usePromoMediators} = usePromo({ref, stateMachine});
+  const { userDetailsProps, useUserDetailsMediators } = useUserDetails({
+    ref,
+    stateMachine,
+  });
+  const { promoProps, usePromoMediators } = usePromo({ ref, stateMachine });
 
   const useMediators = () => {
     useUserDetailsMediators();
@@ -425,22 +449,25 @@ const useInit = ({stateMachine}: {stateMachine: StateMachineType}) => {
     promoProps,
     useMediators,
   };
-}
+};
 
-const UserDetailsSubmodule = ({stateMachine}: {stateMachine: StateMachineType}) => {
-  const { userDetailsProps, promoProps, useMediators } = useInit({stateMachine});
+const UserDetailsSubmodule = ({
+  stateMachine,
+}: {
+  stateMachine: StateMachineType;
+}) => {
+  const { userDetailsProps, promoProps, useMediators } = useInit({
+    stateMachine,
+  });
 
   useMediators();
 
   return (
-    <UserDetailsForm
-      {...userDetailsProps}
-      promo={<Promo {...promoProps} />}
-    />
+    <UserDetailsForm {...userDetailsProps} promo={<Promo {...promoProps} />} />
   );
 };
 
-export {UserDetailsSubmodule};
+export { UserDetailsSubmodule };
 ```
 
 This pattern is described further in [State Machine Module](/gene/modules/advanced/state-machine-module) section.
@@ -488,7 +515,7 @@ Props (or [attributes](https://developer.mozilla.org/en-US/docs/Web/API/Web_comp
 
 Except for the slot pattern covered in the section below, props can be used in a single case - when a module is a submodule iterating over a list of elements, and each element has different data to display. In such a case, props can be used to pass data to the submodule. Another case is to pass a state machine. These cases have been described
 
- in the [Submodules](#submodules) section.
+in the [Submodules](#submodules) section.
 
 ### Slot Pattern
 

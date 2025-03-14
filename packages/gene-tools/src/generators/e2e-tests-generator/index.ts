@@ -1,5 +1,4 @@
-import type {
-  Tree} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
@@ -67,7 +66,7 @@ export default async function (tree: Tree) {
 
   const moduleName = await promptSelectModuleName(
     tree,
-    'Which module library do you want to generate e2e tests for?'
+    'Which module library do you want to generate e2e tests for?',
   );
 
   const moduleProject = workspaceJsonProjects.get(moduleName);
@@ -75,7 +74,7 @@ export default async function (tree: Tree) {
 
   if (!moduleProject || !e2eTestsProject) {
     throw new Error(
-      `Module "${moduleName}" or its e2e tests does not exist in the workspace!`
+      `Module "${moduleName}" or its e2e tests does not exist in the workspace!`,
     );
   }
 
@@ -83,13 +82,13 @@ export default async function (tree: Tree) {
 
   if (!modulePath) {
     throw new Error(
-      `Module "${moduleName}" does not have a source root! Please check your project.json file.`
+      `Module "${moduleName}" does not have a source root! Please check your project.json file.`,
     );
   }
 
   const storybookData = findStorybookData(modulePath + '/lib');
 
-  let moduleComponent: string | undefined
+  let moduleComponent: string | undefined;
 
   const modulesWithinLibrary = findModuleComponents(modulePath);
 
@@ -121,36 +120,34 @@ export default async function (tree: Tree) {
   ora('Analyzing components inside ' + moduleComponent).start();
 
   const dataTestIds = processResults(
-    await findDataTestIds(`${modulePath}/${moduleComponent}`)
+    await findDataTestIds(`${modulePath}/${moduleComponent}`),
   );
 
   ora('Generating Gherkin Scenarios').start();
 
   const gherkinScenarios = await generateGherkin(
     JSON.stringify(dataTestIds),
-    moduleDescription
+    moduleDescription,
   );
   ora('Generating Cypress code').start();
 
   const cypressCode = await generateCypress(
     gherkinScenarios,
     JSON.stringify(dataTestIds),
-    JSON.stringify(storybookData)
+    JSON.stringify(storybookData),
   );
 
-  const dasherizedModuleName = dasherize(
-    moduleName.split('/').pop()
-  );
+  const dasherizedModuleName = dasherize(moduleName.split('/').pop());
 
   console.log('Writing files...');
 
   tree.write(
     `${e2eTestsProject.sourceRoot}/integration/${dasherizedModuleName}.feature`,
-    gherkinScenarios
+    gherkinScenarios,
   );
   tree.write(
     `${e2eTestsProject.sourceRoot}/integration/${dasherizedModuleName}/integration.ts`,
-    cypressCode
+    cypressCode,
   );
 
   await formatFiles(tree);
@@ -164,7 +161,7 @@ export default async function (tree: Tree) {
 
 const askForFeedback = async (
   reRunCallback: (considerations: string) => Promise<string>,
-  finishedCallback: () => string
+  finishedCallback: () => string,
 ) => {
   const change = (
     await prompt([
@@ -195,7 +192,7 @@ const generateGherkin = async (
   dataTestIds: string,
   devDescription: string,
   gherkinScenarios?: string,
-  considerations?: string
+  considerations?: string,
 ): Promise<string> => {
   let resultGherkinScenarios: string;
   if (considerations && gherkinScenarios) {
@@ -224,12 +221,12 @@ const generateGherkin = async (
         JSON.stringify(dataTestIds),
         devDescription,
         resultGherkinScenarios,
-        considerations
+        considerations,
       );
     },
     () => {
       return resultGherkinScenarios;
-    }
+    },
   );
 };
 
@@ -237,7 +234,7 @@ const generateCypress = async (
   gherkinScenarios: string,
   dataTestIds: string,
   storybookData: string,
-  considerations?: string
+  considerations?: string,
 ): Promise<string> => {
   let resultCypressCode: string;
   if (considerations) {
@@ -246,14 +243,14 @@ const generateCypress = async (
       gherkinScenarios,
       dataTestIds,
       storybookData,
-      considerations
+      considerations,
     );
   } else {
     resultCypressCode = await generateCypressCode(
       openai,
       gherkinScenarios,
       dataTestIds,
-      storybookData
+      storybookData,
     );
   }
 
@@ -267,11 +264,11 @@ const generateCypress = async (
         gherkinScenarios,
         dataTestIds,
         storybookData,
-        considerations
+        considerations,
       );
     },
     () => {
       return resultCypressCode;
-    }
+    },
   );
 };

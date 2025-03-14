@@ -1,5 +1,4 @@
-import type {
-  Tree} from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
@@ -59,7 +58,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
 
     const moduleProjectName = `${libDirectory}/${library}`.replace(
       new RegExp('/', 'g'),
-      '-'
+      '-',
     );
 
     moduleProject = projects.get(moduleProjectName);
@@ -82,7 +81,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
       fileName: name,
       tmpl: '',
       npmScope,
-    }
+    },
   );
 
   const reexportIndexPath = `${moduleProject.sourceRoot}/index.ts`;

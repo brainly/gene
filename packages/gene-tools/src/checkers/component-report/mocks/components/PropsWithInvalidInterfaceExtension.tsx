@@ -1,5 +1,5 @@
 import React from 'react';
-import {TestInvalidImportedInterface} from '../types/TestTypes';
+import { TestInvalidImportedInterface } from '../types/TestTypes';
 
 type OneType = Readonly<{
   id: string;

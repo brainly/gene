@@ -14,7 +14,7 @@ type ImageComponentsType = typeof NATIVE_IMAGE;
 const imageComponents = new Map([[NATIVE_IMAGE, NativeImage]]);
 
 function getImageComponent(
-  imagesType: ImageComponentsType
+  imagesType: ImageComponentsType,
 ): React.FC<GeneImagePropsType> {
   return imageComponents.get(imagesType) || NativeImage;
 }
@@ -22,9 +22,9 @@ function getImageComponent(
 export function getAssetsContainer(imagesType: ImageComponentsType) {
   const brainlyAssetsContainer = new Container();
   brainlyAssetsContainer
-    .bind<React.ComponentType<GeneImagePropsType>>(
-      GENE_IMAGE_COMPONENT_IDENTIFIER
-    )
+    .bind<
+      React.ComponentType<GeneImagePropsType>
+    >(GENE_IMAGE_COMPONENT_IDENTIFIER)
     .toConstantValue(withLoaderUrls(getImageComponent(imagesType)));
 
   return brainlyAssetsContainer;

@@ -14,10 +14,7 @@
         "project": ["docs/docs-site/tsconfig(.*)?.json"]
       },
       "rules": {
-        "@next/next/no-html-link-for-pages": [
-          "error",
-          "docs/docs-site/pages"
-        ]
+        "@next/next/no-html-link-for-pages": ["error", "docs/docs-site/pages"]
       }
     },
     {

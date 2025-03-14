@@ -33,24 +33,24 @@ describe('Service generator', () => {
 
     expect(
       appTree.exists(
-        'libs/question/services/question-service/src/lib/useQuestion.ts'
-      )
+        'libs/question/services/question-service/src/lib/useQuestion.ts',
+      ),
     ).toBeTruthy();
     expect(
       appTree.exists(
-        'libs/question/services/question-service/src/lib/queries.ts'
-      )
+        'libs/question/services/question-service/src/lib/queries.ts',
+      ),
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        'libs/question/services/question-service/src/lib/question-service.ts'
-      )
+        'libs/question/services/question-service/src/lib/question-service.ts',
+      ),
     ).not.toBeTruthy();
     expect(
       appTree.exists(
-        'libs/question/services/question-service/src/lib/question-service.spec.ts'
-      )
+        'libs/question/services/question-service/src/lib/question-service.spec.ts',
+      ),
     ).not.toBeTruthy();
   });
 
@@ -108,7 +108,7 @@ describe('Service generator', () => {
     // useCreateQuestion
     hookContent = appTree
       .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
+        'libs/question/services/question-service/src/lib/useCreateQuestion.ts',
       )
       ?.toString();
 
@@ -118,7 +118,7 @@ describe('Service generator', () => {
     // useDeleteQuestion
     hookContent = appTree
       .read(
-        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
+        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts',
       )
       ?.toString();
 
@@ -128,7 +128,7 @@ describe('Service generator', () => {
     // useUpdateQuestion
     hookContent = appTree
       .read(
-        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
+        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts',
       )
       ?.toString();
 
@@ -184,7 +184,7 @@ describe('Service generator', () => {
     // useCreateQuestion
     hookContent = appTree
       .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
+        'libs/question/services/question-service/src/lib/useCreateQuestion.ts',
       )
       ?.toString();
 
@@ -193,7 +193,7 @@ describe('Service generator', () => {
     // useDeleteQuestion
     hookContent = appTree
       .read(
-        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
+        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts',
       )
       ?.toString();
 
@@ -202,7 +202,7 @@ describe('Service generator', () => {
     // useUpdateQuestion
     hookContent = appTree
       .read(
-        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
+        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts',
       )
       ?.toString();
 
@@ -234,7 +234,7 @@ describe('Service generator', () => {
 
     const queriesContent = appTree
       .read(
-        'libs/service-name/services/service-name-service/src/lib/queries.ts'
+        'libs/service-name/services/service-name-service/src/lib/queries.ts',
       )
       ?.toString();
 

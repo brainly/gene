@@ -1,7 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import type Observable from 'zen-observable';
 
-import {useIsMounted} from './useIsMounted';
+import { useIsMounted } from './useIsMounted';
 
 // Adapter for observable -> React (hook)
 /**
@@ -12,13 +12,13 @@ import {useIsMounted} from './useIsMounted';
 export function useObservableQuery<T>(observable: Observable<T>) {
   // we call rerender() to force component update
   // whenever we get a new observable value
-  const [, rerender] = React.useReducer(c => c + 1, 0);
+  const [, rerender] = React.useReducer((c) => c + 1, 0);
 
   const isMounted = useIsMounted();
   const lastValue = useRef<T>();
 
   useEffect(() => {
-    const subcription = observable.subscribe(next => {
+    const subcription = observable.subscribe((next) => {
       if (isMounted()) {
         lastValue.current = next;
         rerender();

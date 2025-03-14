@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingArrowFunc = ({id, content, items}: PropsType) => {
+const PassingArrowFunc = ({ id, content, items }: PropsType) => {
   const handler = () => {
     return null;
   };

@@ -13,7 +13,7 @@ export interface WorkspaceExecutorOptions {
 
 export default async function workspaceExecutorGenerator(
   tree: Tree,
-  rawOptions: WorkspaceExecutorOptions
+  rawOptions: WorkspaceExecutorOptions,
 ): Promise<void> {
   const { className, fileName: name } = names(rawOptions.name);
   validateExecutor(tree, name);

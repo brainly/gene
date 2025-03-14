@@ -10,26 +10,29 @@ import { Callout } from 'nextra-theme-docs';
 Gene is a tool that helps to maintain the quality of the modules in your codebase. It is a GitHub bot that checks the pull requests for the modules and validates them against the rules defined in the Gene Checker Config (the last section). The rules are defined in the Gene Checker Config file, which is a YAML file that should be placed in the root of the module directory. Rules essential from Gene's perspective are not configurable, but some of them can be turned off in the config file.
 
 <Callout type="warning" emoji="⚠️">
-  PR Checker is still in development. It is not yet available for use.
-  Though the generators already generate the configuration file, the Github bot is not yet published - stay tuned!
+  PR Checker is still in development. It is not yet available for use. Though
+  the generators already generate the configuration file, the Github bot is not
+  yet published - stay tuned!
 </Callout>
-
 
 ## Rules
 
 ### Modules declarations
 
 - **Rule: `use_init_required`**
+
   - **Highlight**: Check if `useInit` is in place.
   - **Description**: Core modules should always have `useInit` hook which can be used to extend the module. It is required only for `core` version of the module.
   - **Configurable**: No
 
 - **Rule: `memoization`**
+
   - **Highlight**: Check usages of memo and callbacks.
   - **Description**: Gene requires to memo everything, same checks exist for component checker. You can learn more about this pattern [here](https://attardi.org/why-we-memo-all-the-things/).
   - **Configurable**: Yes, in `gene.config.yaml` file under `memoization`
 
 - **Rule: `no_direct_inversify_import`**
+
   - **Highlight**: Check if there is no `imports import {Container} from 'inversify'`
   - **Description**: These libs shouldn't be imported in module files. `inversify` is a Gene specific not module, direct usage of that is not recommended.
   - **Configurable**: Yes, in `gene.config.yaml` file under `no_direct_inversify_import` key.
@@ -42,16 +45,19 @@ Gene is a tool that helps to maintain the quality of the modules in your codebas
 ### Custom Hooks
 
 - **Rule: `memoization`**
+
   - **Highlight**: Check usages of memo and callbacks.
   - **Description**: As above
   - **Configurable**: Yes, in `gene.config.yaml` file under `memoization`
 
 - **Rule: `no_direct_inversify_import`**
+
   - **Highlight**: Check if there is no `imports import {Container} from 'inversify'`
   - **Description**: As above
   - **Configurable**: Yes, in `gene.config.yaml` file under `no_direct_inversify_import` key.
 
 - **Rule: `no_jsx_in_custom_hooks`**
+
   - **Highlight**: Check if there is no JSX layout in custom hooks files.
   - **Description**: Custom hooks shouldn't have JSX, they should be just used to organize logic. Layout should be created in the main Module file.
   - **Configurable**: Yes, in `gene.config.yaml` file under `no_jsx_in_custom_hooks` key.
@@ -64,6 +70,7 @@ Gene is a tool that helps to maintain the quality of the modules in your codebas
 ### Index files
 
 - **Rule: `no_modules_export_from_core_library`**
+
   - **Highlight**: Check if there are no exports of modules from Core modules libraries, only custom hooks and types.
   - **Description**: Core modules are abstract and should not be exported, only custom hooks and types should be exported.
   - **Configurable**: Yes, in `gene.config.yaml` file under `no_modules_export_from_core_library` key.
@@ -147,22 +154,22 @@ Values below will be used every time the checker won't find either an entire `ge
 const GENE_DEFAULT_APPS_CONFIG = {
   rules: {
     [GENE_CONFIG_RULES.MEMOIZATION]: {
-      enabled: false
+      enabled: false,
     },
     [GENE_CONFIG_RULES.NO_JSX_IN_CUSTOM_HOOKS]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_DIRECT_INVERSIFY_IMPORT]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.STORYBOOK_REQUIRED]: {
-      enabled: false
+      enabled: false,
     },
     [GENE_CONFIG_RULES.UNIT_TESTS_FOR_CUSTOM_HOOKS_REQUIRED]: {
-      enabled: false
-    }
-  }
-}
+      enabled: false,
+    },
+  },
+};
 ```
 
 #### Core modules
@@ -171,20 +178,20 @@ const GENE_DEFAULT_APPS_CONFIG = {
 const GENE_DEFAULT_CORE_CONFIG = {
   rules: {
     [GENE_CONFIG_RULES.MEMOIZATION]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_JSX_IN_CUSTOM_HOOKS]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_DIRECT_INVERSIFY_IMPORT]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.STORYBOOK_REQUIRED]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.UNIT_TESTS_FOR_CUSTOM_HOOKS_REQUIRED]: {
-      enabled: true
-    }
-  }
-}
+      enabled: true,
+    },
+  },
+};
 ```

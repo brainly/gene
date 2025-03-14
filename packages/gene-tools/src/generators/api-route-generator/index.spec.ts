@@ -23,13 +23,11 @@ describe('Subapp generator', () => {
       style: 'none',
     });
 
-    (prompt as unknown as jest.Mock).mockImplementationOnce(
-      ([{ name }]) => {
-        if (name === 'appName') {
-          return { appName: 'example.com-us' };
-        }
+    (prompt as unknown as jest.Mock).mockImplementationOnce(([{ name }]) => {
+      if (name === 'appName') {
+        return { appName: 'example.com-us' };
       }
-    );
+    });
   });
 
   it('should generate files', async () => {
@@ -41,7 +39,7 @@ describe('Subapp generator', () => {
     });
 
     expect(
-      appTree.exists('apps/example.com/us/pages/api/v1/my-api-route.ts')
+      appTree.exists('apps/example.com/us/pages/api/v1/my-api-route.ts'),
     ).toBeTruthy();
   });
 

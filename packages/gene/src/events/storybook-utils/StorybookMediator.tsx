@@ -1,5 +1,5 @@
 import React from 'react';
-import {action} from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 
 type EventsListType = {
   value: string;
@@ -12,14 +12,14 @@ type PropsType = {
 };
 
 function flatEventsArray(
-  events: Array<EventsListType | Array<EventsListType>>
+  events: Array<EventsListType | Array<EventsListType>>,
 ): any {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return events.flat();
 }
 
-export function StorybookMediator({events, children}: PropsType) {
+export function StorybookMediator({ events, children }: PropsType) {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const flatArrayEvents: Array<EventsListType> = flatEventsArray(events);
@@ -29,14 +29,14 @@ export function StorybookMediator({events, children}: PropsType) {
 
     if (!currentRef) return;
 
-    flatArrayEvents.forEach(event => {
+    flatArrayEvents.forEach((event) => {
       if (currentRef !== undefined) {
         currentRef.addEventListener(event.value, action(event.value));
       }
     });
     return () => {
-      flatArrayEvents.forEach(event =>
-        currentRef.removeEventListener(event.value, action(event.value))
+      flatArrayEvents.forEach((event) =>
+        currentRef.removeEventListener(event.value, action(event.value)),
       );
     };
     // disable eslint next line to only once add listener when ref will appear

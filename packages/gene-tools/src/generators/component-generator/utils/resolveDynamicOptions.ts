@@ -1,8 +1,5 @@
-import type {
-  PromptsProfileDefaultValueKeyType} from './resolveGeneratorOptions';
-import {
-  resolveGeneratorOptions,
-} from './resolveGeneratorOptions';
+import type { PromptsProfileDefaultValueKeyType } from './resolveGeneratorOptions';
+import { resolveGeneratorOptions } from './resolveGeneratorOptions';
 
 export type ComponentPromptsProfileType = 'basic' | 'sample' | 'advanced';
 
@@ -51,7 +48,7 @@ export const ComponentPromptsProfileDefaultValueKeyMapping: Readonly<
 };
 
 export const resolveDynamicOptions = async (
-  initialOptions: ComponentSchemaType
+  initialOptions: ComponentSchemaType,
 ): Promise<ComponentSchemaType> => {
   const options = await resolveGeneratorOptions<
     ComponentPromptsProfileType,

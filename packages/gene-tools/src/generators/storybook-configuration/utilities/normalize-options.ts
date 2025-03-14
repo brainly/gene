@@ -4,13 +4,13 @@ import type { NormalizedOptions, Options } from '../schema';
 
 export function normalizeOptions(
   tree: Tree,
-  options: Options
+  options: Options,
 ): NormalizedOptions {
   const projects = getProjects(tree);
   const project = projects.get(options.name);
   if (!project) {
     throw new Error(
-      `The project "${options.name}" does not exist in the workspace.`
+      `The project "${options.name}" does not exist in the workspace.`,
     );
   }
 

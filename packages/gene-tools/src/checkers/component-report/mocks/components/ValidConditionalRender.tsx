@@ -8,7 +8,7 @@ type PropsType = Readonly<{
 
 const someVal = [];
 
-const ValidConditionalRender = ({firstName, lastName}: PropsType) => {
+const ValidConditionalRender = ({ firstName, lastName }: PropsType) => {
   return (
     <div>
       <div>{firstName}</div>

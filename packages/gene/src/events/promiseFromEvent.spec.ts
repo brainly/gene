@@ -1,4 +1,4 @@
-import {promiseFromEvent} from './promiseFromEvent';
+import { promiseFromEvent } from './promiseFromEvent';
 
 describe('promiseFromEvent()', () => {
   it('return promise with event from preferred listener', async () => {

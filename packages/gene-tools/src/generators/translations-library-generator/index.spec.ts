@@ -17,7 +17,7 @@ describe('Translations library generator', () => {
     await translationsLibraryGenerator(appTree);
 
     expect(
-      appTree.exists('libs/translations/src/locales/test.json')
+      appTree.exists('libs/translations/src/locales/test.json'),
     ).toBeTruthy();
   });
 });

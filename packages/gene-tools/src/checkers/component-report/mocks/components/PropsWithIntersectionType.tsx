@@ -1,5 +1,5 @@
 import React from 'react';
-import {TestIntersectionType} from '../types/TestTypes';
+import { TestIntersectionType } from '../types/TestTypes';
 
 type OneType = Readonly<{
   id: string;
@@ -16,7 +16,7 @@ type PropsType = Readonly<{
   TwoType &
   TestIntersectionType;
 
-const PropsWithIntersectionType = ({id, content, foo, values}: PropsType) => {
+const PropsWithIntersectionType = ({ id, content, foo, values }: PropsType) => {
   return null;
 };
 

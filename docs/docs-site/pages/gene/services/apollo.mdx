@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       new ApolloClient({
         uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URL,
         cache: new InMemoryCache(),
-      })
+      }),
   );
   const apolloClientInstance = apolloClient.getClient();
 

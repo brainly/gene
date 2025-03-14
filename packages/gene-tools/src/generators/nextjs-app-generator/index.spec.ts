@@ -43,12 +43,12 @@ describe('NextJS App generator', () => {
     expect(appTree.exists('apps/my-app/tsconfig.spec.json')).toBeTruthy();
     expect(appTree.exists('apps/my-app-e2e/cypress.config.ts')).toBeTruthy();
     expect(
-      appTree.exists('apps/my-app-e2e/src/fixtures/example.json')
+      appTree.exists('apps/my-app-e2e/src/fixtures/example.json'),
     ).toBeTruthy();
 
     expect(appTree.exists('apps/my-app-e2e/src/support/e2e.ts')).toBeTruthy();
     expect(
-      appTree.exists('apps/my-app-e2e/src/e2e/Home/display.ts')
+      appTree.exists('apps/my-app-e2e/src/e2e/Home/display.ts'),
     ).toBeTruthy();
     expect(appTree.exists('apps/my-app-e2e/src/e2e/Home.feature')).toBeTruthy();
   });
@@ -73,42 +73,42 @@ describe('NextJS App generator', () => {
 
     expect(
       appConfig?.targets?.['serve']?.dependsOn?.find(
-        (item: any) => item.target === 'copy-translations-to-app'
-      )
+        (item: any) => item.target === 'copy-translations-to-app',
+      ),
     ).toEqual({ target: 'copy-translations-to-app', projects: 'self' });
 
     expect(
       appConfig?.targets?.['serve']?.dependsOn?.find(
-        (item: any) => item.target === 'copy-assets-to-app'
-      )
+        (item: any) => item.target === 'copy-assets-to-app',
+      ),
     ).toEqual({ target: 'copy-assets-to-app', projects: 'self' });
 
     expect(
       appConfig?.targets?.['serve']?.dependsOn?.find(
-        (item: any) => item.target === 'copy-translations-to-app'
-      )
+        (item: any) => item.target === 'copy-translations-to-app',
+      ),
     ).toEqual({ target: 'copy-translations-to-app', projects: 'self' });
 
     expect(
       appConfig?.targets?.['serve-base']?.dependsOn?.find(
-        (item: any) => item.target === 'copy-assets-to-app'
-      )
+        (item: any) => item.target === 'copy-assets-to-app',
+      ),
     ).toEqual({ target: 'copy-assets-to-app', projects: 'self' });
 
     expect(
       appConfig?.targets?.['build']?.dependsOn?.find(
-        (item: any) => item.target === 'copy-translations-to-app'
-      )
+        (item: any) => item.target === 'copy-translations-to-app',
+      ),
     ).toEqual({ target: 'copy-translations-to-app', projects: 'self' });
 
     expect(
       appConfig?.targets?.['build']?.dependsOn?.find(
-        (item: any) => item.target === 'copy-assets-to-app'
-      )
+        (item: any) => item.target === 'copy-assets-to-app',
+      ),
     ).toEqual({ target: 'copy-assets-to-app', projects: 'self' });
     const e2eConfig = readProjectConfiguration(
       appTree,
-      'example.com-my-app-e2e'
+      'example.com-my-app-e2e',
     );
     expect(e2eConfig?.targets?.['e2e']).toMatchInlineSnapshot(`
       Object {
@@ -147,13 +147,13 @@ describe('NextJS App generator', () => {
 
     const tsconfig = readJson(
       appTree,
-      'apps/example.com/my-app-e2e/tsconfig.json'
+      'apps/example.com/my-app-e2e/tsconfig.json',
     );
 
     expect(tsconfig.compilerOptions.allowJs).toBe(true);
     expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
     expect(
-      tsconfig.compilerOptions.types.includes('@testing-library/cypress')
+      tsconfig.compilerOptions.types.includes('@testing-library/cypress'),
     ).toBe(true);
   });
 
@@ -167,17 +167,17 @@ describe('NextJS App generator', () => {
     });
 
     expect(
-      appTree.exists('apps/example.com/my-app/config/rewrites.json')
+      appTree.exists('apps/example.com/my-app/config/rewrites.json'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/app.po.ts')
+      appTree.exists('apps/example.com/my-app-e2e/src/support/app.po.ts'),
     ).not.toBeTruthy();
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/app.spec.ts')
+      appTree.exists('apps/example.com/my-app-e2e/src/e2e/app.spec.ts'),
     ).not.toBeTruthy();
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/specs/index.spec.tsx')
+      appTree.exists('apps/example.com/my-app-e2e/specs/index.spec.tsx'),
     ).not.toBeTruthy();
   });
 
@@ -192,50 +192,50 @@ describe('NextJS App generator', () => {
     });
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/config/rewrites.json')
+      appTree.exists('apps/example.com/my-app-e2e/config/rewrites.json'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/app.po.ts')
+      appTree.exists('apps/example.com/my-app-e2e/src/support/app.po.ts'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/app.spec.ts')
+      appTree.exists('apps/example.com/my-app-e2e/src/e2e/app.spec.ts'),
     ).not.toBeTruthy();
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/specs/index.spec.tsx')
-    ).not.toBeTruthy();
-
-    expect(
-      appTree.exists('apps/example.com/my-app-e2e/cypress.config.ts')
+      appTree.exists('apps/example.com/my-app-e2e/specs/index.spec.tsx'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/fixtures/example.json')
+      appTree.exists('apps/example.com/my-app-e2e/cypress.config.ts'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/commands.ts')
+      appTree.exists('apps/example.com/my-app-e2e/src/fixtures/example.json'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/e2e.ts')
+      appTree.exists('apps/example.com/my-app-e2e/src/support/commands.ts'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/tsconfig.json')
+      appTree.exists('apps/example.com/my-app-e2e/src/support/e2e.ts'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/.eslintrc.json')
+      appTree.exists('apps/example.com/my-app-e2e/tsconfig.json'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home/display.ts')
+      appTree.exists('apps/example.com/my-app-e2e/.eslintrc.json'),
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home.feature')
+      appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home/display.ts'),
+    ).not.toBeTruthy();
+
+    expect(
+      appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home.feature'),
     ).not.toBeTruthy();
   });
 
@@ -273,7 +273,7 @@ describe('NextJS App generator', () => {
             'import/no-extraneous-dependencies': 'off',
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -305,7 +305,7 @@ describe('NextJS App generator', () => {
       ?.toString();
 
     expect(typesContent).toContain(
-      'dehydratedApolloClient?: NormalizedCacheObject'
+      'dehydratedApolloClient?: NormalizedCacheObject',
     );
     expect(typesContent).toContain('dehydratedQueryClient?: DehydratedState');
   });
@@ -338,10 +338,10 @@ describe('NextJS App generator', () => {
       ?.toString();
 
     expect(typesContent).not.toContain(
-      'dehydratedApolloClient?: NormalizedCacheObject'
+      'dehydratedApolloClient?: NormalizedCacheObject',
     );
     expect(typesContent).not.toContain(
-      'dehydratedQueryClient?: DehydratedState'
+      'dehydratedQueryClient?: DehydratedState',
     );
   });
 
@@ -373,10 +373,10 @@ describe('NextJS App generator', () => {
       ?.toString();
 
     expect(typesContent).toContain(
-      'dehydratedApolloClient?: NormalizedCacheObject'
+      'dehydratedApolloClient?: NormalizedCacheObject',
     );
     expect(typesContent).not.toContain(
-      'dehydratedQueryClient?: DehydratedState'
+      'dehydratedQueryClient?: DehydratedState',
     );
   });
 
@@ -408,7 +408,7 @@ describe('NextJS App generator', () => {
       ?.toString();
 
     expect(typesContent).not.toContain(
-      'dehydratedApolloClient?: NormalizedCacheObject'
+      'dehydratedApolloClient?: NormalizedCacheObject',
     );
     expect(typesContent).toContain('dehydratedQueryClient?: DehydratedState');
   });

@@ -47,7 +47,5 @@
       "default": true
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

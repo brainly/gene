@@ -1,19 +1,19 @@
-const {validateEvents} = require('./eventsValidator');
+const { validateEvents } = require('./eventsValidator');
 const path = require('path');
-const {getWorkspaceLibConfigByPath, tsPathToWebpackAliases} = require('../../../scripts');
+const {
+  getWorkspaceLibConfigByPath,
+  tsPathToWebpackAliases,
+} = require('../../../scripts');
 
-jest.mock(
-  '../../../scripts',
-  () => ({
-    getWorkspaceLibConfigByPath: jest.fn(),
-    tsPathToWebpackAliases: jest.fn(),
-  })
-);
+jest.mock('../../../scripts', () => ({
+  getWorkspaceLibConfigByPath: jest.fn(),
+  tsPathToWebpackAliases: jest.fn(),
+}));
 
 describe('validateEvents()', () => {
   it('is valid for a valid use of dispatch', () => {
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/ValidDispatch.tsx')
+      path.resolve(__dirname, '../mocks/components/ValidDispatch.tsx'),
     );
 
     expect(result).toEqual({
@@ -23,7 +23,7 @@ describe('validateEvents()', () => {
 
   it('does not validate event namespace for private component', () => {
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/ValidDispatchPrivate.tsx')
+      path.resolve(__dirname, '../mocks/components/ValidDispatchPrivate.tsx'),
     );
 
     expect(result).toEqual({
@@ -33,7 +33,7 @@ describe('validateEvents()', () => {
 
   it('detects dispatching not declared events', () => {
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/InvalidDispatch.tsx')
+      path.resolve(__dirname, '../mocks/components/InvalidDispatch.tsx'),
     );
 
     expect(result).toEqual({
@@ -65,7 +65,7 @@ describe('validateEvents()', () => {
       .mockReturnValueOnce(sourceLibConfig)
       .mockReturnValue(targetLibConfig);
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx')
+      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx'),
     );
 
     expect(result).toEqual({
@@ -96,7 +96,7 @@ describe('validateEvents()', () => {
       .mockReturnValueOnce(sourceLibConfig)
       .mockReturnValue(targetLibConfig);
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx')
+      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx'),
     );
 
     expect(result).toEqual({
@@ -129,7 +129,7 @@ describe('validateEvents()', () => {
       .mockReturnValueOnce(sourceLibConfig)
       .mockReturnValue(targetLibConfig);
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx')
+      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx'),
     );
 
     expect(result).toEqual({
@@ -163,7 +163,7 @@ describe('validateEvents()', () => {
       .mockReturnValue(targetLibConfig);
 
     const result = validateEvents(
-      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx')
+      path.resolve(__dirname, '../mocks/components/ExternalTypeDispatch.tsx'),
     );
 
     expect(result).toEqual({
