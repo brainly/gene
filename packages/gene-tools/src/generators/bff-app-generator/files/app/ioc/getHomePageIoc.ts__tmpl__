@@ -1,23 +1,23 @@
 import {Container} from 'inversify';
 import {getBaseContainer} from './baseIoc';
-import {HomePagePropsType} from '../types/types';
+import type {HomePagePropsType} from '../types/types';
 
 <% if (apollo && !reactQuery) { %>
-  import {factory, Factory} from '@brainly-gene/core';
+  import {factory, type Factory} from '@brainly-gene/core';
   import {ServiceTypes} from '@brainly-gene/core'
-import { ApolloClientType } from '@brainly-gene/apollo';
+import type { ApolloClientType } from '@brainly-gene/apollo';
 <% } %>
 
 <% if (reactQuery && !apollo) { %>
-  import {factory, Factory} from '@brainly-gene/core';
-  import {ReactQueryClientType} from '@brainly-gene/core'
+  import {factory, type Factory} from '@brainly-gene/core';
+  import type {ReactQueryClientType} from '@brainly-gene/core'
 import {ServiceTypes} from '@brainly-gene/core'
 <% } %>
 
 <% if (apollo && reactQuery) { %>
-  import {factory, Factory} from '@brainly-gene/core';
-    import {ApolloClientType} from '@brainly-gene/apollo';
-  import {ReactQueryClientType} from '@brainly-gene/core';
+  import {factory, type Factory} from '@brainly-gene/core';
+    import type {ApolloClientType} from '@brainly-gene/apollo';
+  import type {ReactQueryClientType} from '@brainly-gene/core';
   import {ServiceTypes} from '@brainly-gene/core';
 <% } %>
 

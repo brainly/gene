@@ -23,8 +23,5 @@
       "x-prompt": "What are the module tags?"
     }
   },
-  "required": [
-    "name",
-    "directory"
-  ]
+  "required": ["name", "directory"]
 }

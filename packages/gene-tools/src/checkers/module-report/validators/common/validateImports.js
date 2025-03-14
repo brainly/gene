@@ -1,7 +1,7 @@
 function validateImports(importDeclarations) {
   // check if inversify is imported
   const hasInversifyImportDeclaration = importDeclarations.some(
-    path => path.value.source.value === 'inversify'
+    (path) => path.value.source.value === 'inversify',
   );
 
   if (hasInversifyImportDeclaration) {
@@ -16,4 +16,4 @@ function validateImports(importDeclarations) {
   };
 }
 
-module.exports = {validateImports};
+module.exports = { validateImports };

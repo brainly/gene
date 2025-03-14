@@ -1,6 +1,6 @@
-const {readdirSync, rmSync, statSync} = require('fs');
-const {join} = require('path');
-const {toAbsolute} = require('./path');
+const { readdirSync, rmSync, statSync } = require('fs');
+const { join } = require('path');
+const { toAbsolute } = require('./path');
 
 /**
  * Visits all files in a directory and executes a callback on each file.
@@ -8,7 +8,7 @@ const {toAbsolute} = require('./path');
  * @param {(path: string) => void} visitor The visitor function that gets called for each file.
  */
 function visitFiles(dirPath, visitor) {
-  readdirSync(toAbsolute(dirPath)).forEach(child => {
+  readdirSync(toAbsolute(dirPath)).forEach((child) => {
     const childPath = join(dirPath, child);
     const stats = statSync(childPath);
 
@@ -27,7 +27,7 @@ function visitFiles(dirPath, visitor) {
  */
 function removePath(path, throwOnError = true) {
   try {
-    rmSync(path, {force: true, recursive: true});
+    rmSync(path, { force: true, recursive: true });
   } catch (e) {
     if (throwOnError) {
       throw e;
@@ -44,4 +44,4 @@ function removePathOnExitProcess(path) {
   process.on('SIGINT', () => removePath(path, false));
 }
 
-module.exports = {removePath, removePathOnExitProcess, visitFiles};
+module.exports = { removePath, removePathOnExitProcess, visitFiles };

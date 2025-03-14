@@ -51,7 +51,7 @@ describe('useApolloLazyQuery', () => {
       useApolloLazyQuery({
         apolloClient,
         queryFn,
-      })
+      }),
     );
 
     expect(result.current.error).toBe(null);
@@ -90,7 +90,7 @@ describe('useApolloLazyQuery', () => {
       useApolloLazyQuery({
         apolloClient,
         queryFn,
-      })
+      }),
     );
 
     result.current.fetch({ optimisticResponse });
@@ -119,13 +119,13 @@ describe('useApolloLazyQuery', () => {
       useApolloLazyQuery({
         apolloClient,
         queryFn,
-      })
+      }),
     );
 
     const { result: otherResult } = renderHook(() =>
       useQuery(gql(otherQuery), {
         client: apolloClient,
-      })
+      }),
     );
 
     // Fetch other query first
@@ -139,7 +139,7 @@ describe('useApolloLazyQuery', () => {
             query:
               'query GetSomethingElse {\n  hola {\n    mundo\n    __typename\n  }\n}\n',
           }),
-        })
+        }),
       );
     });
 
@@ -162,7 +162,7 @@ describe('useApolloLazyQuery', () => {
             query:
               'query GetSomething {\n  hello {\n    world\n    __typename\n  }\n}\n',
           }),
-        })
+        }),
       );
     });
 
@@ -171,7 +171,6 @@ describe('useApolloLazyQuery', () => {
         hello: { world: 'value' },
       });
     });
-
 
     // Refetch the other query
     await waitFor(() => {
@@ -184,7 +183,7 @@ describe('useApolloLazyQuery', () => {
             query:
               'query GetSomethingElse {\n  hola {\n    mundo\n    __typename\n  }\n}\n',
           }),
-        })
+        }),
       );
     });
 

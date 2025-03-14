@@ -1,5 +1,5 @@
 import React from 'react';
-import {TestIntersectionTypeWithCallback} from '../types/TestTypes';
+import { TestIntersectionTypeWithCallback } from '../types/TestTypes';
 
 type OneType = Readonly<{
   id: string;

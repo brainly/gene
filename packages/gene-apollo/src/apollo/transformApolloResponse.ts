@@ -1,8 +1,8 @@
 import type { ApolloQueryResult, QueryResult } from '@apollo/client';
-import { CommonServiceType } from '@brainly-gene/core';
+import type { CommonServiceType } from '@brainly-gene/core';
 
 export function transformApolloResponse<TData = null, TVariables = null>(
-  response: ApolloQueryResult<TData> | QueryResult<TData> | undefined
+  response: ApolloQueryResult<TData> | QueryResult<TData> | undefined,
 ): Partial<CommonServiceType<TData, TVariables>> {
   if (!response) {
     return {

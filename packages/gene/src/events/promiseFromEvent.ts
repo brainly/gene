@@ -3,22 +3,22 @@ declare let window: any;
 interface ListenableElementType<T> {
   readonly addEventListener?: (
     label: string,
-    callback: (event: T) => unknown
+    callback: (event: T) => unknown,
   ) => unknown;
   readonly removeEventListener?: (
     label: string,
-    callback: (event: T) => unknown
+    callback: (event: T) => unknown,
   ) => unknown;
 }
 
 // Transform listening for event for Promise, use only for single time listeners
 export function promiseFromEvent<
   T = CustomEvent<Record<string, any>>,
-  U extends ListenableElementType<T> = ListenableElementType<T>
+  U extends ListenableElementType<T> = ListenableElementType<T>,
 >(
   eventLabel: string,
   target: U = window,
-  filterFn?: (event: T) => boolean
+  filterFn?: (event: T) => boolean,
 ): Promise<T> {
   return new Promise<T>(
     (resolve: (arg0: T) => unknown, reject: (arg0: unknown) => unknown) => {
@@ -44,6 +44,6 @@ export function promiseFromEvent<
         reject(e);
         return;
       }
-    }
+    },
   );
 }

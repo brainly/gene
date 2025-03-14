@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
-import { factory, Factory, ServiceTypes } from '@brainly-gene/core';
+import type { Factory } from '@brainly-gene/core';
+import { factory, ServiceTypes } from '@brainly-gene/core';
 import { QueryClient } from '@tanstack/react-query';
 import {
   ApolloClient,
@@ -26,9 +27,9 @@ export function useServiceClientsContainer() {
 
   const container = new Container();
   container
-    .bind<Factory<QueryClient | ApolloClient<NormalizedCacheObject>>>(
-      'serviceFactory'
-    )
+    .bind<
+      Factory<QueryClient | ApolloClient<NormalizedCacheObject>>
+    >('serviceFactory')
     .toFunction(factory(clients));
 
   return container;

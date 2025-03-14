@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import {
+import type {
   MediatorDeclarationsType,
   ComponentDeclarationType,
   EventHandlersType,
@@ -31,7 +31,7 @@ export function getModuleContainer({
     mergedContainer = Container.merge(
       parentContainer,
       container,
-      ...containers
+      ...containers,
     ) as Container;
   } else {
     if (isNonEmptyArray(containers)) {
@@ -40,7 +40,7 @@ export function getModuleContainer({
       mergedContainer = Container.merge(
         container,
         firstContainer,
-        ...restContainers
+        ...restContainers,
       ) as Container;
     }
   }
@@ -61,7 +61,7 @@ export function getModuleContainer({
 
 function bind(
   elements: MediatorDeclarationsType | ComponentDeclarationType,
-  container: Container
+  container: Container,
 ) {
   const identifiers: Record<string, symbol> = {};
 

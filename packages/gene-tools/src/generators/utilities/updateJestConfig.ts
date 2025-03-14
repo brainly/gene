@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 
 type JSONValue = string | number | boolean | JSONArray | null | undefined;
 
@@ -10,7 +10,7 @@ export const updateJestConfig = (
   tree: Tree,
   path: string,
   update: (current: JSONObject) => JSONObject,
-  addLiteral?: () => string
+  addLiteral?: () => string,
 ) => {
   const filePath = `${path}/jest.config.ts`;
   const contents = (tree.read(filePath) || '').toString();
@@ -39,7 +39,7 @@ export const updateJestConfig = (
 
 function addLiteralEntry(
   addLiteral: () => string,
-  updatedString: string
+  updatedString: string,
 ): string {
   const lastClosingBracketIndex = updatedString.lastIndexOf('}');
   const literalEntry = addLiteral();

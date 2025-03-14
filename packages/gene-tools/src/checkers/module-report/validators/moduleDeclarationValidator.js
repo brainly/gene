@@ -4,7 +4,7 @@ const jscodeshift = require('jscodeshift');
 const {
   validateMemoization,
 } = require('../../common/validators/memoizeValidator');
-const {validateImports} = require('./common/validateImports');
+const { validateImports } = require('./common/validateImports');
 const {
   getUseInjectionIdentifiers,
   getIdentifiersFromModuleManifest,
@@ -30,11 +30,9 @@ function isUsedExtendGeneModule(path) {
   return path.value.callee.name === 'extendGeneModule';
 }
 
-function validateModuleDeclaration({
-  file, isCore, checkerConfig
-}) {
+function validateModuleDeclaration({ file, isCore, checkerConfig }) {
   try {
-    const {memoization} = checkerConfig.rules;
+    const { memoization } = checkerConfig.rules;
 
     const fileAst = getModuleDeclarationFile(file);
 
@@ -45,10 +43,10 @@ function validateModuleDeclaration({
     if (!callExpressionDeclarationsModuleFile) {
       return {
         valid: false,
-        error: 'Module is not declared with "createGeneModule" or "extendGeneModule" factory!!',
+        error:
+          'Module is not declared with "createGeneModule" or "extendGeneModule" factory!!',
       };
     }
-
 
     if (isCore) {
       const hascreateGeneModuleCallExpression =
@@ -89,7 +87,6 @@ function validateModuleDeclaration({
         }
       }
 
-
       const src = fs.readFileSync(file).toString();
       const ast = j(src);
 
@@ -98,7 +95,7 @@ function validateModuleDeclaration({
 
       // check if useInit is declared
       const hasUseInitDeclaration = functionDeclarations.some(
-        path => path.value.id.name === 'useInit'
+        (path) => path.value.id.name === 'useInit',
       );
 
       if (isCore && !hasUseInitDeclaration) {
@@ -124,10 +121,9 @@ function validateModuleDeclaration({
         const componentsAndMediatorsBindingsInManifest =
           getIdentifiersFromModuleManifest(fileAst, j);
 
-
         const useInjectionValidationResult = validateUseInjectionIdentifiers(
           useInjectionIdentifiers,
-          componentsAndMediatorsBindingsInManifest
+          componentsAndMediatorsBindingsInManifest,
         );
 
         if (!useInjectionValidationResult.valid) {
@@ -136,10 +132,10 @@ function validateModuleDeclaration({
       }
     }
   } catch (e) {
-    return {valid: false, error: `${e.message}`};
+    return { valid: false, error: `${e.message}` };
   }
 
-  return {valid: true, type: 'success'};
+  return { valid: true, type: 'success' };
 }
 
-module.exports = {validateModuleDeclaration};
+module.exports = { validateModuleDeclaration };

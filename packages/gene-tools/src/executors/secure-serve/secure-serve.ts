@@ -1,12 +1,14 @@
-import { ExecutorContext, parseTargetString, runExecutor } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
+import { parseTargetString, runExecutor } from '@nx/devkit';
 
-import { createProxy, ServeOptions } from '../utilities/server';
+import type { ServeOptions } from '../utilities/server';
+import { createProxy } from '../utilities/server';
 
 export type SecureServeExecutorOptions = ServeOptions;
 
 export async function secureServeExecutor(
   options: SecureServeExecutorOptions,
-  context: ExecutorContext
+  context: ExecutorContext,
 ) {
   let success = false;
   const target = parseTargetString(options.serveTarget);

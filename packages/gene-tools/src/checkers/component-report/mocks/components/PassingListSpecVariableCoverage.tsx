@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CmpsList = ({cmps}) => (
+const CmpsList = ({ cmps }) => (
   <>
     {cmps.map(() => (
       <div />

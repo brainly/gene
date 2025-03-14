@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingSlot = ({id, content, items}: PropsType) => {
+const PassingSlot = ({ id, content, items }: PropsType) => {
   const slot = <div>hello</div>;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

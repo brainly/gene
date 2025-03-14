@@ -5,11 +5,7 @@
   "properties": {
     "prompts-profile": {
       "type": "string",
-      "enum": [
-        "basic",
-        "sample",
-        "advanced"
-      ],
+      "enum": ["basic", "sample", "advanced"],
       "x-prompt": {
         "message": "You will create a new component now. Which prompting options would you like to choose?",
         "type": "list",
@@ -38,7 +34,5 @@
       }
     }
   },
-  "required": [
-    "prompts-profile"
-  ]
+  "required": ["prompts-profile"]
 }

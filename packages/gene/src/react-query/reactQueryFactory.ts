@@ -1,5 +1,9 @@
-import { dehydrate, hydrate , DehydratedState , QueryClient as TanstackQueryClient , QueryClient as LegacyQueryClient } from '@tanstack/react-query';
-
+import type {
+  DehydratedState,
+  QueryClient as TanstackQueryClient,
+  QueryClient as LegacyQueryClient,
+} from '@tanstack/react-query';
+import { dehydrate, hydrate } from '@tanstack/react-query';
 
 type QueryClient = TanstackQueryClient | LegacyQueryClient;
 

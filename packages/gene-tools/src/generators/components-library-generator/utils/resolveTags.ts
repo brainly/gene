@@ -1,4 +1,4 @@
-import {BrainlyComponentLibraryGenerator} from '../schema';
+import type { BrainlyComponentLibraryGenerator } from '../schema';
 
 export const resolveTags = (schema: BrainlyComponentLibraryGenerator) => {
   if (!schema.tags) {

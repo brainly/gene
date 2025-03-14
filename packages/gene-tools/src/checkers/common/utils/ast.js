@@ -38,7 +38,7 @@ function isMarkedAsPrivate(node) {
   return (
     node &&
     node.comments &&
-    node.comments.some(c => c.value.includes('@private'))
+    node.comments.some((c) => c.value.includes('@private'))
   );
 }
 
@@ -51,14 +51,14 @@ function findComponentDefinition(path, componentName) {
 
   const componentAsVariableDeclarator = findVariableDeclarator(
     path,
-    componentName
+    componentName,
   );
 
   if (!componentAsVariableDeclarator) {
     return null;
   }
 
-  const {init} = componentAsVariableDeclarator.node;
+  const { init } = componentAsVariableDeclarator.node;
 
   if (init.type === 'ArrowFunctionExpression') {
     return init;
@@ -73,7 +73,7 @@ function findComponentDefinition(path, componentName) {
   }
 
   throw new Error(
-    `Unhandled component init type ${init.type} for component with name ${componentName}`
+    `Unhandled component init type ${init.type} for component with name ${componentName}`,
   );
 }
 
@@ -86,7 +86,7 @@ function findExpressionDeclaration(src) {
 }
 
 function isArrayProp(typeAnnotation) {
-  const isArrayReferenceType = nodeType =>
+  const isArrayReferenceType = (nodeType) =>
     nodeType.type === 'TSTypeReference' &&
     (nodeType.typeName.name === 'Array' ||
       nodeType.typeName.name === 'ReadonlyArray');
@@ -98,7 +98,7 @@ function isArrayProp(typeAnnotation) {
    * element: Array<string>
    * element: ReadonlyArray<string>
    */
-  const checkIfIsArrayType = nodeType =>
+  const checkIfIsArrayType = (nodeType) =>
     nodeType.type === 'TSArrayType' || isArrayReferenceType(nodeType);
 
   /**

@@ -1,6 +1,6 @@
 export const attachQueryParams = (
   baseUrl: string,
-  params: Record<string, string | string[] | undefined | number>
+  params: Record<string, string | string[] | undefined | number>,
 ) => {
   const stringifiedParams = Object.entries(params)
     .reduce(
@@ -8,8 +8,8 @@ export const attachQueryParams = (
         accParams: URLSearchParams,
         [paramName, paramValue]: [
           string,
-          string | string[] | undefined | number
-        ]
+          string | string[] | undefined | number,
+        ],
       ) => {
         if (paramValue === undefined) {
           return accParams;
@@ -17,12 +17,12 @@ export const attachQueryParams = (
 
         accParams.set(
           paramName,
-          Array.isArray(paramValue) ? paramValue.join(',') : String(paramValue)
+          Array.isArray(paramValue) ? paramValue.join(',') : String(paramValue),
         );
 
         return accParams;
       },
-      new URLSearchParams()
+      new URLSearchParams(),
     )
     .toString();
 

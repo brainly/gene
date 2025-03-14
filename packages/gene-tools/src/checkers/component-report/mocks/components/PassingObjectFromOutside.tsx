@@ -6,9 +6,9 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const object = {foo: 'bar'};
+const object = { foo: 'bar' };
 
-const PassingObjectFromOutside = ({id, content, items}: PropsType) => {
+const PassingObjectFromOutside = ({ id, content, items }: PropsType) => {
   return <div data-obj={object}></div>;
 };
 

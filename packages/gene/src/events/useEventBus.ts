@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { AbstractEventBusEventType, register, emit } from './EventBus';
+import type { AbstractEventBusEventType, register, emit } from './EventBus';
 
 interface PropsType<T> {
   eventName: string;
@@ -20,9 +20,7 @@ export function useEventBusBehaviourSubscription<T = unknown>({
   initialValue,
 }: PropsType<T>) {
   const context: EventBusContextType | null = useContext(eventBusContext);
-  const [currentValue, setCurrentValue] = useState<T | undefined>(
-    initialValue
-  );
+  const [currentValue, setCurrentValue] = useState<T | undefined>(initialValue);
   const [error, setError] = useState<string | undefined>();
 
   useEffect(() => {
@@ -30,14 +28,14 @@ export function useEventBusBehaviourSubscription<T = unknown>({
       const subscription = (
         context.register as (
           event: AbstractEventBusEventType,
-          onNext: (value: AbstractEventBusEventType) => void
+          onNext: (value: AbstractEventBusEventType) => void,
         ) => ZenObservable.Subscription
       )(
         {
           type: eventName,
         },
         (value: AbstractEventBusEventType) =>
-          setCurrentValue(value.payload as T)
+          setCurrentValue(value.payload as T),
       );
 
       return () => subscription.unsubscribe();
@@ -56,7 +54,7 @@ export function useEventBusBehaviourSubscription<T = unknown>({
 
 export function useEventBusSubscription<T = Record<string, any>>(
   eventName: string,
-  handler: (payload: T | undefined) => void
+  handler: (payload: T | undefined) => void,
 ) {
   const context: EventBusContextType | null = useContext(eventBusContext);
 
@@ -65,7 +63,7 @@ export function useEventBusSubscription<T = Record<string, any>>(
       const subscription = (
         context.register as (
           event: AbstractEventBusEventType,
-          onNext: (value: AbstractEventBusEventType) => void
+          onNext: (value: AbstractEventBusEventType) => void,
         ) => ZenObservable.Subscription
       )(
         {
@@ -76,10 +74,10 @@ export function useEventBusSubscription<T = Record<string, any>>(
             handler(value?.payload as T);
           } else {
             console.error(
-              `EventBus handler for event: ${eventName} is not defined!`
+              `EventBus handler for event: ${eventName} is not defined!`,
             );
           }
-        }
+        },
       );
 
       return () => subscription.unsubscribe();

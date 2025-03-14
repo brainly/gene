@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   generateFiles,
@@ -10,7 +10,7 @@ import {
   writeJson,
   updateJson,
 } from '@nx/devkit';
-import { BrainlyNextJSAppGenerator } from './schema';
+import type { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
 import { Linter } from '@nx/linter';
@@ -38,6 +38,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
     appDir: false,
+    src: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');

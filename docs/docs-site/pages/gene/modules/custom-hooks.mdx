@@ -2,8 +2,7 @@
 title: Custom Hooks
 ---
 
-import Image from 'next/image'
-
+import Image from 'next/image';
 
 # Custom Hooks
 
@@ -12,8 +11,8 @@ functional segments. This pattern enhances scalability, aids in the composition 
 
 Custom hooks are used for two main purposes:
 
-* **Code organization** - breaking down the module logic into distinct, functional segments called custom hooks.
-* **Code reusability** - allowing common functionalities to be shared across different modules. This concept will be further developed in the [branching](/gene/modules/branching) section.
+- **Code organization** - breaking down the module logic into distinct, functional segments called custom hooks.
+- **Code reusability** - allowing common functionalities to be shared across different modules. This concept will be further developed in the [branching](/gene/modules/branching) section.
 
 **Due to these purposes, custom hooks should be used in every module that does not represent a single feature (e.g., `SimpleModule`).**
 
@@ -121,51 +120,48 @@ export {SimpleModule, declarations};
 
 For the example purpose, `SimpleModule` from now on will be named `CustomHooksModule`. The module will be extended with additional features:
 
-* Displaying `Bar` component using data from `serviceXYZ`
-* Displaying `Foo` and `Bar` inside `Layout` component
+- Displaying `Bar` component using data from `serviceXYZ`
+- Displaying `Foo` and `Bar` inside `Layout` component
 
 With the inclusion of new features, dependencies diagram should look like this:
 
+```mermaid
 
+classDiagram
+  direction TB
+  namespace simple-module {
+      class SimpleModule {
+          useInit
+      }
+  }
 
-  ```mermaid
-  
-  classDiagram
-    direction TB
-    namespace simple-module {
-        class SimpleModule {
-            useInit
-        }
-    }
+  namespace simple-ui {
+      class Foo
+      class Bar
+      class Layout
+  }
 
-    namespace simple-ui {
-        class Foo
-        class Bar
-        class Layout
-    }
+  namespace service-abc {
+      class serviceAbc
+  }
 
-    namespace service-abc {
-        class serviceAbc
-    }
+  namespace service-xyz {
+      class serviceXyz
+  }
 
-    namespace service-xyz {
-        class serviceXyz
-    }
-
-    SimpleModule *-- Foo
-    SimpleModule *-- Bar
-    SimpleModule *-- Layout
-    SimpleModule *-- serviceAbc
-    SimpleModule *-- serviceXyz
-  ```
-
+  SimpleModule *-- Foo
+  SimpleModule *-- Bar
+  SimpleModule *-- Layout
+  SimpleModule *-- serviceAbc
+  SimpleModule *-- serviceXyz
+```
 
 ### Why use custom hooks?
 
 Now, there are a couple of issues if the logic related to powering all of the displayed components won't be handled by separate functions (custom hooks):
 
-* **Code organization** - with a single feature, a file is already ~100 LOC. Adding 2 features will likely triple its size. This issue will be even more significant in production code, which consists of a bigger number of features, each with a higher amount of logic.
-* **Code reusability** - the code won't be reusable with other module variations. This won't allow for using a composition approach in module branching. More on this in the [branching](/gene/modules/branching) section.
+- **Code organization** - with a single feature, a file is already ~100 LOC. Adding 2 features will likely triple its size. This issue will be even more significant in production code, which consists of a bigger number of features, each with a higher amount of logic.
+- **Code reusability** - the code won't be reusable with other module variations. This won't allow for using a composition approach in module branching. More on this in the [branching](/gene/modules/branching) section.
 
 Therefore, in such situations, Gene suggests handling the logic for each distinguishable UI piece with a custom hook.
 
@@ -176,10 +172,14 @@ First, let's handle the `Foo` component with a custom hook. The custom hook will
 **For a framework-agnostic approach, custom hooks are named like `fooHook` in documentation and diagrams. For example, in React, `fooHook` means the `useFoo` hook.**
 
 ```tsx filename="/hooks/useFoo.ts"
-import {FooButtonClick, FooEventsType, FooPropsType} from "@acme/components/simple-ui";
-import {useServiceAbc, AbcType} from "@acme/services/service-abc";
-import {useMediator} from '@brainly-gene/core'
-import * as React from "react";
+import {
+  FooButtonClick,
+  FooEventsType,
+  FooPropsType,
+} from '@acme/components/simple-ui';
+import { useServiceAbc, AbcType } from '@acme/services/service-abc';
+import { useMediator } from '@brainly-gene/core';
+import * as React from 'react';
 
 type TransformedAbcType = {
   items: Array<number>;
@@ -203,12 +203,16 @@ const transformAbc = (data: AbcType | null): TransformedAbcType => {
   );
 };
 
-export type FooComponentMapStatesType = "success" | "loading";
+export type FooComponentMapStatesType = 'success' | 'loading';
 
-export const useFoo = ({ref}: {ref: React.MutableRefObject<HTMLElement | null>}) => {
-  const {data, loading} = useServiceAbc();
+export const useFoo = ({
+  ref,
+}: {
+  ref: React.MutableRefObject<HTMLElement | null>;
+}) => {
+  const { data, loading } = useServiceAbc();
 
-  const {items, sumCount} = React.useMemo(() => transformAbc(data), [data]);
+  const { items, sumCount } = React.useMemo(() => transformAbc(data), [data]);
 
   const [additionalItems, setAdditionalItems] = React.useState<number[]>([]);
 
@@ -234,10 +238,10 @@ export const useFoo = ({ref}: {ref: React.MutableRefObject<HTMLElement | null>})
       DefaultComponent: React.ComponentType<FooPropsType>,
     ) => {
       if (loading) {
-        return componentMap.get("loading") || DefaultComponent;
+        return componentMap.get('loading') || DefaultComponent;
       }
 
-      return componentMap.get("success") || DefaultComponent;
+      return componentMap.get('success') || DefaultComponent;
     },
     [loading],
   );
@@ -250,7 +254,7 @@ export const useFoo = ({ref}: {ref: React.MutableRefObject<HTMLElement | null>})
     useFooMediators,
     useFooComponentMap,
   };
-}
+};
 ```
 
 The `ref` variable is reused for module mediation in Gene, making it the only argument passed to the hook.
@@ -258,13 +262,13 @@ The `ref` variable is reused for module mediation in Gene, making it the only ar
 With the custom hook, the module code will look much simpler:
 
 ```tsx filename="CustomHooksModule.tsx" showLineNumbers {2,7}
-import {Foo, Loading, FooPropsType} from "@acme/components/simple-ui";
-import {FooComponentMapStatesType, useFoo} from "./hooks/useFoo";
+import { Foo, Loading, FooPropsType } from '@acme/components/simple-ui';
+import { FooComponentMapStatesType, useFoo } from './hooks/useFoo';
 
 const useInit = () => {
   const ref = React.useRef(null);
 
-  const {fooProps, useFooMediators, useFooComponentMap} = useFoo({ref});
+  const { fooProps, useFooMediators, useFooComponentMap } = useFoo({ ref });
 
   return {
     fooProps,
@@ -278,8 +282,8 @@ const FooComponentMap = new Map<
   FooComponentMapStatesType,
   React.ComponentType<FooPropsType>
 >([
-  ["success", Foo],
-  ["loading", Loading],
+  ['success', Foo],
+  ['loading', Loading],
 ]);
 
 export const CustomHooksModule = () => {
@@ -314,10 +318,18 @@ The `useFoo` hook represents both indicators of a good custom hook, as it does n
 By using custom hooks, it will be easy to repeat the pattern for `Bar` and `Layout` accordingly:
 
 ```tsx filename="CustomHooksModule.tsx" showLineNumbers {1,3,4,10,11,13..16,22..25,37..44,51..54,60,64..68}
-import {Foo, Loading, Error, FooPropsType, Layout, Bar, BarPropsType} from "@acme/components/simple-ui";
-import {FooComponentMapStatesType, useFoo} from "./hooks/useFoo";
-import {BarComponentMapStatesType, useBar} from "./hooks/useBar";
-import {useLayout} from "./hooks/useLayout";
+import {
+  Foo,
+  Loading,
+  Error,
+  FooPropsType,
+  Layout,
+  Bar,
+  BarPropsType,
+} from '@acme/components/simple-ui';
+import { FooComponentMapStatesType, useFoo } from './hooks/useFoo';
+import { BarComponentMapStatesType, useBar } from './hooks/useBar';
+import { useLayout } from './hooks/useLayout';
 
 const useInit = () => {
   const ref = React.useRef(null);
@@ -346,17 +358,17 @@ const fooComponentMap = new Map<
   FooComponentMapStatesType,
   React.ComponentType<FooPropsType>
 >([
-  ["success", Foo],
-  ["loading", Loading],
+  ['success', Foo],
+  ['loading', Loading],
 ]);
 
 const barComponentMap = new Map<
   BarComponentMapStatesType,
   React.ComponentType<BarPropsType>
 >([
-  ["success", Bar],
-  ["loading", Loading],
-  ["error", Error],
+  ['success', Bar],
+  ['loading', Loading],
+  ['error', Error],
 ]);
 
 export const ModuleWithCustomHooks = () => {
@@ -389,48 +401,46 @@ export const ModuleWithCustomHooks = () => {
 
 Below diagram represents dependencies between all entities used in custom hooks module:
 
+```mermaid
 
-  ```mermaid
-   
-  classDiagram
-    direction TB
-    namespace custom-hooks-module {
+classDiagram
+  direction TB
+  namespace custom-hooks-module {
 
-        class CustomHooksModule {
-            useInit
-        }
+      class CustomHooksModule {
+          useInit
+      }
 
-        class useFoo
-        class useBar
-        class useLayout
-    }
+      class useFoo
+      class useBar
+      class useLayout
+  }
 
-    namespace simple-ui {
-        class Foo
-        class Bar
-        class Layout
-    }
+  namespace simple-ui {
+      class Foo
+      class Bar
+      class Layout
+  }
 
-    namespace service-abc {
-        class serviceAbc
-    }
+  namespace service-abc {
+      class serviceAbc
+  }
 
-    namespace service-xyz {
-        class serviceXyz
-    }
+  namespace service-xyz {
+      class serviceXyz
+  }
 
-    CustomHooksModule *-- Foo
-    CustomHooksModule *-- Bar
-    CustomHooksModule *-- Layout
+  CustomHooksModule *-- Foo
+  CustomHooksModule *-- Bar
+  CustomHooksModule *-- Layout
 
-    CustomHooksModule *-- useFoo
-    CustomHooksModule *-- useBar
-    CustomHooksModule *-- useLayout
+  CustomHooksModule *-- useFoo
+  CustomHooksModule *-- useBar
+  CustomHooksModule *-- useLayout
 
-    useFoo *-- serviceAbc
-    useBar *-- serviceXyz
-  ```
-
+  useFoo *-- serviceAbc
+  useBar *-- serviceXyz
+```
 
 Structure below represents filesystem of the module with applied custom hooks.
 
@@ -455,81 +465,93 @@ Using `AppContext` should be taken out of the equation, as this is a tool for co
 If `Foo` and `Bar` are communicating in a way that they modify each other's state, it means they should be treated as a single feature instead of two separate ones. In this case, **Composition using custom hooks** should be used. In such a case, the logic related to the communication should be lifted to the new custom hook that should import both the `useFoo` and `useBar`. This hook should provide props for both of those features and handle communication between them. The important thing here is the interface of the `useFoo` and `useBar` as they have to lower their encapsulation level in order to accept incoming communication. The best way is to expose handlers that will then be wrapped in a mediator function inside the wrapping hook:
 
 ```tsx filename="/hooks/fooBar/useFooBar.ts"
-import { useBar } from "./useBar";
-import { useFoo } from "./useFoo";
+import { useBar } from './useBar';
+import { useFoo } from './useFoo';
 
 export const useFooBar = ({
   ref,
 }: {
   ref: React.MutableRefObject<HTMLElement | null>;
 }) => {
-  const { fooProps, handlers: {handleFooClick}, useFooComponentMap } = useFoo({ ref });
-  const { barProps, useBarMediators, useBarComponentMap, handlers: {handleBarRefetch} } =
-    useBar({ ref });
+  const {
+    fooProps,
+    handlers: { handleFooClick },
+    useFooComponentMap,
+  } = useFoo({ ref });
+  const {
+    barProps,
+    useBarMediators,
+    useBarComponentMap,
+    handlers: { handleBarRefetch },
+  } = useBar({ ref });
 
   const useFooBarMediators = () => {
-    useMediator<FooButtonClick>(FooEventsType.ON_BUTTON_CLICK, () => {
+    useMediator<FooButtonClick>(
+      FooEventsType.ON_BUTTON_CLICK,
+      () => {
         handleFooClick();
-        handleBarRefetch()
-    }, ref);
+        handleBarRefetch();
+      },
+      ref,
+    );
 
-    useBarMediators()
+    useBarMediators();
   };
 
- return {
+  return {
     fooProps,
     barProps,
     useFooComponentMap,
     useBarComponentMap,
-    useFooBarMediators
-  }
-}
+    useFooBarMediators,
+  };
+};
 ```
 
 Then `useFooBar` can be used instead of individual `useFoo` and `useBar` within the module.
 
-  ```mermaid
-  
-  classDiagram
-    direction TB
-    namespace custom-hooks-module {
+```mermaid
 
-        class CustomHooksModule {
-            useInit
-        }
+classDiagram
+  direction TB
+  namespace custom-hooks-module {
 
-        class useFooBar
-        class useFoo
-        class useBar
-        class useLayout
-    }
+      class CustomHooksModule {
+          useInit
+      }
 
-    namespace simple-ui {
-        class Foo
-        class Bar
-        class Layout
-    }
+      class useFooBar
+      class useFoo
+      class useBar
+      class useLayout
+  }
 
-    namespace service-abc {
-        class serviceAbc
-    }
+  namespace simple-ui {
+      class Foo
+      class Bar
+      class Layout
+  }
 
-    namespace service-xyz {
-        class serviceXyz
-    }
+  namespace service-abc {
+      class serviceAbc
+  }
 
-    CustomHooksModule *-- Foo
-    CustomHooksModule *-- Bar
-    CustomHooksModule *-- Layout
+  namespace service-xyz {
+      class serviceXyz
+  }
 
-    CustomHooksModule *-- useFooBar
-    useFooBar *-- useFoo
-    useFooBar *-- useBar
-    CustomHooksModule *-- useLayout
+  CustomHooksModule *-- Foo
+  CustomHooksModule *-- Bar
+  CustomHooksModule *-- Layout
 
-    useFoo *-- serviceAbc
-    useBar *-- serviceXyz
-  ```
+  CustomHooksModule *-- useFooBar
+  useFooBar *-- useFoo
+  useFooBar *-- useBar
+  CustomHooksModule *-- useLayout
+
+  useFoo *-- serviceAbc
+  useBar *-- serviceXyz
+```
 
 Structure below represents filesystem of the module with applied custom hooks.
 

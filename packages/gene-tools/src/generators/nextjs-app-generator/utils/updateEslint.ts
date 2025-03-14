@@ -1,4 +1,5 @@
-import { joinPathFragments, Tree, updateJson } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { joinPathFragments, updateJson } from '@nx/devkit';
 
 export const updateEslint = (tree: Tree, appDir: string) => {
   updateJson(
@@ -13,6 +14,6 @@ export const updateEslint = (tree: Tree, appDir: string) => {
           },
         },
       };
-    }
+    },
   );
 };

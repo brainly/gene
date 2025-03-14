@@ -1,8 +1,8 @@
-import React, {SyntheticEvent} from 'react';
-import {useTransformedNextRouter} from '../routers';
+import React, { SyntheticEvent } from 'react';
+import { useTransformedNextRouter } from '../routers';
 
 export interface Routable {
-  onError?: (err: {cancelled: boolean; url: string; type?: string}) => void;
+  onError?: (err: { cancelled: boolean; url: string; type?: string }) => void;
   guard?: (url?: string) => boolean;
   requiresLeaveConfirmation?: boolean;
   url: string;
@@ -17,9 +17,9 @@ function getDisplayName<T>(WrappedComponent: React.FC<T>) {
 
 export function withRouter<T extends Routable>(Component: React.FC<T>) {
   function ViewComponent(props: T) {
-    const newProps: T = {...props};
+    const newProps: T = { ...props };
 
-    const {navigate, generate} = useTransformedNextRouter();
+    const { navigate, generate } = useTransformedNextRouter();
 
     function onClick(e: SyntheticEvent) {
       if (!newProps.guard?.(newProps.url)) {

@@ -4,13 +4,12 @@ jest.mock('@nx/devkit', () => ({
 }));
 jest.mock('http-proxy');
 
-import { ExecutorContext, logger, runExecutor } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
+import { logger, runExecutor } from '@nx/devkit';
 
 import { createServer } from 'http-proxy';
-import {
-  secureServeExecutor,
-  SecureServeExecutorOptions,
-} from './secure-serve';
+import type { SecureServeExecutorOptions } from './secure-serve';
+import { secureServeExecutor } from './secure-serve';
 
 describe('secureServe executor', () => {
   const options: SecureServeExecutorOptions = {
@@ -49,10 +48,10 @@ describe('secureServe executor', () => {
     });
 
     await expect(
-      async () => await secureServeExecutor(options, context)
+      async () => await secureServeExecutor(options, context),
     ).rejects.toThrow();
     expect(logger.error).toHaveBeenCalledWith(
-      expect.stringContaining('Failed to initialize the proxy')
+      expect.stringContaining('Failed to initialize the proxy'),
     );
   });
 
@@ -62,8 +61,8 @@ describe('secureServe executor', () => {
     expect(result.success).toBe(true);
     expect(logger.info).toHaveBeenCalledWith(
       expect.stringContaining(
-        `Started https://${options.host}:${options.port} → http://${options.targetHost}:${options.targetPort}`
-      )
+        `Started https://${options.host}:${options.port} → http://${options.targetHost}:${options.targetPort}`,
+      ),
     );
     expect(runExecutor).toHaveBeenCalled();
     expect(createServer).toHaveBeenCalled();

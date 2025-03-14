@@ -1,15 +1,15 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   readJson,
-  Tree,
   updateJson,
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { BrainlyComponentLibraryGenerator } from './schema';
+import type { BrainlyComponentLibraryGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
 
 import { dasherize } from '@nx/devkit/src/utils/string-utils';
@@ -18,7 +18,7 @@ import { resolveTags } from './utils/resolveTags';
 
 const getDirectoryPath = (
   schema: BrainlyComponentLibraryGenerator,
-  dasherizedName: string
+  dasherizedName: string,
 ) => {
   if (!schema.directory) {
     return `${dasherizedName}/components`;
@@ -31,14 +31,14 @@ const getDirectoryPath = (
 
 export default async function (
   tree: Tree,
-  schema: BrainlyComponentLibraryGenerator
+  schema: BrainlyComponentLibraryGenerator,
 ) {
   const nameWithSuffix = `${dasherize(schema.name)}-ui`;
   const directoryPath = getDirectoryPath(schema, dasherize(schema.name));
   const moduleSourcePath = `libs/${directoryPath}/${nameWithSuffix}/src/`;
   const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
     new RegExp('/', 'g'),
-    '-'
+    '-',
   );
   const currentPackageJson = readJson(tree, 'package.json');
 
@@ -58,7 +58,7 @@ export default async function (
     tree,
     joinPathFragments(__dirname, './files'),
     moduleSourcePath,
-    {}
+    {},
   );
 
   /**
@@ -75,7 +75,7 @@ export default async function (
       compilerOptions: {
         ...currentTsconfig.compilerOptions,
         isolatedModules: true,
-        esModuleInterop: true
+        esModuleInterop: true,
       },
     };
   });

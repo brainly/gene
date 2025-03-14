@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   second?: string[];
 }>;
 
-const MissingListStories = ({list, second}: PropsType) => {
+const MissingListStories = ({ list, second }: PropsType) => {
   return null;
 };
 

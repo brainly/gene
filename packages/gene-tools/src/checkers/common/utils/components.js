@@ -3,8 +3,8 @@ const fs = require('fs');
 const j = jscodeshift.withParser('tsx');
 const path = require('path');
 
-const {findComponentDefinition} = require('./ast');
-const {getComponentMetadata} = require('./meta');
+const { findComponentDefinition } = require('./ast');
+const { getComponentMetadata } = require('./meta');
 
 function getDeclarationFromAssignedTypeOrInterface(ast, file, type) {
   if (!type.typeAnnotation.typeName || !type.typeAnnotation.typeName.name) {
@@ -75,8 +75,8 @@ function getLocalTypeOrInterfaceDeclaration(ast, name) {
 function getImportedTypeOrInterfaceDeclaration(ast, file, name) {
   const importDeclaration = ast
     .find(j.ImportDeclaration)
-    .filter(({node}) =>
-      node.specifiers.find(specifier => specifier.local.name === name)
+    .filter(({ node }) =>
+      node.specifiers.find((specifier) => specifier.local.name === name),
     )
     .nodes()[0];
 
@@ -111,7 +111,7 @@ function getImportedTypeOrInterfaceDeclaration(ast, file, name) {
 }
 
 function getMembersFromIntersectingTypes(ast, file, types) {
-  const declarations = types.map(type => {
+  const declarations = types.map((type) => {
     if (
       (type.typeName && type.typeName.name === 'Readonly') ||
       type.type === 'TSTypeLiteral'
@@ -138,7 +138,7 @@ function getMembersFromIntersectingTypes(ast, file, types) {
     return declaration;
   });
 
-  const literal = declarations.find(({typeAnnotation}) => {
+  const literal = declarations.find(({ typeAnnotation }) => {
     if (!typeAnnotation) {
       return false;
     }
@@ -147,12 +147,12 @@ function getMembersFromIntersectingTypes(ast, file, types) {
 
   if (literal) {
     throw new Error(
-      `One of intersecting types declaration looks invalid (did you use Readonly?)`
+      `One of intersecting types declaration looks invalid (did you use Readonly?)`,
     );
   }
 
   const members = declarations
-    .map(type => {
+    .map((type) => {
       let typeAst = type.typeAst;
 
       if (!typeAst) {
@@ -192,11 +192,11 @@ function findPropTypesDeclaration(src, file) {
 
   const defaultExportCollection = ast.find(j.ExportDefaultDeclaration);
 
-  const {componentName} = getComponentMetadata(src);
+  const { componentName } = getComponentMetadata(src);
 
   const componentDef = findComponentDefinition(
     defaultExportCollection.paths()[0],
-    componentName
+    componentName,
   );
 
   // TODO: Figure out if we want to valdiate props in HOCs
@@ -266,4 +266,4 @@ function findPropTypesDeclaration(src, file) {
   return propsType;
 }
 
-module.exports = {findPropTypesDeclaration};
+module.exports = { findPropTypesDeclaration };

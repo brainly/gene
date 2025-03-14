@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   generateFiles,
@@ -10,7 +10,7 @@ import {
   writeJson,
   updateJson,
 } from '@nx/devkit';
-import { BrainlyNextJSAppGenerator } from './schema';
+import type { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
 import { Linter } from '@nx/linter';
@@ -21,7 +21,11 @@ import { updateEslint } from './utils/updateEslint';
 import { underscore, camelize } from '@nx/devkit/src/utils/string-utils';
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { cleanupFiles } from './utils/cleanupFiles';
-import { getNpmScope, updateCypressTsConfig, updateJestConfig } from '../utilities';
+import {
+  getNpmScope,
+  updateCypressTsConfig,
+  updateJestConfig,
+} from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory, e2e } = schema;
@@ -114,7 +118,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
             },
           ],
         };
-      }
+      },
     );
   }
 
@@ -150,16 +154,12 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
         yaml: require.resolve('yaml', {
           paths: [require.resolve('openapi3-ts')],
         }),
-      },`
+      },`,
   );
 
   await formatFiles(tree);
 
-  cleanupFiles(tree, [
-    'pages/_app.tsx',
-    'pages/index.tsx',
-    'pages/styles.css',
-  ]);
+  cleanupFiles(tree, ['pages/_app.tsx', 'pages/index.tsx', 'pages/styles.css']);
 
   // revert possible changes to package.json
   writeJson(tree, 'package.json', currentPackageJson);

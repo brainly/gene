@@ -1,12 +1,12 @@
-import {SentryErrorBoundary} from './sentry';
-import {EmptyErrorBoundary} from './empty';
-import {Container} from 'inversify';
-import {ErrorBoundaryComponentType} from './types';
+import { SentryErrorBoundary } from './sentry';
+import { EmptyErrorBoundary } from './empty';
+import { Container } from 'inversify';
+import type { ErrorBoundaryComponentType } from './types';
 
 export const ERROR_BOUNDARY_IDENTIFIER = Symbol.for('errorBoundary');
 export const EMPTY_ERROR_BOUNDARY_IDENTIFIER = Symbol.for('emptyErrorBoundary');
 export const SENTRY_ERROR_BOUNDARY_IDENTIFIER = Symbol.for(
-  'sentryErrorBoundary'
+  'sentryErrorBoundary',
 );
 
 export type ErrorBoundaryType =
@@ -19,7 +19,7 @@ const errorBoundariesComponents = new Map([
 ]);
 
 function getErrorBoundary(
-  errorBoundary: ErrorBoundaryType
+  errorBoundary: ErrorBoundaryType,
 ): ErrorBoundaryComponentType {
   return errorBoundariesComponents.get(errorBoundary) || EmptyErrorBoundary;
 }

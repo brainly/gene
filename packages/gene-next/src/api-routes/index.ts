@@ -1,1 +1,1 @@
-export {apiHandlerConnect} from './apiHandlerConnect';
+export { apiHandlerConnect } from './apiHandlerConnect';

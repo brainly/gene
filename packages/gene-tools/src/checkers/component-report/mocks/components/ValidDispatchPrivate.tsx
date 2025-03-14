@@ -1,6 +1,6 @@
 import React from 'react';
-import {dispatch} from '@brainly-gene/core';
-import {ValidDispatchEventsType, ClickEvent} from './ValidDispatchEventsType';
+import { dispatch } from '@brainly-gene/core';
+import { ValidDispatchEventsType, ClickEvent } from './ValidDispatchEventsType';
 
 type PropsType = Readonly<{
   id: string;
@@ -9,12 +9,12 @@ type PropsType = Readonly<{
 }>;
 
 /* @private */
-const ValidDispatchPrivate = ({id, content, items}: PropsType) => {
+const ValidDispatchPrivate = ({ id, content, items }: PropsType) => {
   const handleContentClick = React.useCallback(
     (e: React.SyntheticEvent<HTMLElement>) => {
       dispatch<ClickEvent>(e.target, [ValidDispatchEventsType.ON_DIV_CLICK]);
     },
-    []
+    [],
   );
 
   return (

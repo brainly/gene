@@ -8,10 +8,10 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const RefProp = ({id, content, items}: PropsType) => {
+const RefProp = ({ id, content, items }: PropsType) => {
   const ref = React.useRef();
 
-  const clazz = cx('foo', {bar: content === 'bar'});
+  const clazz = cx('foo', { bar: content === 'bar' });
 
   return (
     <>

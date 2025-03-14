@@ -76,7 +76,7 @@ const registerFactory = function <T extends AbstractEventBusEventType>() {
         this.closed = true;
         subscriberMap.set(
           event.type,
-          subscriber.filter((payload) => payload !== onNext)
+          subscriber.filter((payload) => payload !== onNext),
         );
       },
     };
@@ -85,7 +85,7 @@ const registerFactory = function <T extends AbstractEventBusEventType>() {
 
 const emitFactory = function () {
   return async function <T extends AbstractEventBusEventType>(
-    event: T | Promise<T>
+    event: T | Promise<T>,
   ) {
     const result = event instanceof Promise ? await event : event;
 
@@ -99,7 +99,7 @@ const emitFactory = function () {
 export const emit = compose<
   Observable<AbstractEventBusEventType>,
   (
-    event: AbstractEventBusEventType | Promise<AbstractEventBusEventType>
+    event: AbstractEventBusEventType | Promise<AbstractEventBusEventType>,
   ) => void
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -113,7 +113,7 @@ export const register = compose<
   Observable<AbstractEventBusEventType>,
   (
     event: AbstractEventBusEventType,
-    onNext: (value: AbstractEventBusEventType) => void
+    onNext: (value: AbstractEventBusEventType) => void,
   ) => ZenObservable.Subscription
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore

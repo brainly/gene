@@ -22,8 +22,8 @@ export const useSearchResults = () => {
   React.useEffect(() => {
     if (!docs || !docs.length) {
       fetch('/data.json')
-        .then(data => data.json())
-        .then(json => setDocs(json));
+        .then((data) => data.json())
+        .then((json) => setDocs(json));
     }
   }, [docs]);
 
@@ -34,34 +34,34 @@ export const useSearchResults = () => {
       }
 
       const contentResults = keyword
-        ? docs.filter(doc =>
-            doc.content.toLowerCase().includes(keyword.toLowerCase())
+        ? docs.filter((doc) =>
+            doc.content.toLowerCase().includes(keyword.toLowerCase()),
           )
         : [];
 
       const withSubstrContent = contentResults.map(
-        ({route, title, content}) => {
+        ({ route, title, content }) => {
           const index = content.toLowerCase().indexOf(keyword.toLowerCase());
           const substr = slice(content, index, 15, 15 + keyword.length);
 
-          return {route, title, content: substr, type: 'content'};
-        }
+          return { route, title, content: substr, type: 'content' };
+        },
       );
 
       const titleResults = keyword
-        ? docs.filter(doc =>
-            doc.title?.toLowerCase().includes(keyword.toLowerCase())
+        ? docs.filter((doc) =>
+            doc.title?.toLowerCase().includes(keyword.toLowerCase()),
           )
         : [];
 
-      const withNoContent = titleResults.map(result => {
-        return {...result, content: undefined, type: 'title'};
+      const withNoContent = titleResults.map((result) => {
+        return { ...result, content: undefined, type: 'title' };
       });
 
       return [...withNoContent, ...withSubstrContent].slice(0, 10);
     },
-    [docs]
+    [docs],
   );
 
-  return {searchDocs};
+  return { searchDocs };
 };

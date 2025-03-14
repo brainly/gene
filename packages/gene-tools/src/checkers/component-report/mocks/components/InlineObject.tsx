@@ -6,10 +6,10 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const InlineArrowFunc = ({id, content, items}: PropsType) => {
+const InlineArrowFunc = ({ id, content, items }: PropsType) => {
   return (
     <>
-      <div data-obj={{foo: 'bar'}}>click me</div>
+      <div data-obj={{ foo: 'bar' }}>click me</div>
     </>
   );
 };

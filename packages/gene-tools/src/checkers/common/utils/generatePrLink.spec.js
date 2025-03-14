@@ -38,10 +38,7 @@ describe('generateLink', () => {
       'libs/example-lib/src/lib/example-module/ExampleModule.tsx';
     const prUrl =
       'https://github.com/example-organization/example-repository/pull/123';
-    const hash = crypto
-      .createHash('sha256')
-      .update(regularPath)
-      .digest('hex');
+    const hash = crypto.createHash('sha256').update(regularPath).digest('hex');
     const expectedLink = `${prUrl}/files#diff-${hash}`;
 
     const result = generateLink({ truncatedPath: regularPath, prUrl });

@@ -1,4 +1,5 @@
-import { logger, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from '../library-generator';
 import subappGenerator from './index';
@@ -34,7 +35,7 @@ describe('Subapp generator', () => {
     });
 
     expect(
-      appTree.exists('libs/api-utils/src/subapps/my-subapp.ts')
+      appTree.exists('libs/api-utils/src/subapps/my-subapp.ts'),
     ).toBeTruthy();
   });
 
@@ -54,17 +55,15 @@ describe('Subapp generator', () => {
   });
 
   it('should create new lib if it does not exist', async () => {
-    (prompt as unknown as jest.Mock).mockImplementation(
-      ([{ name }]) => {
-        if (name === 'shouldGenerateLib') {
-          return { shouldGenerateLib: true };
-        }
-
-        if (name === 'libDirectory') {
-          return { libDirectory: 'my-domain' };
-        }
+    (prompt as unknown as jest.Mock).mockImplementation(([{ name }]) => {
+      if (name === 'shouldGenerateLib') {
+        return { shouldGenerateLib: true };
       }
-    );
+
+      if (name === 'libDirectory') {
+        return { libDirectory: 'my-domain' };
+      }
+    });
 
     await subappGenerator(appTree, {
       library: 'my-api-utils',
@@ -75,7 +74,7 @@ describe('Subapp generator', () => {
     });
 
     expect(
-      appTree.exists('libs/my-domain/my-api-utils/src/subapps/my-subapp.ts')
+      appTree.exists('libs/my-domain/my-api-utils/src/subapps/my-subapp.ts'),
     ).toBeTruthy();
 
     const indexContent = appTree

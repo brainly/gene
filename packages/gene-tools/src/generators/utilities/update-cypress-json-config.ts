@@ -1,4 +1,5 @@
-import { Tree, updateJson } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { updateJson } from '@nx/devkit';
 
 export const updateCypressTsConfig = (tree: Tree, e2ePath: string) => {
   updateJson(tree, `${e2ePath}/tsconfig.json`, (json) => {

@@ -27,7 +27,7 @@ export interface Message {
 export type LogType = (message: Message) => void;
 
 export type ErrorWithModuleBoundaryLoggingFunctionType = (
-  e: Message | Error | string
+  e: Message | Error | string,
 ) => void;
 
 export type LoggerFunction = (message: Message) => void;

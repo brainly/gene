@@ -1,5 +1,5 @@
 import React from 'react';
-import {createGeneModule, useModuleInjection} from '@brainly-gene/core';
+import { createGeneModule, useModuleInjection } from '@brainly-gene/core';
 import { useSomeLogic } from './delegates/useSomeLogic';
 
 const symbolIdent = Symbol.for('injectionExample');
@@ -7,7 +7,7 @@ const symbolIdent = Symbol.for('injectionExample');
 function useInit() {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
-  const {someProps, useSomeMediators} = useSomeLogic({ref});
+  const { someProps, useSomeMediators } = useSomeLogic({ ref });
 
   const injected = useModuleInjection(symbolIdent);
   const injectedSecond = useModuleInjection('injectionKey');
@@ -17,18 +17,13 @@ function useInit() {
     someProps,
     useSomeMediators,
     injected,
-    injectedSecond
+    injectedSecond,
   };
 }
 
 function RawValidModule() {
-  const {
-    ref,
-    someProps,
-    useSomeMediators,
-    injected,
-    injectedSecond
-  } = useInit();
+  const { ref, someProps, useSomeMediators, injected, injectedSecond } =
+    useInit();
 
   useSomeMediators();
 
@@ -41,7 +36,7 @@ function RawValidModule() {
   );
 }
 
-const {declarations, module: ValidModule} = createGeneModule({
+const { declarations, module: ValidModule } = createGeneModule({
   module: RawValidModule,
   declarations: {
     components: [[symbolIdent, 'ExampleComponent']],
@@ -49,4 +44,4 @@ const {declarations, module: ValidModule} = createGeneModule({
   },
 });
 
-export {ValidModule, declarations};
+export { ValidModule, declarations };

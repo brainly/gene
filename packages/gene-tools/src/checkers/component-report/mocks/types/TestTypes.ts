@@ -1,4 +1,4 @@
-import {DoubleImportedInterface} from './AnotherTypes';
+import { DoubleImportedInterface } from './AnotherTypes';
 
 export type TestIntersectionType = Readonly<{
   foo: string;

@@ -59,7 +59,7 @@ describe('getMessagesFromListProps()', () => {
     });
 
     expect(result).toEqual(
-      'Prop exampleList: no empty list in story and no fulfilled list in story'
+      'Prop exampleList: no empty list in story and no fulfilled list in story',
     );
   });
 
@@ -80,7 +80,7 @@ describe('getMessagesFromListProps()', () => {
     });
 
     expect(result).toEqual(
-      'Prop exampleList: no empty list in story and no fulfilled list in story, Prop exampleList2: no empty list in story and no fulfilled list in story, Prop exampleList3: no empty list in story and no fulfilled list in story'
+      'Prop exampleList: no empty list in story and no fulfilled list in story, Prop exampleList2: no empty list in story and no fulfilled list in story, Prop exampleList3: no empty list in story and no fulfilled list in story',
     );
   });
 });
@@ -90,7 +90,7 @@ describe('getDeclaredLists()', () => {
     const result = getDeclaredLists({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/ValidListStories'
+        '../mocks/components/ValidListStories',
       ),
     });
 
@@ -111,7 +111,7 @@ describe('getListsFromStories()', () => {
     const result = getListsFromStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/ValidListStories'
+        '../mocks/components/ValidListStories',
       ),
       declaredLists: ['list', 'second', 'third', 'fourth'],
     });
@@ -140,7 +140,7 @@ describe('getListsFromStories()', () => {
     const result = getListsFromStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/MissingListStories'
+        '../mocks/components/MissingListStories',
       ),
       declaredLists: ['list', 'second', 'third', 'fourth'],
     });

@@ -14,7 +14,7 @@ export function useMyData(props?: { variables: VariablesType }) {
       queryKey: queryKey(props?.variables),
       queryFn: (ctx) => queryFn(props?.variables, ctx),
     },
-    queryClient
+    queryClient,
   );
 
   return transformReactQueryResponse(result);

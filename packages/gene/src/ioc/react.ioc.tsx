@@ -15,7 +15,7 @@ interface Props extends React.PropsWithChildren {
 export const Provider: React.FC<Props> = (props) => {
   const value = useMemo(
     () => ({ container: props.container }),
-    [props.container]
+    [props.container],
   );
 
   return (
@@ -36,7 +36,7 @@ export function useInjection<T>(identifier: interfaces.ServiceIdentifier<T>) {
 
   if (!container) {
     throw new Error(
-      'DI context not found. Is your component wrapped in <InversifyContext.Provider />?'
+      'DI context not found. Is your component wrapped in <InversifyContext.Provider />?',
     );
   }
 
@@ -57,7 +57,7 @@ type ComponentInjectionType<T> =
 
 export function useComponentInjection<T>(
   identifier: interfaces.ServiceIdentifier<React.ComponentType<T>>,
-  fallback: React.ComponentType<T>
+  fallback: React.ComponentType<T>,
 ) {
   const { container } = useContext(InversifyContext);
 
@@ -86,7 +86,7 @@ type CallbackInjectionType<T, R = void> =
 
 export function useCallbackInjection<T, R = void>(
   identifier: interfaces.ServiceIdentifier<CallbackType<T, R>>,
-  fallback: CallbackType<T, R>
+  fallback: CallbackType<T, R>,
 ) {
   const { container } = useContext(InversifyContext);
 
@@ -109,7 +109,7 @@ export function useCallbackInjection<T, R = void>(
 }
 
 export function withIoc<Props extends Record<string, any>>(
-  getContainer: (props?: Props) => interfaces.Container
+  getContainer: (props?: Props) => interfaces.Container,
 ) {
   return (Page: React.ComponentType<Props>) => {
     return (props: Props) => {

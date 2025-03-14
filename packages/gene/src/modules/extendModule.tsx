@@ -4,12 +4,15 @@ import { getModuleContainer } from './di';
 import { decorateModule } from './decorateModule';
 import { ModuleComponentType } from './types';
 
-export function extendGeneModule<RenderChildrenProp = Record<string, any>, SlotsLabels extends string = string>(
+export function extendGeneModule<
+  RenderChildrenProp = Record<string, any>,
+  SlotsLabels extends string = string,
+>(
   parentDeclarations: ModuleInputType<RenderChildrenProp, SlotsLabels> & {
     identifiers: Record<string, symbol>;
     container: Container;
   },
-  moduleDeclarations: Partial<ModuleInputType<RenderChildrenProp, SlotsLabels>>
+  moduleDeclarations: Partial<ModuleInputType<RenderChildrenProp, SlotsLabels>>,
 ): ModuleComponentType<RenderChildrenProp> {
   const { container } = getModuleContainer({
     components: moduleDeclarations?.declarations?.components || [],

@@ -13,8 +13,6 @@
       "default": false
     }
   },
-  "required": [
-    "command"
-  ],
+  "required": ["command"],
   "additionalProperties": false
 }

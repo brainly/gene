@@ -4,7 +4,7 @@ import { join } from 'path';
 
 async function executor(
   options: any,
-  context: { projectName: any; root: any; workspace: any }
+  context: { projectName: any; root: any; workspace: any },
 ) {
   const projectName = context.projectName;
   const appRootPath = context.root;
@@ -19,7 +19,7 @@ async function executor(
 
   if (!workspace.projects[translationsProject]) {
     throw new Error(
-      `Project "${translationsProject}" not found in workspace. You can generate it using "nx g @brainly-gene/tools:translations-library".`
+      `Project "${translationsProject}" not found in workspace. You can generate it using "nx g @brainly-gene/tools:translations-library".`,
     );
   }
 
@@ -30,7 +30,7 @@ async function executor(
   const from = join(
     appRootPath,
     workspace.projects[translationsProject].sourceRoot,
-    'locales'
+    'locales',
   );
   const to = join(appRootPath, project.root, 'public', 'nx-locales');
 

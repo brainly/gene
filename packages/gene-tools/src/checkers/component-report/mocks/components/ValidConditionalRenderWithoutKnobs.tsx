@@ -1,12 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
-import {Text} from 'brainly-style-guide';
+import { Text } from 'brainly-style-guide';
 
 type PropsType = Readonly<{
   variation?: number;
 }>;
 
-const ValidConditionalRenderWithoutKnobs = ({variation}: PropsType) => {
+const ValidConditionalRenderWithoutKnobs = ({ variation }: PropsType) => {
   return (
     <div data-testid="test_classname">
       <Text

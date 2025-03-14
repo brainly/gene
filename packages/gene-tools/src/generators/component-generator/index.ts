@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   getProjects,
@@ -8,14 +8,14 @@ import {
   readJson,
   writeJson,
 } from '@nx/devkit';
-import { BrainlyComponentGenerator } from './schema';
+import type { BrainlyComponentGenerator } from './schema';
 import { resolveDynamicOptions } from './utils/resolveDynamicOptions';
 import { reexport } from './utils/reexport';
 import { prompt } from 'inquirer';
 import { readdirSync } from 'fs';
 import { camelCase, upperFirst } from 'lodash';
 import { promptSelectAppName } from '../utilities/getAppName';
-import {classify} from '@nx/devkit/src/utils/string-utils';
+import { classify } from '@nx/devkit/src/utils/string-utils';
 import { getComponentTemplateVariables } from './utils/getComponentTemplateVariables';
 
 export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
@@ -25,7 +25,7 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
   const libraryName = await promptSelectAppName(
     schema.library,
     tree,
-    'What is name of library in which you want to create a component?'
+    'What is name of library in which you want to create a component?',
   );
 
   const library = projects.get(libraryName);
@@ -47,8 +47,9 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
   }
 
   if (tags?.includes('type:module')) {
-    const variants = readdirSync(`${sourceRoot}/lib`)
-      .filter((entry) => !entry.includes('.'));
+    const variants = readdirSync(`${sourceRoot}/lib`).filter(
+      (entry) => !entry.includes('.'),
+    );
 
     const isModuleLibrary = tags?.includes('type:application-module-library');
 
@@ -99,7 +100,7 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
       ...templateVariables,
       filename: classify(generatorOptions.name),
       tmpl: '',
-    }
+    },
   );
 
   const reexportFileName = upperFirst(camelCase(generatorOptions.name));

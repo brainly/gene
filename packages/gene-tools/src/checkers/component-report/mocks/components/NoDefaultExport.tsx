@@ -6,6 +6,6 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-export const NoDefaultExport = ({id, content, items}: PropsType) => {
+export const NoDefaultExport = ({ id, content, items }: PropsType) => {
   return null;
 };

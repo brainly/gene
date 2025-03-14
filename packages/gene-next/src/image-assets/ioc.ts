@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
+import type { GeneImagePropsType } from '@brainly-gene/core';
 import {
   NativeImage,
   withLoaderUrls,
-  GeneImagePropsType,
   GENE_IMAGE_COMPONENT_IDENTIFIER,
   NATIVE_IMAGE,
 } from '@brainly-gene/core';
@@ -13,7 +13,7 @@ import { Container } from 'inversify';
 
 export const NEXT_IMAGE = Symbol.for('nextImage');
 export const NEXT_IMAGE_IMGPROXY_LOADER = Symbol.for(
-  'nextImageImageproxyLoader'
+  'nextImageImageproxyLoader',
 );
 
 type ImageComponentsType =
@@ -28,7 +28,7 @@ const imageComponents = new Map([
 ]);
 
 function getImageComponent(
-  imagesType: ImageComponentsType
+  imagesType: ImageComponentsType,
 ): React.FC<GeneImagePropsType> {
   return imageComponents.get(imagesType) || NativeImage;
 }
@@ -43,9 +43,9 @@ export function getAssetsContainer(imagesType: ImageComponentsType) {
       : imageComponent;
 
   brainlyAssetsContainer
-    .bind<React.ComponentType<GeneImagePropsType>>(
-      GENE_IMAGE_COMPONENT_IDENTIFIER
-    )
+    .bind<
+      React.ComponentType<GeneImagePropsType>
+    >(GENE_IMAGE_COMPONENT_IDENTIFIER)
     .toConstantValue(componentToBind);
 
   return brainlyAssetsContainer;

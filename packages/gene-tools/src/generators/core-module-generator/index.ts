@@ -1,3 +1,4 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
@@ -5,16 +6,20 @@ import {
   joinPathFragments,
   readJson,
   readProjectConfiguration,
-  Tree,
   updateJson,
   updateProjectConfiguration,
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
-import { BrainlyCoreModuleGenerator } from './schema';
+import type { BrainlyCoreModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import { dasherize, classify, camelize, underscore } from '@nx/devkit/src/utils/string-utils';
+import {
+  dasherize,
+  classify,
+  camelize,
+  underscore,
+} from '@nx/devkit/src/utils/string-utils';
 import { Linter } from '@nx/linter';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 import { resolveTags } from './utils/resolveTags';
@@ -31,7 +36,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
   if (!providedTags.includes('domain:')) {
     throw new Error(
-      'Domain tag is required, please add tag `domain:<YOUR_DOMAIN_NAME>`. Domain should correspond to product or feature name for given lib. Examples: social-qa, tutoring, answer-platform, ads.'
+      'Domain tag is required, please add tag `domain:<YOUR_DOMAIN_NAME>`. Domain should correspond to product or feature name for given lib. Examples: social-qa, tutoring, answer-platform, ads.',
     );
   }
 
@@ -46,7 +51,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
   const moduleSourcePath = `${modulePath}/src`;
   const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
     new RegExp('/', 'g'),
-    '-'
+    '-',
   );
   const moduleProjectE2EName = `${moduleProjectName}-e2e`;
   const e2ePath = `apps/${moduleProjectE2EName}`;
@@ -84,7 +89,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
       tmpl: '',
       errorBoundary,
       npmScope,
-    }
+    },
   );
 
   /**
@@ -114,10 +119,9 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
       fileName: nameWithSuffix,
       pascalCaseFileName: classify(nameWithSuffix),
       dataTestId: underscore(`${nameWithSuffix}-id`),
-      connectedFileName: camelize(nameWithSuffix)
-        .toLocaleLowerCase(),
+      connectedFileName: camelize(nameWithSuffix).toLocaleLowerCase(),
       tmpl: '',
-    }
+    },
   );
 
   const e2eProjectConfig = readProjectConfiguration(tree, moduleProjectE2EName);
@@ -154,7 +158,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
           },
         ],
       };
-    }
+    },
   );
 
   await formatFiles(tree);
@@ -168,7 +172,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
 const getDirectoryPath = (
   schema: BrainlyCoreModuleGenerator,
-  dasherizedName: string
+  dasherizedName: string,
 ) => {
   if (!schema.directory) {
     return `${dasherizedName}/modules`;

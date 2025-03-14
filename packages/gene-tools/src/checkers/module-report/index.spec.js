@@ -17,114 +17,114 @@ describe('generateModuleReport()', () => {
   it('generates a complete module report for valid application modules', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/valid-app-modules/app-modules'
+      'mocks/valid-app-modules/app-modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/index.ts'
+          'mocks/valid-app-modules/app-modules/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidModule.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidVariationModule.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidModule.stories.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/gene.config.yaml'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/hooks/useSomeLogic.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/hooks/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/hooks/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/hooks/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/components/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/components/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/components/ExampleComponent/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/components/ExampleComponent/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module/components/ExampleComponent/ExampleComponent.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module/components/ExampleComponent/ExampleComponent.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/another-module/AnotherValidModule.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/another-module/AnotherValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/another-module/AnotherValidModule.stories.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/another-module/AnotherValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/another-module/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/another-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/another-module/delegates/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/another-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/another-module/delegates/useSomeLogic.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/another-module/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/another-module/gene.config.yaml'
+          'mocks/valid-app-modules/app-modules/src/lib/another-module/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/ValidWithDisabledStorybookModule.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/ValidWithDisabledStorybookModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/ValidVariationWithDisabledStorybookModule.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/ValidVariationWithDisabledStorybookModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/gene.config.yaml'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/hooks/useSomeLogic.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/hooks/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/hooks/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/hooks/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/components/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/components/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/components/ExampleComponent/index.ts'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/components/ExampleComponent/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/components/ExampleComponent/ExampleComponent.tsx'
+          'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/components/ExampleComponent/ExampleComponent.tsx',
         ),
       ],
       pathPrefix,
@@ -132,13 +132,13 @@ describe('generateModuleReport()', () => {
     });
 
     const linkValidModule = generateLinkFor(
-      'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidModule.tsx'
+      'mocks/valid-app-modules/app-modules/src/lib/valid-module/ValidModule.tsx',
     );
     const linkAnotherModule = generateLinkFor(
-      'mocks/valid-app-modules/app-modules/src/lib/another-module/AnotherValidModule.tsx'
+      'mocks/valid-app-modules/app-modules/src/lib/another-module/AnotherValidModule.tsx',
     );
     const linkValidModuleWithDisabledStorybook = generateLinkFor(
-      'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/ValidWithDisabledStorybookModule.tsx'
+      'mocks/valid-app-modules/app-modules/src/lib/valid-module-with-disabled-storybook/ValidWithDisabledStorybookModule.tsx',
     );
 
     const expectedResultForValidModule =
@@ -168,7 +168,7 @@ describe('generateModuleReport()', () => {
     expect(validModuleReport.report).toEqual(expectedResultForValidModule);
     expect(anotherModuleReport.report).toEqual(expectedResultForAnotherModule);
     expect(validmModuleWithDisabledStorybookReport.report).toEqual(
-      expectedResultForValidModuleWithDisabledStorybook
+      expectedResultForValidModuleWithDisabledStorybook,
     );
     expect(validModuleReport.success).toBe(true);
     expect(anotherModuleReport.success).toBe(true);
@@ -178,58 +178,58 @@ describe('generateModuleReport()', () => {
   it('throws declaration error for invalid application modules', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-app-modules-no-declaration/app-modules'
+      'mocks/invalid-app-modules-no-declaration/app-modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/index.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidModule.tsx'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidVariationModule.tsx'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/index.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/index.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -237,10 +237,10 @@ describe('generateModuleReport()', () => {
     });
 
     const linkValidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidModule.tsx'
+      'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/valid-module/ValidModule.tsx',
     );
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+      'mocks/invalid-app-modules-no-declaration/app-modules/src/lib/invalid-module/InvalidModule.tsx',
     );
 
     const expectedResultForValidModule =
@@ -266,58 +266,58 @@ describe('generateModuleReport()', () => {
   it('throws export delegates for invalid application modules', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-app-modules-export-delegates/app-modules'
+      'mocks/invalid-app-modules-export-delegates/app-modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/index.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidModule.tsx'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidVariationModule.tsx'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidModule.stories.tsx'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/index.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/index.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -325,20 +325,20 @@ describe('generateModuleReport()', () => {
     });
 
     const linkIndex = generateLinkFor(
-      'mocks/invalid-app-modules-export-delegates/app-modules/src/index.ts'
+      'mocks/invalid-app-modules-export-delegates/app-modules/src/index.ts',
     );
     const linkValidModule = generateLinkFor(
-      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidModule.tsx'
+      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/ValidModule.tsx',
     );
     const linkValidModuleIndex = generateLinkFor(
-      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/index.ts'
+      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/valid-module/index.ts',
     );
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/InvalidModule.tsx',
     );
     const linkInvalidModuleIndex = generateLinkFor(
-      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/index.ts'
+      'mocks/invalid-app-modules-export-delegates/app-modules/src/lib/invalid-module/index.ts',
     );
 
     const expectedResultForValidModule =
@@ -364,62 +364,62 @@ describe('generateModuleReport()', () => {
   it('throws no spec error for invalid application modules', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-app-modules-no-spec/app-modules'
+      'mocks/invalid-app-modules-no-spec/app-modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/index.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidModule.tsx'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidVariationModule.tsx'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/index.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/index.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/gene.config.yaml'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -427,15 +427,15 @@ describe('generateModuleReport()', () => {
     });
 
     const linkValidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidModule.tsx'
+      'mocks/invalid-app-modules-no-spec/app-modules/src/lib/valid-module/ValidModule.tsx',
     );
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+      'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/InvalidModule.tsx',
     );
 
     const linkInvalidModuleDelegate = generateLinkFor(
-      'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts'
+      'mocks/invalid-app-modules-no-spec/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts',
     );
 
     const expectedResultForValidModule =
@@ -461,62 +461,62 @@ describe('generateModuleReport()', () => {
   it('throws no storybook error for invalid application modules', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-app-modules-no-storybook/app-modules'
+      'mocks/invalid-app-modules-no-storybook/app-modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/index.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidModule.tsx'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidVariationModule.tsx'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/index.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/index.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/gene.config.yaml'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -524,11 +524,11 @@ describe('generateModuleReport()', () => {
     });
 
     const linkValidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidModule.tsx'
+      'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/valid-module/ValidModule.tsx',
     );
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+      'mocks/invalid-app-modules-no-storybook/app-modules/src/lib/invalid-module/InvalidModule.tsx',
     );
 
     const expectedResultForValidModule =
@@ -554,62 +554,62 @@ describe('generateModuleReport()', () => {
   it('ignores no storybook error for invalid application modules by config', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules'
+      'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/index.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidModule.tsx'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidVariationModule.tsx'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/index.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/index.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/gene.config.yaml'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/delegates/index.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts'
+          'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -617,11 +617,11 @@ describe('generateModuleReport()', () => {
     });
 
     const linkValidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidModule.tsx'
+      'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/valid-module/ValidModule.tsx',
     );
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/InvalidModule.tsx'
+      'mocks/invalid-app-modules-no-storybook-ignore-by-config/app-modules/src/lib/invalid-module/InvalidModule.tsx',
     );
 
     const expectedResultForValidModule =
@@ -647,42 +647,42 @@ describe('generateModuleReport()', () => {
   it('generates a complete module report for valid core module', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/valid-core-module/modules'
+      'mocks/valid-core-module/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/index.ts'
+          'mocks/valid-core-module/modules/valid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/ValidModule.tsx'
+          'mocks/valid-core-module/modules/valid-module/src/lib/ValidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/ValidVariationModule.tsx'
+          'mocks/valid-core-module/modules/valid-module/src/lib/ValidVariationModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/ValidModule.stories.tsx'
+          'mocks/valid-core-module/modules/valid-module/src/lib/ValidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/index.ts'
+          'mocks/valid-core-module/modules/valid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/delegates/index.ts'
+          'mocks/valid-core-module/modules/valid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/valid-core-module/modules/valid-module/src/lib/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/valid-core-module/modules/valid-module/src/lib/delegates/useSomeLogic.spec.ts'
+          'mocks/valid-core-module/modules/valid-module/src/lib/delegates/useSomeLogic.spec.ts',
         ),
       ],
       pathPrefix,
@@ -691,7 +691,7 @@ describe('generateModuleReport()', () => {
     });
 
     const linkValidModule = generateLinkFor(
-      'mocks/valid-core-module/modules/valid-module/src/lib/ValidModule.tsx'
+      'mocks/valid-core-module/modules/valid-module/src/lib/ValidModule.tsx',
     );
 
     const expectedResultForValidModule =
@@ -709,38 +709,38 @@ describe('generateModuleReport()', () => {
   it('throws declaration error for invalid core module', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-core-module-extend-declaration/modules'
+      'mocks/invalid-core-module-extend-declaration/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/index.ts'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/InvalidModule.tsx'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/InvalidModule.stories.tsx'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/index.ts'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/delegates/index.ts'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts'
+          'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts',
         ),
       ],
       pathPrefix,
@@ -749,7 +749,7 @@ describe('generateModuleReport()', () => {
     });
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/InvalidModule.tsx'
+      'mocks/invalid-core-module-extend-declaration/modules/invalid-module/src/lib/InvalidModule.tsx',
     );
 
     const expectedResultForInvalidModule =
@@ -767,38 +767,38 @@ describe('generateModuleReport()', () => {
   it('throws export module error for invalid core module', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-core-module-export-module/modules'
+      'mocks/invalid-core-module-export-module/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/index.ts'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/InvalidModule.tsx'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/InvalidModule.stories.tsx'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/index.ts'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/delegates/index.ts'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts'
+          'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts',
         ),
       ],
       pathPrefix,
@@ -807,15 +807,15 @@ describe('generateModuleReport()', () => {
     });
 
     const linkIndex = generateLinkFor(
-      'mocks/invalid-core-module-export-module/modules/invalid-module/src/index.ts'
+      'mocks/invalid-core-module-export-module/modules/invalid-module/src/index.ts',
     );
 
     const linkLibIndex = generateLinkFor(
-      'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/index.ts'
+      'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/index.ts',
     );
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/InvalidModule.tsx'
+      'mocks/invalid-core-module-export-module/modules/invalid-module/src/lib/InvalidModule.tsx',
     );
 
     const expectedResultForValidModule =
@@ -833,42 +833,42 @@ describe('generateModuleReport()', () => {
   it('ignores export module error for invalid core module by config', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-core-module-export-module-ignore-by-config/modules'
+      'mocks/invalid-core-module-export-module-ignore-by-config/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/index.ts'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.stories.tsx'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/index.ts'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/gene.config.yaml'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/delegates/index.ts'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts'
+          'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts',
         ),
       ],
       pathPrefix,
@@ -877,7 +877,7 @@ describe('generateModuleReport()', () => {
     });
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx'
+      'mocks/invalid-core-module-export-module-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx',
     );
 
     const expectedResultForInvalidModule =
@@ -895,34 +895,34 @@ describe('generateModuleReport()', () => {
   it('throws no spec error for invalid core module', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-core-module-no-spec/modules'
+      'mocks/invalid-core-module-no-spec/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/index.ts'
+          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/InvalidModule.tsx'
+          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/InvalidModule.stories.tsx'
+          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/index.ts'
+          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/delegates/index.ts'
+          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -931,11 +931,11 @@ describe('generateModuleReport()', () => {
     });
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/InvalidModule.tsx'
+      'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/InvalidModule.tsx',
     );
 
     const linkInvalidModuleDelegate = generateLinkFor(
-      'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+      'mocks/invalid-core-module-no-spec/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
     );
 
     const expectedResultForInvalidModule =
@@ -953,38 +953,38 @@ describe('generateModuleReport()', () => {
   it('ignores no spec error for invalid core module by config', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-core-module-no-spec-ignore-by-config/modules'
+      'mocks/invalid-core-module-no-spec-ignore-by-config/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/index.ts'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.stories.tsx'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/index.ts'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/gene.config.yaml'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/gene.config.yaml',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/delegates/index.ts'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
         ),
       ],
       pathPrefix,
@@ -993,7 +993,7 @@ describe('generateModuleReport()', () => {
     });
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx'
+      'mocks/invalid-core-module-no-spec-ignore-by-config/modules/invalid-module/src/lib/InvalidModule.tsx',
     );
 
     const expectedResultForInvalidModule =
@@ -1011,38 +1011,38 @@ describe('generateModuleReport()', () => {
   it('throws no storybook error for invalid core module', () => {
     const pathPrefix = path.resolve(
       __dirname,
-      'mocks/invalid-core-module-no-storybook/modules'
+      'mocks/invalid-core-module-no-storybook/modules',
     );
 
     const reports = generateModuleReport({
       files: [
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/index.ts'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/InvalidModule.tsx'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/InvalidModule.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/InvalidModule.stories.tsx'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/InvalidModule.stories.tsx',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/index.ts'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/delegates/index.ts'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/delegates/index.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/delegates/useSomeLogic.ts'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/delegates/useSomeLogic.ts',
         ),
         path.resolve(
           __dirname,
-          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts'
+          'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/delegates/useSomeLogic.spec.ts',
         ),
       ],
       pathPrefix,
@@ -1051,7 +1051,7 @@ describe('generateModuleReport()', () => {
     });
 
     const linkInvalidModule = generateLinkFor(
-      'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/InvalidModule.tsx'
+      'mocks/invalid-core-module-no-storybook/modules/invalid-module/src/lib/InvalidModule.tsx',
     );
 
     const expectedResultForInvalidModule =

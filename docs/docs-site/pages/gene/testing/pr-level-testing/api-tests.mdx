@@ -3,25 +3,30 @@
 ## Why We Need API Tests
 
 API tests are essential because they:
+
 - Provide fast feedback on API functionality and reliability.
 - Help identify issues early, reducing the cost of bug fixes.
 - Ensure integration points between services are functioning as expected.
 - Complement end-to-end (E2E) tests by covering scenarios difficult to test through the UI.
 
 ## Responsibilities
+
 **Creation**
-  - **Developer**:
-    - Creates tests when working on specific increments.
-    - Fixes tests if they are flaky.
-  - **QA**:
-    - Reviews and executes API tests.
-    - Ensures test coverage and reliability.
+
+- **Developer**:
+  - Creates tests when working on specific increments.
+  - Fixes tests if they are flaky.
+- **QA**:
+  - Reviews and executes API tests.
+  - Ensures test coverage and reliability.
 
 **Fixing**
-  - The developer responsible for introducing the bug.
+
+- The developer responsible for introducing the bug.
 
 **Maintenance**
-  - The developer responsible for changes in the area covered by the API tests.
+
+- The developer responsible for changes in the area covered by the API tests.
 
 ## Scope and Effort
 
@@ -29,7 +34,8 @@ API tests are essential because they:
 - **Effort**: Estimation depends on the complexity of the APIs. Initial setup might require significant effort, but regular maintenance should be minimal.
 
 ## Tools
-*Note: The team can decide which technology stack to use for E2E tests; the tools below are suggestions.*
+
+_Note: The team can decide which technology stack to use for E2E tests; the tools below are suggestions._
 
 - **Cypress**: Known for ease of use, robust API testing capabilities, and CI/CD integration.
 - **Postman**: Useful for manual API testing and creating automated tests.
@@ -47,6 +53,7 @@ API tests are essential because they:
 ## Definition of Done
 
 An API test is considered complete when it:
+
 - Covers the defined scope and meets the acceptance criteria.
 - Passes consistently in the test environment.
 - Has been reviewed and approved by a peer.
@@ -56,16 +63,15 @@ An API test is considered complete when it:
 
 ### Testing a GET Endpoint with Cypress
 
-*Note: This example uses Cypress to test a GET endpoint. Other libraries, tools, or frameworks can be used based on specific requirements.*
+_Note: This example uses Cypress to test a GET endpoint. Other libraries, tools, or frameworks can be used based on specific requirements._
 
 ```js
 describe('GET /api/users', () => {
   it('should return a list of users', () => {
-    cy.request('GET', '/api/users')
-      .then((response) => {
-        expect(response.status).to.eq(200);
-        expect(response.body).to.have.length.greaterThan(0);
-      });
+    cy.request('GET', '/api/users').then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.length.greaterThan(0);
+    });
   });
 });
 ```

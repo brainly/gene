@@ -33,8 +33,8 @@ export function createProxy({
       .on('error', function (e: any) {
         logger.error(
           chalk.red(
-            `${chalk.green('[PROXY]')} Request failed: ${chalk.bold(e.code)}`
-          )
+            `${chalk.green('[PROXY]')} Request failed: ${chalk.bold(e.code)}`,
+          ),
         );
       })
       .listen(port);
@@ -45,8 +45,8 @@ export function createProxy({
 
   logger.info(
     `${chalk.green(
-      '[PROXY]'
-    )} Started https://${host}:${port} → http://${targetHost}:${targetPort}`
+      '[PROXY]',
+    )} Started https://${host}:${port} → http://${targetHost}:${targetPort}`,
   );
 
   return server;

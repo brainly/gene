@@ -1,1 +1,1 @@
-export {InvalidModule} from './InvalidModule';
+export { InvalidModule } from './InvalidModule';

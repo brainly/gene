@@ -1,14 +1,14 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
   installPackagesTask,
   generateFiles,
   joinPathFragments,
-  Tree,
   readJson,
   writeJson,
 } from '@nx/devkit';
-import { APIRouteGenerator } from './schema';
+import type { APIRouteGenerator } from './schema';
 import { classify } from '@nx/devkit/src/utils/string-utils';
 
 import { promptSelectAppName, getAllAppKeys, getNpmScope } from '../utilities';
@@ -22,7 +22,7 @@ export default async function (tree: Tree, schema: APIRouteGenerator) {
     '',
     tree,
     'What is the app name?',
-    getAllAppKeys(tree)
+    getAllAppKeys(tree),
   );
   const projects = getProjects(tree);
 
@@ -45,7 +45,7 @@ export default async function (tree: Tree, schema: APIRouteGenerator) {
       tmpl: '',
       directory: directory.length > 0 ? `/${directory}` : directory,
       npmScope,
-    }
+    },
   );
 
   await formatFiles(tree);

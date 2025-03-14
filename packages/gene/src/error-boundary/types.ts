@@ -5,7 +5,7 @@ export interface ErrorBoundaryPropsType {
 }
 
 export type ErrorBoundaryComponentType = (
-  props: ErrorBoundaryPropsType
+  props: ErrorBoundaryPropsType,
 ) => JSX.Element;
 
 export type ErrorBoundaryDeclarationType = Omit<

@@ -10,7 +10,7 @@ export type ModuleInputType<T, U extends string> = {
 };
 
 export type ModuleReturnType<T, U extends string> = {
-  module: ModuleComponentType<T, U >;
+  module: ModuleComponentType<T, U>;
   container: Container;
   identifiers: Record<string, symbol>;
   declarations: ModuleInputType<T, U> & {
@@ -19,8 +19,11 @@ export type ModuleReturnType<T, U extends string> = {
   };
 };
 
-export function createGeneModule<RenderChildrenProp = Record<string, any>, SlotsLabels extends string = string>(
-  props: ModuleInputType<RenderChildrenProp, SlotsLabels>
+export function createGeneModule<
+  RenderChildrenProp = Record<string, any>,
+  SlotsLabels extends string = string,
+>(
+  props: ModuleInputType<RenderChildrenProp, SlotsLabels>,
 ): ModuleReturnType<RenderChildrenProp, SlotsLabels> {
   const {
     mediators,

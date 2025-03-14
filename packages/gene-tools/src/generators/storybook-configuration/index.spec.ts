@@ -1,5 +1,6 @@
 import * as devkit from '@nx/devkit';
-import { readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { Linter } from '@nx/linter';
 import { applicationGenerator } from '@nx/next';
@@ -39,7 +40,7 @@ describe('storybookConfiguration generator', () => {
 
     it('should throw when passing a non-existent project', async () => {
       await expect(async () =>
-        storybookConfigurationGenerator(tree, { name: 'non-existent-project' })
+        storybookConfigurationGenerator(tree, { name: 'non-existent-project' }),
       ).rejects.toThrow();
     });
 
@@ -62,16 +63,16 @@ describe('storybookConfiguration generator', () => {
 
       expect(devkit.formatFiles).toHaveBeenCalled();
       expect(
-        tree.read(`apps/${application}/.storybook/main.js`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/main.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`apps/${application}/.storybook/manager.js`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/manager.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`apps/${application}/.storybook/preview.js`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/preview.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`apps/${application}/.storybook/tsconfig.json`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/tsconfig.json`, 'utf-8'),
       ).toMatchSnapshot();
     });
 
@@ -79,16 +80,16 @@ describe('storybookConfiguration generator', () => {
       await storybookConfigurationGenerator(tree, { name: application });
 
       expect(
-        tree.read(`apps/${application}/.storybook/main.js`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/main.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`apps/${application}/.storybook/manager.js`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/manager.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`apps/${application}/.storybook/preview.js`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/preview.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`apps/${application}/.storybook/tsconfig.json`, 'utf-8')
+        tree.read(`apps/${application}/.storybook/tsconfig.json`, 'utf-8'),
       ).toMatchSnapshot();
     });
 
@@ -102,7 +103,7 @@ describe('storybookConfiguration generator', () => {
           '**/*.stories.js',
           '**/*.stories.jsx',
           '**/*.stories.tsx',
-        ])
+        ]),
       );
     });
 
@@ -143,7 +144,7 @@ describe('storybookConfiguration generator', () => {
 
     it('should throw when passing a non-existent project', async () => {
       await expect(async () =>
-        storybookConfigurationGenerator(tree, { name: 'non-existent-project' })
+        storybookConfigurationGenerator(tree, { name: 'non-existent-project' }),
       ).rejects.toThrow();
     });
 
@@ -162,16 +163,16 @@ describe('storybookConfiguration generator', () => {
       await storybookConfigurationGenerator(tree, { name: library });
 
       expect(
-        tree.read(`libs/${library}/.storybook/main.js`, 'utf-8')
+        tree.read(`libs/${library}/.storybook/main.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`libs/${library}/.storybook/manager.js`, 'utf-8')
+        tree.read(`libs/${library}/.storybook/manager.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`libs/${library}/.storybook/preview.js`, 'utf-8')
+        tree.read(`libs/${library}/.storybook/preview.js`, 'utf-8'),
       ).toMatchSnapshot();
       expect(
-        tree.read(`libs/${library}/.storybook/tsconfig.json`, 'utf-8')
+        tree.read(`libs/${library}/.storybook/tsconfig.json`, 'utf-8'),
       ).toMatchSnapshot();
     });
 
@@ -185,7 +186,7 @@ describe('storybookConfiguration generator', () => {
           '**/*.stories.js',
           '**/*.stories.jsx',
           '**/*.stories.tsx',
-        ])
+        ]),
       );
     });
 

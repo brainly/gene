@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingMemoizedSlot = ({id, content, items}: PropsType) => {
+const PassingMemoizedSlot = ({ id, content, items }: PropsType) => {
   const slot = React.useMemo(() => <div>hello</div>, []);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

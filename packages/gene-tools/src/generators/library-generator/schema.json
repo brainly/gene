@@ -23,7 +23,5 @@
       "x-prompt": "What are the library tags?"
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

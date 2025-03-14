@@ -11,6 +11,7 @@ We built abstracted services to provide a unified API, allowing users to interac
 ## Common API
 
 Each of our services returns a common API format:
+
 ```jsx
 const { data, loading, error, fetchMore, refetch } = useMyService();
 ```
@@ -18,6 +19,7 @@ const { data, loading, error, fetchMore, refetch } = useMyService();
 ## Supported Clients
 
 Currently, we support two clients:
+
 - [Apollo Client](https://www.apollographql.com/docs/react/)
 - [React Query](https://react-query.tanstack.com/)
 
@@ -34,6 +36,7 @@ In Next.js applications, developers use the `getServerSideProps` pattern to hydr
 However, React's nested component structure can lead to complex prop drilling. Although using a `context` to pass `serverProps` can reduce this complexity, it does not solve the issue entirely, particularly regarding cache invalidation. This setup results in two data sources: the props and the client-side instance of the query client, complicating cache management.
 
 Our solution is to create a QueryClient instance on the server, fetch data, populate the QueryClient state, and send this state to the client side via the `serverProps` pattern. On the client side, we then initialize a QueryClient instance with the server-prepared initial state. This approach provides the following benefits:
+
 - A single source of data
 - QueryClient manages cache state and handles invalidation
 

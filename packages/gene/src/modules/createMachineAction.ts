@@ -1,23 +1,23 @@
 export type ActionHandler<
   TMachineContext,
   TMachineEvent,
-  TInjectedDependencies
+  TInjectedDependencies,
 > = (
   deps: TInjectedDependencies,
   context: TMachineContext,
-  event: TMachineEvent
+  event: TMachineEvent,
 ) => void;
 
 export function createGeneMachineAction<
   TMachineContext,
   TMachineEvent,
-  TInjectedDependencies
+  TInjectedDependencies,
 >(
   actionFunction: ActionHandler<
     TMachineContext,
     TMachineEvent,
     TInjectedDependencies
-  >
+  >,
 ) {
   return (deps: TInjectedDependencies) =>
     (context: TMachineContext, event: TMachineEvent) =>

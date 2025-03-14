@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const jscodeshift = require('jscodeshift');
 
-const {isArrayProp} = require('../../common/utils/ast');
-const {findPropTypesDeclaration} = require('../../common/utils/components');
+const { isArrayProp } = require('../../common/utils/ast');
+const { findPropTypesDeclaration } = require('../../common/utils/components');
 
-function getListsFromStories({truncatedPath, declaredLists}) {
+function getListsFromStories({ truncatedPath, declaredLists }) {
   const src = fs.readFileSync(`${truncatedPath}.stories.tsx`).toString();
 
   const baseName = path.basename(truncatedPath);
@@ -20,8 +20,10 @@ function getListsFromStories({truncatedPath, declaredLists}) {
   }
 
   return declaredLists
-    .map(item => {
-      const propNodes = ast.find(j.JSXAttribute, {name: {name: item}}).nodes();
+    .map((item) => {
+      const propNodes = ast
+        .find(j.JSXAttribute, { name: { name: item } })
+        .nodes();
 
       return propNodes.length ? propNodes : item;
     })
@@ -65,27 +67,28 @@ function getListsFromStories({truncatedPath, declaredLists}) {
     }, {});
 }
 
-function getDeclaredLists({truncatedPath}) {
+function getDeclaredLists({ truncatedPath }) {
   const src = fs.readFileSync(`${truncatedPath}.tsx`).toString();
 
   const propsTypeDeclaration = findPropTypesDeclaration(
     src,
-    `${truncatedPath}.tsx`
+    `${truncatedPath}.tsx`,
   );
 
   if (!propsTypeDeclaration) {
     return [];
   }
 
-  const {typeParameters} = propsTypeDeclaration.typeAnnotation;
+  const { typeParameters } = propsTypeDeclaration.typeAnnotation;
 
   const propsMembers = typeParameters ? typeParameters.params[0].members : null;
 
   return propsMembers
     ? propsMembers
         .map(
-          member =>
-            isArrayProp(member.typeAnnotation.typeAnnotation) && member.key.name
+          (member) =>
+            isArrayProp(member.typeAnnotation.typeAnnotation) &&
+            member.key.name,
         )
         .filter(Boolean)
     : [];
@@ -99,7 +102,7 @@ function getMessagesFromListProps(props) {
   }
 
   return keys
-    .map(prop => {
+    .map((prop) => {
       const propObj = props[prop];
 
       let message = `Prop ${prop}: `;

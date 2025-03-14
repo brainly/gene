@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 
 import { registerPrompt, prompt } from 'inquirer';
 
@@ -21,7 +21,7 @@ export async function promptSelectAppName(
   schemaAppName: string,
   tree: Tree,
   question: string,
-  listOfSelectableProjects?: string[]
+  listOfSelectableProjects?: string[],
 ) {
   let appName = schemaAppName;
 
@@ -46,7 +46,7 @@ export async function promptSelectAppName(
 export async function promptSelectMultipleAppNames(
   tree: Tree,
   question: string,
-  listOfSelectableProjects?: string[]
+  listOfSelectableProjects?: string[],
 ) {
   const projects = listOfSelectableProjects ?? getListOfAllProjectKeys(tree);
 

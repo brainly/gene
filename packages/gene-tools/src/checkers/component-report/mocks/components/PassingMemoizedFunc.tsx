@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingMemoizedFunc = ({id, content, items}: PropsType) => {
+const PassingMemoizedFunc = ({ id, content, items }: PropsType) => {
   const handler = React.useCallback(() => {
     return null;
   }, []);

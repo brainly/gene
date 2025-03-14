@@ -1,12 +1,12 @@
 function getUseInjectionIdentifiers(ast, j) {
   const useInjectionsDeclarations = ast
     .find(j.CallExpression, {
-      callee: {name: 'useModuleInjection'},
+      callee: { name: 'useModuleInjection' },
     })
     .paths();
 
   return useInjectionsDeclarations
-    .map(path => path.value.arguments)
+    .map((path) => path.value.arguments)
     .map(([argument]) => ({
       type: argument.type,
       name: argument.name || argument.value,
@@ -15,20 +15,20 @@ function getUseInjectionIdentifiers(ast, j) {
 
 function getIdentifiersFromModuleManifest(ast, j) {
   return ast
-    .find(j.CallExpression, {callee: {name: 'createGeneModule'}})
+    .find(j.CallExpression, { callee: { name: 'createGeneModule' } })
     .find(j.ObjectExpression)
     .find(j.ObjectProperty)
-    .filter(path => path.value.key.name === 'declarations')
+    .filter((path) => path.value.key.name === 'declarations')
     .find(j.ObjectProperty)
     .filter(
-      path =>
+      (path) =>
         path.value.key.name === 'mediators' ||
-        path.value.key.name === 'components'
+        path.value.key.name === 'components',
     )
     .nodes()
-    .map(node =>
+    .map((node) =>
       node.value.elements
-        ? node.value.elements.map(element => {
+        ? node.value.elements.map((element) => {
             const firstTupleElement = element.elements[0];
 
             if (!firstTupleElement) {
@@ -40,22 +40,22 @@ function getIdentifiersFromModuleManifest(ast, j) {
               name: firstTupleElement.value || firstTupleElement.name,
             };
           })
-        : []
+        : [],
     )
     .flat();
 }
 
 function validateUseInjectionIdentifiers(
   useInjectionIdentifiers,
-  moduleManifestIdentifiers
+  moduleManifestIdentifiers,
 ) {
   for (let i = 0; i <= useInjectionIdentifiers.length - 1; i++) {
     const useInjectionIdentifier = useInjectionIdentifiers[i];
 
     const hasBinding = moduleManifestIdentifiers.some(
-      item =>
+      (item) =>
         item.type === useInjectionIdentifier.type &&
-        item.name === useInjectionIdentifier.name
+        item.name === useInjectionIdentifier.name,
     );
 
     if (!hasBinding) {

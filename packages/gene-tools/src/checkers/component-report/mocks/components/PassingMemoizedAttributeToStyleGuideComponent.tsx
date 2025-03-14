@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, Link} from 'brainly-style-guide';
+import { Flex, Link } from 'brainly-style-guide';
 type PropsType = Readonly<{
   id: string;
   content: string;
@@ -18,11 +18,11 @@ const PassingMemoizedAttributeToStyleGuideComponent = ({
   return (
     <>
       <div onClick={handler}></div>
-      <Flex marginRight={{sm: 'xs'}}>content</Flex>
+      <Flex marginRight={{ sm: 'xs' }}>content</Flex>
     </>
   );
 };
 
 export default React.memo<PropsType>(
-  PassingMemoizedAttributeToStyleGuideComponent
+  PassingMemoizedAttributeToStyleGuideComponent,
 );

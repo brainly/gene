@@ -1,6 +1,6 @@
 import React from 'react';
-import {dispatch} from '@brainly-gene/core';
-import {ExampleOnClickType, ExampleEventsType} from '@acme/example';
+import { dispatch } from '@brainly-gene/core';
+import { ExampleOnClickType, ExampleEventsType } from '@acme/example';
 
 type PropsType = Readonly<{
   id: string;
@@ -8,15 +8,15 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const InlineArrowFunc = ({id, content, items}: PropsType) => {
+const InlineArrowFunc = ({ id, content, items }: PropsType) => {
   const handleContentClick = React.useCallback(
     (e: React.SyntheticEvent<HTMLElement>) => {
       dispatch<ExampleOnClickType>(e.target, [
         ExampleEventsType.ON_CLICK,
-        {foo: 'bar'},
+        { foo: 'bar' },
       ]);
     },
-    []
+    [],
   );
 
   return (

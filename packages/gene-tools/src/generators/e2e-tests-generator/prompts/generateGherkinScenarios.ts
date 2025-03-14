@@ -1,5 +1,5 @@
-import type {OpenAIApi} from 'openai';
-import {isValidGherkin} from '../utils/validateGherkin';
+import type { OpenAIApi } from 'openai';
+import { isValidGherkin } from '../utils/validateGherkin';
 
 const getGherkinReflectionPrompt = ({
   previousOutput,
@@ -34,7 +34,7 @@ const getGherkinReflectionPrompt = ({
   ${previousOutput}
 
   <ORIGINAL PROMPT>
-  ${getGherkinPrompt({input, devDescription})}
+  ${getGherkinPrompt({ input, devDescription })}
   `;
 
 const getGherkinPrompt = ({
@@ -193,7 +193,7 @@ export const reflectOnGherkinScenarios = async ({
           devDescription,
         }),
       },
-      {role: 'assistant', content: previousOutput},
+      { role: 'assistant', content: previousOutput },
       {
         role: 'user',
         content: getGherkinReflectionPrompt({

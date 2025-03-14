@@ -1,4 +1,4 @@
-import { Router } from './types';
+import type { Router } from './types';
 
 export type RouterIocType = () => Router;
 

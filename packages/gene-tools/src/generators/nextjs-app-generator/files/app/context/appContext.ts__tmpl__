@@ -1,4 +1,4 @@
-import { ActionType, makeStore } from '@brainly-gene/core';
+import { type ActionType, makeStore } from '@brainly-gene/core';
 
 export interface AppStoreType {
   hello: string;

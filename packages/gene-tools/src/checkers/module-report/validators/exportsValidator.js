@@ -4,7 +4,7 @@ const j = jscodeshift.withParser('tsx');
 
 function isExportingModule(path) {
   return path.value.specifiers.some((specifier) =>
-    specifier.exported.name.includes('Module')
+    specifier.exported.name.includes('Module'),
   );
 }
 
@@ -37,7 +37,7 @@ function validateExports({ filePaths, isCore, pathPrefix, checkerConfig }) {
           no_modules_export_from_core_library: noModulesExportsFromCoreLibrary,
         } = checkerConfig.rules;
         const hasModuleExport = exportDeclarations.some((path) =>
-          isExportingModule(path)
+          isExportingModule(path),
         );
 
         if (
@@ -53,7 +53,7 @@ function validateExports({ filePaths, isCore, pathPrefix, checkerConfig }) {
         }
       } else {
         const hasInvalidExport = exportDeclarations.some(
-          (path) => !isExportingModule(path) && !isExportingType(path)
+          (path) => !isExportingModule(path) && !isExportingType(path),
         );
         const isFileInsideComponentsFolder = isInsideComponentsFolder(filePath);
 

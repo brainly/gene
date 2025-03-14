@@ -1,14 +1,14 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
   installPackagesTask,
   generateFiles,
   joinPathFragments,
-  Tree,
   readJson,
   writeJson,
 } from '@nx/devkit';
-import { SubappGenerator } from './schema';
+import type { SubappGenerator } from './schema';
 import { classify, camelize } from '@nx/devkit/src/utils/string-utils';
 
 import { prompt } from 'inquirer';
@@ -58,7 +58,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
 
     const moduleProjectName = `${libDirectory}/${library}`.replace(
       new RegExp('/', 'g'),
-      '-'
+      '-',
     );
 
     moduleProject = projects.get(moduleProjectName);
@@ -81,7 +81,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
       fileName: name,
       tmpl: '',
       npmScope,
-    }
+    },
   );
 
   const reexportIndexPath = `${moduleProject.sourceRoot}/index.ts`;

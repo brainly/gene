@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import type React from 'react';
+import { useEffect } from 'react';
 
 interface EventHandlerArgsType<T, PayloadT> {
   type: T;
@@ -10,7 +11,7 @@ type MediatorType = [any, any?];
 export const useMediator = <T extends MediatorType>(
   eventType: T[0],
   eventHandler: (event: EventHandlerArgsType<T[0], T[1]>) => unknown,
-  ref: React.RefObject<any>
+  ref: React.RefObject<any>,
 ) => {
   useEffect(() => {
     const currentRef = ref.current;

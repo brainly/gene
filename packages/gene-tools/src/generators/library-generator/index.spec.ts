@@ -1,4 +1,5 @@
-import { logger, readJson, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger, readJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from './index';
 
@@ -35,8 +36,8 @@ describe('Library generator', () => {
     const eslintJSON = readJson(appTree, eslintLibPath);
     expect(
       eslintJSON.overrides.find((rule: any) =>
-        rule.extends?.includes('plugin:react-hooks/recommended')
-      )
+        rule.extends?.includes('plugin:react-hooks/recommended'),
+      ),
     );
   });
 
@@ -75,7 +76,7 @@ describe('Library generator', () => {
       .read('libs/my-library/jest.config.ts')
       ?.toString();
     expect(jestConfigContent).toContain(
-      `transform: { '^.+\\\\.[tj]sx?$': 'ts-jest' }`
+      `transform: { '^.+\\\\.[tj]sx?$': 'ts-jest' }`,
     );
   });
 

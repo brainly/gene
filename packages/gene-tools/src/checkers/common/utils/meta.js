@@ -25,17 +25,17 @@ function getNamedExportModuleDeclaration(ast) {
 
   for (const path of namedExportCollection.nodes()) {
     if (path.specifiers) {
-      const moduleExport = path.specifiers.find(specifier => {
+      const moduleExport = path.specifiers.find((specifier) => {
         return specifier.exported.name.includes('Module');
       });
 
       if (moduleExport) {
-        return {name: moduleExport.exported.name};
+        return { name: moduleExport.exported.name };
       }
     }
   }
 
-  return {name: null};
+  return { name: null };
 }
 
 function getComponentName(ast) {
@@ -109,18 +109,18 @@ function getComponentIsPrivate(ast) {
 
   const componentAsFunction = findFunctionDeclaration(
     defaultExportCollection.paths()[0],
-    componentName
+    componentName,
   );
 
   const componentAsVariableDeclarator = findVariableDeclarator(
     defaultExportCollection.paths()[0],
-    componentName
+    componentName,
   );
 
   const isPrivate = Boolean(
     (componentAsVariableDeclarator &&
       isMarkedAsPrivate(componentAsVariableDeclarator.parent.node)) ||
-      (componentAsFunction && isMarkedAsPrivate(componentAsFunction.node))
+      (componentAsFunction && isMarkedAsPrivate(componentAsFunction.node)),
   );
 
   return isPrivate;
@@ -134,7 +134,7 @@ function getComponentMetadata(src) {
   const componentDisplayName = getComponentDisplayName(ast);
   const hocs = getHOCs(ast);
 
-  return {componentName, isPrivate, componentDisplayName, hocs};
+  return { componentName, isPrivate, componentDisplayName, hocs };
 }
 
 module.exports = {

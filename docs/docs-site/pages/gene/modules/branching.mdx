@@ -108,7 +108,7 @@ Now, let's consider using `CustomHookModule` inside `ExampleApplicationMarketA`.
 Due to this fact, `CustomHookModule` should be placed close to the app. The conceptual view is presented in the diagram below:
 
 ```mermaid
-  
+
 classDiagram
   direction TB
   namespace apps-example-application-market-a {
@@ -190,14 +190,14 @@ classDiagram
   namespace apps-example-application-market-a {
       class ExampleApplicationMarketA
 
-  }
+}
 
-  namespace apps-example-application-market-b {
-      class ExampleApplicationMarketB
+namespace apps-example-application-market-b {
+class ExampleApplicationMarketB
 
-  }
+}
 
-  namespace apps-example-application-market-a-modules-custom-hook-module {
+namespace apps-example-application-market-a-modules-custom-hook-module {
 
       class ExampleApplicationMarketACustomHookModule {
           useInit
@@ -208,9 +208,10 @@ classDiagram
       class appALayoutHook["useLayout"]
 
       class Bar
-  }
 
-  namespace apps-example-application-market-b-modules-custom-hook-module {
+}
+
+namespace apps-example-application-market-b-modules-custom-hook-module {
 
       class ExampleApplicationMarketBCustomHookModule {
           useInit
@@ -221,47 +222,48 @@ classDiagram
       class appBLayoutHook["useLayout"]
 
       class Baz
-  }
 
-  namespace simple-ui {
-      class Foo
-      class Layout
-  }
+}
 
-  namespace service-abc {
-      class serviceAbc
-  }
+namespace simple-ui {
+class Foo
+class Layout
+}
 
-  namespace service-xyz {
-      class serviceXyz
-  }
+namespace service-abc {
+class serviceAbc
+}
 
-  ExampleApplicationMarketB *-- ExampleApplicationMarketBCustomHookModule
+namespace service-xyz {
+class serviceXyz
+}
 
-  ExampleApplicationMarketBCustomHookModule *-- Foo
-  ExampleApplicationMarketBCustomHookModule *-- Baz
-  ExampleApplicationMarketBCustomHookModule *-- Layout
+ExampleApplicationMarketB \*-- ExampleApplicationMarketBCustomHookModule
 
-  ExampleApplicationMarketBCustomHookModule *-- appBFooHook
-  ExampleApplicationMarketBCustomHookModule *-- appBBazHook
-  ExampleApplicationMarketBCustomHookModule *-- appBLayoutHook
+ExampleApplicationMarketBCustomHookModule _-- Foo
+ExampleApplicationMarketBCustomHookModule _-- Baz
+ExampleApplicationMarketBCustomHookModule \*-- Layout
 
-  appBFooHook *-- serviceAbc
-  appBBazHook *-- serviceXyz
-  ExampleApplicationMarketA *-- ExampleApplicationMarketACustomHookModule
+ExampleApplicationMarketBCustomHookModule _-- appBFooHook
+ExampleApplicationMarketBCustomHookModule _-- appBBazHook
+ExampleApplicationMarketBCustomHookModule \*-- appBLayoutHook
 
-  ExampleApplicationMarketACustomHookModule *-- Foo
-  ExampleApplicationMarketACustomHookModule *-- Bar
-  ExampleApplicationMarketACustomHookModule *-- Layout
+appBFooHook _-- serviceAbc
+appBBazHook _-- serviceXyz
+ExampleApplicationMarketA \*-- ExampleApplicationMarketACustomHookModule
 
-  ExampleApplicationMarketACustomHookModule *-- appAFooHook
-  ExampleApplicationMarketACustomHookModule *-- appABarHook
-  ExampleApplicationMarketACustomHookModule *-- appALayoutHook
+ExampleApplicationMarketACustomHookModule _-- Foo
+ExampleApplicationMarketACustomHookModule _-- Bar
+ExampleApplicationMarketACustomHookModule \*-- Layout
 
-  appAFooHook *-- serviceAbc
-  appABarHook *-- serviceXyz
+ExampleApplicationMarketACustomHookModule _-- appAFooHook
+ExampleApplicationMarketACustomHookModule _-- appABarHook
+ExampleApplicationMarketACustomHookModule \*-- appALayoutHook
 
-```
+appAFooHook _-- serviceAbc
+appABarHook _-- serviceXyz
+
+````
 </EnlargableContent>
 
 
@@ -285,7 +287,7 @@ Here's the simplified representation of the example of how to extract the core f
 
 <EnlargableContent>
 ```mermaid
- 
+
 classDiagram
   direction TB
   namespace apps-example-application-market-a {
@@ -342,7 +344,8 @@ classDiagram
   ExampleApplicationMarketACustomHookModule *-- useFoo
   ExampleApplicationMarketACustomHookModule *-- useLayout
   ExampleApplicationMarketACustomHookModule *-- useBar
-```
+````
+
 </EnlargableContent>
 As presented in the diagram, modules used by `ExampleApplicationMarketA` and `ExampleApplicationMarketB` are using `CustomHookModuleCore` as a core module. This module is responsible for exporting custom hooks that are used by the application modules. Application modules are using **composition** to combine core and market-specific functionalities.
 
@@ -358,7 +361,6 @@ Core functionalities are the features used by at least a significant part of the
 
 Per `CustomHookModuleCore` example, assume that `Bar` is considered a core functionality as it will be used in future applications (e.g., `ApplicationC`, `ApplicationD`, etc.), while `Baz` is a market-specific feature. In this case, `Bar` should be extracted to `CustomHookModuleCore`, and `Baz` should be kept in `ExampleApplicationMarketBCustomHookModule`.
 
-
 <EnlargableContent>
 ```mermaid
  
@@ -367,35 +369,32 @@ classDiagram
   namespace apps-example-application-market-a {
       class ExampleApplicationMarketA
 
-  }
+}
 
-  namespace apps-example-application-market-b {
-      class ExampleApplicationMarketB
+namespace apps-example-application-market-b {
+class ExampleApplicationMarketB
 
-  }
+}
 
-
-  namespace apps-example-application-market-a-modules-custom-hook-module {
+namespace apps-example-application-market-a-modules-custom-hook-module {
 
       class ExampleApplicationMarketACustomHookModule {
           useInit
       }
 
+}
 
-  }
-
-  namespace apps-example-application-market-b-modules-custom-hook-module {
+namespace apps-example-application-market-b-modules-custom-hook-module {
 
       class ExampleApplicationMarketBCustomHookModule {
           useInit
       }
 
       class useBaz
-  }
 
+}
 
-
-  namespace custom-hook-module-core {
+namespace custom-hook-module-core {
 
       class useFoo
 
@@ -404,24 +403,22 @@ classDiagram
       class CustomHookModuleCore {
           useInit
       }
-  }
 
+}
 
-  ExampleApplicationMarketB *-- ExampleApplicationMarketBCustomHookModule
+ExampleApplicationMarketB \*-- ExampleApplicationMarketBCustomHookModule
 
+ExampleApplicationMarketBCustomHookModule _-- useFoo
+ExampleApplicationMarketBCustomHookModule _-- useLayout
+ExampleApplicationMarketBCustomHookModule \*-- useBaz
 
-  ExampleApplicationMarketBCustomHookModule *-- useFoo
-  ExampleApplicationMarketBCustomHookModule *-- useLayout
-  ExampleApplicationMarketBCustomHookModule *-- useBaz
+ExampleApplicationMarketA \*-- ExampleApplicationMarketACustomHookModule
 
-  ExampleApplicationMarketA *-- ExampleApplicationMarketACustomHookModule
+ExampleApplicationMarketACustomHookModule _-- useFoo
+ExampleApplicationMarketACustomHookModule _-- useLayout
+ExampleApplicationMarketACustomHookModule \*-- useBar
 
-
-  ExampleApplicationMarketACustomHookModule *-- useFoo
-  ExampleApplicationMarketACustomHookModule *-- useLayout
-  ExampleApplicationMarketACustomHookModule *-- useBar
-
-```
+````
 
 </EnlargableContent>
 
@@ -435,7 +432,7 @@ If there is no Core module distinguished yet, the diagram for such a case would 
 
 <EnlargableContent>
 ```mermaid
- 
+
 classDiagram
   direction TB
   namespace apps-example-application-market-a {
@@ -502,7 +499,8 @@ classDiagram
   ExampleApplicationMarketALoggedCustomHookModule *-- appAUserHook
 
 
-```
+````
+
 </EnlargableContent>
 
 In this case, if there is a Core module distinguished, `useUser` can be treated as a core functionality since it is reused. If there is a distinguished core module for the `CustomHookModule`, the diagram would look as follows:
@@ -516,15 +514,15 @@ classDiagram
       class ExampleApplicationMarketAUnlogPage
       class ExampleApplicationMarketALogPage
 
-  }
+}
 
-  namespace apps-example-application-market-b {
-      class ExampleApplicationMarketBUnlogPage
-      class ExampleApplicationMarketBLogPage
+namespace apps-example-application-market-b {
+class ExampleApplicationMarketBUnlogPage
+class ExampleApplicationMarketBLogPage
 
-  }
+}
 
-  namespace apps-example-application-market-a-modules-custom-hook-module {
+namespace apps-example-application-market-a-modules-custom-hook-module {
 
       class ExampleApplicationMarketAUnloggedCustomHookModule {
           useInit
@@ -533,11 +531,9 @@ classDiagram
           useInit
       }
 
+}
 
-
-  }
-
-  namespace apps-example-application-market-b-modules-custom-hook-module {
+namespace apps-example-application-market-b-modules-custom-hook-module {
 
       class ExampleApplicationMarketBUnloggedCustomHookModule {
           useInit
@@ -547,9 +543,10 @@ classDiagram
       }
 
       class useBaz
-  }
 
-  namespace custom-hook-module-core {
+}
+
+namespace custom-hook-module-core {
 
       class useFoo
 
@@ -563,31 +560,28 @@ classDiagram
       class LoggedCustomHookModule {
           useInit
       }
-  }
 
+}
 
+ExampleApplicationMarketBLoggedCustomHookModule _-- useFoo
+ExampleApplicationMarketBLoggedCustomHookModule _-- useLayout
+ExampleApplicationMarketBLoggedCustomHookModule _-- useBaz
+ExampleApplicationMarketBLoggedCustomHookModule _-- useUser
 
-  ExampleApplicationMarketBLoggedCustomHookModule *-- useFoo
-  ExampleApplicationMarketBLoggedCustomHookModule *-- useLayout
-  ExampleApplicationMarketBLoggedCustomHookModule *-- useBaz
-  ExampleApplicationMarketBLoggedCustomHookModule *-- useUser
+ExampleApplicationMarketALoggedCustomHookModule _-- useFoo
+ExampleApplicationMarketALoggedCustomHookModule _-- useLayout
+ExampleApplicationMarketALoggedCustomHookModule _-- useBar
+ExampleApplicationMarketALoggedCustomHookModule _-- useUser
 
+ExampleApplicationMarketBUnlogPage _-- ExampleApplicationMarketBUnloggedCustomHookModule
+ExampleApplicationMarketBLogPage _-- ExampleApplicationMarketBLoggedCustomHookModule
 
-  ExampleApplicationMarketALoggedCustomHookModule *-- useFoo
-  ExampleApplicationMarketALoggedCustomHookModule *-- useLayout
-  ExampleApplicationMarketALoggedCustomHookModule *-- useBar
-  ExampleApplicationMarketALoggedCustomHookModule *-- useUser
+ExampleApplicationMarketBLoggedCustomHookModule \*-- useBaz
 
-  ExampleApplicationMarketBUnlogPage *-- ExampleApplicationMarketBUnloggedCustomHookModule
-  ExampleApplicationMarketBLogPage *-- ExampleApplicationMarketBLoggedCustomHookModule
+ExampleApplicationMarketAUnlogPage _-- ExampleApplicationMarketAUnloggedCustomHookModule
+ExampleApplicationMarketALogPage _-- ExampleApplicationMarketALoggedCustomHookModule
 
-
-  ExampleApplicationMarketBLoggedCustomHookModule *-- useBaz
-
-  ExampleApplicationMarketAUnlogPage *-- ExampleApplicationMarketAUnloggedCustomHookModule
-  ExampleApplicationMarketALogPage *-- ExampleApplicationMarketALoggedCustomHookModule
-
-```
+````
 </EnlargableContent>
 
 **Adding module variations to the same library should be used in all cases where the variation is created not for another app but for a specific scenario within the app.**
@@ -614,7 +608,7 @@ The diagram below shows the reasoning path when creating module variations and c
 
 <EnlargableContent>
 ```mermaid
- 
+
  flowchart
 
   Start("Create module")
@@ -656,7 +650,8 @@ The diagram below shows the reasoning path when creating module variations and c
       ActionInheritance["Create a module inheritor based on the original module"]
       ActionInheritance --> ActionInheritanceImport["Import module variation in the target application"]
   end
-```
+````
+
 </EnlargableContent>
 
 ## Modules Placement and Generation (NX ecosystem)

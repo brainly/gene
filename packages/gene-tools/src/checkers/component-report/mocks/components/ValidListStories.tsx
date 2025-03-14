@@ -8,7 +8,7 @@ type PropsType = Readonly<{
   fourth?: ReadonlyArray<string>;
 }>;
 
-const ValidListStories = ({list, second, third}: PropsType) => {
+const ValidListStories = ({ list, second, third }: PropsType) => {
   return null;
 };
 

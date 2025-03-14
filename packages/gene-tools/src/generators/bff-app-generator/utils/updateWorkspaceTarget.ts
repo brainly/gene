@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,
@@ -20,11 +20,11 @@ export const updateWorkspaceTarget = async ({
   directory: string;
 }) => {
   const appTargetsTemplate = readFileSync(
-    joinPathFragments(__dirname, './workspaceAppTargetTemplate.ejs')
+    joinPathFragments(__dirname, './workspaceAppTargetTemplate.ejs'),
   );
 
   const e2eTargetsTemplate = readFileSync(
-    joinPathFragments(__dirname, './workspaceE2ETargetTemplate.ejs')
+    joinPathFragments(__dirname, './workspaceE2ETargetTemplate.ejs'),
   );
 
   if (!appTargetsTemplate || !e2eTargetsTemplate) {
@@ -58,7 +58,7 @@ export const updateWorkspaceTarget = async ({
   if (e2e !== false) {
     const currentE2EProjectConfig = readProjectConfiguration(
       tree,
-      e2eProjectName
+      e2eProjectName,
     );
 
     const updatedE2EProjectConfig = {

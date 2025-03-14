@@ -85,16 +85,16 @@ export const parsePropTypeToKnob = (propType: string) => {
 const maybeIncludeCopyType = ifElse(
   (_, copyArray) => copyArray.length > 0,
   append('string'),
-  identity
+  identity,
 );
 
 export const getStorybookKnobs: (
   propsArray: (string | undefined)[][],
-  copyArray: string[]
+  copyArray: string[],
 ) => string[] = pipe(
   maybeIncludeCopyType,
   map(([, propType]: any) => parsePropTypeToKnob(propType)),
-  uniq
+  uniq,
 );
 
 export const defaultPropValue = (prop: string, propType: string) => {

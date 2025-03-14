@@ -8,7 +8,7 @@ type PropsType = Readonly<{
 }>;
 
 /* @private */
-const CallbackProp = ({id, content, items}: PropsType) => {
+const CallbackProp = ({ id, content, items }: PropsType) => {
   return null;
 };
 

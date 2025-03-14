@@ -2,8 +2,8 @@
 title: useMediator API
 ---
 
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 
 # useMediator API
 
@@ -14,30 +14,30 @@ The `useMediator` hook is implemented using `useEffect` and the native `addEvent
 The `useMediator` hook accepts three arguments:
 
 ```jsx
-useMediator(eventName, eventHandler, HTMLElement)
+useMediator(eventName, eventHandler, HTMLElement);
 ```
 
 where:
 
-| Argument       | Description                                                                                      |
-|----------------|--------------------------------------------------------------------------------------------------|
-| `eventName`    | The name of the event to listen for.                                                             |
+| Argument       | Description                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName`    | The name of the event to listen for.                                                                                            |
 | `eventHandler` | A handler function that processes the event payload. <br /> Example: `function handleMyEvent(payload) { console.log(payload) }` |
-| `HTMLElement`  | The HTML element to which the listener is attached.                                              |
+| `HTMLElement`  | The HTML element to which the listener is attached.                                                                             |
 
 ## Example Usage
 
 ```jsx
 function ReactComponent() {
-  const ref = useRef()
+  const ref = useRef();
 
   function handleMyEvent(payload) {
     // Handle the event payload, e.g., by navigating or fetching data
-    console.log(payload)
+    console.log(payload);
   }
 
-  useMediator('myEvent', handleMyEvent, ref)
+  useMediator('myEvent', handleMyEvent, ref);
 
-  return <div ref={ref}>...</div>
+  return <div ref={ref}>...</div>;
 }
 ```

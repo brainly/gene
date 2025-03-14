@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 
 export const cleanupFiles = (tree: Tree, filesToRemove: string[]) => {
   filesToRemove &&
