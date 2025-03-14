@@ -2,7 +2,7 @@ import { logger, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from '../library-generator';
 import subappGenerator from './index';
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
@@ -54,7 +54,7 @@ describe('Subapp generator', () => {
   });
 
   it('should create new lib if it does not exist', async () => {
-    (inquirer.prompt as unknown as jest.Mock).mockImplementation(
+    (prompt as unknown as jest.Mock).mockImplementation(
       ([{ name }]) => {
         if (name === 'shouldGenerateLib') {
           return { shouldGenerateLib: true };

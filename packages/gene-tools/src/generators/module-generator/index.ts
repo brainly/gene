@@ -16,7 +16,7 @@ import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
 import { BrainlyModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { dasherize, classify, camelize, underscore } from '@nx/devkit/src/utils/string-utils';
 import { Linter } from '@nx/linter';
 import {
   getNpmScope,
@@ -76,7 +76,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
     return project.root.endsWith(`${directoryPath}/${APP_MODULES_LIB_SUFFIX}`);
   });
 
-  const dasherizedName = stringUtils.dasherize(schema.name);
+  const dasherizedName = dasherize(schema.name);
   const nameWithSuffix = `${dasherizedName}-module`;
 
   const modulePath = `libs/${directoryPath}/${APP_MODULES_LIB_SUFFIX}`;
@@ -89,11 +89,11 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
   const moduleProjectE2EName = `${moduleProjectName}-e2e`;
   const e2ePath = `apps/${moduleProjectE2EName}`;
 
-  const moduleAutoprefixedName = stringUtils.classify(
+  const moduleAutoprefixedName = classify(
     `${appName}-${nameWithSuffix}`
   );
 
-  const defaultModuleName = stringUtils.classify(nameWithSuffix);
+  const defaultModuleName = classify(nameWithSuffix);
 
   const shouldAutoprefix =
     typeof schema.shouldAutoprefix === 'boolean'
@@ -123,8 +123,8 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         ...schema,
         fileName: nameWithSuffix,
         pascalCaseFileName: moduleDisplayName,
-        camelCaseFileName: stringUtils.camelize(nameWithSuffix),
-        dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
+        camelCaseFileName: camelize(nameWithSuffix),
+        dataTestId: underscore(`${nameWithSuffix}-id`),
         tmpl: '',
         errorBoundary,
         npmScope,
@@ -155,9 +155,8 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           ...schema,
           fileName: nameWithSuffix,
           pascalCaseFileName: moduleDisplayName,
-          dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
-          connectedFileName: stringUtils
-            .camelize(moduleDisplayName)
+          dataTestId: underscore(`${nameWithSuffix}-id`),
+          connectedFileName: camelize(moduleDisplayName)
             .toLocaleLowerCase(),
           tmpl: '',
           npmScope,
@@ -182,9 +181,8 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           ...schema,
           fileName: nameWithSuffix,
           pascalCaseFileName: moduleDisplayName,
-          dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
-          connectedFileName: stringUtils
-            .camelize(moduleDisplayName)
+          dataTestId: underscore(`${nameWithSuffix}-id`),
+          connectedFileName: camelize(moduleDisplayName)
             .toLocaleLowerCase(),
           tmpl: '',
           npmScope,
@@ -280,8 +278,8 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       ...schema,
       fileName: nameWithSuffix,
       pascalCaseFileName: moduleDisplayName,
-      camelCaseFileName: stringUtils.camelize(nameWithSuffix),
-      dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
+      camelCaseFileName: camelize(nameWithSuffix),
+      dataTestId: underscore(`${nameWithSuffix}-id`),
       tmpl: '',
       errorBoundary,
       npmScope,
@@ -311,9 +309,8 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         ...schema,
         fileName: nameWithSuffix,
         pascalCaseFileName: moduleDisplayName,
-        dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
-        connectedFileName: stringUtils
-          .camelize(moduleDisplayName)
+        dataTestId: underscore(`${nameWithSuffix}-id`),
+        connectedFileName: camelize(moduleDisplayName)
           .toLocaleLowerCase(),
         tmpl: '',
         npmScope,

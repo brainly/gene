@@ -1,6 +1,6 @@
 import {ValidListStoriesEventsType} from './ValidListStoriesEventsType';
 
-import * as React from 'react';
+import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {registerStoryInPackages, StorybookMediator} from '@brainly-gene/core';
 import ValidListStories from './ValidListStories';

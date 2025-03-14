@@ -9,9 +9,9 @@ import {
 import { promptSelectModuleName } from '../utilities';
 import { findModuleComponents } from './utils/findModuleComponents';
 
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { dasherize } from '@nx/devkit/src/utils/string-utils';
 
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 import { findDataTestIds, processResults } from './utils/findDataTestIds';
 import {
   generateGherkinScenarios,
@@ -96,7 +96,7 @@ export default async function (tree: Tree) {
     moduleComponent = modulesWithinLibrary[0];
   } else {
     moduleComponent = (
-      await inquirer.prompt([
+      await prompt([
         {
           type: 'search-list',
           message:
@@ -108,7 +108,7 @@ export default async function (tree: Tree) {
     ).moduleComponent;
   }
 
-  const { moduleDescription } = await inquirer.prompt([
+  const { moduleDescription } = await prompt([
     {
       type: 'input',
       message:
@@ -137,7 +137,7 @@ export default async function (tree: Tree) {
     JSON.stringify(storybookData)
   );
 
-  const dasherizedModuleName = stringUtils.dasherize(
+  const dasherizedModuleName = dasherize(
     moduleName.split('/').pop()
   );
 
@@ -166,7 +166,7 @@ const askForFeedback = async (
   finishedCallback: () => string
 ) => {
   const change = (
-    await inquirer.prompt([
+    await prompt([
       {
         type: 'confirm',
         message: 'Is there anything you want to change about the results?',
@@ -177,7 +177,7 @@ const askForFeedback = async (
 
   if (change) {
     const considerations = (
-      await inquirer.prompt([
+      await prompt([
         {
           type: 'input',
           message: 'What would you like to change?',

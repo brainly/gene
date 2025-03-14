@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {useModuleInjection} from '@brainly-gene/core';
 
 function useInit() {

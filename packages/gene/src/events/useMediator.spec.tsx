@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import {useMediator} from './useMediator';
 import {dispatch} from './dispatchBubbleEvent';

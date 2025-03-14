@@ -28,6 +28,13 @@
       }
     },
     {
+      "files": ["*.[jt]s?(x)"],
+      "excludedFiles": ["*.spec.ts", "*.spec.tsx"],
+      "rules": {
+        "import/no-namespace": "error"
+      }
+    },
+    {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
       "rules": {

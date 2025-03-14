@@ -1,11 +1,11 @@
 import { logger, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import serviceGenerator from './index';
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
 const mockCrudOptions = (options: string[]) => {
-  (inquirer.prompt as unknown as jest.Mock).mockImplementationOnce(
+  (prompt as unknown as jest.Mock).mockImplementationOnce(
     ([{ name }]) => {
       return { crudFunctions: options };
     }

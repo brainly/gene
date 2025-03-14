@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {GeneImagePropsType} from './types';
 
 const NativeImage = ({...props}: GeneImagePropsType) => {

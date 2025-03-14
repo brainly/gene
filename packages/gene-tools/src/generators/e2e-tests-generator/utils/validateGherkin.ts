@@ -1,10 +1,10 @@
-import * as Gherkin from '@cucumber/gherkin';
-import * as Messages from '@cucumber/messages';
+import { AstBuilder, GherkinClassicTokenMatcher, Parser, compile } from '@cucumber/gherkin';
+import { IdGenerator } from '@cucumber/messages';
 
-const uuidFn = Messages.IdGenerator.uuid();
-const builder = new Gherkin.AstBuilder(uuidFn);
-const matcher = new Gherkin.GherkinClassicTokenMatcher(); // or Gherkin.GherkinInMarkdownTokenMatcher()
-const parser = new Gherkin.Parser(builder, matcher);
+const uuidFn = IdGenerator.uuid();
+const builder = new AstBuilder(uuidFn);
+const matcher = new GherkinClassicTokenMatcher(); // or Gherkin.GherkinInMarkdownTokenMatcher()
+const parser = new Parser(builder, matcher);
 
 export const isValidGherkin = ({
   gherkinString,
@@ -13,7 +13,7 @@ export const isValidGherkin = ({
 }): { isValid: boolean; error?: string } => {
   try {
     const gherkinDocument = parser.parse(gherkinString);
-    Gherkin.compile(gherkinDocument, 'uri_of_the_feature.feature', uuidFn);
+    compile(gherkinDocument, 'uri_of_the_feature.feature', uuidFn);
 
     return { isValid: true };
   } catch (error: any) {

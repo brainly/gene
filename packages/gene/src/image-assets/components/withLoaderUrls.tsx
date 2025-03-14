@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useInjection } from '../../ioc'
 import {
   APP_CONTEXT_IDENTIFIER,

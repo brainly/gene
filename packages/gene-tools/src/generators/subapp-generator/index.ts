@@ -9,9 +9,9 @@ import {
   writeJson,
 } from '@nx/devkit';
 import { SubappGenerator } from './schema';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { classify, camelize } from '@nx/devkit/src/utils/string-utils';
 
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 import libraryGenerator from '../library-generator';
 import { reexport } from './utils/reexport';
 import { getNpmScope } from '../utilities';
@@ -26,7 +26,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
 
   if (!moduleProject || !moduleProject.sourceRoot) {
     const shouldGenerateLib = (
-      await inquirer.prompt([
+      await prompt([
         {
           type: 'confirm',
           name: 'shouldGenerateLib',
@@ -39,7 +39,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
       throw new Error(`Library "${library}" was not found`);
     }
 
-    const { libDirectory } = await inquirer.prompt([
+    const { libDirectory } = await prompt([
       {
         type: 'input',
         name: 'libDirectory',
@@ -76,8 +76,8 @@ export default async function (tree: Tree, schema: SubappGenerator) {
     joinPathFragments(moduleProject.sourceRoot, `${directory}`),
     {
       ...schema,
-      pascalCaseFileName: stringUtils.classify(name),
-      camelCaseFileName: stringUtils.camelize(name),
+      pascalCaseFileName: classify(name),
+      camelCaseFileName: camelize(name),
       fileName: name,
       tmpl: '',
       npmScope,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {TestIntersectionType} from '../types/TestTypes';
 import {SomeType} from '@acme/some-types';
 
