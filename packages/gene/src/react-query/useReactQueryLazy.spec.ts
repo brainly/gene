@@ -1,9 +1,8 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook , waitFor } from '@testing-library/react';
 
 import { reactQueryFetchWrapper } from './reactQueryFetchWrapper';
 import { useReactQueryLazy } from './useReactQueryLazy';
 import { QueryClient } from '@tanstack/react-query';
-import { waitFor } from '@testing-library/react';
 import {
   ExampleResponse,
   mockFetch,

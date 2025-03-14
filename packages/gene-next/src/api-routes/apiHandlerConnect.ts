@@ -1,4 +1,4 @@
-import nc, {NextConnect, Options} from 'next-connect';
+import nc, {type NextConnect, type Options} from 'next-connect';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {IncomingMessage, ServerResponse} from 'http';
 

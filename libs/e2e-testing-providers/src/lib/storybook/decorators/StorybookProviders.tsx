@@ -1,9 +1,17 @@
 import * as React from 'react';
-import { Provider } from '@brainly-gene/core';
+import {
+  Provider,
+  Router,
+  useMockedRouterContainer,
+  getAssetsContainer,
+  NATIVE_IMAGE,
+  emit,
+  EventBusContextProvider,
+  register,
+} from '@brainly-gene/core';
 
 import styles from './StorybookProviders.module.scss';
-import { Container, interfaces } from 'inversify';
-import { Router, useMockedRouterContainer } from '@brainly-gene/core';
+import { Container, type interfaces } from 'inversify';
 
 import {
   AppStoreType,
@@ -12,8 +20,6 @@ import {
   useServiceClientsContainer,
 } from '../../ioc';
 import { Locale, LinkRewriteContextProvider } from '@brainly-gene/next';
-import { getAssetsContainer, NATIVE_IMAGE } from '@brainly-gene/core';
-import { emit, EventBusContextProvider, register } from '@brainly-gene/core';
 
 type OverwritableContainerKeys = 'adsContainer';
 

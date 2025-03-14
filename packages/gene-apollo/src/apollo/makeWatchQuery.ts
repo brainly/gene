@@ -1,16 +1,16 @@
 import {
   ApolloClient,
-  NormalizedCacheObject,
+  type NormalizedCacheObject,
   ObservableQuery,
-  ApolloQueryResult,
-  WatchQueryOptions,
+  type ApolloQueryResult,
+  type WatchQueryOptions,
 } from '@apollo/client';
 
 async function maybeWarmUpCache<TQuery, TVariables>(
   watchQuery: ObservableQuery<TQuery, TVariables>,
   queryFn: () => Promise<ApolloQueryResult<TQuery>>
 ) {
-  watchQuery.result().then(results => {
+  watchQuery.result().then((results) => {
     /**
      * partial indicates that no all query data has been fetched
      * which shows that there wasn't server call, or something went wrong
