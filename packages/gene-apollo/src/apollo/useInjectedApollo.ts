@@ -1,5 +1,6 @@
-import { ApolloClient, type NormalizedCacheObject } from '@apollo/client';
-import { Factory, useInjection, ServiceTypes } from '@brainly-gene/core';
+import type { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import type { Factory } from '@brainly-gene/core';
+import { useInjection, ServiceTypes } from '@brainly-gene/core';
 
 export function useInjectedApolloClient() {
   try {

@@ -1,8 +1,9 @@
 import { Container } from 'inversify';
 
-import { Router, RouterEvent } from './types';
+import type { Router, RouterEvent } from './types';
 import { Observable } from 'zen-observable-ts';
-import { ROUTER_SERVICE_IDENTIFIER, RouterIocType } from './ioc';
+import type { RouterIocType } from './ioc';
+import { ROUTER_SERVICE_IDENTIFIER } from './ioc';
 
 const baseRouterMock: Router = {
   openInNewTab: () => null,

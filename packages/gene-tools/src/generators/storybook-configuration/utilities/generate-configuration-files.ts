@@ -1,10 +1,11 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   generateFiles,
   joinPathFragments,
-  offsetFromRoot,
-  Tree,
+  offsetFromRoot
 } from '@nx/devkit';
-import { NormalizedOptions } from '../schema';
+import type { NormalizedOptions } from '../schema';
 
 export function generateConfigurationFiles(
   tree: Tree,

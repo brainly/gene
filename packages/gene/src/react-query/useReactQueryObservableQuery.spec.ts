@@ -1,11 +1,13 @@
 import { renderHook, waitFor } from '@testing-library/react';
 
 import { useReactQueryObservableQuery } from './useReactQueryObservableQuery';
-import { QueryClient, QueryObserver } from '@tanstack/react-query';
+import type { QueryObserver } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 import { createTestObservable } from './test-utils';
+import type {
+  ExampleResponse} from '../services';
 import {
-  ExampleResponse,
   mockFetch,
   mockFetchBasedOnParam,
   mockFetchChangingData,

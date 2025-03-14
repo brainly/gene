@@ -1,8 +1,9 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
-  joinPathFragments,
-  Tree,
+  joinPathFragments
 } from '@nx/devkit';
 
 export async function storybookInitGenerator(tree: Tree) {

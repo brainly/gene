@@ -1,9 +1,9 @@
-import {
+import type {
   ApolloClient,
-  type NormalizedCacheObject,
   ObservableQuery,
-  type ApolloQueryResult,
-  type WatchQueryOptions,
+  NormalizedCacheObject,
+  ApolloQueryResult,
+  WatchQueryOptions,
 } from '@apollo/client';
 
 async function maybeWarmUpCache<TQuery, TVariables>(

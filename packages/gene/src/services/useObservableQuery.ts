@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import Observable from 'zen-observable';
+import type Observable from 'zen-observable';
 
 import {useIsMounted} from './useIsMounted';
 

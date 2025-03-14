@@ -1,9 +1,10 @@
 import { Container } from 'inversify';
 
-import {
-  APP_CONTEXT_IDENTIFIER,
+import type {
   ActionType,
-  AppContextType,
+  AppContextType} from './appContext';
+import {
+  APP_CONTEXT_IDENTIFIER
 } from './appContext';
 import { makeStore } from './makeStore';
 

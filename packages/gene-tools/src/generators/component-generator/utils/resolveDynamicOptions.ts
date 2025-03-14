@@ -1,5 +1,6 @@
+import type {
+  PromptsProfileDefaultValueKeyType} from './resolveGeneratorOptions';
 import {
-  PromptsProfileDefaultValueKeyType,
   resolveGeneratorOptions,
 } from './resolveGeneratorOptions';
 

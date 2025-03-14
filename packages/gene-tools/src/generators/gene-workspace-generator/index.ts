@@ -1,8 +1,9 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   generateFiles,
   installPackagesTask,
-  joinPathFragments,
-  Tree,
+  joinPathFragments
 } from '@nx/devkit';
 import assetsLibraryGenerator from '../assets-library-generator';
 import translationsLibraryGenerator from '../translations-library-generator';

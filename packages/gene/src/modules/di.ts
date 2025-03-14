@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import {
+import type {
   MediatorDeclarationsType,
   ComponentDeclarationType,
   EventHandlersType,

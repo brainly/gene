@@ -1,5 +1,6 @@
-import { formatFiles, logger, Tree } from '@nx/devkit';
-import { Options } from './schema';
+import type { Tree } from '@nx/devkit';
+import { formatFiles, logger } from '@nx/devkit';
+import type { Options } from './schema';
 import {
   addStorybookTargets,
   excludeStoriesFromProjectTsConfig,

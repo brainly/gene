@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { ApolloClient, type NormalizedCacheObject } from '@apollo/client';
+import type { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 export interface ApolloClientType {
   hydrate: (initialState?: NormalizedCacheObject) => void;
   dehydrate: () => unknown;

@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
-import { Literal, withParser } from 'jscodeshift';
+import type { Literal} from 'jscodeshift';
+import { withParser } from 'jscodeshift';
 import { sync } from 'glob';
 
 interface Result {

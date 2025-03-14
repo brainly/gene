@@ -1,9 +1,10 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
   installPackagesTask,
   readJson,
-  Tree,
   writeJson,
 } from '@nx/devkit';
 import { promptSelectModuleName } from '../utilities';

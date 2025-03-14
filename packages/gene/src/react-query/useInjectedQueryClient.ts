@@ -1,8 +1,8 @@
-import { QueryClient } from '@tanstack/react-query';
+import type { QueryClient } from '@tanstack/react-query';
 
 import { useInjection } from '../ioc';
 import { ServiceTypes } from '../services';
-import { Factory } from '../utils';
+import type { Factory } from '../utils';
 
 export function useInjectedReactQueryClient(): QueryClient {
   return useInjection<Factory>('serviceFactory')(ServiceTypes.reactQuery)(

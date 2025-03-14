@@ -1,6 +1,6 @@
 import { useTranslation as useReacti18Translation } from 'react-i18next';
 import i18n from 'i18next';
-import { TranslationParamsType, TranslationServiceType } from '../types';
+import type { TranslationParamsType, TranslationServiceType } from '../types';
 import { transChoiceHelper as transChoiceHelperFn } from '../utils/transChoiceHelper';
 import { useMemo } from 'react';
 import { ssrFallback } from '../ssr/ssrFallback';

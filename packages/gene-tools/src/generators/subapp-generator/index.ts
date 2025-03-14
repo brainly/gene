@@ -1,14 +1,15 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
   installPackagesTask,
   generateFiles,
   joinPathFragments,
-  Tree,
   readJson,
   writeJson,
 } from '@nx/devkit';
-import { SubappGenerator } from './schema';
+import type { SubappGenerator } from './schema';
 import { classify, camelize } from '@nx/devkit/src/utils/string-utils';
 
 import { prompt } from 'inquirer';

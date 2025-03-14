@@ -1,10 +1,11 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   readProjectConfiguration,
-  Tree,
   updateProjectConfiguration,
   readJson,
   writeJson,

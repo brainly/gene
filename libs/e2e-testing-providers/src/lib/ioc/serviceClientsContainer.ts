@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
-import { factory, Factory, ServiceTypes } from '@brainly-gene/core';
+import type { Factory} from '@brainly-gene/core';
+import { factory, ServiceTypes } from '@brainly-gene/core';
 import { QueryClient } from '@tanstack/react-query';
 import {
   ApolloClient,

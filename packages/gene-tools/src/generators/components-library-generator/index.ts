@@ -1,15 +1,16 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   readJson,
-  Tree,
   updateJson,
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { BrainlyComponentLibraryGenerator } from './schema';
+import type { BrainlyComponentLibraryGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
 
 import { dasherize } from '@nx/devkit/src/utils/string-utils';

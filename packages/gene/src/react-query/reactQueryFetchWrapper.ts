@@ -1,4 +1,4 @@
-import {Response as NodeResponse} from 'node-fetch';
+import type {Response as NodeResponse} from 'node-fetch';
 
 export async function reactQueryFetchWrapper<TResponse = unknown>(
   queryFn: () => Promise<Response | NodeResponse>

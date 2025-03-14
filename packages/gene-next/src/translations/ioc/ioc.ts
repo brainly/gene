@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { TranslationServiceType } from '../types';
+import type { TranslationServiceType } from '../types';
 import { useTranslation } from '../translators/react-i18n';
 
 

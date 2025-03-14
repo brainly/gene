@@ -1,5 +1,5 @@
 import { withParser } from 'jscodeshift';
-import { Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 
 const j = withParser('tsx');
 

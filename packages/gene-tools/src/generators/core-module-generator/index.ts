@@ -1,3 +1,5 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
@@ -5,14 +7,13 @@ import {
   joinPathFragments,
   readJson,
   readProjectConfiguration,
-  Tree,
   updateJson,
   updateProjectConfiguration,
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
-import { BrainlyCoreModuleGenerator } from './schema';
+import type { BrainlyCoreModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { dasherize, classify, camelize, underscore } from '@nx/devkit/src/utils/string-utils';
 import { Linter } from '@nx/linter';

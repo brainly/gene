@@ -1,10 +1,10 @@
-import {
+import type {
   InfiniteQueryObserverResult,
   QueryObserverResult,
   UseQueryResult,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
-import { CommonServiceType } from '../services';
+import type { CommonServiceType } from '../services';
 
 export function transformReactQueryResponse<TData = null, TVariables = null>(
   response:

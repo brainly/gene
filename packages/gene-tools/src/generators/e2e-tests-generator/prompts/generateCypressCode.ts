@@ -1,4 +1,4 @@
-import { OpenAIApi } from 'openai';
+import type { OpenAIApi } from 'openai';
 // import {validateCypressCode} from '../utils/validateCypressCode';
 
 const getCypressCodeReflectionPrompt = (

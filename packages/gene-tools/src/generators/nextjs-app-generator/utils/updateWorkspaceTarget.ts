@@ -1,5 +1,6 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
-  Tree,
   joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,

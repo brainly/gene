@@ -1,6 +1,6 @@
-import React from 'react';
-import { Container } from 'inversify';
-import { ErrorBoundaryDeclarationType } from '../error-boundary';
+import type React from 'react';
+import type { Container } from 'inversify';
+import type { ErrorBoundaryDeclarationType } from '../error-boundary';
 
 export type MediatorPropsType<T extends Record<string, unknown>> = T & {
   ref: React.RefObject<HTMLElement | HTMLDivElement | null>;

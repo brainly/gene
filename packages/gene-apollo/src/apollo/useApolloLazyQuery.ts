@@ -1,11 +1,11 @@
 import React from 'react';
-import {
+import type {
   ApolloClient,
-  type ApolloQueryResult,
-  type NormalizedCacheObject,
+  ApolloQueryResult,
+  NormalizedCacheObject,
 } from '@apollo/client';
 import { transformApolloResponse } from './transformApolloResponse';
-import { CommonFetchFn, CommonServiceType } from '@brainly-gene/core';
+import type { CommonFetchFn, CommonServiceType } from '@brainly-gene/core';
 
 interface PropsType<TData, TVariables> {
   apolloClient: ApolloClient<NormalizedCacheObject>;

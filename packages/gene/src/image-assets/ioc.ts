@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 
 import NativeImage from './components/NativeImage';
 import { Container } from 'inversify';
-import { GeneImagePropsType } from './components/types';
+import type { GeneImagePropsType } from './components/types';
 import { withLoaderUrls } from './components/withLoaderUrls';
 
 export const GENE_IMAGE_COMPONENT_IDENTIFIER = Symbol.for('GeneImage');

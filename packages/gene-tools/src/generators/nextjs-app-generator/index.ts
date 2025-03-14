@@ -1,5 +1,6 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   generateFiles,
@@ -10,7 +11,7 @@ import {
   writeJson,
   updateJson,
 } from '@nx/devkit';
-import { BrainlyNextJSAppGenerator } from './schema';
+import type { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
 import { Linter } from '@nx/linter';

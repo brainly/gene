@@ -1,7 +1,7 @@
 import {SentryErrorBoundary} from './sentry';
 import {EmptyErrorBoundary} from './empty';
 import {Container} from 'inversify';
-import {ErrorBoundaryComponentType} from './types';
+import type {ErrorBoundaryComponentType} from './types';
 
 export const ERROR_BOUNDARY_IDENTIFIER = Symbol.for('errorBoundary');
 export const EMPTY_ERROR_BOUNDARY_IDENTIFIER = Symbol.for('emptyErrorBoundary');

@@ -1,6 +1,6 @@
 import { isServer } from '../utils';
 import React from 'react';
-import {
+import type {
   FetchNextPageOptions,
   FetchPreviousPageOptions,
   InfiniteData,

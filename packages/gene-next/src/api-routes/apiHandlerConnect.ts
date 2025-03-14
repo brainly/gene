@@ -1,6 +1,6 @@
 import nc, {type NextConnect, type Options} from 'next-connect';
-import {NextApiRequest, NextApiResponse} from 'next';
-import {IncomingMessage, ServerResponse} from 'http';
+import type {NextApiRequest, NextApiResponse} from 'next';
+import type {IncomingMessage, ServerResponse} from 'http';
 
 /**
  * @description

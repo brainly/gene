@@ -1,4 +1,4 @@
-import {CommonServiceType} from './types';
+import type {CommonServiceType} from './types';
 
 export function getDefaultServiceResponse<T, TVariables>(
   response?: Partial<CommonServiceType<T, TVariables>>

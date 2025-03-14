@@ -1,14 +1,15 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   getProjects,
   installPackagesTask,
   generateFiles,
   joinPathFragments,
-  Tree,
   readJson,
   writeJson,
 } from '@nx/devkit';
-import { APIRouteGenerator } from './schema';
+import type { APIRouteGenerator } from './schema';
 import { classify } from '@nx/devkit/src/utils/string-utils';
 
 import { promptSelectAppName, getAllAppKeys, getNpmScope } from '../utilities';

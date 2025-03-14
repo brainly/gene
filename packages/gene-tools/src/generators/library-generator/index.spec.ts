@@ -1,4 +1,5 @@
-import { logger, readJson, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger, readJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from './index';
 

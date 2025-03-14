@@ -1,10 +1,11 @@
-import {
-  InfiniteQueryObserver,
+import type {
   InfiniteQueryObserverOptions,
   QueryClient,
   QueryObserverOptions,
-  QueryObserver,
-  QueryKey,
+  QueryKey} from '@tanstack/react-query';
+import {
+  InfiniteQueryObserver,
+  QueryObserver
 } from '@tanstack/react-query';
 
 /**

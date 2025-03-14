@@ -4,7 +4,7 @@ import {
   getReactQueryPaginatedObservable,
 } from './getReactQueryObservable';
 import { reactQueryFetchWrapper } from './reactQueryFetchWrapper';
-import { ExampleResponse, ExamplePaginatedResponse } from '../services';
+import type { ExampleResponse, ExamplePaginatedResponse } from '../services';
 
 /**
  *

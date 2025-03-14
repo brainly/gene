@@ -1,8 +1,9 @@
 import {Container} from 'inversify';
-import {
+import type {
   AppContextType,
-  APP_CONTEXT_IDENTIFIER,
-ActionType, makeStore} from '@brainly-gene/core';
+ActionType} from '@brainly-gene/core';
+import {
+  APP_CONTEXT_IDENTIFIER, makeStore} from '@brainly-gene/core';
 
 
 

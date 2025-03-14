@@ -1,4 +1,5 @@
-import { detectPackageManager, ExecutorContext } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
+import { detectPackageManager } from '@nx/devkit';
 
 import { spawn } from 'child_process';
 

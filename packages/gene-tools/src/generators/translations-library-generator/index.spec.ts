@@ -1,4 +1,5 @@
-import { logger, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import translationsLibraryGenerator from './index';
 

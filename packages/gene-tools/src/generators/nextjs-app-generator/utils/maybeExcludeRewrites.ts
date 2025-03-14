@@ -1,5 +1,5 @@
-import { Tree } from '@nx/devkit';
-import { BrainlyNextJSAppGenerator } from '../schema';
+import type { Tree } from '@nx/devkit';
+import type { BrainlyNextJSAppGenerator } from '../schema';
 
 export const maybeExcludeRewrites = (
   tree: Tree,

@@ -1,6 +1,8 @@
-import { ExecutorContext, parseTargetString, runExecutor } from '@nx/devkit';
+import type { ExecutorContext} from '@nx/devkit';
+import { parseTargetString, runExecutor } from '@nx/devkit';
 
-import { createProxy, ServeOptions } from '../utilities/server';
+import type { ServeOptions } from '../utilities/server';
+import { createProxy } from '../utilities/server';
 
 export type SecureServeExecutorOptions = ServeOptions;
 

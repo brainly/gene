@@ -1,18 +1,17 @@
-import {
-  type ApolloQueryResult,
+import type {
   ObservableQuery,
-  type FetchMoreQueryOptions,
-  type FetchMoreOptions,
+  ApolloQueryResult,
+  FetchMoreQueryOptions,
+  FetchMoreOptions,
 } from '@apollo/client';
 
 import { transformApolloResponse } from './transformApolloResponse';
 import { merge } from 'zen-observable/extras';
-import { Observable } from 'zen-observable-ts';
+import type { Observable } from 'zen-observable-ts';
+import type { RouterEvent, RouterIocType } from '@brainly-gene/core';
 import {
   isServer,
   ROUTER_SERVICE_IDENTIFIER,
-  RouterEvent,
-  RouterIocType,
   useObservableQuery,
   useInjection,
 } from '@brainly-gene/core';

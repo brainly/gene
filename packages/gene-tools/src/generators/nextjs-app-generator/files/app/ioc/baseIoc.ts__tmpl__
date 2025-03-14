@@ -1,18 +1,18 @@
 import { Container } from 'inversify';
 
-import { useDispatch, useStore, AppStoreType } from '../context/appContext';
+import { useDispatch, useStore, type AppStoreType } from '../context/appContext';
 
 <% if (apollo) { %>
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { ApolloClientType, apolloFactory } from '@brainly-gene/apollo';
+import { type ApolloClientType, apolloFactory } from '@brainly-gene/apollo';
 
 <% } %>
 
 <% if (reactQuery) { %>
 
 import {
-  ReactQueryClientType,
+  type ReactQueryClientType,
   reactQueryFactory,
 } from '@brainly-gene/core';
 import { QueryClient } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { NEXT_ROUTER, getRouterContainer } from '@brainly-gene/next';
 import {
   APP_CONTEXT_IDENTIFIER,
-  AppContextType,
+  type AppContextType,
 } from '@brainly-gene/core';
 import { getTranslatorContainer, REACT_I18_NEXT } from '@brainly-gene/next';
 

@@ -1,7 +1,8 @@
+import type {
+  TSESTree} from '@typescript-eslint/utils';
 import {
   AST_NODE_TYPES,
-  ESLintUtils,
-  TSESTree,
+  ESLintUtils
 } from '@typescript-eslint/utils';
 
 export type Options = [

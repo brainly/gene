@@ -1,5 +1,5 @@
 import { getHttpProtocol } from '@brainly-gene/next';
-import { NextPageContext } from 'next';
+import type { NextPageContext } from 'next';
 
 interface CustomErrorProps {
   errorCode: number;

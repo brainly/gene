@@ -1,4 +1,4 @@
-import {TranslationParamsType} from '../types';
+import type {TranslationParamsType} from '../types';
 
 /**
  * @description

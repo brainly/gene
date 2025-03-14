@@ -1,11 +1,12 @@
 import {Container} from 'inversify';
-import {
+import type {
   LogType,
   Message,
-  Severity,
-  LogLevel,
   ErrorWithModuleBoundaryLoggingFunctionType,
-  LoggerFunction,
+  LoggerFunction} from './types';
+import {
+  Severity,
+  LogLevel
 } from './types';
 import {baseErrorLog} from "./loggers";
 

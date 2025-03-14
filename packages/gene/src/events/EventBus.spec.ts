@@ -1,4 +1,5 @@
-import {register, AbstractEventBusEventType, emit} from './EventBus';
+import type { AbstractEventBusEventType} from './EventBus';
+import {register, emit} from './EventBus';
 
 describe('Test EventBus Core Features', () => {
   const eventType1 = 'testEvent1';

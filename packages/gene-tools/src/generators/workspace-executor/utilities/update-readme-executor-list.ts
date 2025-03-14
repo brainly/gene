@@ -1,6 +1,6 @@
-import { Tree } from '@nx/devkit';
-import { MDAST } from 'mdast';
-import { UNIST } from 'unist';
+import type { Tree } from '@nx/devkit';
+import type { MDAST } from 'mdast';
+import type { UNIST } from 'unist';
 import visit = require('unist-util-visit');
 import remark = require('remark');
 

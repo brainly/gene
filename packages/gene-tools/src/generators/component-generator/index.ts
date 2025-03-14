@@ -1,5 +1,6 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   getProjects,
@@ -8,7 +9,7 @@ import {
   readJson,
   writeJson,
 } from '@nx/devkit';
-import { BrainlyComponentGenerator } from './schema';
+import type { BrainlyComponentGenerator } from './schema';
 import { resolveDynamicOptions } from './utils/resolveDynamicOptions';
 import { reexport } from './utils/reexport';
 import { prompt } from 'inquirer';

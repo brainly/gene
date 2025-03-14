@@ -1,12 +1,12 @@
 import React from 'react';
 import { transformReactQueryResponse } from './transformReactQueryResponse';
 
-import {
+import type {
   QueryClient,
   QueryKey,
   QueryObserverResult,
 } from '@tanstack/react-query';
-import { CommonServiceType, CommonFetchFn } from '../services';
+import type { CommonServiceType, CommonFetchFn } from '../services';
 
 interface PropsType<TData, TVariables> {
   reactQueryClient: QueryClient;

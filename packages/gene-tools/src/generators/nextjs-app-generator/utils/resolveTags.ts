@@ -1,4 +1,4 @@
-import {BrainlyNextJSAppGenerator} from '../schema';
+import type {BrainlyNextJSAppGenerator} from '../schema';
 
 export const resolveTags = (schema: BrainlyNextJSAppGenerator) => {
   if (!schema.tags) {

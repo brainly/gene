@@ -3,7 +3,7 @@ import React from 'react';
 import {compose} from 'ramda';
 import {getRequestHeaders} from '@brainly-gene/next';
 import {getHomePageContainer} from '../ioc/getHomePageIoc';
-import { GetServerSideProps } from 'next/types';
+import type { GetServerSideProps } from 'next/types';
 
 <% if (reactQuery) { %>
 import {withIoc, reactQueryFactory} from '@brainly-gene/core';

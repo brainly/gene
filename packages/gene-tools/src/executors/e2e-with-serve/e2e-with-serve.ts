@@ -1,12 +1,14 @@
-import {
+import type {
   ExecutorContext,
+  Target} from '@nx/devkit';
+import {
   logger,
   parseTargetString,
-  runExecutor,
-  Target,
+  runExecutor
 } from '@nx/devkit';
 
-import { createProxy, ServeOptions } from '../utilities/server';
+import type { ServeOptions } from '../utilities/server';
+import { createProxy } from '../utilities/server';
 import Server = require('http-proxy');
 
 export type serveExecutorOptions = {

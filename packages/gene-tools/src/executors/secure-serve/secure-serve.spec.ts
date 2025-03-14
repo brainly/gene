@@ -4,12 +4,14 @@ jest.mock('@nx/devkit', () => ({
 }));
 jest.mock('http-proxy');
 
-import { ExecutorContext, logger, runExecutor } from '@nx/devkit';
+import type { ExecutorContext} from '@nx/devkit';
+import { logger, runExecutor } from '@nx/devkit';
 
 import { createServer } from 'http-proxy';
+import type {
+  SecureServeExecutorOptions} from './secure-serve';
 import {
-  secureServeExecutor,
-  SecureServeExecutorOptions,
+  secureServeExecutor
 } from './secure-serve';
 
 describe('secureServe executor', () => {

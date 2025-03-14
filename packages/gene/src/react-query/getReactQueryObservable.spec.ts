@@ -1,8 +1,9 @@
+import type {
+  InfiniteQueryObserverResult,
+  QueryObserverResult} from '@tanstack/react-query';
 import {
   InfiniteQueryObserver,
-  InfiniteQueryObserverResult,
-  QueryObserver,
-  QueryObserverResult,
+  QueryObserver
 } from '@tanstack/react-query';
 
 import {
@@ -10,10 +11,11 @@ import {
   createTestObservable,
 } from './test-utils';
 
+import type {
+  ExampleResponse} from '../services';
 import {
   mockFetch,
   wait,
-  ExampleResponse,
   mockFetchPaginated,
 } from '../services';
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { AbstractEventBusEventType, register, emit } from './EventBus';
+import type { AbstractEventBusEventType, register, emit } from './EventBus';
 
 interface PropsType<T> {
   eventName: string;

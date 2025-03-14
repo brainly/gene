@@ -1,4 +1,5 @@
-import { formatFiles, names, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { formatFiles, names } from '@nx/devkit';
 import {
   addExecutor,
   generateExecutorFiles,

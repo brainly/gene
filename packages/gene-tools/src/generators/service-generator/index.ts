@@ -1,5 +1,6 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   getWorkspaceLayout,
@@ -9,7 +10,7 @@ import {
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { BrainlyServiceGenerator } from './schema';
+import type { BrainlyServiceGenerator } from './schema';
 import { classify, camelize, dasherize } from '@nx/devkit/src/utils/string-utils';
 import inquirer = require('inquirer');
 

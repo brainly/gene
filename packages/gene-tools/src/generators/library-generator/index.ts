@@ -1,15 +1,16 @@
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   installPackagesTask,
   readJson,
-  Tree,
   updateJson,
   workspaceRoot,
   writeJson,
 } from '@nx/devkit';
 import { Linter } from '@nx/linter';
 import { libraryGenerator } from '@nx/react';
-import { GeneLibraryGenerator } from './schema';
+import type { GeneLibraryGenerator } from './schema';
 import { getNpmScope, updateJestConfig } from '../utilities';
 import { relative } from 'path';
 

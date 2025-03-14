@@ -1,4 +1,4 @@
-import { QueryClient, QueryFunctionContext } from '@tanstack/react-query';
+import type { QueryClient, QueryFunctionContext } from '@tanstack/react-query';
 import { reactQueryFetchWrapper } from '@brainly-gene/core';
 import nodeFetch from 'node-fetch';
 

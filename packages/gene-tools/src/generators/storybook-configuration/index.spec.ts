@@ -1,5 +1,6 @@
 import * as devkit from '@nx/devkit';
-import { readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { Linter } from '@nx/linter';
 import { applicationGenerator } from '@nx/next';
