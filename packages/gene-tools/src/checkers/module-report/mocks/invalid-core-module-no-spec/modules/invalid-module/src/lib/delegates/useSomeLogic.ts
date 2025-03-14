@@ -4,7 +4,7 @@ import {
   TranslationServiceType,
 } from '@brainly-gene/next';
 import {useQuestion} from '@acme/social-qa/question/services/question-service';
-import * as React from 'react';
+import React from 'react';
 import {useMediator} from '@brainly-gene/core'
 import {
   ROUTER_SERVICE_IDENTIFIER,

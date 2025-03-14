@@ -1,4 +1,4 @@
-import { ApolloQueryResult, QueryResult } from '@apollo/client';
+import type { ApolloQueryResult, QueryResult } from '@apollo/client';
 import { CommonServiceType } from '@brainly-gene/core';
 
 export function transformApolloResponse<TData = null, TVariables = null>(

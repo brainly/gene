@@ -9,7 +9,7 @@ import {
   writeJson,
 } from '@nx/devkit';
 import { APIRouteGenerator } from './schema';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { classify } from '@nx/devkit/src/utils/string-utils';
 
 import { promptSelectAppName, getAllAppKeys, getNpmScope } from '../utilities';
 
@@ -40,7 +40,7 @@ export default async function (tree: Tree, schema: APIRouteGenerator) {
     joinPathFragments(moduleProject.sourceRoot, `/pages/api/${directory}`),
     {
       ...schema,
-      pascalCaseFileName: stringUtils.classify(name),
+      pascalCaseFileName: classify(name),
       fileName: name,
       tmpl: '',
       directory: directory.length > 0 ? `/${directory}` : directory,

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 interface EventHandlerArgsType<T, PayloadT> {
   type: T;

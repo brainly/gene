@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {createGeneModule, useModuleInjection} from '@brainly-gene/core';
 import { useSomeLogic } from './delegates/useSomeLogic';
 

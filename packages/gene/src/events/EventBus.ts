@@ -1,5 +1,5 @@
 import { Observable } from 'zen-observable-ts';
-import * as R from 'ramda';
+import { compose } from 'ramda';
 
 export interface AbstractEventBusEventType<PayloadType = unknown> {
   payload?: PayloadType;
@@ -96,7 +96,7 @@ const emitFactory = function () {
 // exports
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const emit = R.compose<
+export const emit = compose<
   Observable<AbstractEventBusEventType>,
   (
     event: AbstractEventBusEventType | Promise<AbstractEventBusEventType>
@@ -109,7 +109,7 @@ export const emit = R.compose<
 // please note that registerFactory must be last in composition due to the number of args
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const register = R.compose<
+export const register = compose<
   Observable<AbstractEventBusEventType>,
   (
     event: AbstractEventBusEventType,

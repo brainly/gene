@@ -8,8 +8,10 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": ["*.[jt]s?(x)"],
+      "extends": ["eslint:recommended", "plugin:import/recommended"],
       "rules": {
+        "import/no-unresolved": "off",
         "@nx/enforce-module-boundaries": [
           "error",
           {
@@ -23,6 +25,13 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": ["*.[jt]s?(x)"],
+      "excludedFiles": ["*.spec.ts", "*.spec.tsx"],
+      "rules": {
+        "import/no-namespace": "error"
       }
     },
     {

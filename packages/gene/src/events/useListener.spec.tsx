@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import {dispatch} from './dispatchBubbleEvent';
 import {render, screen, fireEvent} from '@testing-library/react';

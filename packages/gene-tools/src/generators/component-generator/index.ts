@@ -11,8 +11,8 @@ import {
 import { BrainlyComponentGenerator } from './schema';
 import { resolveDynamicOptions } from './utils/resolveDynamicOptions';
 import { reexport } from './utils/reexport';
-import * as inquirer from 'inquirer';
-import * as fs from 'fs';
+import { prompt } from 'inquirer';
+import { readdirSync } from 'fs';
 import { camelCase, upperFirst } from 'lodash';
 import { promptSelectAppName } from '../utilities/getAppName';
 import {classify} from '@nx/devkit/src/utils/string-utils';
@@ -47,13 +47,12 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
   }
 
   if (tags?.includes('type:module')) {
-    const variants = fs
-      .readdirSync(`${sourceRoot}/lib`)
+    const variants = readdirSync(`${sourceRoot}/lib`)
       .filter((entry) => !entry.includes('.'));
 
     const isModuleLibrary = tags?.includes('type:application-module-library');
 
-    const { chosenVariant } = await inquirer.prompt([
+    const { chosenVariant } = await prompt([
       {
         type: 'list',
         name: 'chosenVariant',

@@ -1,7 +1,7 @@
-import * as jscodeshift from 'jscodeshift';
+import { withParser } from 'jscodeshift';
 import { Tree } from '@nx/devkit';
 
-const j = jscodeshift.withParser('tsx');
+const j = withParser('tsx');
 
 interface PropsType {
   tree: Tree;

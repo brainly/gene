@@ -1,14 +1,11 @@
 import React from 'react';
 import {
   ApolloClient,
-  ApolloQueryResult,
-  NormalizedCacheObject,
+  type ApolloQueryResult,
+  type NormalizedCacheObject,
 } from '@apollo/client';
 import { transformApolloResponse } from './transformApolloResponse';
-import {
-  CommonFetchFn,
-  CommonServiceType,
-} from '@brainly-gene/core';
+import { CommonFetchFn, CommonServiceType } from '@brainly-gene/core';
 
 interface PropsType<TData, TVariables> {
   apolloClient: ApolloClient<NormalizedCacheObject>;
@@ -28,12 +25,8 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
 
   const fetch: CommonFetchFn<TData, TVariables> = React.useCallback(
     async (options) => {
-      const {
-        variables,
-        optimisticResponse,
-        refetchQueries,
-        updates,
-      } = options || {};
+      const { variables, optimisticResponse, refetchQueries, updates } =
+        options || {};
       try {
         if (optimisticResponse) {
           setQueryResults({

@@ -1,7 +1,7 @@
 import { bind, fromPairs, pipe, prop, toPairs } from 'ramda';
-import * as inquirer from 'inquirer';
-import * as fs from 'fs';
-import * as path from 'path';
+import { prompt } from 'inquirer';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 type SchemaPropertiesEntryType<TSchemaType> = [
   keyof TSchemaType,
@@ -67,7 +67,7 @@ export async function getUserPromptInput({
   choices?: string[];
 }): Promise<boolean | string | null> {
   try {
-    const promptOutput: PromptOutputType = await inquirer.prompt({
+    const promptOutput: PromptOutputType = await prompt({
       type: promptType,
       name: promptType,
       message: question,
@@ -88,8 +88,7 @@ export async function getUserPromptInput({
 export const getElementFileContent = (opts: FileUtilsInputOptsType) => {
   const { filePath } = opts;
 
-  const fileContent = fs
-    .readFileSync(path.join(__dirname, filePath))
+  const fileContent = readFileSync(join(__dirname, filePath))
     .toString();
 
   return {

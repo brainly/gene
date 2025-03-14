@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
 import { useApolloObservableQuery } from './useApolloObservableQuery';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {Flex, Link} from 'brainly-style-guide';
 type PropsType = Readonly<{
   id: string;

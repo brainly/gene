@@ -1,7 +1,7 @@
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 
 export async function promptBoolean(question: string): Promise<boolean> {
-  const response = await inquirer.prompt([
+  const response = await prompt([
     {
       type: 'confirm',
       name: 'answer',

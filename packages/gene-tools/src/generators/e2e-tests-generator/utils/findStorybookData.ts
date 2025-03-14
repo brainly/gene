@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import { readdirSync, statSync, readFileSync } from 'fs';
+import { join } from 'path';
 
 function extractStories(fileContent: string): Record<string, string> {
   const stories: Record<string, string> = {};
@@ -34,9 +34,9 @@ function getStorybookFilesFromDir(root: string): string[] {
   const files: string[] = [];
 
   function traverse(dir: string): void {
-    fs.readdirSync(dir).forEach((file) => {
-      const fullPath = path.join(dir, file);
-      if (fs.statSync(fullPath).isDirectory()) {
+    readdirSync(dir).forEach((file) => {
+      const fullPath = join(dir, file);
+      if (statSync(fullPath).isDirectory()) {
         traverse(fullPath);
       } else if (
         file.endsWith('.stories.tsx') ||
@@ -57,7 +57,7 @@ export function findStorybookData(sourceRoot: string): Record<string, string> {
   let allStories: Record<string, string> = {};
 
   for (const file of storybookFiles) {
-    const fileContent = fs.readFileSync(file, 'utf-8');
+    const fileContent = readFileSync(file, 'utf-8');
     const stories = extractStories(fileContent);
     allStories = { ...allStories, ...stories };
   }

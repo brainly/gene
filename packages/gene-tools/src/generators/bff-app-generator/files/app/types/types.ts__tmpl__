@@ -1,6 +1,6 @@
 
 <% if (apollo && reactQuery) { %>
-  import {NormalizedCacheObject} from '@apollo/client';
+  import type {NormalizedCacheObject} from '@apollo/client';
   import {DehydratedState} from '@tanstack/react-query';
 
   export interface HomePagePropsType {
@@ -11,7 +11,7 @@
 
 
 <% if (apollo && !reactQuery) { %>
-  import {NormalizedCacheObject} from '@apollo/client';
+  import type {NormalizedCacheObject} from '@apollo/client';
 
   export interface HomePagePropsType {
     dehydratedApolloClient?: NormalizedCacheObject;

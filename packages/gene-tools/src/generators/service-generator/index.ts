@@ -10,7 +10,7 @@ import {
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { BrainlyServiceGenerator } from './schema';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { classify, camelize, dasherize } from '@nx/devkit/src/utils/string-utils';
 import inquirer = require('inquirer');
 
 import { getNpmScope } from '../utilities';
@@ -34,8 +34,8 @@ function createFiles(
     {
       ...schema,
       npmScope: options.npmScope,
-      fileName: stringUtils.classify(schema.name),
-      lowerCaseFileName: stringUtils.camelize(schema.name),
+      fileName: classify(schema.name),
+      lowerCaseFileName: camelize(schema.name),
       tmpl: '',
     }
   );
@@ -58,7 +58,7 @@ const promptCrudFunctions = async (
   serviceName: string,
   useDefaultCrudFunctions?: boolean
 ) => {
-  const classifiedName = stringUtils.classify(serviceName);
+  const classifiedName = classify(serviceName);
   if (useDefaultCrudFunctions) {
     return [`use${classifiedName}s`];
   }
@@ -99,7 +99,7 @@ const promptCrudFunctions = async (
 
 export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
-  const name = stringUtils.dasherize(schema.name);
+  const name = dasherize(schema.name);
   const directory = getDirectoryPath(schema, name);
 
   let crudFunctions: string[] = [];

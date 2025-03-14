@@ -1,7 +1,7 @@
 import { logger, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import apiRouteGenerator from './index';
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 import { applicationGenerator } from '@nx/next';
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
@@ -22,7 +22,7 @@ describe('Subapp generator', () => {
       style: 'none',
     });
 
-    (inquirer.prompt as unknown as jest.Mock).mockImplementationOnce(
+    (prompt as unknown as jest.Mock).mockImplementationOnce(
       ([{ name }]) => {
         if (name === 'appName') {
           return { appName: 'example.com-us' };

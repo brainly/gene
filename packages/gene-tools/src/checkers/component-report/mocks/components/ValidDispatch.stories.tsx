@@ -1,6 +1,6 @@
 import {ValidDispatchEventsType} from './ValidDispatchEventsType';
 
-import * as React from 'react';
+import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {registerStoryInPackages, StorybookMediator} from '@brainly-gene/core';
 import ValidDispatch from './ValidDispatch';

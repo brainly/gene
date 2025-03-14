@@ -1,7 +1,7 @@
 import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import componentsLibraryGenerator from './index';
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 import componentGenerator from '../component-generator';
 
 /**
@@ -23,7 +23,7 @@ describe('Components library generator', () => {
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);
 
-    (inquirer.prompt as unknown as jest.Mock).mockImplementation(({ name }) => {
+    (prompt as unknown as jest.Mock).mockImplementation(({ name }) => {
       if (name === 'input') {
         return { input: 'TestComponent' };
       }
