@@ -1,4 +1,5 @@
-import type { Tree } from '@nx/devkit';
+import type {
+  Tree} from '@nx/devkit';
 import {
   formatFiles,
   installPackagesTask,
@@ -27,7 +28,7 @@ import { updateCypressTsConfig } from '../utilities';
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory = '', e2e } = schema;
   const currentPackageJson = readJson(tree, 'package.json');
-  console.log({schema})
+
   await applicationGenerator(tree, {
     name: name,
     directory: directory,
@@ -40,7 +41,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     appDir: false,
     src: false,
   });
-  console.log('after applicationGenerator')
+
   const normalizedDirectory = directory.replace(/\//g, '-');
   const projectName = normalizedDirectory
     ? `${normalizedDirectory}-${name}`
@@ -116,7 +117,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
             },
           ],
         };
-      },
+      }
     );
   }
   await storybookConfigurationGenerator(tree, {
