@@ -39,6 +39,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
     appDir: false,
+    src: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');
