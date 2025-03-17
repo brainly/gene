@@ -1,7 +1,6 @@
 'use client';
-import * as React from 'react';
-import { AbstractEventBusEventType, register, emit } from './EventBus';
-
+import { createContext, useContext, useState, useEffect } from 'react';
+import type { AbstractEventBusEventType, register, emit } from './EventBus';
 interface PropsType<T> {
   eventName: string;
   initialValue?: T;
@@ -12,7 +11,7 @@ interface EventBusContextType {
   register: typeof register;
 }
 
-const eventBusContext = React.createContext<EventBusContextType | null>(null);
+const eventBusContext = createContext<EventBusContextType | null>(null);
 
 export const EventBusContextProvider = eventBusContext.Provider;
 
@@ -20,13 +19,11 @@ export function useEventBusBehaviourSubscription<T = unknown>({
   eventName,
   initialValue,
 }: PropsType<T>) {
-  const context: EventBusContextType | null = React.useContext(eventBusContext);
-  const [currentValue, setCurrentValue] = React.useState<T | undefined>(
-    initialValue
-  );
-  const [error, setError] = React.useState<string | undefined>();
+  const context: EventBusContextType | null = useContext(eventBusContext);
+  const [currentValue, setCurrentValue] = useState<T | undefined>(initialValue);
+  const [error, setError] = useState<string | undefined>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (context && context.register) {
       const subscription = (
         context.register as (
@@ -59,9 +56,9 @@ export function useEventBusSubscription<T = Record<string, any>>(
   eventName: string,
   handler: (payload: T | undefined) => void
 ) {
-  const context: EventBusContextType | null = React.useContext(eventBusContext);
+  const context: EventBusContextType | null = useContext(eventBusContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (context && (context as EventBusContextType).register) {
       const subscription = (
         context.register as (
@@ -92,7 +89,7 @@ export function useEventBusSubscription<T = Record<string, any>>(
 }
 
 export function useEventBusEmit() {
-  const context: EventBusContextType | null = React.useContext(eventBusContext);
+  const context: EventBusContextType | null = useContext(eventBusContext);
 
   if (context && context.emit) {
     return context.emit;

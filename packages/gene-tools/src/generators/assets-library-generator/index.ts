@@ -1,13 +1,13 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   readJson,
-  Tree,
   writeJson,
 } from '@nx/devkit';
-import { AssetsLibraryGenerator } from './schema';
+import type { AssetsLibraryGenerator } from './schema';
 
 import libraryGenerator from '../library-generator';
 
@@ -27,7 +27,7 @@ export default async function (tree: Tree, schema: AssetsLibraryGenerator) {
     {
       ...schema,
       tmpl: '',
-    }
+    },
   );
 
   await formatFiles(tree);

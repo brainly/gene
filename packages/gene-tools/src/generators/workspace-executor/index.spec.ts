@@ -1,4 +1,4 @@
-import { Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 import * as devkit from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import workspaceExecutorGenerator from './index';
@@ -13,7 +13,7 @@ describe('workspaceExecutor generator', () => {
 
     tree.write(
       'tools/executors/executors.json',
-      JSON.stringify({ executors: {} })
+      JSON.stringify({ executors: {} }),
     );
     tree.write(
       'tools/executors/README.md',
@@ -28,18 +28,19 @@ Some description
 ## Other sections
 
 Some text
-`
+`,
     );
   });
 
   it('should throw when the executor already exists', async () => {
     tree.write(
       'tools/executors/executors.json',
-      JSON.stringify({ executors: { [expectedExecutorName]: {} } })
+      JSON.stringify({ executors: { [expectedExecutorName]: {} } }),
     );
 
     expect(
-      async () => await workspaceExecutorGenerator(tree, { name: executorName })
+      async () =>
+        await workspaceExecutorGenerator(tree, { name: executorName }),
     ).rejects.toThrow();
   });
 
@@ -47,13 +48,13 @@ Some text
     await workspaceExecutorGenerator(tree, { name: executorName });
 
     expect(
-      tree.exists(`tools/executors/${expectedExecutorName}/impl.ts`)
+      tree.exists(`tools/executors/${expectedExecutorName}/impl.ts`),
     ).toBeTruthy();
     expect(
-      tree.exists(`tools/executors/${expectedExecutorName}/README.md`)
+      tree.exists(`tools/executors/${expectedExecutorName}/README.md`),
     ).toBeTruthy();
     expect(
-      tree.exists(`tools/executors/${expectedExecutorName}/schema.json`)
+      tree.exists(`tools/executors/${expectedExecutorName}/schema.json`),
     ).toBeTruthy();
   });
 
@@ -61,7 +62,7 @@ Some text
     await workspaceExecutorGenerator(tree, { name: executorName });
 
     expect(
-      devkit.readJson(tree, `tools/executors/executors.json`)
+      devkit.readJson(tree, `tools/executors/executors.json`),
     ).toMatchSnapshot();
   });
 

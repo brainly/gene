@@ -18,7 +18,7 @@ function validateProps(file) {
 
     const componentDef = findComponentDefinition(
       defaultExportCollection.paths()[0],
-      componentName
+      componentName,
     );
 
     if (componentDef && componentDef.params.length === 0) {

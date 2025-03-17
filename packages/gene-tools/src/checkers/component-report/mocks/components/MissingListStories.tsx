@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   text?: string;
@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   second?: string[];
 }>;
 
-const MissingListStories = ({list, second}: PropsType) => {
+const MissingListStories = ({ list, second }: PropsType) => {
   return null;
 };
 

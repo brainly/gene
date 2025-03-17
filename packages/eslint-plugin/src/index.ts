@@ -8,7 +8,7 @@ import { resolve } from 'path';
 import { USE_LISTENER_RULE_NAME } from './rules/use-listener';
 
 const pkg = JSON.parse(
-  readFileSync(resolve(__dirname, '../package.json'), 'utf8')
+  readFileSync(resolve(__dirname, '../package.json'), 'utf8'),
 );
 
 const pluginName = pkg.name.replace('/eslint-plugin', '');

@@ -6,7 +6,7 @@ describe('useSomeLogic', () => {
   it('should return an object with someProps property', () => {
     const { result } = renderHook(() => {
       const ref = useRef(null);
-      return useSomeLogic({ref});
+      return useSomeLogic({ ref });
     });
 
     expect(result.current).toHaveProperty('someProps');

@@ -49,8 +49,5 @@
     }
   },
   "additionalProperties": false,
-  "required": [
-    "serve",
-    "e2eTests"
-  ]
+  "required": ["serve", "e2eTests"]
 }

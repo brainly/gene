@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const InlineArrowFunc = ({id, content, items}: PropsType) => {
+const InlineArrowFunc = ({ id, content, items }: PropsType) => {
   return (
     <>
       <div onClick={() => null}>click me</div>

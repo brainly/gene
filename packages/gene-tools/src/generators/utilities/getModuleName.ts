@@ -1,33 +1,33 @@
-import { Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
 
-import * as inquirer from 'inquirer';
+import { registerPrompt, prompt } from 'inquirer';
 
 // inquirer-search-list has no type declaration
 // https://github.com/robin-rpr/inquirer-search-list
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import * as inquirerSearchList from 'inquirer-search-list';
-inquirer.registerPrompt('search-list', inquirerSearchList);
+import * as inquirerSearchList from 'inquirer-search-list'; // eslint-disable-line import/no-namespace
+registerPrompt('search-list', inquirerSearchList);
 
 // inquirer-search-checkbox has no type declaration
 // https://github.com/robin-rpr/inquirer-search-list
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import * as inquirerSearchCheckbox from 'inquirer-search-checkbox';
+import * as inquirerSearchCheckbox from 'inquirer-search-checkbox'; // eslint-disable-line import/no-namespace
 import { getListOfAllProjectKeys } from './treeHelpers';
-inquirer.registerPrompt('search-checkbox', inquirerSearchCheckbox);
+registerPrompt('search-checkbox', inquirerSearchCheckbox);
 
 export async function promptSelectModuleName(
   tree: Tree,
   question: string,
-  listOfSelectableProjects?: string[]
+  listOfSelectableProjects?: string[],
 ) {
   const projects = (
     listOfSelectableProjects ?? getListOfAllProjectKeys(tree)
   ).filter((project) => project.endsWith('-module'));
 
   return (
-    await inquirer.prompt([
+    await prompt([
       {
         type: 'search-list',
         message: `${question}\r\nType to search`,

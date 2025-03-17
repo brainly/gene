@@ -1,12 +1,12 @@
 export function dispatch<T extends [string, Record<string, unknown>?]>(
   target: EventTarget | null,
-  event: T
+  event: T,
 ) {
   const [eventType, eventPayload] = event;
 
   if (!target) {
     console.warn(
-      'No specified target for bubble event, no possibility to dispatch!'
+      'No specified target for bubble event, no possibility to dispatch!',
     );
     return;
   }
@@ -16,6 +16,6 @@ export function dispatch<T extends [string, Record<string, unknown>?]>(
       detail: eventPayload,
       cancelable: true,
       bubbles: true,
-    })
+    }),
   );
 }

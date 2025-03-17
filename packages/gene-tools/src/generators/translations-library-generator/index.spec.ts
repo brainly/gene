@@ -1,4 +1,5 @@
-import { logger, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import translationsLibraryGenerator from './index';
 
@@ -16,7 +17,7 @@ describe('Translations library generator', () => {
     await translationsLibraryGenerator(appTree);
 
     expect(
-      appTree.exists('libs/translations/src/locales/test.json')
+      appTree.exists('libs/translations/src/locales/test.json'),
     ).toBeTruthy();
   });
 });

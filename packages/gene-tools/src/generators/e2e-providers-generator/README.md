@@ -2,9 +2,7 @@
 
 This generator creates a library for E2E testing providers.
 
-
 This lib is used in storybook files to allow easy mocking of IoC containers.
-
 
 ## Usage
 

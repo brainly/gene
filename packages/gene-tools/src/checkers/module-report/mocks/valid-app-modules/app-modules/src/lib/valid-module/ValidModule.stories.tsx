@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {storiesOf} from '@storybook/react';
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import { ValidModule } from './ValidModule';
 import { ValidVariationModule } from './ValidVariationModule';
 

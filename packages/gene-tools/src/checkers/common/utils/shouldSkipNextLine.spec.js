@@ -1,4 +1,4 @@
-const {shouldSkipNextLine} = require('./shouldSkipNextLine');
+const { shouldSkipNextLine } = require('./shouldSkipNextLine');
 const {
   GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
 } = require('../constants/nextLineDisablers');
@@ -27,7 +27,7 @@ describe('shouldSkipNextLine()', () => {
     const skipNextLine = shouldSkipNextLine(
       arrayOfLines,
       lineNumber,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
     );
 
     expect(skipNextLine).toEqual({
@@ -41,7 +41,7 @@ describe('shouldSkipNextLine()', () => {
     const skipNextLine = shouldSkipNextLine(
       arrayOfLines,
       lineNumber,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
     );
 
     expect(skipNextLine).toEqual({
@@ -56,7 +56,7 @@ describe('shouldSkipNextLine()', () => {
     const skipNextLine = shouldSkipNextLine(
       arrayOfLines,
       lineNumber,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
     );
 
     expect(skipNextLine).toEqual({

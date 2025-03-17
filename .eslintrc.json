@@ -8,8 +8,10 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": ["*.[jt]s?(x)"],
+      "extends": ["eslint:recommended", "plugin:import/recommended"],
       "rules": {
+        "import/no-unresolved": "off",
         "@nx/enforce-module-boundaries": [
           "error",
           {
@@ -26,10 +28,20 @@
       }
     },
     {
+      "files": ["*.[jt]s?(x)"],
+      "excludedFiles": ["*.spec.ts", "*.spec.tsx"],
+      "rules": {
+        "import/no-namespace": "error"
+      }
+    },
+    {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
       "rules": {
-        "@typescript-eslint/no-explicit-any": "warn"
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/no-import-type-side-effects": "error"
       }
     },
     {

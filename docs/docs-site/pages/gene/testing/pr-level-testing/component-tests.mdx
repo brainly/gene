@@ -1,37 +1,46 @@
 # Components Tests Guide
 
 ## Why We Need Components Tests
+
 Component tests are crucial for ensuring the reliability and functionality of individual components within our app. They help identify issues early in development, reducing the cost and effort of fixing bugs later in the cycle.
 
 ## Responsibility
+
 All developers are responsible for writing and maintaining component tests for the components they develop, with distinctions between core components and application modules as outlined below. Ensuring high code quality and reliability is a shared responsibility across the team.
 
 ### Creation
-- **Developer:**  
+
+- **Developer:**
   - Creates tests when working on specific increments.
   - Responsible for fixing any flaky tests.
 
 ### Fixing
+
 - **Developer who introduced the bug.**
 
 ### Maintenance
+
 - **Developer responsible for changes in specific core or application module tests.**
 
 ## Scope and Effort
+
 ### Core Components Tests
+
 - **Mandatory:** Yes
 - **When:** Component is used in multiple projects.
 - **Scope:** Comprehensive coverage of critical functionalities.
 - **Effort:** High priority, significant effort.
 
 ### Application Components Tests
+
 - **Mandatory:** No (Project Leader decision)
 - **When:** Component is used in only one project.
 - **Scope:** Basic coverage, focusing on market-specific features.
 - **Effort:** Medium priority, minimal effort, ideally covered at E2E level.
 
 ## Tools
-*The team can choose its preferred technology stack for E2E tests. The following tools are suggestions only.*
+
+_The team can choose its preferred technology stack for E2E tests. The following tools are suggestions only._
 
 - **Testing Frameworks:** Jest, Cypress
 - **Assertion Libraries:** Chai, Assert
@@ -40,6 +49,7 @@ All developers are responsible for writing and maintaining component tests for t
 - **Other:** Storybook, TestRail, Jira
 
 ## Guidelines and Best Practices
+
 - Write tests that are easy to understand and maintain.
 - Aim for high test coverage, prioritizing critical paths.
 - Use descriptive names for test cases.
@@ -48,7 +58,9 @@ All developers are responsible for writing and maintaining component tests for t
 - Regularly review and refactor tests to keep them up-to-date with code changes.
 
 ## Definition of Done
+
 A module test is considered complete when:
+
 - All core functionalities are covered by tests.
 - All tests pass without errors.
 - Tests do not rely on external services; use mocks/stubs where necessary.
@@ -56,8 +68,10 @@ A module test is considered complete when:
 - Test cases are documented and added to the test suite.
 
 ## Examples
+
 ### Core Component Test with Cypress
-*Note: This example uses Cypress for testing a core component. You can use other testing libraries, tools, frameworks, etc., to achieve similar goals based on your requirements and preferences.*
+
+_Note: This example uses Cypress for testing a core component. You can use other testing libraries, tools, frameworks, etc., to achieve similar goals based on your requirements and preferences._
 
 ```gherkin
 Feature: GetOrAddSomethingModule

@@ -1,4 +1,5 @@
-import { Tree, updateJson } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { updateJson } from '@nx/devkit';
 
 export function addExecutor(tree: Tree, name: string): void {
   updateJson(tree, 'tools/executors/executors.json', (json) => {

@@ -1,4 +1,4 @@
-const {validateStories} = require('./storiesValidator');
+const { validateStories } = require('./storiesValidator');
 const path = require('path');
 
 describe('validateStories()', () => {
@@ -6,7 +6,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/ValidDispatch'
+        '../mocks/components/ValidDispatch',
       ),
     });
 
@@ -19,7 +19,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/InvalidDispatch'
+        '../mocks/components/InvalidDispatch',
       ),
     });
 
@@ -32,7 +32,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/MissingDispatch'
+        '../mocks/components/MissingDispatch',
       ),
     });
 
@@ -46,7 +46,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/MissingListStories'
+        '../mocks/components/MissingListStories',
       ),
     });
 
@@ -62,7 +62,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/InvalidConditionalRender'
+        '../mocks/components/InvalidConditionalRender',
       ),
     });
 
@@ -78,7 +78,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/ValidConditionalRender'
+        '../mocks/components/ValidConditionalRender',
       ),
     });
 
@@ -91,7 +91,7 @@ describe('validateStories()', () => {
     const result = validateStories({
       truncatedPath: path.resolve(
         __dirname,
-        '../mocks/components/ValidListStories'
+        '../mocks/components/ValidListStories',
       ),
     });
 

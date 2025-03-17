@@ -1,15 +1,10 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { reactQueryFetchWrapper } from './reactQueryFetchWrapper';
 import { useReactQueryLazy } from './useReactQueryLazy';
 import { QueryClient } from '@tanstack/react-query';
-import { waitFor } from '@testing-library/react';
-import {
-  ExampleResponse,
-  mockFetch,
-  mockFetchWithDelay,
-  mockFetchWithError,
-} from '../services';
+import type { ExampleResponse } from '../services';
+import { mockFetch, mockFetchWithDelay, mockFetchWithError } from '../services';
 
 let queryClient: QueryClient;
 
@@ -27,7 +22,7 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     expect(result.current.data).toBe(undefined);
@@ -65,7 +60,7 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     result.current.fetch({ optimisticResponse });
@@ -99,7 +94,7 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     result.current.fetch({ ignoreCache: true });
@@ -133,7 +128,7 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     result.current.fetch({ updates: [{ queryKey: ['otherKey'], updateFn }] });
@@ -157,7 +152,7 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     result.current.fetch({ updates: [{ queryKey: ['otherKey'], updateFn }] });
@@ -191,7 +186,7 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     try {
@@ -218,11 +213,11 @@ describe('useReactQueryLazy', () => {
         reactQueryClient: queryClient,
         queryFn,
         queryKey: () => ['key'],
-      })
+      }),
     );
 
     await waitFor(() =>
-      result.current.fetch({ refetchQueries: [['anotherKey']] })
+      result.current.fetch({ refetchQueries: [['anotherKey']] }),
     );
 
     expect(refetchSpy).toHaveBeenCalledWith({ queryKey: ['anotherKey'] });

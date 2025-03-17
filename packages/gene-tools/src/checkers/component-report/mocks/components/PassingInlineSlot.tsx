@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingInlineSlot = ({id, content, items}: PropsType) => {
+const PassingInlineSlot = ({ id, content, items }: PropsType) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return <div slot={<div>hello</div>}></div>;

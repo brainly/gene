@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { renderHook, waitFor } from '@testing-library/react';
 import {
@@ -23,7 +23,7 @@ describe('useEventBusBehaviourSubscription', () => {
       () => useEventBusBehaviourSubscription(props),
       {
         wrapper,
-      }
+      },
     );
 
     expect(result.current).toBe(undefined);
@@ -47,7 +47,7 @@ describe('useEventBusBehaviourSubscription', () => {
       () => useEventBusBehaviourSubscription<string>(props),
       {
         wrapper,
-      }
+      },
     );
 
     expect(result.current).toBe('test-value');
@@ -68,7 +68,7 @@ describe('useEventBusBehaviourSubscription', () => {
       initialValue: 'test-value',
     };
     const { result } = renderHook(() =>
-      useEventBusBehaviourSubscription<string>(props)
+      useEventBusBehaviourSubscription<string>(props),
     );
 
     expect(result.current).toEqual({
@@ -84,7 +84,7 @@ describe('useEventBusSubscription', () => {
       () => useEventBusSubscription<string>('test-event', mockHandler),
       {
         wrapper,
-      }
+      },
     );
 
     expect(result.current).toBe(undefined);
@@ -104,12 +104,12 @@ describe('useEventBusSubscription', () => {
   it('returns error when hook is used without context', async () => {
     console.error = jest.fn();
     const { result } = renderHook(() =>
-      useEventBusSubscription<string>('test-event', () => null)
+      useEventBusSubscription<string>('test-event', () => null),
     );
 
     expect(result.current).toEqual(undefined);
     expect(console.error).toHaveBeenCalledWith(
-      'EventBus context is not defined!'
+      'EventBus context is not defined!',
     );
   });
 });

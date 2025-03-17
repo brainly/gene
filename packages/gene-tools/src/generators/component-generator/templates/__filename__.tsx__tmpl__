@@ -2,7 +2,7 @@
   <%= flowDeclaration %>
 <% } %>
 
-import * as React from 'react';
+import React from 'react';
 <% if (copy) { %>import {<% if (shouldAddFlowDeclaration) { %>type <% } %><%= copyTypeName(name) %>} from './<%= copyTypeName(name) %>';<% } %>
 <% if (styles) { %>import styles from './<%= classify(name) %>.module.<%= stylesExtension %>';
 import cx from 'classnames';<% } %>

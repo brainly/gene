@@ -1,1 +1,1 @@
-export {AnotherValidModule} from './AnotherValidModule';
+export { AnotherValidModule } from './AnotherValidModule';

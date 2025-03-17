@@ -1,30 +1,37 @@
 # End-to-End (E2E) Testing Guide
 
 ## Why We Need E2E Tests
+
 End-to-end tests are essential to ensure our application operates as expected from the user's perspective. They help detect integration issues, validate complete user flows, and confirm that our application meets business requirements. E2E tests also provide confidence in the system's functionality after deployments or major changes.
 
 ## Responsibility
+
 E2E testing is a collaborative effort between developers and QA engineers. Developers write and maintain E2E tests for new features, while QA engineers create comprehensive test plans, validate tests, and ensure overall test coverage.
 
 - **Creation**
+
   - **Developer or QA**:
     - Creates tests for specific increments, depending on the team structure and project leadership.
     - Is responsible for fixing flaky tests.
 
 - **Fixing**
+
   - Developer who introduced the bug.
 
 - **Maintenance**
   - Developer responsible for changes in the E2E test area.
 
 ## Scope and Effort
+
 E2E tests should cover:
 
 **Main Focus**
+
 - **User Flows and Stories**: Validate critical user stories and interactions.
 - **Cross-Browser Testing**: Ensure compatibility across various browsers.
 
 **Optional Checks**
+
 - **Accessibility Automation Tests**: Confirm the application meets accessibility standards.
 - **Visual Automation Tests**: Determine the most critical visual components for testing.
 - **Analytics Events Checks**: Identify key analytics events to validate.
@@ -36,6 +43,7 @@ E2E tests should cover:
 - **Other**: Define additional critical checks as needed.
 
 ## Tools
+
 The team can decide on the appropriate technology stack for E2E tests. The following tools are suggestions:
 
 - **Cypress**: E2E testing and accessibility checks.
@@ -45,6 +53,7 @@ The team can decide on the appropriate technology stack for E2E tests. The follo
 - **BrowserStack**: Cross-browser testing.
 
 ## Guidelines and Best Practices
+
 - **Start Simple**: Focus on critical user flows before expanding to complex scenarios.
 - **Test Data Management**: Ensure tests are idempotent with consistent test data.
 - **Parallel Execution**: Use CI/CD pipelines for parallel test execution to reduce time.
@@ -52,32 +61,39 @@ The team can decide on the appropriate technology stack for E2E tests. The follo
 - **Maintenance**: Regularly review and update tests to maintain relevance and effectiveness.
 
 ## Definition of Done
+
 ### E2E Tests
+
 - All related E2E tests pass.
 - Key user flows and stories are validated without errors.
 - Identified issues are resolved and re-tested.
 - Code reviewed and approved by peers.
 
 ### Accessibility Tests
+
 - Accessibility checks report no major issues.
 - Application meets WCAG (Web Content Accessibility Guidelines) standards.
 - Accessibility issues are resolved and re-validated.
 - Regular audits are conducted to ensure ongoing compliance.
 
 ### Visual Tests
+
 - Visual tests reveal no unexpected changes.
 - UI components are consistent across resolutions and devices.
 - Visual regressions are identified and fixed.
 - Visual changes are reviewed and approved by the design team.
 
 ### Analytics Events Tests
+
 - Analytics events are correctly recorded for relevant actions.
 - Events are validated using tools like Google Analytics Debugger.
 - Data integrity confirmed across user scenarios.
 - Analytics setup reviewed and validated by the analytics team.
 
 ## Examples
+
 ### User Flow Test with Cypress
+
 > **Note**: This example uses Cypress for testing a user login flow. Other testing tools, libraries, and frameworks may also achieve similar results depending on project requirements.
 
 ```javascript

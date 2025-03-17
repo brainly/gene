@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = {
   id: string;
@@ -6,7 +6,7 @@ type PropsType = {
   items: Array<unknown>;
 };
 
-const NoReadonlyProps = ({id, content, items}: PropsType) => {
+const NoReadonlyProps = ({ id, content, items }: PropsType) => {
   return null;
 };
 

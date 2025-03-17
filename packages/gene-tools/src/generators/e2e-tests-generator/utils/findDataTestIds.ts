@@ -1,6 +1,7 @@
-import * as fs from 'fs';
-import * as jscodeshift from 'jscodeshift';
-import * as glob from 'glob';
+import { readFileSync } from 'fs';
+import type { Literal } from 'jscodeshift';
+import { withParser } from 'jscodeshift';
+import { sync } from 'glob';
 
 interface Result {
   componentName: string;
@@ -30,10 +31,10 @@ function isFirstLetterCapital(str: string | null) {
 }
 
 async function extractDataTestIdsFromFile(
-  componentPath: string
+  componentPath: string,
 ): Promise<Result[]> {
-  const j = jscodeshift.withParser('tsx');
-  const content = fs.readFileSync(componentPath, 'utf8');
+  const j = withParser('tsx');
+  const content = readFileSync(componentPath, 'utf8');
   const root = j(content);
   const results: Result[] = [];
 
@@ -55,8 +56,7 @@ async function extractDataTestIdsFromFile(
               .split('/')
               .pop()
               ?.replace(/\.tsx$/, '') || '',
-          dataTestId: (attrPath.node.value as jscodeshift.Literal)
-            .value as string,
+          dataTestId: (attrPath.node.value as Literal).value as string,
           dataTestIdElementName: attrPath.parentPath.node.name.name,
         });
       }
@@ -68,7 +68,7 @@ async function extractDataTestIdsFromFile(
 export function processResults(results: Result[]): Result[] {
   // Filter out components with 'Module' in the name
   const filteredResults = results.filter(
-    (result) => !result.componentName.includes('Module') && !!result.dataTestId
+    (result) => !result.componentName.includes('Module') && !!result.dataTestId,
   );
 
   // Remove duplicates based on dataTestId
@@ -87,7 +87,7 @@ export function processResults(results: Result[]): Result[] {
 
 export async function findDataTestIds(
   componentPath: string,
-  maxDepth = 2
+  maxDepth = 2,
 ): Promise<Result[]> {
   const processedFiles: string[] = [];
   const toProcess: FileToProcess[] = [{ path: componentPath, depth: 0 }];
@@ -110,8 +110,8 @@ export async function findDataTestIds(
     const extractedData = await extractDataTestIdsFromFile(currentFile);
     results.push(...extractedData);
 
-    const j = jscodeshift.withParser('tsx');
-    const content = fs.readFileSync(currentFile, 'utf8');
+    const j = withParser('tsx');
+    const content = readFileSync(currentFile, 'utf8');
     const root = j(content);
 
     // Find components returned by the render function
@@ -130,13 +130,13 @@ export async function findDataTestIds(
             : componentName
         }.ts?(x)`;
 
-        const componentFiles = glob.sync(globPattern);
+        const componentFiles = sync(globPattern);
 
         toProcess.push(
           ...componentFiles.map((filePath: string) => ({
             path: filePath,
             depth: currentDepth + 1,
-          }))
+          })),
         );
       }
     });

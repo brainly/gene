@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   generateFiles,
@@ -10,7 +10,7 @@ import {
   writeJson,
   updateJson,
 } from '@nx/devkit';
-import { BrainlyNextJSAppGenerator } from './schema';
+import type { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
 import { Linter } from '@nx/linter';
@@ -18,10 +18,14 @@ import { maybeExcludeRewrites } from './utils/maybeExcludeRewrites';
 import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { underscore, camelize } from '@nx/devkit/src/utils/string-utils';
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { cleanupFiles } from './utils/cleanupFiles';
-import { getNpmScope, updateCypressTsConfig, updateJestConfig } from '../utilities';
+import {
+  getNpmScope,
+  updateCypressTsConfig,
+  updateJestConfig,
+} from '../utilities';
 
 export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
   const { name, directory, e2e } = schema;
@@ -67,7 +71,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     reactQuery: schema.reactQuery,
     rewrites: schema.rewrites,
     projectName,
-    dataTestId: stringUtils.underscore(`${initialPage}-id`),
+    dataTestId: underscore(`${initialPage}-id`),
     offsetFromRoot: offsetFromRoot(appDir),
     title: schema.title,
     description: schema.description,
@@ -78,9 +82,9 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     generateFiles(tree, joinPathFragments(__dirname, './files/e2e'), e2eDir, {
       ...schema,
       fileName: initialPage,
-      camelCaseFileName: stringUtils.camelize(initialPage),
-      dataTestId: stringUtils.underscore(`${initialPage}-id`),
-      connectedFileName: stringUtils.camelize(initialPage).toLocaleLowerCase(),
+      camelCaseFileName: camelize(initialPage),
+      dataTestId: underscore(`${initialPage}-id`),
+      connectedFileName: camelize(initialPage).toLocaleLowerCase(),
       tmpl: '',
     });
   }
@@ -114,7 +118,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
             },
           ],
         };
-      }
+      },
     );
   }
 
@@ -150,16 +154,12 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
         yaml: require.resolve('yaml', {
           paths: [require.resolve('openapi3-ts')],
         }),
-      },`
+      },`,
   );
 
   await formatFiles(tree);
 
-  cleanupFiles(tree, [
-    'pages/_app.tsx',
-    'pages/index.tsx',
-    'pages/styles.css',
-  ]);
+  cleanupFiles(tree, ['pages/_app.tsx', 'pages/index.tsx', 'pages/styles.css']);
 
   // revert possible changes to package.json
   writeJson(tree, 'package.json', currentPackageJson);

@@ -1,6 +1,6 @@
-import nc, {NextConnect, Options} from 'next-connect';
-import {NextApiRequest, NextApiResponse} from 'next';
-import {IncomingMessage, ServerResponse} from 'http';
+import nc, { type NextConnect, type Options } from 'next-connect';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { IncomingMessage, ServerResponse } from 'http';
 
 /**
  * @description
@@ -9,9 +9,9 @@ import {IncomingMessage, ServerResponse} from 'http';
  */
 export function apiHandlerConnect<
   TRequest extends NextApiRequest,
-  TResponse extends NextApiResponse
+  TResponse extends NextApiResponse,
 >(
-  options?: Options<IncomingMessage, ServerResponse>
+  options?: Options<IncomingMessage, ServerResponse>,
 ): NextConnect<TRequest, TResponse> {
   return nc<TRequest, TResponse>({
     ...options,

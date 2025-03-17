@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {compose} from 'ramda';
+import React from 'react';
+import { compose } from 'ramda';
 
 type PropsType = Readonly<{
   id: string;
@@ -10,7 +10,7 @@ type PropsType = Readonly<{
 
 const withLogic = (Component: React.ComponentType<any>) => Component;
 
-const ValidPropsCompose = ({id, content, items}: PropsType) => {
+const ValidPropsCompose = ({ id, content, items }: PropsType) => {
   return null;
 };
 

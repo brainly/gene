@@ -1,9 +1,9 @@
-import * as React from 'react';
-import {TestImportedInterface} from '../types/TestTypes';
+import React from 'react';
+import { TestImportedInterface } from '../types/TestTypes';
 
 type PropsType = TestImportedInterface;
 
-const PropsWithAssignmentToInterface = ({zuzu}: PropsType) => {
+const PropsWithAssignmentToInterface = ({ zuzu }: PropsType) => {
   return null;
 };
 

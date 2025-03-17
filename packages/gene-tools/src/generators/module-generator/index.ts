@@ -1,22 +1,26 @@
+import type { Tree, ProjectConfiguration } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   readProjectConfiguration,
-  Tree,
   updateJson,
   updateProjectConfiguration,
   getProjects,
-  ProjectConfiguration,
   readJson,
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
-import { BrainlyModuleGenerator } from './schema';
+import type { BrainlyModuleGenerator } from './schema';
 import storybookConfigurationGenerator from '../storybook-configuration';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import {
+  dasherize,
+  classify,
+  camelize,
+  underscore,
+} from '@nx/devkit/src/utils/string-utils';
 import { Linter } from '@nx/linter';
 import {
   getNpmScope,
@@ -37,7 +41,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
 
   const workspaceJsonProjects = [...getProjects(tree)].map(
     ([projectName, project]) =>
-      [projectName, project] as [string, ProjectConfiguration]
+      [projectName, project] as [string, ProjectConfiguration],
   );
 
   const appProjects = workspaceJsonProjects
@@ -54,7 +58,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
       schema.appName || '',
       tree,
       'For which app would you like to generate the module?',
-      appProjects
+      appProjects,
     ));
 
   if (!appName) {
@@ -76,7 +80,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
     return project.root.endsWith(`${directoryPath}/${APP_MODULES_LIB_SUFFIX}`);
   });
 
-  const dasherizedName = stringUtils.dasherize(schema.name);
+  const dasherizedName = dasherize(schema.name);
   const nameWithSuffix = `${dasherizedName}-module`;
 
   const modulePath = `libs/${directoryPath}/${APP_MODULES_LIB_SUFFIX}`;
@@ -84,23 +88,21 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
   const moduleProjectName =
     `${directoryPath}/${APP_MODULES_LIB_SUFFIX}`.replace(
       new RegExp('/', 'g'),
-      '-'
+      '-',
     );
   const moduleProjectE2EName = `${moduleProjectName}-e2e`;
   const e2ePath = `apps/${moduleProjectE2EName}`;
 
-  const moduleAutoprefixedName = stringUtils.classify(
-    `${appName}-${nameWithSuffix}`
-  );
+  const moduleAutoprefixedName = classify(`${appName}-${nameWithSuffix}`);
 
-  const defaultModuleName = stringUtils.classify(nameWithSuffix);
+  const defaultModuleName = classify(nameWithSuffix);
 
   const shouldAutoprefix =
     typeof schema.shouldAutoprefix === 'boolean'
       ? schema.shouldAutoprefix
       : await promptBoolean(
           `Would you like to autoprefix the module name with the app name? (default: ${defaultModuleName}, autoprefixed: ${moduleAutoprefixedName})
-Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/branching#modules-naming`
+Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/branching#modules-naming`,
         );
 
   const moduleDisplayName = shouldAutoprefix
@@ -123,12 +125,12 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         ...schema,
         fileName: nameWithSuffix,
         pascalCaseFileName: moduleDisplayName,
-        camelCaseFileName: stringUtils.camelize(nameWithSuffix),
-        dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
+        camelCaseFileName: camelize(nameWithSuffix),
+        dataTestId: underscore(`${nameWithSuffix}-id`),
         tmpl: '',
         errorBoundary,
         npmScope,
-      }
+      },
     );
 
     const reexportFilePath = `${moduleSourcePath}/index.ts`;
@@ -137,11 +139,11 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
 
     tree.write(
       reexportFilePath,
-      `${existingReexportFile}\nexport {${moduleDisplayName}} from './lib/${nameWithSuffix}';`
+      `${existingReexportFile}\nexport {${moduleDisplayName}} from './lib/${nameWithSuffix}';`,
     );
 
     const isE2EProjectExists = workspaceJsonProjects.find(
-      ([projectName]) => projectName === moduleProjectE2EName
+      ([projectName]) => projectName === moduleProjectE2EName,
     );
 
     if (schema.e2e && isE2EProjectExists) {
@@ -155,13 +157,11 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           ...schema,
           fileName: nameWithSuffix,
           pascalCaseFileName: moduleDisplayName,
-          dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
-          connectedFileName: stringUtils
-            .camelize(moduleDisplayName)
-            .toLocaleLowerCase(),
+          dataTestId: underscore(`${nameWithSuffix}-id`),
+          connectedFileName: camelize(moduleDisplayName).toLocaleLowerCase(),
           tmpl: '',
           npmScope,
-        }
+        },
       );
     }
 
@@ -182,18 +182,16 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           ...schema,
           fileName: nameWithSuffix,
           pascalCaseFileName: moduleDisplayName,
-          dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
-          connectedFileName: stringUtils
-            .camelize(moduleDisplayName)
-            .toLocaleLowerCase(),
+          dataTestId: underscore(`${nameWithSuffix}-id`),
+          connectedFileName: camelize(moduleDisplayName).toLocaleLowerCase(),
           tmpl: '',
           npmScope,
-        }
+        },
       );
 
       const e2eProjectConfig = readProjectConfiguration(
         tree,
-        moduleProjectE2EName
+        moduleProjectE2EName,
       );
 
       updateProjectConfiguration(tree, moduleProjectE2EName, {
@@ -234,7 +232,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
               },
             ],
           };
-        }
+        },
       );
     }
 
@@ -248,7 +246,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
   }
 
   console.log(
-    `Module library for app ${appName} was not found in ${modulePath}. Generating...`
+    `Module library for app ${appName} was not found in ${modulePath}. Generating...`,
   );
 
   const domainTags = tags?.filter((tag) => tag.startsWith('domain:'));
@@ -280,12 +278,12 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       ...schema,
       fileName: nameWithSuffix,
       pascalCaseFileName: moduleDisplayName,
-      camelCaseFileName: stringUtils.camelize(nameWithSuffix),
-      dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
+      camelCaseFileName: camelize(nameWithSuffix),
+      dataTestId: underscore(`${nameWithSuffix}-id`),
       tmpl: '',
       errorBoundary,
       npmScope,
-    }
+    },
   );
 
   /**
@@ -311,18 +309,16 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         ...schema,
         fileName: nameWithSuffix,
         pascalCaseFileName: moduleDisplayName,
-        dataTestId: stringUtils.underscore(`${nameWithSuffix}-id`),
-        connectedFileName: stringUtils
-          .camelize(moduleDisplayName)
-          .toLocaleLowerCase(),
+        dataTestId: underscore(`${nameWithSuffix}-id`),
+        connectedFileName: camelize(moduleDisplayName).toLocaleLowerCase(),
         tmpl: '',
         npmScope,
-      }
+      },
     );
 
     const e2eProjectConfig = readProjectConfiguration(
       tree,
-      moduleProjectE2EName
+      moduleProjectE2EName,
     );
 
     updateProjectConfiguration(tree, moduleProjectE2EName, {
@@ -357,7 +353,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
             },
           ],
         };
-      }
+      },
     );
   }
 

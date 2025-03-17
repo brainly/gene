@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   firstName?: string;
@@ -8,7 +8,7 @@ type PropsType = Readonly<{
 
 const someVal = [];
 
-const InvalidConditionalRender = ({firstName, lastName}: PropsType) => {
+const InvalidConditionalRender = ({ firstName, lastName }: PropsType) => {
   return (
     <div>
       <div>{firstName}</div>

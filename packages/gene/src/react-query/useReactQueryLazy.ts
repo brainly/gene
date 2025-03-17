@@ -1,12 +1,12 @@
 import React from 'react';
 import { transformReactQueryResponse } from './transformReactQueryResponse';
 
-import {
+import type {
   QueryClient,
   QueryKey,
   QueryObserverResult,
 } from '@tanstack/react-query';
-import { CommonServiceType, CommonFetchFn } from '../services';
+import type { CommonServiceType, CommonFetchFn } from '../services';
 
 interface PropsType<TData, TVariables> {
   reactQueryClient: QueryClient;
@@ -42,7 +42,7 @@ export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
 
         if (!previousData) {
           console.error(
-            `Query key ${JSON.stringify(queryKey)} does not exist in cache`
+            `Query key ${JSON.stringify(queryKey)} does not exist in cache`,
           );
           return;
         }
@@ -62,7 +62,7 @@ export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
           reactQueryClient.setQueryData(queryKey, (queryData: any) => {
             if (!queryData) {
               console.error(
-                `Query key ${JSON.stringify(queryKey)} does not exist in cache`
+                `Query key ${JSON.stringify(queryKey)} does not exist in cache`,
               );
               return queryData;
             }
@@ -77,7 +77,7 @@ export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
         updates?.forEach(({ queryKey }) => {
           reactQueryClient.setQueryData(
             queryKey,
-            previousQueryValues.get(JSON.stringify(queryKey))
+            previousQueryValues.get(JSON.stringify(queryKey)),
           );
         });
       };
@@ -94,7 +94,7 @@ export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
 
       try {
         const cachedResponse = reactQueryClient.getQueryData(
-          queryKey(variables)
+          queryKey(variables),
         );
 
         if (cachedResponse && !ignoreCache) {
@@ -111,7 +111,7 @@ export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
 
         const response = await queryFn(
           reactQueryClient,
-          variables || ({} as TVariables)
+          variables || ({} as TVariables),
         );
 
         const transformedData = transformReactQueryResponse({
@@ -144,11 +144,11 @@ export function useReactQueryLazy<TData, TVariables = Record<string, any>>({
         return Promise.reject(transformedData);
       }
     },
-    [queryFn, queryKey, reactQueryClient]
+    [queryFn, queryKey, reactQueryClient],
   );
 
   return React.useMemo(
     () => ({ ...queryResults, fetch }),
-    [fetch, queryResults]
+    [fetch, queryResults],
   );
 }

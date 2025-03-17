@@ -21,7 +21,7 @@ function prepareStorybookRootAssets(workspaceRoot) {
   console.log('Check if .storybook directory exists');
   if (!existsSync(resolve(workspaceRoot, '.storybook/main.js'))) {
     console.log(
-      'No .storybook directory found. Running nx g @brainly-gene/tools:storybook-init'
+      'No .storybook directory found. Running nx g @brainly-gene/tools:storybook-init',
     );
 
     const packageManager = detectPackageManager();
@@ -33,7 +33,7 @@ function prepareStorybookRootAssets(workspaceRoot) {
   copySync(
     join(workspaceRoot, '.storybook/msw/mockServiceWorker.js'),
     join(workspaceRoot, '.storybook/assets/mockServiceWorker.js'),
-    { overwrite: true }
+    { overwrite: true },
   );
 
   Object.keys(assetsPaths).forEach((key) => {

@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {createGeneModule, useModuleInjection} from '@brainly-gene/core';
+import React from 'react';
+import { createGeneModule, useModuleInjection } from '@brainly-gene/core';
 import { useSomeLogic } from './delegates/useSomeLogic';
 
 const symbolIdent = Symbol.for('injectionExample');
 
-export type ExampleType = {id: string};
+export type ExampleType = { id: string };
 
 function useInit() {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
-  const {someProps, useSomeMediators} = useSomeLogic({ref});
+  const { someProps, useSomeMediators } = useSomeLogic({ ref });
 
   const injected = useModuleInjection(symbolIdent);
   const injectedSecond = useModuleInjection('injectionKey');
@@ -19,18 +19,13 @@ function useInit() {
     someProps,
     useSomeMediators,
     injected,
-    injectedSecond
+    injectedSecond,
   };
 }
 
 function RawValidModule() {
-  const {
-    ref,
-    someProps,
-    useSomeMediators,
-    injected,
-    injectedSecond
-  } = useInit();
+  const { ref, someProps, useSomeMediators, injected, injectedSecond } =
+    useInit();
 
   useSomeMediators();
 
@@ -43,12 +38,13 @@ function RawValidModule() {
   );
 }
 
-const {declarations, module: ValidWithDisabledStorybookModule} = createGeneModule({
-  module: RawValidModule,
-  declarations: {
-    components: [[symbolIdent, 'ExampleComponent']],
-    mediators: [['injectionKey', 'ExampleMedaitor']],
-  },
-});
+const { declarations, module: ValidWithDisabledStorybookModule } =
+  createGeneModule({
+    module: RawValidModule,
+    declarations: {
+      components: [[symbolIdent, 'ExampleComponent']],
+      mediators: [['injectionKey', 'ExampleMedaitor']],
+    },
+  });
 
 export { ValidWithDisabledStorybookModule, declarations };

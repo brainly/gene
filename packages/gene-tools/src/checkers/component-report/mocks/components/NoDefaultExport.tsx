@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -6,6 +6,6 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-export const NoDefaultExport = ({id, content, items}: PropsType) => {
+export const NoDefaultExport = ({ id, content, items }: PropsType) => {
   return null;
 };

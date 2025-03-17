@@ -1,7 +1,8 @@
-import { logger, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import apiRouteGenerator from './index';
-import * as inquirer from 'inquirer';
+import { prompt } from 'inquirer';
 import { applicationGenerator } from '@nx/next';
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
@@ -22,13 +23,11 @@ describe('Subapp generator', () => {
       style: 'none',
     });
 
-    (inquirer.prompt as unknown as jest.Mock).mockImplementationOnce(
-      ([{ name }]) => {
-        if (name === 'appName') {
-          return { appName: 'example.com-us' };
-        }
+    (prompt as unknown as jest.Mock).mockImplementationOnce(([{ name }]) => {
+      if (name === 'appName') {
+        return { appName: 'example.com-us' };
       }
-    );
+    });
   });
 
   it('should generate files', async () => {
@@ -40,7 +39,7 @@ describe('Subapp generator', () => {
     });
 
     expect(
-      appTree.exists('apps/example.com/us/pages/api/v1/my-api-route.ts')
+      appTree.exists('apps/example.com/us/pages/api/v1/my-api-route.ts'),
     ).toBeTruthy();
   });
 

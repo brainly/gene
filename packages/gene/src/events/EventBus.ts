@@ -1,5 +1,5 @@
 import { Observable } from 'zen-observable-ts';
-import * as R from 'ramda';
+import { compose } from 'ramda';
 
 export interface AbstractEventBusEventType<PayloadType = unknown> {
   payload?: PayloadType;
@@ -76,7 +76,7 @@ const registerFactory = function <T extends AbstractEventBusEventType>() {
         this.closed = true;
         subscriberMap.set(
           event.type,
-          subscriber.filter((payload) => payload !== onNext)
+          subscriber.filter((payload) => payload !== onNext),
         );
       },
     };
@@ -85,7 +85,7 @@ const registerFactory = function <T extends AbstractEventBusEventType>() {
 
 const emitFactory = function () {
   return async function <T extends AbstractEventBusEventType>(
-    event: T | Promise<T>
+    event: T | Promise<T>,
   ) {
     const result = event instanceof Promise ? await event : event;
 
@@ -96,10 +96,10 @@ const emitFactory = function () {
 // exports
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const emit = R.compose<
+export const emit = compose<
   Observable<AbstractEventBusEventType>,
   (
-    event: AbstractEventBusEventType | Promise<AbstractEventBusEventType>
+    event: AbstractEventBusEventType | Promise<AbstractEventBusEventType>,
   ) => void
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -109,11 +109,11 @@ export const emit = R.compose<
 // please note that registerFactory must be last in composition due to the number of args
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const register = R.compose<
+export const register = compose<
   Observable<AbstractEventBusEventType>,
   (
     event: AbstractEventBusEventType,
-    onNext: (value: AbstractEventBusEventType) => void
+    onNext: (value: AbstractEventBusEventType) => void,
   ) => ZenObservable.Subscription
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore

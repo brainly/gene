@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   getWorkspaceLayout,
@@ -9,8 +9,12 @@ import {
   writeJson,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
-import { BrainlyServiceGenerator } from './schema';
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import type { BrainlyServiceGenerator } from './schema';
+import {
+  classify,
+  camelize,
+  dasherize,
+} from '@nx/devkit/src/utils/string-utils';
 import inquirer = require('inquirer');
 
 import { getNpmScope } from '../utilities';
@@ -25,7 +29,7 @@ interface GeneratorOptions {
 function createFiles(
   tree: Tree,
   schema: BrainlyServiceGenerator,
-  options: GeneratorOptions
+  options: GeneratorOptions,
 ) {
   generateFiles(
     tree,
@@ -34,16 +38,16 @@ function createFiles(
     {
       ...schema,
       npmScope: options.npmScope,
-      fileName: stringUtils.classify(schema.name),
-      lowerCaseFileName: stringUtils.camelize(schema.name),
+      fileName: classify(schema.name),
+      lowerCaseFileName: camelize(schema.name),
       tmpl: '',
-    }
+    },
   );
 }
 
 const getDirectoryPath = (
   schema: BrainlyServiceGenerator,
-  dasherizedName: string
+  dasherizedName: string,
 ) => {
   if (!schema.directory) {
     return `${dasherizedName}/services`;
@@ -56,9 +60,9 @@ const getDirectoryPath = (
 
 const promptCrudFunctions = async (
   serviceName: string,
-  useDefaultCrudFunctions?: boolean
+  useDefaultCrudFunctions?: boolean,
 ) => {
-  const classifiedName = stringUtils.classify(serviceName);
+  const classifiedName = classify(serviceName);
   if (useDefaultCrudFunctions) {
     return [`use${classifiedName}s`];
   }
@@ -99,7 +103,7 @@ const promptCrudFunctions = async (
 
 export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
-  const name = stringUtils.dasherize(schema.name);
+  const name = dasherize(schema.name);
   const directory = getDirectoryPath(schema, name);
 
   let crudFunctions: string[] = [];
@@ -107,7 +111,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   if (schema.serviceType === 'react-query') {
     crudFunctions = await promptCrudFunctions(
       name,
-      schema.useDefaultCrudFunctions
+      schema.useDefaultCrudFunctions,
     );
   }
 
@@ -115,7 +119,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     name: `${name}-service`,
     directory: directory,
     tags: ['type:service', ...(schema.tags ? schema.tags.split(',') : [])].join(
-      ','
+      ',',
     ),
   });
 
@@ -132,7 +136,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
         path.endsWith(`${name}-service.ts`) ||
         path.endsWith(`${name}-service.spec.ts`) ||
         path.endsWith('README.md') ||
-        path === 'index.ts'
+        path === 'index.ts',
     )
     .map(({ path }) => path);
 
@@ -182,7 +186,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
         }
 
         return !crudFunctions.find((crudFunction) =>
-          filename?.includes(crudFunction)
+          filename?.includes(crudFunction),
         );
       })
       .map(({ path }) => path);
@@ -196,7 +200,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     });
     tree.write(
       `${baseOptions.targetLocation}/index.ts`,
-      lines?.join('\n') || ''
+      lines?.join('\n') || '',
     );
   }
 

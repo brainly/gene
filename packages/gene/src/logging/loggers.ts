@@ -1,4 +1,4 @@
-import type {Message} from './types';
+import type { Message } from './types';
 
 export function baseLog(message: Message, logFunction = console.log) {
   logFunction(
@@ -10,7 +10,7 @@ export function baseLog(message: Message, logFunction = console.log) {
       typeof message.message.error === 'string'
         ? message.message.error
         : message.message.error.stack
-    }`
+    }`,
   );
 }
 

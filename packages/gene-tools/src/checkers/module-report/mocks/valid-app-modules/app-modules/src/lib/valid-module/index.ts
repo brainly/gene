@@ -1,5 +1,4 @@
-export {ValidModule} from './ValidModule';
-export {ValidVariationModule} from './ValidVariationModule';
+export { ValidModule } from './ValidModule';
+export { ValidVariationModule } from './ValidVariationModule';
 
-export type {ExampleType} from './ValidModule'
-
+export type { ExampleType } from './ValidModule';

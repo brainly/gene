@@ -1,13 +1,14 @@
 const { existsSync, readFileSync } = require('fs');
-const {getColumns: getModuleColumns} = require('./moduleColumnMapper');
-const {parse} = require('yaml');
+const { getColumns: getModuleColumns } = require('./moduleColumnMapper');
+const { parse } = require('yaml');
 
 const REGEXES = {
   indexFile: /\/.+\/index\.ts?$/,
   delegatesIndexFile: /\/.+\/(delegates|hooks)\/(.+\/)*index\.ts?$/,
   moduleFile: /\/.+\/(?<fileName>.+)\.(ts|tsx)$/,
   storybookFile: /\/.+\/(?<fileName>.+)\.stories\.tsx?$/,
-  delegateFile: /\/.+\/(?<fileName>.+)\/(delegates|hooks)\/(.+\/)*[\w-]+\.(ts|tsx|test\.ts|test\.tsx|spec\.ts|spec\.tsx)$/,
+  delegateFile:
+    /\/.+\/(?<fileName>.+)\/(delegates|hooks)\/(.+\/)*[\w-]+\.(ts|tsx|test\.ts|test\.tsx|spec\.ts|spec\.tsx)$/,
   adapterFile: /\/.+\/(?<fileName>.+)\/adapters\/[\w-]+\.(ts|tsx)$/,
   isModule: /(.+Module)\.(ts|tsx)$/,
   isDelegate: /(.+(delegates|hooks)\/)[\w-]+\.(ts|tsx)$/,
@@ -19,7 +20,6 @@ const REGEXES = {
   geneConfig: /\/.+\/gene\.config\.y(a)ml$/,
 };
 
-
 const GENE_CONFIG_RULES = {
   MEMOIZATION: 'memoization',
   NO_JSX_IN_DELEGATES: 'no_jsx_in_delegates', // Deprecated in favor of NO_JSX_IN_HOOKS
@@ -29,76 +29,77 @@ const GENE_CONFIG_RULES = {
   UNIT_TESTS_FOR_DELEGATES_REQUIRED: 'unit_tests_for_delegates_required', // Deprecated in favor of UNIT_TESTS_FOR_HOOKS_REQUIRED
   UNIT_TESTS_FOR_HOOKS_REQUIRED: 'unit_tests_for_hooks_required',
   NO_MODULES_EXPORTS_FROM_CORE_LIBRARY: 'no_modules_export_from_core_library',
-}
+};
 
 const GENE_DEFAULT_APPS_CONFIG = {
   rules: {
     [GENE_CONFIG_RULES.MEMOIZATION]: {
-      enabled: false
+      enabled: false,
     },
     // Deprecated in favor of NO_JSX_IN_HOOKS
     [GENE_CONFIG_RULES.NO_JSX_IN_DELEGATES]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_JSX_IN_HOOKS]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_DIRECT_INVERSIFY_IMPORT]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.STORYBOOK_REQUIRED]: {
-      enabled: false
+      enabled: false,
     },
     // Deprecated in favor of UNIT_TESTS_FOR_HOOKS_REQUIRED
     [GENE_CONFIG_RULES.UNIT_TESTS_FOR_DELEGATES_REQUIRED]: {
-      enabled: false
+      enabled: false,
     },
     [GENE_CONFIG_RULES.UNIT_TESTS_FOR_HOOKS_REQUIRED]: {
-      enabled: false
+      enabled: false,
     },
     [GENE_CONFIG_RULES.NO_MODULES_EXPORTS_FROM_CORE_LIBRARY]: {
-      enabled: true
-    }
-  }
-}
+      enabled: true,
+    },
+  },
+};
 
 const GENE_DEFAULT_CORE_CONFIG = {
   rules: {
     [GENE_CONFIG_RULES.MEMOIZATION]: {
-      enabled: true
+      enabled: true,
     },
     // Deprecated in favor of NO_JSX_IN_HOOKS
     [GENE_CONFIG_RULES.NO_JSX_IN_DELEGATES]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_JSX_IN_HOOKS]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_DIRECT_INVERSIFY_IMPORT]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.STORYBOOK_REQUIRED]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.UNIT_TESTS_FOR_DELEGATES_REQUIRED]: {
-      enabled: true
+      enabled: true,
     },
     // Deprecated in favor of UNIT_TESTS_FOR_HOOKS_REQUIRED
     [GENE_CONFIG_RULES.UNIT_TESTS_FOR_HOOKS_REQUIRED]: {
-      enabled: true
+      enabled: true,
     },
     [GENE_CONFIG_RULES.NO_MODULES_EXPORTS_FROM_CORE_LIBRARY]: {
-      enabled: true
-    }
-  }
-}
+      enabled: true,
+    },
+  },
+};
 
 function resolveConfig(configPath, isCore) {
-  const defaultConfig  = isCore ? GENE_DEFAULT_CORE_CONFIG : GENE_DEFAULT_APPS_CONFIG;
+  const defaultConfig = isCore
+    ? GENE_DEFAULT_CORE_CONFIG
+    : GENE_DEFAULT_APPS_CONFIG;
 
   try {
     const isConfigFile = existsSync(configPath);
-
 
     if (!isConfigFile) {
       return defaultConfig;
@@ -109,14 +110,13 @@ function resolveConfig(configPath, isCore) {
     return {
       rules: {
         ...defaultConfig,
-        ...(configParsed?.checker_config?.rules ?? {})
-      }
-    }
+        ...(configParsed?.checker_config?.rules ?? {}),
+      },
+    };
   } catch {
     return defaultConfig;
   }
 }
-
 
 /**
  * Grouping files to structure:
@@ -135,9 +135,10 @@ function getFilesPerModulesVariants(files) {
 
     if (
       moduleMatch &&
-      REGEXES.isModule.test(currentFile) && !REGEXES.storybookFile.test(currentFile)
+      REGEXES.isModule.test(currentFile) &&
+      !REGEXES.storybookFile.test(currentFile)
     ) {
-      const {fileName} = moduleMatch.groups;
+      const { fileName } = moduleMatch.groups;
 
       acc.push([fileName, currentFile]);
     }
@@ -165,7 +166,11 @@ function getFilesPerModulesVariants(files) {
         if (!acc.has(variant)) {
           const storybookFile = storybookMatch ? currentFile : '';
 
-          acc.set(variant, {module: variantMainFile, stories: storybookFile, tests: null});
+          acc.set(variant, {
+            module: variantMainFile,
+            stories: storybookFile,
+            tests: null,
+          });
         }
       });
     }
@@ -189,11 +194,12 @@ function getAllAppModulesMeta(files) {
     const appModuleMatch = currentFile.match(REGEXES.appModule);
 
     if (appModuleMatch) {
-      const {moduleName, } = appModuleMatch.groups;
+      const { moduleName } = appModuleMatch.groups;
       if (!acc.has(moduleName)) {
         const moduleFiles = files.filter(
-          file =>
-            file.includes(`/${moduleName}/`) || REGEXES.appModulesMainIndex.test(file)
+          (file) =>
+            file.includes(`/${moduleName}/`) ||
+            REGEXES.appModulesMainIndex.test(file),
         );
 
         acc.set(moduleName, moduleFiles);
@@ -205,10 +211,10 @@ function getAllAppModulesMeta(files) {
 }
 
 function getCoreModuleMeta(files) {
-  const coreModuleMatch = files.find(file => file.match(REGEXES.coreModule));
+  const coreModuleMatch = files.find((file) => file.match(REGEXES.coreModule));
 
   if (coreModuleMatch) {
-    const {moduleName} = coreModuleMatch.match(REGEXES.coreModule).groups;
+    const { moduleName } = coreModuleMatch.match(REGEXES.coreModule).groups;
 
     return new Map().set(moduleName, files);
   }
@@ -216,7 +222,7 @@ function getCoreModuleMeta(files) {
   return new Map();
 }
 
-function generateModuleReport({files, pathPrefix, prUrl, isCoreModule}) {
+function generateModuleReport({ files, pathPrefix, prUrl, isCoreModule }) {
   if (files.length === 0) {
     return {
       report: null,
@@ -238,84 +244,88 @@ function generateModuleReport({files, pathPrefix, prUrl, isCoreModule}) {
   const modulesWithFilesVariants = [...Array.from(modules.entries())].map(
     ([moduleName, files]) => {
       return [moduleName, getFilesPerModulesVariants(files)];
-    }
+    },
   );
 
-  return [...modulesWithFilesVariants.entries()].reduce((acc, [, [moduleName, files]]) => {
-    const exportFiles = files.get('exports') || [];
-    const delegatesFiles = files.get('delegates') || [];
-    const configFile = files.get('config') ;
+  return [...modulesWithFilesVariants.entries()].reduce(
+    (acc, [, [moduleName, files]]) => {
+      const exportFiles = files.get('exports') || [];
+      const delegatesFiles = files.get('delegates') || [];
+      const configFile = files.get('config');
 
-    const moduleVariantFiles = [...files.entries()].filter(
-      ([key]) => key !== 'exports' && key !== 'delegates' && key !== 'config'
-    ).map(([variantName, files]) => {
+      const moduleVariantFiles = [...files.entries()]
+        .filter(
+          ([key]) =>
+            key !== 'exports' && key !== 'delegates' && key !== 'config',
+        )
+        .map(([variantName, files]) => {
+          return [variantName, { ...files }];
+        });
 
-      return [variantName, {...files}];
-    });
+      const config = resolveConfig(configFile, isCoreModule);
 
-    const config = resolveConfig(configFile, isCoreModule);
+      const columns = getModuleColumns();
 
-    const columns = getModuleColumns();
+      const errors = [];
+      let errorsDetected = false;
 
-    const errors = [];
-    let errorsDetected = false;
+      const rows = [
+        columns
+          .map((c) => {
+            try {
+              const { content, success } = c.run({
+                moduleName,
+                moduleFiles: moduleVariantFiles,
+                delegates: delegatesFiles,
+                exports: exportFiles,
+                checkerConfig: config,
+                prUrl,
+                pathPrefix,
+                isCore: isCoreModule,
+              });
 
-    const rows = [
-      columns
-        .map(c => {
-          try {
-            const {content, success} = c.run({
-              moduleName,
-              moduleFiles: moduleVariantFiles,
-              delegates: delegatesFiles,
-              exports: exportFiles,
-              checkerConfig: config,
-              prUrl,
-              pathPrefix,
-              isCore: isCoreModule,
-            });
+              if (!success) {
+                acc.success = false;
+                errorsDetected = true;
+              }
 
-            if (!success) {
+              return content;
+            } catch (e) {
               acc.success = false;
               errorsDetected = true;
+              acc.report = `Error getting cell content: ${e.message}`;
+              return `Error getting cell content: ${e.message}`;
             }
+          })
+          .join(' | '),
+      ];
 
-            return content;
-          } catch (e) {
-            acc.success = false;
-            errorsDetected = true;
-            acc.report = `Error getting cell content: ${e.message}`;
-            return `Error getting cell content: ${e.message}`;
-          }
-        })
-        .join(' | '),
-    ];
+      const table = [
+        columns.map((c) => c.name).join(' | '),
+        columns.map(() => '---').join(' | '),
+        ...rows.filter(Boolean),
+      ].join('\n');
 
-    const table = [
-      columns.map(c => c.name).join(' | '),
-      columns.map(() => '---').join(' | '),
-      ...rows.filter(Boolean),
-    ].join('\n');
+      const maybeErrors =
+        errors.length > 0
+          ? ['', '## Errors', ...errors.map((e) => `* ${e}`)].join('\n')
+          : null;
 
-    const maybeErrors =
-      errors.length > 0
-        ? ['', '## Errors', ...errors.map(e => `* ${e}`)].join('\n')
-        : null;
+      const modulePathResolved = isCoreModule
+        ? pathPrefix
+        : `${pathPrefix}/src/lib/${moduleName}`;
 
-    const modulePathResolved = isCoreModule ? pathPrefix : `${pathPrefix}/src/lib/${moduleName}`;
+      const reportHeader = `## Module report for ${modulePathResolved}`;
 
-    const reportHeader = `## Module report for ${modulePathResolved}`;
+      const report = {
+        report: [reportHeader, table, maybeErrors].filter(Boolean).join('\n'),
+        success: !errorsDetected,
+      };
 
-    const report = {
-      report: [reportHeader, table, maybeErrors]
-        .filter(Boolean)
-        .join('\n'),
-      success: !errorsDetected,
-    };
-
-    return [...acc, report];
-
-  }, []);
+      return [...acc, report];
+    },
+    [],
+  );
 }
 
-module.exports = {generateModuleReport};
+module.exports = { generateModuleReport };

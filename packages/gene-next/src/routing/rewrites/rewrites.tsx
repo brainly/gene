@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import React, {useContext, useMemo} from 'react';
-import {match, compile} from 'path-to-regexp';
+import React, { useContext, useMemo } from 'react';
+import { match, compile } from 'path-to-regexp';
 
 interface LinkRewritesService {
   originUrl: string;
@@ -10,7 +10,7 @@ interface LinkRewritesService {
 }
 
 const LinkRewriteContext = React.createContext<LinkRewritesService | null>(
-  null
+  null,
 );
 
 interface Rewrite {
@@ -31,7 +31,7 @@ interface PropsType {
 }
 
 export function LinkRewriteContextProvider(props: PropsType) {
-  const {rewrites, redirects, originUrl, children} = props;
+  const { rewrites, redirects, originUrl, children } = props;
 
   const parsedRewrites = useMemo(() => parseRewrites(rewrites), [rewrites]);
 
@@ -66,7 +66,7 @@ export function LinkRewriteContextProvider(props: PropsType) {
         return null;
       },
     }),
-    [parsedRewrites, parsedRedirects, originUrl]
+    [parsedRewrites, parsedRedirects, originUrl],
   );
 
   return (
@@ -87,22 +87,22 @@ export function useHrefRewrite() {
 }
 
 function parseRewrites(rewrites: Rewrite[]) {
-  return rewrites.map(rewrite => {
+  return rewrites.map((rewrite) => {
     return {
-      matchFn: match(rewrite.destination, {decode: decodeURIComponent}),
-      compileFn: compile(rewrite.source, {encode: encodeURIComponent}),
+      matchFn: match(rewrite.destination, { decode: decodeURIComponent }),
+      compileFn: compile(rewrite.source, { encode: encodeURIComponent }),
     };
   });
 }
 
 function parseRedirects(redirects: Rewrite[]) {
-  return redirects.map(redirect => {
-    const {origin, pathname} = new URL(redirect.destination);
+  return redirects.map((redirect) => {
+    const { origin, pathname } = new URL(redirect.destination);
 
     return {
-      matchFn: match(redirect.source, {decode: decodeURIComponent}),
+      matchFn: match(redirect.source, { decode: decodeURIComponent }),
       compileFn: (data: any) =>
-        origin + compile(pathname, {encode: encodeURIComponent})(data),
+        origin + compile(pathname, { encode: encodeURIComponent })(data),
     };
   });
 }

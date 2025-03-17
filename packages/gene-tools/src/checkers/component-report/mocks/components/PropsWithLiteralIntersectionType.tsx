@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {TestLiteralType, TestIntersectionType} from '../types/TestTypes';
+import React from 'react';
+import { TestLiteralType, TestIntersectionType } from '../types/TestTypes';
 
 type OneType = Readonly<{
   id: string;

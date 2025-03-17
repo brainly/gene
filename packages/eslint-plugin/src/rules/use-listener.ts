@@ -1,20 +1,17 @@
-import {
-  AST_NODE_TYPES,
-  ESLintUtils,
-  TSESTree,
-} from '@typescript-eslint/utils';
+import type { TSESTree } from '@typescript-eslint/utils';
+import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
 
 export type Options = [
   {
     ignorePaths?: string[];
-  }
+  },
 ];
 type MessageIds = 'useListenerInModule';
 
 export const USE_LISTENER_RULE_NAME = 'use-listener';
 
 export const useListenerRule = ESLintUtils.RuleCreator(
-  () => `https://brainly.github.io/gene/gene/components/hooks/useListener`
+  () => `https://brainly.github.io/gene/gene/components/hooks/useListener`,
 )<Options, MessageIds>({
   name: USE_LISTENER_RULE_NAME,
   meta: {
@@ -47,7 +44,7 @@ export const useListenerRule = ESLintUtils.RuleCreator(
     return {
       CallExpression(node: TSESTree.CallExpression) {
         const isPathIgnored = ignorePaths?.some((path) =>
-          context.getFilename().includes(path)
+          context.getFilename().includes(path),
         );
 
         if (isPathIgnored) {

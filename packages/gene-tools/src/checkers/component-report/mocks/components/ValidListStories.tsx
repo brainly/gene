@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   text?: string;
@@ -8,7 +8,7 @@ type PropsType = Readonly<{
   fourth?: ReadonlyArray<string>;
 }>;
 
-const ValidListStories = ({list, second, third}: PropsType) => {
+const ValidListStories = ({ list, second, third }: PropsType) => {
   return null;
 };
 

@@ -1,4 +1,4 @@
-import {TranslationParamsType} from '../types';
+import type { TranslationParamsType } from '../types';
 
 /**
  * @description
@@ -16,7 +16,7 @@ export interface TransChoiceHelperFnType {
   translator: {
     trans: (
       string: string,
-      translationVariables?: TranslationParamsType
+      translationVariables?: TranslationParamsType,
     ) => string;
   };
   translationKey: string;

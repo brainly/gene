@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -8,7 +8,7 @@ type PropsType = Readonly<{
 }>;
 
 /* @private */
-const CallbackProp = ({id, content, items}: PropsType) => {
+const CallbackProp = ({ id, content, items }: PropsType) => {
   return null;
 };
 

@@ -1,12 +1,12 @@
 const fs = require('fs');
 
-const {getColumns} = require('./columnMapper');
-const {getComponentMetadata} = require('../common/utils/meta');
+const { getColumns } = require('./columnMapper');
+const { getComponentMetadata } = require('../common/utils/meta');
 const {
   extractReactComponents,
 } = require('../common/utils/extractReactComponents');
 
-function isNotApplicable(column, {isPrivate, truncatedPath}) {
+function isNotApplicable(column, { isPrivate, truncatedPath }) {
   if (!isPrivate) {
     return false;
   }
@@ -16,35 +16,35 @@ function isNotApplicable(column, {isPrivate, truncatedPath}) {
   }
 
   if (typeof column.skipForPrivateComponents === 'function') {
-    return column.skipForPrivateComponents({truncatedPath});
+    return column.skipForPrivateComponents({ truncatedPath });
   }
 
   return false;
 }
 
-function generateComponentReport({files, pathPrefix, jestOutput, prUrl}) {
-  const truncatedPaths = extractReactComponents({files});
+function generateComponentReport({ files, pathPrefix, jestOutput, prUrl }) {
+  const truncatedPaths = extractReactComponents({ files });
 
-  const columns = getColumns({jestOutput});
+  const columns = getColumns({ jestOutput });
 
   const errors = [];
   let errorsDetected = false;
 
-  const rows = truncatedPaths.map(truncatedPath => {
+  const rows = truncatedPaths.map((truncatedPath) => {
     try {
-      const {isPrivate, componentName, componentDisplayName} =
+      const { isPrivate, componentName, componentDisplayName } =
         getComponentMetadata(
-          fs.readFileSync(`${truncatedPath}.tsx`).toString()
+          fs.readFileSync(`${truncatedPath}.tsx`).toString(),
         );
 
       return columns
-        .map(c => {
-          if (isNotApplicable(c, {isPrivate, truncatedPath})) {
+        .map((c) => {
+          if (isNotApplicable(c, { isPrivate, truncatedPath })) {
             return 'N/A';
           }
 
           try {
-            const {content, success} = c.run({
+            const { content, success } = c.run({
               truncatedPath,
               isPrivate,
               componentName,
@@ -78,14 +78,14 @@ function generateComponentReport({files, pathPrefix, jestOutput, prUrl}) {
   }
 
   const table = [
-    columns.map(c => c.name).join(' | '),
+    columns.map((c) => c.name).join(' | '),
     columns.map(() => '---').join(' | '),
     ...rows.filter(Boolean),
   ].join('\n');
 
   const maybeErrors =
     errors.length > 0
-      ? ['', '## Errors', ...errors.map(e => `* ${e}`)].join('\n')
+      ? ['', '## Errors', ...errors.map((e) => `* ${e}`)].join('\n')
       : null;
 
   return {
@@ -96,4 +96,4 @@ function generateComponentReport({files, pathPrefix, jestOutput, prUrl}) {
   };
 }
 
-module.exports = {generateComponentReport};
+module.exports = { generateComponentReport };

@@ -1,7 +1,7 @@
-import {Response as NodeResponse} from 'node-fetch';
+import type { Response as NodeResponse } from 'node-fetch';
 
 export async function reactQueryFetchWrapper<TResponse = unknown>(
-  queryFn: () => Promise<Response | NodeResponse>
+  queryFn: () => Promise<Response | NodeResponse>,
 ): Promise<TResponse> {
   const response = await queryFn();
 
@@ -18,7 +18,7 @@ export class ResponseError extends Error {
   constructor(
     message: string,
     public readonly status: number,
-    public readonly data: unknown
+    public readonly data: unknown,
   ) {
     super(message);
     Object.setPrototypeOf(this, ResponseError.prototype);

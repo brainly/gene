@@ -1,5 +1,5 @@
+import type { Tree } from '@nx/devkit';
 import {
-  Tree,
   formatFiles,
   installPackagesTask,
   generateFiles,
@@ -10,7 +10,7 @@ import {
   writeJson,
   updateJson,
 } from '@nx/devkit';
-import { BrainlyNextJSAppGenerator } from './schema';
+import type { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
 import { Linter } from '@nx/linter';
@@ -19,7 +19,7 @@ import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
 import { updateEslint } from './utils/updateEslint';
 
-import * as stringUtils from '@nx/devkit/src/utils/string-utils';
+import { underscore, camelize } from '@nx/devkit/src/utils/string-utils';
 
 import { excludeTestsBoilerplate } from './utils/excludeTestsBoilerplate';
 import { updateCypressTsConfig } from '../utilities';
@@ -38,6 +38,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
     appDir: false,
+    src: false,
   });
 
   const normalizedDirectory = directory.replace(/\//g, '-');
@@ -65,7 +66,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     reactQuery: schema.reactQuery,
     rewrites: schema.rewrites,
     projectName,
-    dataTestId: stringUtils.underscore(`${initialPage}-id`),
+    dataTestId: underscore(`${initialPage}-id`),
     offsetFromRoot: offsetFromRoot(appDir),
   });
 
@@ -73,9 +74,9 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     generateFiles(tree, joinPathFragments(__dirname, './files/e2e'), e2eDir, {
       ...schema,
       fileName: initialPage,
-      camelCaseFileName: stringUtils.camelize(initialPage),
-      dataTestId: stringUtils.underscore(`${initialPage}-id`),
-      connectedFileName: stringUtils.camelize(initialPage).toLocaleLowerCase(),
+      camelCaseFileName: camelize(initialPage),
+      dataTestId: underscore(`${initialPage}-id`),
+      connectedFileName: camelize(initialPage).toLocaleLowerCase(),
       tmpl: '',
     });
   }

@@ -1,9 +1,10 @@
-import { readJson, Tree, writeJson } from '@nx/devkit';
-import { NormalizedOptions } from '../schema';
+import type { Tree } from '@nx/devkit';
+import { readJson, writeJson } from '@nx/devkit';
+import type { NormalizedOptions } from '../schema';
 
 export function excludeStoriesFromProjectTsConfig(
   tree: Tree,
-  options: NormalizedOptions
+  options: NormalizedOptions,
 ): void {
   const tsConfigPath = getTsConfigPath(tree, options);
   const tsConfigContent = readJson(tree, tsConfigPath);

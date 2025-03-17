@@ -1,1 +1,1 @@
-export {useSomeLogic} from './delegates/useSomeLogic';
+export { useSomeLogic } from './delegates/useSomeLogic';

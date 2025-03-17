@@ -52,7 +52,7 @@ module.exports = {
   webpackFinal: async (config) => {
     // removes default file-loader
     const rules = config.module.rules.filter(
-      (rule) => !rule.loader || !rule.loader.includes('file-loader')
+      (rule) => !rule.loader || !rule.loader.includes('file-loader'),
     );
 
     const tsPaths = new TsconfigPathsPlugin({
@@ -74,7 +74,7 @@ module.exports = {
           fs: false,
           stream: false,
           os: false,
-          zlib: false
+          zlib: false,
         },
       },
       module: {

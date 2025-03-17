@@ -1,19 +1,22 @@
-import * as React from 'react';
-import { Provider } from '@brainly-gene/core';
+import React from 'react';
+import type { Router } from '@brainly-gene/core';
+import {
+  Provider,
+  useMockedRouterContainer,
+  getAssetsContainer,
+  NATIVE_IMAGE,
+  emit,
+  EventBusContextProvider,
+  register,
+} from '@brainly-gene/core';
 
 import styles from './StorybookProviders.module.scss';
-import { Container, interfaces } from 'inversify';
-import { Router, useMockedRouterContainer } from '@brainly-gene/core';
+import { Container, type interfaces } from 'inversify';
 
-import {
-  AppStoreType,
-  ReducerType,
-  useAppContextContainer,
-  useServiceClientsContainer,
-} from '../../ioc';
-import { Locale, LinkRewriteContextProvider } from '@brainly-gene/next';
-import { getAssetsContainer, NATIVE_IMAGE } from '@brainly-gene/core';
-import { emit, EventBusContextProvider, register } from '@brainly-gene/core';
+import type { AppStoreType, ReducerType } from '../../ioc';
+import { useAppContextContainer, useServiceClientsContainer } from '../../ioc';
+import type { Locale } from '@brainly-gene/next';
+import { LinkRewriteContextProvider } from '@brainly-gene/next';
 
 type OverwritableContainerKeys = 'adsContainer';
 
@@ -48,7 +51,7 @@ export function StorybookProviders({
     routerContainer,
     appContextContainer,
     mockedAssetsContainer,
-    ...additionalContainers
+    ...additionalContainers,
   );
 
   return (

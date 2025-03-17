@@ -1,10 +1,10 @@
-import {ValidDispatchEventsType} from './ValidDispatchEventsType';
+import { ValidDispatchEventsType } from './ValidDispatchEventsType';
 
-import * as React from 'react';
-import {storiesOf} from '@storybook/react';
-import {registerStoryInPackages, StorybookMediator} from '@brainly-gene/core';
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { registerStoryInPackages, StorybookMediator } from '@brainly-gene/core';
 import InvalidDispatch from './InvalidDispatch';
-import {array} from '@storybook/addon-knobs';
+import { array } from '@storybook/addon-knobs';
 
 const EVENTS_LIST = [
   {
@@ -14,7 +14,7 @@ const EVENTS_LIST = [
 ];
 
 storiesOf(registerStoryInPackages('mocks/Dispatch'), module)
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <StorybookMediator events={EVENTS_LIST}>{storyFn()}</StorybookMediator>
   ))
   .add('default', () => (

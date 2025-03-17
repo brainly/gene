@@ -1,21 +1,16 @@
-import {
-  InfiniteQueryObserver,
+import type {
   InfiniteQueryObserverResult,
-  QueryObserver,
   QueryObserverResult,
 } from '@tanstack/react-query';
+import { InfiniteQueryObserver, QueryObserver } from '@tanstack/react-query';
 
 import {
   createPaginatedTestObservable,
   createTestObservable,
 } from './test-utils';
 
-import {
-  mockFetch,
-  wait,
-  ExampleResponse,
-  mockFetchPaginated,
-} from '../services';
+import type { ExampleResponse } from '../services';
+import { mockFetch, wait, mockFetchPaginated } from '../services';
 
 describe('getReactQueryObservable', () => {
   beforeAll(() => {

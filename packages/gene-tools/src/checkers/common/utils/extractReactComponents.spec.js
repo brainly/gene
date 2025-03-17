@@ -1,4 +1,4 @@
-const {extractReactComponents} = require('./extractReactComponents');
+const { extractReactComponents } = require('./extractReactComponents');
 const path = require('path');
 
 describe('extractReactComponents()', () => {
@@ -8,14 +8,14 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.tsx'
+            '../../component-report/mocks/components/SomeComponent.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -26,18 +26,18 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.tsx'
+            '../../component-report/mocks/components/SomeComponent.tsx',
           ),
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.spec.tsx'
+            '../../component-report/mocks/components/SomeComponent.spec.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -48,10 +48,10 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/someComponent.tsx'
+            '../../component-report/mocks/components/someComponent.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([]);
   });
 
@@ -61,10 +61,10 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.ts'
+            '../../component-report/mocks/components/SomeComponent.ts',
           ),
         ],
-      })
+      }),
     ).toEqual([]);
   });
 
@@ -74,14 +74,14 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.stories.tsx'
+            '../../component-report/mocks/components/SomeComponent.stories.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -92,14 +92,14 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.spec.tsx'
+            '../../component-report/mocks/components/SomeComponent.spec.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -111,14 +111,14 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.tsx'
+            '../../component-report/mocks/components/SomeComponent.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -129,18 +129,18 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.tsx'
+            '../../component-report/mocks/components/SomeComponent.tsx',
           ),
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.spec.tsx'
+            '../../component-report/mocks/components/SomeComponent.spec.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -151,10 +151,10 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/someComponent.tsx'
+            '../../component-report/mocks/components/someComponent.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([]);
   });
 
@@ -164,10 +164,10 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.ts'
+            '../../component-report/mocks/components/SomeComponent.ts',
           ),
         ],
-      })
+      }),
     ).toEqual([]);
   });
 
@@ -177,14 +177,14 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.stories.tsx'
+            '../../component-report/mocks/components/SomeComponent.stories.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });
@@ -195,14 +195,14 @@ describe('extractReactComponents()', () => {
         files: [
           path.resolve(
             __dirname,
-            '../../component-report/mocks/components/SomeComponent.spec.tsx'
+            '../../component-report/mocks/components/SomeComponent.spec.tsx',
           ),
         ],
-      })
+      }),
     ).toEqual([
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/SomeComponent'
+        '../../component-report/mocks/components/SomeComponent',
       ),
     ]);
   });

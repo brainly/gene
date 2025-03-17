@@ -1,22 +1,17 @@
-import * as React from 'react';
-import {extendGeneModule, useModuleInjection} from '@brainly-gene/core';
+import React from 'react';
+import { extendGeneModule, useModuleInjection } from '@brainly-gene/core';
 
 function useInit() {
   const ref = React.useRef();
 
-  return {ref};
+  return { ref };
 }
 
 const symbolIdent = Symbol.for('injectionExample');
 
 function RawInvalidModule() {
-  const {
-    ref,
-    someProps,
-    useSomeMediators,
-    injected,
-    injectedSecond
-  } = useInit();
+  const { ref, someProps, useSomeMediators, injected, injectedSecond } =
+    useInit();
 
   useSomeMediators();
 
@@ -29,7 +24,7 @@ function RawInvalidModule() {
   );
 }
 
-const {declarations, module: InvalidModule} = extendGeneModule({
+const { declarations, module: InvalidModule } = extendGeneModule({
   module: RawInvalidModule,
   declarations: {
     components: [[symbolIdent, 'ExampleComponent']],
@@ -37,4 +32,4 @@ const {declarations, module: InvalidModule} = extendGeneModule({
   },
 });
 
-export {InvalidModule, declarations};
+export { InvalidModule, declarations };

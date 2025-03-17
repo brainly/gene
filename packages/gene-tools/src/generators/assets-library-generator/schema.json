@@ -13,7 +13,5 @@
       "x-prompt": "Are you using brainly-style-guide?"
     }
   },
-  "required": [
-    "withStyleGuide"
-  ]
+  "required": ["withStyleGuide"]
 }

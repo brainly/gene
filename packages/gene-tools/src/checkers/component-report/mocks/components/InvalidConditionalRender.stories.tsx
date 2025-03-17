@@ -1,8 +1,8 @@
-import {ValidConditionalRenderEventsType} from './ValidConditionalRenderEventsType';
+import { ValidConditionalRenderEventsType } from './ValidConditionalRenderEventsType';
 
-import * as React from 'react';
-import {storiesOf} from '@storybook/react';
-import {registerStoryInPackages, StorybookMediator} from '@brainly-gene/core';
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { registerStoryInPackages, StorybookMediator } from '@brainly-gene/core';
 import ValidConditionalRender from './ValidConditionalRender';
 
 const EVENTS_LIST = [
@@ -13,7 +13,7 @@ const EVENTS_LIST = [
 ];
 
 storiesOf(registerStoryInPackages('mocks/InvalidConditionalRender'), module)
-  .addDecorator(storyFn => (
+  .addDecorator((storyFn) => (
     <StorybookMediator events={EVENTS_LIST}>{storyFn()}</StorybookMediator>
   ))
   .add('default', () => (

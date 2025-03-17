@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {TestIntersectionType} from '../types/TestTypes';
-import {SomeType} from '@acme/some-types';
+import React from 'react';
+import { TestIntersectionType } from '../types/TestTypes';
+import { SomeType } from '@acme/some-types';
 
 type OneType = Readonly<{
   id: string;
@@ -18,7 +18,7 @@ type PropsType = Readonly<{
   TestIntersectionType &
   SomeType;
 
-const PropsWithTypesFromOtherLibs = ({id, content, values}: PropsType) => {
+const PropsWithTypesFromOtherLibs = ({ id, content, values }: PropsType) => {
   return null;
 };
 

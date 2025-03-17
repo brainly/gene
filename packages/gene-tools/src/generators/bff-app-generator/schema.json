@@ -58,8 +58,5 @@
       "default": true
     }
   },
-  "required": [
-    "name",
-    "directory"
-  ]
+  "required": ["name", "directory"]
 }

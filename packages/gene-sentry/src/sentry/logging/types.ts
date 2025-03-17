@@ -1,4 +1,4 @@
-import { ErrorMessage, LogLevel, Severity } from '@brainly-gene/core';
+import type { ErrorMessage, LogLevel, Severity } from '@brainly-gene/core';
 
 export type SentryErrorMessage = ErrorMessage &
   Readonly<{

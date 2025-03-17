@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -7,7 +7,7 @@ type PropsType = Readonly<{
   doQuickMath: (a: number) => number;
 }>;
 
-const FunctionProp = ({id, content, items}: PropsType) => {
+const FunctionProp = ({ id, content, items }: PropsType) => {
   return null;
 };
 

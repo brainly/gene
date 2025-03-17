@@ -1,7 +1,7 @@
-import * as jscodeshift from 'jscodeshift';
-import { Tree } from '@nx/devkit';
+import { withParser } from 'jscodeshift';
+import type { Tree } from '@nx/devkit';
 
-const j = jscodeshift.withParser('tsx');
+const j = withParser('tsx');
 
 interface PropsType {
   tree: Tree;
@@ -22,13 +22,13 @@ export const reexport = ({
   const exports = ast
     .find(j.ExportAllDeclaration)
     .filter(({ node }) =>
-      String(node.source.value).endsWith(`/${componentName}`)
+      String(node.source.value).endsWith(`/${componentName}`),
     )
     .nodes()[0];
 
   if (exports) {
     throw new Error(
-      `Component with name ${componentName} already exists in this library`
+      `Component with name ${componentName} already exists in this library`,
     );
   }
 
@@ -37,7 +37,7 @@ export const reexport = ({
   ast
     .get()
     .node.program.body.push(
-      j.exportAllDeclaration(j.stringLiteral(path), null)
+      j.exportAllDeclaration(j.stringLiteral(path), null),
     );
 
   tree.write(reexportIndexPath, ast.toSource({ quote: 'single' }));

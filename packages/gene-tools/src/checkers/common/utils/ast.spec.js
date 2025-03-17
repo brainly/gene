@@ -1,4 +1,4 @@
-import {isArrayProp} from './ast';
+import { isArrayProp } from './ast';
 
 describe('isArrayProp', () => {
   it('should return false for other type than Array', () => {

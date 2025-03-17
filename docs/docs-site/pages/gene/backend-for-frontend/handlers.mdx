@@ -36,7 +36,7 @@ import { apiHandlerConnect } from '@brainly-gene/next';
 import {
   getQuestion,
   postQuestion,
-  deleteQuestion
+  deleteQuestion,
 } from '@acme/simple-cms/api';
 
 export default apiHandlerConnect()
@@ -51,10 +51,7 @@ export default apiHandlerConnect()
 ```typescript
 import cors from 'cors';
 import { apiHandlerConnect } from '@brainly-gene/next';
-import {
-  getUser,
-  deleteUser
-} from '@acme/simple-cms/api';
+import { getUser, deleteUser } from '@acme/simple-cms/api';
 
 export default apiHandlerConnect()
   .use(cors())
@@ -88,7 +85,7 @@ Below is an example of custom middleware that intercepts requests to add an auth
 export function customMiddleware(
   req: NextApiRequest,
   res: NextApiResponse,
-  next: () => void
+  next: () => void,
 ) {
   const apiKey = process.env.API_KEY;
 
@@ -119,7 +116,10 @@ export async function getQuestion(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function deleteQuestion(req: NextApiRequest, res: NextApiResponse) {
+export async function deleteQuestion(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   // Delete question logic here
 }
 

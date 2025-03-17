@@ -1,7 +1,7 @@
 export type TranslateFunctionType = (
   key: string,
   params?: TranslationParamsType,
-  transChoiceHelper?: {basedOnParam: number}
+  transChoiceHelper?: { basedOnParam: number },
 ) => string;
 
 export interface TranslationServiceType {

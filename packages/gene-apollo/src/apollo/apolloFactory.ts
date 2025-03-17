@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import type { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 export interface ApolloClientType {
   hydrate: (initialState?: NormalizedCacheObject) => void;
   dehydrate: () => unknown;
@@ -71,7 +71,7 @@ function isEqual(value: any, other: any): boolean {
 }
 
 export function apolloFactory(
-  getClient: () => ApolloClient<NormalizedCacheObject>
+  getClient: () => ApolloClient<NormalizedCacheObject>,
 ) {
   const client = getClient();
 
@@ -89,7 +89,7 @@ export function apolloFactory(
           arrayMerge: (destinationArray: any[], sourceArray: any[]) => [
             ...sourceArray,
             ...destinationArray.filter((d: any) =>
-              sourceArray.every((s: any) => !isEqual(s, d))
+              sourceArray.every((s: any) => !isEqual(s, d)),
             ),
           ],
         });

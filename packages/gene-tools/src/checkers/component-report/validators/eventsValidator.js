@@ -57,7 +57,7 @@ function isAcceptableImport(src, name, file) {
   const importDeclaration = ast
     .find(j.ImportDeclaration)
     .filter(({ node }) =>
-      node.specifiers.find((specifier) => specifier.local.name === name)
+      node.specifiers.find((specifier) => specifier.local.name === name),
     )
     .nodes()[0];
 
@@ -71,7 +71,7 @@ function isAcceptableImport(src, name, file) {
 
   const libsMap = tsPathToWebpackAliases(
     `${workspaceRoot}/tsconfig.base.json`,
-    workspaceRoot
+    workspaceRoot,
   );
   const lib = libsMap[typeSource];
 
@@ -98,10 +98,10 @@ function isUtilityType(tags) {
 
 function isSameDomain(sourceTags, targetTags) {
   const domainSourceTags = sourceTags.filter((tag) =>
-    tag.startsWith('domain:')
+    tag.startsWith('domain:'),
   );
   const domainTargetTags = targetTags.filter((tag) =>
-    tag.startsWith('domain:')
+    tag.startsWith('domain:'),
   );
 
   return (

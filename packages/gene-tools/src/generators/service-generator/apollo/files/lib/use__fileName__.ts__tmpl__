@@ -1,7 +1,7 @@
 import {
   <%= lowerCaseFileName %>Query,
-  <%= fileName %>Query,
-  <%= fileName %>QueryVariables,  
+  type <%= fileName %>Query,
+  type <%= fileName %>QueryVariables,
 } from './queries';
 import { useQuery } from '@apollo/client';
 import {

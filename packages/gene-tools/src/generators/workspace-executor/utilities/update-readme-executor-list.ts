@@ -1,6 +1,6 @@
-import { Tree } from '@nx/devkit';
-import { MDAST } from 'mdast';
-import { UNIST } from 'unist';
+import type { Tree } from '@nx/devkit';
+import type { MDAST } from 'mdast';
+import type { UNIST } from 'unist';
 import visit = require('unist-util-visit');
 import remark = require('remark');
 
@@ -9,7 +9,7 @@ const readmeAvailableWorkspaceExecutorsHeading =
 
 export function updateReadmeExecutorList(
   tree: Tree,
-  executorName: string
+  executorName: string,
 ): void {
   const readmeContent = tree.read('tools/executors/README.md', 'utf-8');
 
@@ -41,7 +41,7 @@ export function updateReadmeExecutorList(
               foundList = true;
               addExecutorListItemToNode(node as MDAST.List, executorName);
             }
-          }) as any
+          }) as any,
         );
       };
     })

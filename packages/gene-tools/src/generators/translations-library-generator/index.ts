@@ -1,10 +1,10 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
   readProjectConfiguration,
-  Tree,
   updateProjectConfiguration,
   readJson,
   writeJson,
@@ -26,7 +26,7 @@ export default async function (tree: Tree) {
     'libs/translations/src',
     {
       tmpl: '',
-    }
+    },
   );
 
   const projectConfig = readProjectConfiguration(tree, 'translations');

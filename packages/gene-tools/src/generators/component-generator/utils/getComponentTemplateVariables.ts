@@ -17,7 +17,7 @@ import {
 } from '@nx/devkit/src/utils/string-utils';
 
 export const getComponentTemplateVariables = (
-  _options: Record<string, any>
+  _options: Record<string, any>,
 ) => {
   const {
     props,
@@ -43,8 +43,8 @@ export const getComponentTemplateVariables = (
       parsePropsEntries({
         defaultValue: defaultPropsType,
         shouldAddFlowDeclaration,
-      })
-    )
+      }),
+    ),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
   )(props as string);

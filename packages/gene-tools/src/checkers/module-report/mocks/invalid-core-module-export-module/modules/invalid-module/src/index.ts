@@ -1,1 +1,1 @@
-export {useSomeLogic} from './lib';
+export { useSomeLogic } from './lib';

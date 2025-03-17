@@ -1,5 +1,4 @@
-export {ValidWithDisabledStorybookModule} from './ValidWithDisabledStorybookModule';
-export {ValidVariationWithDisabledStorybookModule} from './ValidVariationWithDisabledStorybookModule';
+export { ValidWithDisabledStorybookModule } from './ValidWithDisabledStorybookModule';
+export { ValidVariationWithDisabledStorybookModule } from './ValidVariationWithDisabledStorybookModule';
 
-export type {ExampleType} from './ValidWithDisabledStorybookModule'
-
+export type { ExampleType } from './ValidWithDisabledStorybookModule';

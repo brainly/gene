@@ -23,7 +23,7 @@ function EmptyContext({ children }: { children?: React.ReactNode }) {
 
 export function decorateModule<
   RenderChildrenProps = Record<string, any>,
-  SlotsLabels extends string = string
+  SlotsLabels extends string = string,
 >({
   Module,
   container,
@@ -45,27 +45,27 @@ export function decorateModule<
     const getContainerWithModuleBoundaryTrackErrorFunction = React.useCallback(
       (currentContainer: Container | interfaces.Container) => {
         const hasLoggerBound = currentContainer.isBound(
-          ERROR_LOGGING_SERVICE_IDENTIFIER
+          ERROR_LOGGING_SERVICE_IDENTIFIER,
         );
         const logger = hasLoggerBound
           ? currentContainer.get<(message: Message) => unknown | undefined>(
-              ERROR_LOGGING_SERVICE_IDENTIFIER
+              ERROR_LOGGING_SERVICE_IDENTIFIER,
             )
           : undefined;
         const moduleBoundaryTrackErrorFunction = getErrorLoggingFunction(
           logger,
-          errorBoundary?.boundaryName
+          errorBoundary?.boundaryName,
         );
 
         const loggerContainer = new Container();
         loggerContainer
           .bind<ErrorWithModuleBoundaryLoggingFunctionType>(
-            ERROR_WITH_MODULE_BOUNDARY_LOGGING_IDENTIFIER
+            ERROR_WITH_MODULE_BOUNDARY_LOGGING_IDENTIFIER,
           )
           .toFunction(moduleBoundaryTrackErrorFunction);
         return loggerContainer;
       },
-      []
+      [],
     );
 
     const moduleContainer = React.useMemo(() => {
@@ -77,7 +77,7 @@ export function decorateModule<
 
         mergedContainer.parent = Container.merge(
           context.container.parent || emptyContainer,
-          container.parent || emptyContainer
+          container.parent || emptyContainer,
         );
 
         targetContainer = mergedContainer;
@@ -93,7 +93,7 @@ export function decorateModule<
 
       const mergedContainer = Container.merge(
         targetContainer,
-        getContainerWithModuleBoundaryTrackErrorFunction(targetContainer)
+        getContainerWithModuleBoundaryTrackErrorFunction(targetContainer),
       );
       mergedContainer.parent = targetContainer.parent;
 
@@ -127,7 +127,7 @@ export function decorateModule<
 
       return moduleContainer.isBound(ERROR_BOUNDARY_IDENTIFIER)
         ? moduleContainer.get<ErrorBoundaryComponentType>(
-            ERROR_BOUNDARY_IDENTIFIER
+            ERROR_BOUNDARY_IDENTIFIER,
           )
         : EmptyErrorBoundary;
     }, []);

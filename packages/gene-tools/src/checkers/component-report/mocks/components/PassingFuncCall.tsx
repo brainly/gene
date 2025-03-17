@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -6,7 +6,7 @@ type PropsType = Readonly<{
   items: Array<unknown>;
 }>;
 
-const PassingFuncCall = ({id, content, items}: PropsType) => {
+const PassingFuncCall = ({ id, content, items }: PropsType) => {
   const getId = () => 'div-42';
 
   return <div id={getId()}></div>;

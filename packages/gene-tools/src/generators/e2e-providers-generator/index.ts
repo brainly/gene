@@ -1,9 +1,9 @@
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
   installPackagesTask,
   joinPathFragments,
-  Tree,
   readJson,
   writeJson,
 } from '@nx/devkit';
@@ -24,7 +24,7 @@ export default async function (tree: Tree) {
     'libs/e2e-testing-providers/src',
     {
       tmpl: '',
-    }
+    },
   );
 
   await formatFiles(tree);

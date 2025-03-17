@@ -61,7 +61,7 @@ function validateDelegates({
 
       const useInjectionValidationResult = validateUseInjectionIdentifiers(
         useInjectionIdentifiers,
-        componentsAndMediatorsBindingsInManifest
+        componentsAndMediatorsBindingsInManifest,
       );
 
       if (!useInjectionValidationResult.valid) {
@@ -102,7 +102,7 @@ function validateDelegates({
       const delegateTestFile = allDelegatesFiles.find(
         (file) =>
           (file.includes('.test.ts') || file.includes('.spec.ts')) &&
-          file.includes(delegateName)
+          file.includes(delegateName),
       );
 
       if (!delegateTestFile) {

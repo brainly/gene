@@ -11,22 +11,23 @@ The app context communication bases on app state changes. As the state may be us
 the context is updated and all modules that are using this context are re-rendered.
 
 ## What is app context for?
+
 - holding common state that is used by multiple modules
 - holding dynamic data that cannot be fetched from API (e.g. user settings) and needs to be shared between modules
 - communication between modules (via some state property)
 
 ## What is app context **not** for?
+
 - holding raw or transformed data fetched from API with the intention of being shared between modules
-(in this case each module should call the service and transform the data on its own)
+  (in this case each module should call the service and transform the data on its own)
 - holding _feature flag_-like data
 - holding data that cannot be easily serialized/deserialized (e.g. functions)
-
 
 If you want to use context in your module we are recommending usage of `makeStore` pattern by creating contexts with `makeStore` helper.
 Example context:
 
 ```tsx
-import {makeStore} from '@brainly-gene/core';
+import { makeStore } from '@brainly-gene/core';
 
 export enum Actions {
   UPDATE_HELLO,
@@ -65,10 +66,10 @@ function reducer(state: StateType, action: ActionType) {
 
 const [StoreProvider, useDispatch, useStore] = makeStore<StateType, ActionType>(
   initialState,
-  reducer
+  reducer,
 );
 
-export {StoreProvider, useStore, useDispatch};
+export { StoreProvider, useStore, useDispatch };
 ```
 
 ## Add context provider
@@ -77,18 +78,18 @@ To be able to use context on module level, you need to wrap your module with pro
 all providers for modules:
 
 ```jsx
-import {createGeneModule} from '@brainly-gene/core';
-import {StoreProvider, AnotherStoreProvider} from './contexts';
-import {MyModule as RawMyModule} from './MyModule';
+import { createGeneModule } from '@brainly-gene/core';
+import { StoreProvider, AnotherStoreProvider } from './contexts';
+import { MyModule as RawMyModule } from './MyModule';
 
-const {declarations, module: MyModule} = createGeneModule({
+const { declarations, module: MyModule } = createGeneModule({
   module: RawMyModule,
   declarations: {
     contextProviders: [StoreProvider, AnotherStoreProvider],
   },
 });
 
-export {MyModule, declarations};
+export { MyModule, declarations };
 ```
 
 with that you will be able to use context on module level, i.e:

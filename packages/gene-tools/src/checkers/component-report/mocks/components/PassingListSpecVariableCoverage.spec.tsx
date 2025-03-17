@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {render} from '@testing-library/react';
+import React from 'react';
+import { render } from '@testing-library/react';
 import CmpsList from './PassingListSpecVariableCoverage';
 
 describe('<Cmp />', () => {

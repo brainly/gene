@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Observable from 'zen-observable';
+import type Observable from 'zen-observable';
 
 // Adapter for observable -> React (hook)
 /**
@@ -9,7 +9,7 @@ import Observable from 'zen-observable';
  */
 export function useObservableQueryV2<T>(
   observable: Observable<T>,
-  queryHash: string
+  queryHash: string,
 ) {
   // we call rerender() to force component update
   // whenever we get a new observable value

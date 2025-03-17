@@ -1,4 +1,4 @@
-const {validateTests} = require('./testsValidator');
+const { validateTests } = require('./testsValidator');
 const path = require('path');
 
 describe('validateTests()', () => {
@@ -6,7 +6,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/PassingListSpecNumberCoverage'
+        '../../mocks/components/PassingListSpecNumberCoverage',
       ),
     });
 
@@ -19,7 +19,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/PassingListSpecVariableCoverage'
+        '../../mocks/components/PassingListSpecVariableCoverage',
       ),
     });
 
@@ -32,7 +32,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/NotApplyListSpecCoverage'
+        '../../mocks/components/NotApplyListSpecCoverage',
       ),
     });
 
@@ -45,7 +45,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/NonExistingListSpecCoverage'
+        '../../mocks/components/NonExistingListSpecCoverage',
       ),
     });
 
@@ -58,7 +58,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/MissingListSpecCoverage'
+        '../../mocks/components/MissingListSpecCoverage',
       ),
     });
 
@@ -67,7 +67,7 @@ describe('validateTests()', () => {
 
     expect(result.error).toContain('`cmps.map(...)`, `cmps.map(...)`');
     expect(result.error).toContain(
-      'Some lists lengths assertions are missing, use both `.toHaveLength(0)` and `.toHaveLength(n)` for lists:'
+      'Some lists lengths assertions are missing, use both `.toHaveLength(0)` and `.toHaveLength(n)` for lists:',
     );
   });
 
@@ -85,7 +85,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/AllowedMocks'
+        '../../mocks/components/AllowedMocks',
       ),
     });
 
@@ -98,7 +98,7 @@ describe('validateTests()', () => {
     const result = validateTests({
       truncatedPath: path.resolve(
         __dirname,
-        '../../mocks/components/NotAllowedMocks'
+        '../../mocks/components/NotAllowedMocks',
       ),
     });
 

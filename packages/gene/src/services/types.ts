@@ -3,7 +3,7 @@ export interface CommonServiceType<
   TVariables = Record<string, any>,
   TRefetch = (variables: TVariables) => Promise<void>,
   TFetchMore = (variables: TVariables) => Promise<void>,
-  TFetchPreviousPage = (variables: TVariables) => Promise<void>
+  TFetchPreviousPage = (variables: TVariables) => Promise<void>,
 > {
   loading: boolean;
   error: Error | string | null;
@@ -29,7 +29,7 @@ export interface FetchPropsType<TData, TVariables, TQueryKey> {
 export type CommonFetchFn<
   TData,
   TVariables = Record<string, any>,
-  TQueryKey = string
+  TQueryKey = string,
 > = (
-  args?: FetchPropsType<TData, TVariables, TQueryKey>
+  args?: FetchPropsType<TData, TVariables, TQueryKey>,
 ) => Promise<Partial<CommonServiceType<TData, TVariables>>>;

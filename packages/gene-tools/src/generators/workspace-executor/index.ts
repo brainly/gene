@@ -1,4 +1,5 @@
-import { formatFiles, names, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { formatFiles, names } from '@nx/devkit';
 import {
   addExecutor,
   generateExecutorFiles,
@@ -12,7 +13,7 @@ export interface WorkspaceExecutorOptions {
 
 export default async function workspaceExecutorGenerator(
   tree: Tree,
-  rawOptions: WorkspaceExecutorOptions
+  rawOptions: WorkspaceExecutorOptions,
 ): Promise<void> {
   const { className, fileName: name } = names(rawOptions.name);
   validateExecutor(tree, name);

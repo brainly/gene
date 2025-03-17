@@ -1,4 +1,4 @@
-import { Observable } from 'zen-observable-ts';
+import type { Observable } from 'zen-observable-ts';
 
 export interface NavigateOptions {
   /**

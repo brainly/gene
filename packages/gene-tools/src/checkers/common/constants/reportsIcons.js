@@ -6,4 +6,4 @@ function getIcon(type) {
   return type === 'experimental' ? EXPERIMENTAL_ICON : ERROR_ICON;
 }
 
-module.exports = {SUCCESS_ICON, EXPERIMENTAL_ICON, ERROR_ICON, getIcon};
+module.exports = { SUCCESS_ICON, EXPERIMENTAL_ICON, ERROR_ICON, getIcon };

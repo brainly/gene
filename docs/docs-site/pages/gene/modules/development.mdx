@@ -1,10 +1,8 @@
 ---
-
 title: Modules development
-
 ---
 
-import Image from 'next/image'
+import Image from 'next/image';
 
 # Modules development
 
@@ -31,7 +29,7 @@ According to Gene principles, the module should be built using the builder patte
 - Load data from the `serviceAbc` with the following type:
 
 ```ts
-type AbcType = Array<{id: string, count: number}>;
+type AbcType = Array<{ id: string; count: number }>;
 ```
 
 - Transform the data
@@ -47,28 +45,27 @@ type FooPropsType = {
 
 The diagram below presents the dependencies of the entities used to wrap this module:
 
+```mermaid
 
-  ```mermaid
-  
-  classDiagram
-    direction LR
-    namespace simple-module {
-        class SimpleModule {
-            useInit
-        }
-    }
+classDiagram
+  direction LR
+  namespace simple-module {
+      class SimpleModule {
+          useInit
+      }
+  }
 
-    namespace simple-ui {
-        class Foo
-    }
+  namespace simple-ui {
+      class Foo
+  }
 
-    namespace service-abc {
-        class serviceAbc
-    }
+  namespace service-abc {
+      class serviceAbc
+  }
 
-    SimpleModule *-- Foo
-    SimpleModule *-- serviceAbc
-  ```
+  SimpleModule *-- Foo
+  SimpleModule *-- serviceAbc
+```
 
 Besides the dependencies mentioned above, Gene modules are wrapped with an appropriate dependency injection container that provides utilities like a fetch client and a router. These dependencies are covered in the [dependencies doc](/gene/modules/dependencies).
 
@@ -275,9 +272,14 @@ export {SimpleModule, declarations};
 The last piece of the module is the rendering. In this simple scenario, the module should render either loading info or a `Foo` component with appropriate props.
 
 ```tsx filename="SimpleModule.tsx" {1, 68..74}
-import {Foo, Loading, FooButtonClick, FooEventsType} from "@acme/components/simple-ui";
-import {useServiceAbc, AbcType} from "@acme/services/service-abc";
-import {useMediator} from '@brainly-gene/core'
+import {
+  Foo,
+  Loading,
+  FooButtonClick,
+  FooEventsType,
+} from '@acme/components/simple-ui';
+import { useServiceAbc, AbcType } from '@acme/services/service-abc';
+import { useMediator } from '@brainly-gene/core';
 
 type TransformedAbcType = {
   items: Array<number>;
@@ -302,9 +304,9 @@ const transformAbc = (data: AbcType | null): TransformedAbcType => {
 };
 
 const useInit = () => {
-  const {data, loading, error} = useServiceAbc();
+  const { data, loading, error } = useServiceAbc();
 
-  const {items, sumCount} = React.useMemo(() => transformAbc(data), [data]);
+  const { items, sumCount } = React.useMemo(() => transformAbc(data), [data]);
 
   const [additionalItems, setAdditionalItems] = React.useState<number[]>([]);
 
@@ -327,37 +329,27 @@ const useInit = () => {
     sumCount,
     ref,
     useMediators,
-  }
-}
+  };
+};
 
 const RawSimpleModule = () => {
-  const {
-    list,
-    loading,
-    sumCount,
-    ref,
-    useMediators,
-  } = useInit();
+  const { list, loading, sumCount, ref, useMediators } = useInit();
 
-  useMediators()
+  useMediators();
 
   return (
     <div ref={ref}>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Foo list={list} sumCount={sumCount} />
-      )}
+      {loading ? <Loading /> : <Foo list={list} sumCount={sumCount} />}
     </div>
   );
 };
 
-const {declarations, module: SimpleModule} = createGeneModule({
+const { declarations, module: SimpleModule } = createGeneModule({
   module: RawSimpleModule,
   declarations: {},
 });
 
-export {SimpleModule, declarations};
+export { SimpleModule, declarations };
 ```
 
 #### Component Map

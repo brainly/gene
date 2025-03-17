@@ -1,7 +1,10 @@
 export const wait = async (time = 0) =>
   new Promise((resolve) => setTimeout(resolve, time));
 
-export interface ExampleResponse { data: { hello: string }; headers?: Headers }
+export interface ExampleResponse {
+  data: { hello: string };
+  headers?: Headers;
+}
 export interface ExamplePaginatedResponse {
   data: { page: number };
   headers?: Headers;
@@ -18,7 +21,7 @@ export function mockFetch() {
       text: () => Promise.resolve(JSON.stringify(res)),
       headers: new Headers({ 'Content-Type': 'application/json' }),
       status: 200,
-    })
+    }),
   );
 }
 export function mockFetchPaginated() {
@@ -30,7 +33,7 @@ export function mockFetchPaginated() {
       json: () => Promise.resolve({ data: { page: 1 } }),
       headers: new Headers({ 'Content-Type': 'application/json' }),
       status: 200,
-    })
+    }),
   );
 }
 
@@ -52,7 +55,7 @@ export function mockFetchWithDelay(delay = 0) {
             status: 200,
           });
         }, delay);
-      })
+      }),
   );
 }
 
@@ -69,7 +72,7 @@ export function mockFetchWithError(delay = 0) {
             },
           });
         }, delay);
-      })
+      }),
   );
 }
 
@@ -93,7 +96,7 @@ export function mockFetchBasedOnParam() {
 export function mockFetchBasedOnQuery() {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  global.fetch = jest.fn((url, {body}) => {
+  global.fetch = jest.fn((url, { body }) => {
     let res = {};
     console.log(JSON.parse(body).operationName);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

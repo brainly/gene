@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, { useLayoutEffect } from 'react';
 
 export function useIsMounted(): () => boolean {
   const mountedRef = React.useRef(false);

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -7,7 +7,7 @@ type PropsType = Readonly<{
   [key: string]: any;
 }>;
 
-const WildcardProps = ({id, content, items}: PropsType) => {
+const WildcardProps = ({ id, content, items }: PropsType) => {
   return null;
 };
 

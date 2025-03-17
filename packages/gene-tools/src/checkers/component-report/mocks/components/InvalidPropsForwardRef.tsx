@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 type PropsType = Readonly<{
   id: string;
@@ -9,7 +9,7 @@ type PropsType = Readonly<{
 const InvalidPropsForwardRef = React.forwardRef<
   HTMLDivElement | null,
   PropsType
->(({id, content, items}, x) => {
+>(({ id, content, items }, x) => {
   return null;
 });
 

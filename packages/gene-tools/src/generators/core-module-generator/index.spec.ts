@@ -1,4 +1,5 @@
-import { logger, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
+import type { Tree } from '@nx/devkit';
+import { logger, readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
 
@@ -28,42 +29,42 @@ describe('Core module generator', () => {
     });
 
     expect(
-      appTree.exists(expectedModuleFolder + '/my-lib-module/README.md')
+      appTree.exists(expectedModuleFolder + '/my-lib-module/README.md'),
     ).toBeTruthy();
     expect(
       appTree.exists(
-        expectedModuleFolder + '/my-lib-module/src/lib/MyLibModule.tsx'
-      )
+        expectedModuleFolder + '/my-lib-module/src/lib/MyLibModule.tsx',
+      ),
     ).toBeTruthy();
     expect(
-      appTree.exists(expectedModuleFolder + '/my-lib-module/src/lib/index.ts')
+      appTree.exists(expectedModuleFolder + '/my-lib-module/src/lib/index.ts'),
     ).toBeTruthy();
     expect(
       appTree.exists(
-        expectedModuleFolder + '/my-lib-module/src/lib/MyLibModule.stories.tsx'
-      )
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        expectedModuleFolder + '/my-lib-module/src/lib/hooks/index.ts'
-      )
+        expectedModuleFolder + '/my-lib-module/src/lib/MyLibModule.stories.tsx',
+      ),
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/app.spec.ts'
-      )
+        expectedModuleFolder + '/my-lib-module/src/lib/hooks/index.ts',
+      ),
+    ).toBeTruthy();
+
+    expect(
+      appTree.exists(
+        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/app.spec.ts',
+      ),
     );
     expect(
       appTree.exists(
-        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/my-lib-module.feature'
-      )
+        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/my-lib-module.feature',
+      ),
     );
     expect(
       appTree.exists(
-        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/my-lib-module/display.ts'
-      )
+        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/my-lib-module/display.ts',
+      ),
     );
   });
 
@@ -83,13 +84,13 @@ describe('Core module generator', () => {
 
     const tsconfig = readJson(
       appTree,
-      'apps/my-lib-modules-my-lib-module-e2e/tsconfig.json'
+      'apps/my-lib-modules-my-lib-module-e2e/tsconfig.json',
     );
 
     expect(tsconfig.compilerOptions.allowJs).toBe(true);
     expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
     expect(
-      tsconfig.compilerOptions.types.includes('@testing-library/cypress')
+      tsconfig.compilerOptions.types.includes('@testing-library/cypress'),
     ).toBe(true);
   });
 
@@ -111,7 +112,7 @@ describe('Core module generator', () => {
             'import/no-extraneous-dependencies': 'off',
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -126,11 +127,11 @@ describe('Core module generator', () => {
       .read('libs/my-lib/modules/my-lib-module/src/lib/index.ts')
       ?.toString();
     expect(moduleContent).not.toMatch(
-      /export {MyLibModule} from ".\/MyLibModule";/
+      /export {MyLibModule} from ".\/MyLibModule";/,
     );
     expect(moduleContent).toMatch(/export {};/);
     expect(moduleContent).toMatch(
-      /\/\/ reexport here hooks and types used by hooks from core module/
+      /\/\/ reexport here hooks and types used by hooks from core module/,
     );
   });
 

@@ -1,20 +1,17 @@
 import React from 'react';
-import {
+import type {
   ApolloClient,
   ApolloQueryResult,
   NormalizedCacheObject,
 } from '@apollo/client';
 import { transformApolloResponse } from './transformApolloResponse';
-import {
-  CommonFetchFn,
-  CommonServiceType,
-} from '@brainly-gene/core';
+import type { CommonFetchFn, CommonServiceType } from '@brainly-gene/core';
 
 interface PropsType<TData, TVariables> {
   apolloClient: ApolloClient<NormalizedCacheObject>;
   queryFn: (
     client: ApolloClient<NormalizedCacheObject>,
-    variables: TVariables
+    variables: TVariables,
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
@@ -28,12 +25,8 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
 
   const fetch: CommonFetchFn<TData, TVariables> = React.useCallback(
     async (options) => {
-      const {
-        variables,
-        optimisticResponse,
-        refetchQueries,
-        updates,
-      } = options || {};
+      const { variables, optimisticResponse, refetchQueries, updates } =
+        options || {};
       try {
         if (optimisticResponse) {
           setQueryResults({
@@ -50,7 +43,7 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
         const apolloResponse = await queryFn(apolloClient, variables || {});
 
         const transformedData = transformApolloResponse<TData, TVariables>(
-          apolloResponse
+          apolloResponse,
         );
 
         setQueryResults(transformedData);
@@ -80,11 +73,11 @@ export function useApolloLazyQuery<TData, TVariables = Record<string, any>>({
         return transformedData;
       }
     },
-    []
+    [],
   );
 
   return React.useMemo(
     () => ({ ...queryResults, fetch }),
-    [fetch, queryResults]
+    [fetch, queryResults],
   );
 }

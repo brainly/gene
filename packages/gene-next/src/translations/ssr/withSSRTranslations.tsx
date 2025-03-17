@@ -3,7 +3,7 @@ import { useSSR } from 'react-i18next';
 import { SSRStore } from './ssrStore';
 
 export function withSSRTranslations<T>(
-  language: string = process.env.NEXT_PUBLIC_BUILD_LANG || 'en-US'
+  language: string = process.env.NEXT_PUBLIC_BUILD_LANG || 'en-US',
 ) {
   return (Page: React.ComponentType<T>) => {
     return (props: T & { pageProps: Record<string, any> }) => {
@@ -28,7 +28,7 @@ export function withSSRTranslations<T>(
             common: serverTranslations.common,
           },
         },
-        language
+        language,
       );
 
       return <Page {...props} />;
