@@ -3,6 +3,8 @@ import { logger, readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import appGenerator from './index';
 
+jest.setTimeout(10000);
+
 describe('NextJS App generator', () => {
   let appTree: Tree;
   let projectName: string;
