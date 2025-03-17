@@ -10,12 +10,3 @@ export {
   EventBusContextProvider,
 } from './useEventBus';
 export type { AbstractEventBusEventType } from './EventBus';
-
-export {
-  registerStoryInLegacy,
-  registerStoryInHomepage,
-  registerStoryInPackages,
-} from './storybook-utils/register';
-
-export { StorybookMediator } from './storybook-utils/StorybookMediator';
-export { default as MainContent } from './storybook-utils/MainContent/MainContent';

@@ -12,7 +12,7 @@ type PropsType = {
 };
 
 function flatEventsArray(
-  events: Array<EventsListType | Array<EventsListType>>,
+  events: Array<EventsListType | Array<EventsListType>>
 ): any {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -36,11 +36,10 @@ export function StorybookMediator({ events, children }: PropsType) {
     });
     return () => {
       flatArrayEvents.forEach((event) =>
-        currentRef.removeEventListener(event.value, action(event.value)),
+        currentRef.removeEventListener(event.value, action(event.value))
       );
     };
     // disable eslint next line to only once add listener when ref will appear
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 
   return <div ref={ref}>{children}</div>;

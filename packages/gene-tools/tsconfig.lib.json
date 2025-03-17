@@ -17,7 +17,9 @@
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
   },
   "include": ["**/*.ts", "**/*.js"],
   "exclude": ["**/*.spec.ts", "node_modules", "**/mocks/**", "jest.config.ts"]
