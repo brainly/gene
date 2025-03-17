@@ -4,5 +4,5 @@ export {
   useCallbackInjection,
   useComponentInjection,
   useInjection,
-  withIoc,
+  withIoc
 } from './react.ioc';

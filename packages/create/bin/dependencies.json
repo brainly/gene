@@ -4,7 +4,6 @@
     "@brainly-gene/next",
     "@nx/next",
     "@sentry/react",
-    "@storybook/addon-actions",
     "@tanstack/react-query",
     "brainly-style-guide",
     "chalk",

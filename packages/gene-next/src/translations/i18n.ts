@@ -3,12 +3,6 @@ import HttpApi from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-interface SSRStoreType {
-  current: Record<string, string>;
-}
-
-export const SSRStore: SSRStoreType = { current: {} };
-
 export const i18nConfig = {
   react: {
     useSuspense: false, //   <---- required for NextJS, must migrate to https://github.com/isaachinman/next-i18next

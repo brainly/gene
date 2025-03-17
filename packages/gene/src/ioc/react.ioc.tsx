@@ -1,3 +1,4 @@
+'use client';
 import React, { PropsWithChildren, useContext, useMemo } from 'react';
 
 import { interfaces } from 'inversify';

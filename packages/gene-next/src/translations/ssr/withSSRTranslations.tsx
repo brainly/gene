@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSSR } from 'react-i18next';
-import { SSRStore } from '../i18n';
+import { SSRStore } from './ssrStore';
 
 export function withSSRTranslations<T>(
   language: string = process.env.NEXT_PUBLIC_BUILD_LANG || 'en-US',
