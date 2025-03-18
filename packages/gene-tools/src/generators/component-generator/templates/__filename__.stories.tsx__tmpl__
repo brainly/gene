@@ -3,7 +3,7 @@
 <% } %>
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import {StorybookMediator} from '@brainly-gene/tools';
+import {StorybookMediator} from '@brainly-gene/tools/storybook-utils';
 <% if (storybookKnobs.length > 0) { %>import {<%= storybookKnobs.join(', ') %>} from '@storybook/addon-knobs';<% } %>
 import <%= classify(name) %> from './<%= classify(name) %>';
 <% if (events) { %>import {<%= eventsTypeName(name) %>} from './<%= eventsTypeName(name) %>';<% } %>
