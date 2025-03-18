@@ -17,7 +17,6 @@ import type { AppStoreType, ReducerType } from '../../ioc';
 import { useAppContextContainer, useServiceClientsContainer } from '../../ioc';
 import type { Locale } from '@brainly-gene/next';
 import { LinkRewriteContextProvider } from '@brainly-gene/next';
-
 type OverwritableContainerKeys = 'adsContainer';
 
 export interface StorybookProvidersPropsType {

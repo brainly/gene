@@ -11,6 +11,6 @@
     "./executors.json": "./executors.json",
     "./generators.json": "./generators.json",
     ".": "./src/index.js",
-    "./src/storybook-utils": "./src/storybook-utils/index.js"
+    "./storybook-utils": "./storybook-utils/index.js"
   }
 }
