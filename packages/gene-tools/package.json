@@ -10,6 +10,7 @@
     "./package.json": "./package.json",
     "./executors.json": "./executors.json",
     "./generators.json": "./generators.json",
-    ".": "./src/index.js"
+    ".": "./src/index.js",
+    "./src/storybook-utils": "./src/storybook-utils/index.js"
   }
 }
