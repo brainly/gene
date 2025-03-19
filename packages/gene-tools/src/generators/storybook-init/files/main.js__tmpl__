@@ -87,6 +87,14 @@ module.exports = {
                 loader: require.resolve('babel-loader'),
                 options: {
                   rootMode: 'upward',
+                  presets: [
+                    // runtime is automatic by default in babel 8+
+                    ['@babel/preset-react', {runtime: 'automatic'}],
+                    [
+                      '@nx/react/babel',
+                      {runtime: 'automatic', useBuiltIns: 'usage'},
+                    ],
+                  ],
                 },
               },
             ],
