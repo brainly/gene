@@ -1,5 +1,5 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { useRef, useEffect } from 'react';
 
 type EventsListType = {
   value: string;
@@ -20,11 +20,11 @@ function flatEventsArray(
 }
 
 export function StorybookMediator({ events, children }: PropsType) {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const flatArrayEvents: Array<EventsListType> = flatEventsArray(events);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const currentRef = ref.current;
 
     if (!currentRef) return;

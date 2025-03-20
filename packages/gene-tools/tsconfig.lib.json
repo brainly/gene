@@ -18,7 +18,6 @@
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
     "jsx": "react-jsx",
   },
   "include": ["**/*.ts", "**/*.js"],
