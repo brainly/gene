@@ -1,3 +1,4 @@
+'use client';
 export * from './i18n';
 export * from './ioc/ioc';
 export * from './types';
