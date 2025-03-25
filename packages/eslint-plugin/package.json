@@ -4,5 +4,9 @@
   "license": "Apache-2.0",
   "main": "src/index.js",
   "generators": "./generators.json",
-  "executors": "./executors.json"
+  "executors": "./executors.json",
+  "peerDependencies": {
+    "@typescript-eslint/utils": ">=6.21.0",
+    "tslib": ">=2.3.0"
+  }
 }
