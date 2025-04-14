@@ -87,7 +87,7 @@
     "@babel/preset-env": "7.16.7",
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "7.16.7",
-    "@babel/runtime": "7.16.7",
+    "@babel/runtime": "7.26.10",
     "@badeball/cypress-cucumber-preprocessor": "13.0.2",
     "@bahmutov/cypress-esbuild-preprocessor": "2.1.5",
     "@cypress/browserify-preprocessor": "3.0.2",
