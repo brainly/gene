@@ -56,6 +56,21 @@ function isMemoized(declaration) {
   return true;
 }
 
+function isCallToMemoizedFunction(path, expression) {
+  if (expression.body.type !== 'CallExpression') {
+    return false;
+  }
+
+  const { callee } = expression.body;
+
+  if (callee.type === 'Identifier') {
+    const variableDeclarator = findVariableDeclarator(path, callee.name);
+    return variableDeclarator && isMemoized(variableDeclarator.node);
+  }
+
+  return false;
+}
+
 function validateMemoization(file) {
   const src = fs.readFileSync(file).toString();
 
@@ -75,7 +90,7 @@ function validateMemoization(file) {
     })
     .forEach((path) => {
       const importedElements = path.value.specifiers.map(
-        (el) => el.imported.name,
+        (el) => el.imported.name
       );
 
       styleGuideImportedElements.push(...importedElements);
@@ -85,12 +100,12 @@ function validateMemoization(file) {
     (element) => {
       if (styleGuideImportedElements.length) {
         return !styleGuideImportedElements.includes(
-          element.parentPath.parentPath.value.name.name,
+          element.parentPath.parentPath.value.name.name
         );
       }
 
       return true;
-    },
+    }
   );
 
   for (const path of jsxElementsWithoutStyleGuideElements.paths()) {
@@ -111,7 +126,7 @@ function validateMemoization(file) {
     const skipNextLine = shouldSkipNextLine(
       arrayOfLines,
       lineNumberToCheck,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
     );
 
     if (skipNextLine.error) {
@@ -122,10 +137,13 @@ function validateMemoization(file) {
     }
 
     if (valueExpressionType === 'ArrowFunctionExpression') {
-      return {
-        valid: false,
-        error: `Passing non-memoized inline arrow function as ${propName}`,
-      };
+      if (!isCallToMemoizedFunction(path, path.node.value.expression)) {
+        return {
+          valid: false,
+          error: `Passing non-memoized inline arrow function as ${propName}`,
+        };
+      }
+      continue;
     }
 
     if (valueExpressionType === 'ObjectExpression') {
@@ -153,7 +171,7 @@ function validateMemoization(file) {
 
     const functionDeclaration = findFunctionDeclaration(
       path,
-      valueExpressionName,
+      valueExpressionName
     );
 
     if (functionDeclaration) {
@@ -165,7 +183,7 @@ function validateMemoization(file) {
 
     const variableDeclarator = findVariableDeclarator(
       path,
-      valueExpressionName,
+      valueExpressionName
     );
 
     if (!variableDeclarator) {
@@ -176,7 +194,7 @@ function validateMemoization(file) {
     const skipVariableDeclarator = shouldSkipNextLine(
       arrayOfLines,
       variableDeclarator.node.loc.start.line,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
     );
 
     if (skipVariableDeclarator.error) {
