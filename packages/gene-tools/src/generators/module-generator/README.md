@@ -29,7 +29,7 @@ CREATE libs/example-application/market-a/app-modules/src/lib/simple-module-modul
 CREATE libs/example-application/market-a/app-modules/.storybook/main.js
 CREATE libs/example-application/market-a/app-modules/.storybook/manager.js
 CREATE libs/example-application/market-a/app-modules/.storybook/preview.js
-CREATE libs/example-application/market-a/app-modules/.storybook/tsconfig.json
+CREATE libs/example-application/market-a/app-modules/tsconfig.storybook.json
 ```
 
 Schema file for running this generator with appropriate description of options is available [here](./schema.json).

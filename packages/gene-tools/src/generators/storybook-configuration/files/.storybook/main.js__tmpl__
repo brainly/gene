@@ -1,4 +1,4 @@
-const rootMain = require('<%= offsetFromRoot %>.storybook/main');
+const rootMain = require('<%= offsetFromRoot %>../.storybook/main');
 
 module.exports = {
   ...rootMain,

@@ -44,7 +44,7 @@ CREATE apps/example.com/hi/config/rewrites.json
 CREATE apps/example.com/hi/withNodeModulesCSS.js
 CREATE apps/example.com/hi/.storybook/main.js
 CREATE apps/example.com/hi/.storybook/preview.js
-CREATE apps/example.com/hi/.storybook/tsconfig.json
+CREATE apps/example.com/hi/tsconfig.storybook.json
 
 ```
 
