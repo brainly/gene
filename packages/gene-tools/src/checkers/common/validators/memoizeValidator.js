@@ -56,6 +56,21 @@ function isMemoized(declaration) {
   return true;
 }
 
+function isCallToMemoizedFunction(path, expression) {
+  if (expression.body.type !== 'CallExpression') {
+    return false;
+  }
+
+  const { callee } = expression.body;
+
+  if (callee.type === 'Identifier') {
+    const variableDeclarator = findVariableDeclarator(path, callee.name);
+    return variableDeclarator && isMemoized(variableDeclarator.node);
+  }
+
+  return false;
+}
+
 function validateMemoization(file, checkerConfig) {
   const { memoization } = checkerConfig.rules;
 
@@ -128,10 +143,13 @@ function validateMemoization(file, checkerConfig) {
     }
 
     if (valueExpressionType === 'ArrowFunctionExpression') {
-      return {
-        valid: false,
-        error: `Passing non-memoized inline arrow function as ${propName}`,
-      };
+      if (!isCallToMemoizedFunction(path, path.node.value.expression)) {
+        return {
+          valid: false,
+          error: `Passing non-memoized inline arrow function as ${propName}`,
+        };
+      }
+      continue;
     }
 
     if (valueExpressionType === 'ObjectExpression') {

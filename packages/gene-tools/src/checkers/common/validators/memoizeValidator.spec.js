@@ -255,4 +255,18 @@ describe('validateMemoization()', () => {
       valid: true,
     });
   });
+
+  it('allows inline arrow function that calls a memoized function', () => {
+    const result = validateMemoization(
+      path.resolve(
+        __dirname,
+        '../../component-report/mocks/components/InlineArrowWithMemoizedCall.tsx'
+      ),
+      defaultConfig
+    );
+
+    expect(result).toEqual({
+      valid: true,
+    });
+  });
 });
