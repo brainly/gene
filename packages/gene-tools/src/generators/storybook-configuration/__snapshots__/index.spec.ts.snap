@@ -64,24 +64,24 @@ export { decorators, parameters } from '../../../.storybook/preview';
 
 exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 4`] = `
 "{
-  \\"extends\\": \\"../tsconfig.json\\",
+  \\"extends\\": \\"./tsconfig.json\\",
   \\"compilerOptions\\": {
     \\"emitDecoratorMetadata\\": true,
     \\"experimentalDecorators\\": true,
     \\"outDir\\": \\"\\"
   },
   \\"exclude\\": [
-    \\"../**/*.spec.ts\\",
-    \\"../**/*.spec.js\\",
-    \\"../**/*.spec.tsx\\",
-    \\"../**/*.spec.jsx\\"
+    \\"src/**/*.spec.ts\\",
+    \\"src/**/*.spec.js\\",
+    \\"src/**/*.spec.tsx\\",
+    \\"src/**/*.spec.jsx\\"
   ],
   \\"include\\": [
-    \\"../**/*.stories.ts\\",
-    \\"../**/*.stories.js\\",
-    \\"../**/*.stories.jsx\\",
-    \\"../**/*.stories.tsx\\",
-    \\"*.js\\"
+    \\"**/*.stories.ts\\",
+    \\"**/*.stories.js\\",
+    \\"**/*.stories.jsx\\",
+    \\"**/*.stories.tsx\\",
+    \\".storybook/*.js\\"
   ]
 }
 "
@@ -133,24 +133,24 @@ export { decorators, parameters } from '../../../.storybook/preview';
 
 exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 4`] = `
 "{
-  \\"extends\\": \\"../tsconfig.json\\",
+  \\"extends\\": \\"./tsconfig.json\\",
   \\"compilerOptions\\": {
     \\"emitDecoratorMetadata\\": true,
     \\"experimentalDecorators\\": true,
     \\"outDir\\": \\"\\"
   },
   \\"exclude\\": [
-    \\"../**/*.spec.ts\\",
-    \\"../**/*.spec.js\\",
-    \\"../**/*.spec.tsx\\",
-    \\"../**/*.spec.jsx\\"
+    \\"src/**/*.spec.ts\\",
+    \\"src/**/*.spec.js\\",
+    \\"src/**/*.spec.tsx\\",
+    \\"src/**/*.spec.jsx\\"
   ],
   \\"include\\": [
-    \\"../**/*.stories.ts\\",
-    \\"../**/*.stories.js\\",
-    \\"../**/*.stories.jsx\\",
-    \\"../**/*.stories.tsx\\",
-    \\"*.js\\"
+    \\"**/*.stories.ts\\",
+    \\"**/*.stories.js\\",
+    \\"**/*.stories.jsx\\",
+    \\"**/*.stories.tsx\\",
+    \\".storybook/*.js\\"
   ]
 }
 "
@@ -217,24 +217,24 @@ export { decorators, parameters } from '../../../.storybook/preview';
 
 exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 4`] = `
 "{
-  \\"extends\\": \\"../tsconfig.json\\",
+  \\"extends\\": \\"./tsconfig.json\\",
   \\"compilerOptions\\": {
     \\"emitDecoratorMetadata\\": true,
     \\"experimentalDecorators\\": true,
     \\"outDir\\": \\"\\"
   },
   \\"exclude\\": [
-    \\"../**/*.spec.ts\\",
-    \\"../**/*.spec.js\\",
-    \\"../**/*.spec.tsx\\",
-    \\"../**/*.spec.jsx\\"
+    \\"src/**/*.spec.ts\\",
+    \\"src/**/*.spec.js\\",
+    \\"src/**/*.spec.tsx\\",
+    \\"src/**/*.spec.jsx\\"
   ],
   \\"include\\": [
-    \\"../**/*.stories.ts\\",
-    \\"../**/*.stories.js\\",
-    \\"../**/*.stories.jsx\\",
-    \\"../**/*.stories.tsx\\",
-    \\"*.js\\"
+    \\"**/*.stories.ts\\",
+    \\"**/*.stories.js\\",
+    \\"**/*.stories.jsx\\",
+    \\"**/*.stories.tsx\\",
+    \\".storybook/*.js\\"
   ]
 }
 "

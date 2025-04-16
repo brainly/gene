@@ -27,7 +27,7 @@ CREATE libs/social-qa/components/answer-box-ui/src/index.js.map
 CREATE libs/social-qa/components/answer-box-ui/.storybook/main.js
 CREATE libs/social-qa/components/answer-box-ui/.storybook/manager.js
 CREATE libs/social-qa/components/answer-box-ui/.storybook/preview.js
-CREATE libs/social-qa/components/answer-box-ui/.storybook/tsconfig.json
+CREATE libs/social-qa/components/answer-box-ui/tsconfig.storybook.json
 
 ```
 

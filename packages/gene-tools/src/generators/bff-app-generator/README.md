@@ -62,7 +62,7 @@ CREATE apps/examples/bff/us/web-e2e/src/e2e/Home.feature
 CREATE apps/examples/bff/us/web/.storybook/main.js
 CREATE apps/examples/bff/us/web/.storybook/manager.js
 CREATE apps/examples/bff/us/web/.storybook/preview.js
-CREATE apps/examples/bff/us/web/.storybook/tsconfig.json
+CREATE apps/examples/bff/us/web/tsconfig.storybook.json
 ```
 
 We can test the new application by running the application
