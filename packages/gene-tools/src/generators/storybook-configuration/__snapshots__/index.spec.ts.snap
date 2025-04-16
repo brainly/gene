@@ -68,7 +68,12 @@ exports[`storybookConfiguration generator application should generate configurat
   \\"compilerOptions\\": {
     \\"emitDecoratorMetadata\\": true,
     \\"experimentalDecorators\\": true,
-    \\"outDir\\": \\"\\"
+    \\"outDir\\": \\"\\",
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"noUncheckedIndexedAccess\\": true,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"forceConsistentCasingInFileNames\\": true
   },
   \\"exclude\\": [
     \\"src/**/*.spec.ts\\",
@@ -137,7 +142,12 @@ exports[`storybookConfiguration generator application should generate the .story
   \\"compilerOptions\\": {
     \\"emitDecoratorMetadata\\": true,
     \\"experimentalDecorators\\": true,
-    \\"outDir\\": \\"\\"
+    \\"outDir\\": \\"\\",
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"noUncheckedIndexedAccess\\": true,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"forceConsistentCasingInFileNames\\": true
   },
   \\"exclude\\": [
     \\"src/**/*.spec.ts\\",
@@ -221,7 +231,12 @@ exports[`storybookConfiguration generator library should generate the .storybook
   \\"compilerOptions\\": {
     \\"emitDecoratorMetadata\\": true,
     \\"experimentalDecorators\\": true,
-    \\"outDir\\": \\"\\"
+    \\"outDir\\": \\"\\",
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"noUncheckedIndexedAccess\\": true,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"forceConsistentCasingInFileNames\\": true
   },
   \\"exclude\\": [
     \\"src/**/*.spec.ts\\",
