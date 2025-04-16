@@ -1,13 +1,20 @@
 const { validateMemoization } = require('./memoizeValidator');
 const path = require('path');
 
+const defaultConfig = {
+  rules: {
+    memoization: true,
+  },
+};
+
 describe('validateMemoization()', () => {
   it('is valid for a basic component', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingMemoizedFunc.tsx',
+        '../../component-report/mocks/components/PassingMemoizedFunc.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -19,8 +26,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingArrowFunc.tsx',
+        '../../component-report/mocks/components/PassingArrowFunc.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -33,8 +41,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingObject.tsx',
+        '../../component-report/mocks/components/PassingObject.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -47,8 +56,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingObjectFromOutside.tsx',
+        '../../component-report/mocks/components/PassingObjectFromOutside.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -60,8 +70,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/AllowedProps.tsx',
+        '../../component-report/mocks/components/AllowedProps.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -73,8 +84,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/InlineArrowFunc.tsx',
+        '../../component-report/mocks/components/InlineArrowFunc.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -87,8 +99,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/InlineObject.tsx',
+        '../../component-report/mocks/components/InlineObject.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -101,8 +114,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingFunc.tsx',
+        '../../component-report/mocks/components/PassingFunc.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -115,8 +129,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingPrimitives.tsx',
+        '../../component-report/mocks/components/PassingPrimitives.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -128,8 +143,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PropsForwarding.tsx',
+        '../../component-report/mocks/components/PropsForwarding.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -141,8 +157,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingSlot.tsx',
+        '../../component-report/mocks/components/PassingSlot.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -154,8 +171,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingInlineSlot.tsx',
+        '../../component-report/mocks/components/PassingInlineSlot.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -167,8 +185,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingMemoizedSlot.tsx',
+        '../../component-report/mocks/components/PassingMemoizedSlot.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -180,8 +199,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingFuncCall.tsx',
+        '../../component-report/mocks/components/PassingFuncCall.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -194,8 +214,9 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingMemoizedAttributeToStyleGuideComponent.tsx',
+        '../../component-report/mocks/components/PassingMemoizedAttributeToStyleGuideComponent.tsx'
       ),
+      defaultConfig
     );
 
     expect(result).toEqual({
@@ -207,8 +228,27 @@ describe('validateMemoization()', () => {
     const result = validateMemoization(
       path.resolve(
         __dirname,
-        '../../component-report/mocks/components/PassingMemoizedFuncCall.tsx',
+        '../../component-report/mocks/components/PassingMemoizedFuncCall.tsx'
       ),
+      defaultConfig
+    );
+
+    expect(result).toEqual({
+      valid: true,
+    });
+  });
+
+  it('skips validation when memoization is disabled', () => {
+    const result = validateMemoization(
+      path.resolve(
+        __dirname,
+        '../../component-report/mocks/components/PassingArrowFunc.tsx'
+      ),
+      {
+        rules: {
+          memoization: false,
+        },
+      }
     );
 
     expect(result).toEqual({

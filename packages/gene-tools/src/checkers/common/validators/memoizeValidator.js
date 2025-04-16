@@ -56,7 +56,13 @@ function isMemoized(declaration) {
   return true;
 }
 
-function validateMemoization(file) {
+function validateMemoization(file, checkerConfig) {
+  const { memoization } = checkerConfig.rules;
+
+  if (!memoization) {
+    return { valid: true };
+  }
+
   const src = fs.readFileSync(file).toString();
 
   const ast = j(src);
@@ -75,7 +81,7 @@ function validateMemoization(file) {
     })
     .forEach((path) => {
       const importedElements = path.value.specifiers.map(
-        (el) => el.imported.name,
+        (el) => el.imported.name
       );
 
       styleGuideImportedElements.push(...importedElements);
@@ -85,12 +91,12 @@ function validateMemoization(file) {
     (element) => {
       if (styleGuideImportedElements.length) {
         return !styleGuideImportedElements.includes(
-          element.parentPath.parentPath.value.name.name,
+          element.parentPath.parentPath.value.name.name
         );
       }
 
       return true;
-    },
+    }
   );
 
   for (const path of jsxElementsWithoutStyleGuideElements.paths()) {
@@ -111,7 +117,7 @@ function validateMemoization(file) {
     const skipNextLine = shouldSkipNextLine(
       arrayOfLines,
       lineNumberToCheck,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
     );
 
     if (skipNextLine.error) {
@@ -153,7 +159,7 @@ function validateMemoization(file) {
 
     const functionDeclaration = findFunctionDeclaration(
       path,
-      valueExpressionName,
+      valueExpressionName
     );
 
     if (functionDeclaration) {
@@ -165,7 +171,7 @@ function validateMemoization(file) {
 
     const variableDeclarator = findVariableDeclarator(
       path,
-      valueExpressionName,
+      valueExpressionName
     );
 
     if (!variableDeclarator) {
@@ -176,7 +182,7 @@ function validateMemoization(file) {
     const skipVariableDeclarator = shouldSkipNextLine(
       arrayOfLines,
       variableDeclarator.node.loc.start.line,
-      GENE_REPORT_DISABLE_MEMO_NEXT_LINE,
+      GENE_REPORT_DISABLE_MEMO_NEXT_LINE
     );
 
     if (skipVariableDeclarator.error) {
