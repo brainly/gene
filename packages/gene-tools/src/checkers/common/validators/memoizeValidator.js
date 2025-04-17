@@ -71,7 +71,10 @@ function isCallToMemoizedFunction(path, expression) {
   return false;
 }
 
-function validateMemoization(file, checkerConfig) {
+function validateMemoization(
+  file,
+  checkerConfig = { rules: { memoization: true } }
+) {
   const { memoization } = checkerConfig.rules;
 
   if (!memoization) {
