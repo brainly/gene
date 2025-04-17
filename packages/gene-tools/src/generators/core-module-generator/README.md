@@ -37,7 +37,7 @@ CREATE libs/social-qa/question/modules/progress-tracking-module/src/lib/index.ts
 CREATE libs/social-qa/question/modules/progress-tracking-module/.storybook/main.js
 CREATE libs/social-qa/question/modules/progress-tracking-module/.storybook/manager.js
 CREATE libs/social-qa/question/modules/progress-tracking-module/.storybook/preview.js
-CREATE libs/social-qa/question/modules/progress-tracking-module/.storybook/tsconfig.json
+CREATE libs/social-qa/question/modules/progress-tracking-module/tsconfig.storybook.json
 CREATE apps/social-qa-question-modules-progress-tracking-module-e2e/cypress.config.ts
 CREATE apps/social-qa-question-modules-progress-tracking-module-e2e/src/fixtures/example.json
 CREATE apps/social-qa-question-modules-progress-tracking-module-e2e/src/support/commands.ts

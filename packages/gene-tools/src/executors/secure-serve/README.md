@@ -32,8 +32,7 @@ In the project configuration, add a `serve-base` target that serves the Next.js 
         "serve-base": {
           "dependsOn": [
             {
-              "target": "copy-translations",
-              "projects": "self"
+              "target": "copy-translations"
             }
           ],
           "executor": "@nx/next:server",
