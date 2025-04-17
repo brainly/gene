@@ -9,10 +9,10 @@ export function generateConfigurationFiles(
   generateFiles(
     tree,
     joinPathFragments(__dirname, '..', 'files'),
-    options.storybookDir,
+    options.projectRoot,
     {
       isLibrary: options.isLibrary,
-      offsetFromRoot: offsetFromRoot(options.storybookDir),
+      offsetFromRoot: offsetFromRoot(options.projectRoot),
       tmpl: '',
     },
   );

@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "types": ["node", "jest"],
+    "types": ["jest", "node", "@testing-library/jest-dom"],
     "rootDir": "src/",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,

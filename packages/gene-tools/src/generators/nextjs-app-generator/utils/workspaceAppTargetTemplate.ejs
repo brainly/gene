@@ -2,22 +2,19 @@
   "build": {
     "dependsOn": [
      {
-        "target": "copy-translations-to-app",
-        "projects": "self"
+        "target": "copy-translations-to-app"
      },
      {
-        "target": "copy-assets-to-app",
-        "projects": "self"
+        "target": "copy-assets-to-app"
       },
       {
         "target": "build",
-        "projects": "dependencies"
+        "dependencies": true
       }
     ],
     "executor": "@nx/next:build",
     "outputs": ["{options.outputPath}"],
     "options": {
-      "root": "apps/<%= projectPath %>",
       "outputPath": "dist/apps/<%= projectPath %>"
     },
     "configurations": {
@@ -27,12 +24,10 @@
   "serve-base": {
     "dependsOn": [
        {
-          "target": "copy-translations-to-app",
-          "projects": "self"
+          "target": "copy-translations-to-app"
        },
        {
-          "target": "copy-assets-to-app",
-          "projects": "self"
+          "target": "copy-assets-to-app"
         }
     ],
     "executor": "@nx/next:server",
@@ -54,16 +49,14 @@
     },
     "dependsOn": [
      {
-        "target": "copy-translations-to-app",
-        "projects": "self"
+        "target": "copy-translations-to-app"
      },
      {
-        "target": "copy-assets-to-app",
-        "projects": "self"
+        "target": "copy-assets-to-app"
       },
       {
         "target": "build",
-        "projects": "dependencies"
+        "dependencies": true
       }
     ],
     "configurations": {
