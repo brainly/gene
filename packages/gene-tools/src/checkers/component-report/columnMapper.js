@@ -139,12 +139,12 @@ function getColumns({ jestOutput }) {
     },
     {
       name: 'Memo',
-      run: ({ truncatedPath }) => {
+      run: ({ truncatedPath, checkerConfig }) => {
         const {
           valid,
           error,
           type = 'error',
-        } = validateMemoization(`${truncatedPath}.tsx`);
+        } = validateMemoization(`${truncatedPath}.tsx`, checkerConfig);
 
         return valid
           ? { content: SUCCESS_ICON, success: true }

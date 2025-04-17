@@ -71,7 +71,16 @@ function isCallToMemoizedFunction(path, expression) {
   return false;
 }
 
-function validateMemoization(file) {
+function validateMemoization(
+  file,
+  checkerConfig = { rules: { memoization: true } }
+) {
+  const { memoization } = checkerConfig.rules;
+
+  if (!memoization) {
+    return { valid: true };
+  }
+
   const src = fs.readFileSync(file).toString();
 
   const ast = j(src);
