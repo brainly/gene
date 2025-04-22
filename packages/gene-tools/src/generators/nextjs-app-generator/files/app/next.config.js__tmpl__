@@ -67,6 +67,15 @@ const getConfig = () => {
          */
         largePageDataBytes: 400 * 100000,
         esmExternals: false,
+        turbo: {
+          resolveAlias: {
+            net: './turbopack-non-browser-modules-fallback.js',
+            dns: './turbopack-non-browser-modules-fallback.js',
+            fs: './turbopack-non-browser-modules-fallback.js',
+            path: './turbopack-non-browser-modules-fallback.js',
+            canvas: './turbopack-non-browser-modules-fallback.js',
+          },
+        },
       },
       serverRuntimeConfig: {
         domains,

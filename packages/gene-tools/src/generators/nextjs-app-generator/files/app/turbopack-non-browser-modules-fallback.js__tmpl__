@@ -1,0 +1,5 @@
+// Dev only TurboPack fallback for non-browser modules
+// to be used in next.config.js, experimental.turbo.resolveAlias
+// Similar as we have it for webpack here https://github.com/brainly/frontend-monorepo/blob/aea853328a2a7eb0a72530e8f421f6fd6e24fc5e/apps/social-qa/us/withNodeModulesCSS.js#L62-L65
+// More details here: https://github.com/vercel/next.js/discussions/67196#discussioncomment-12380628
+export {};
