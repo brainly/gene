@@ -14,7 +14,6 @@ module.exports = {
     '@storybook/addon-storysource',
     join(__dirname, './events/register.jsx'),
     '@storybook/addon-links',
-    'storybook-addon-next-router',
   ],
 
   previewHead: (head) => `
