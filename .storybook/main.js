@@ -2,6 +2,11 @@ const { join } = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
+  framework: '@storybook/nextjs',
+  features: {
+    storyStoreV7: false,
+  },
+
   core: {
     builder: 'webpack5',
   },
@@ -12,11 +17,11 @@ module.exports = {
     '@storybook/addon-backgrounds',
     '@storybook/addon-viewport',
     '@storybook/addon-storysource',
-    join(__dirname, './events/register.jsx'),
+    join(__dirname, './events'),
     '@storybook/addon-links',
   ],
 
-  previewHead: (head) => `
+  previewHead: head => `
     ${head}
     <link href="brainly-style-guide/css/style-guide.css" rel="stylesheet"/>
     <script src="brainly-style-guide/images/icons.js" defer></script>
@@ -39,23 +44,41 @@ module.exports = {
     </script>
   `,
 
-  managerHead: (head) => `
+  managerHead: head => `
     ${head}
     <link rel="icon" type="image/x-icon" href="brainly-style-guide/images/favicons/brainly/favicon.ico">
     <link rel="icon" sizes="192x192" href="brainly-style-guide/images/favicons/brainly/favicon-hd.png">
     <meta name="theme-color" content="#ffffff">
   `,
 
-  env: (config) => ({
+  env: config => ({
     ...config,
     NEXT_PUBLIC_ENV: 'local',
   }),
 
-  webpackFinal: async (config) => {
-    // removes default file-loader
-    const rules = config.module.rules.filter(
-      (rule) => !rule.loader || !rule.loader.includes('file-loader'),
+  webpackFinal: async config => {
+    const rules = config.module.rules
+      // removes default file-loader
+      .filter(rule => !rule.loader || !rule.loader.includes('file-loader'))
+      // removes default svg loader
+      .filter(rule => !rule.test?.toString().includes('svg'));
+
+    // taken from: https://github.com/webpack-contrib/sass-loader/issues/867#issuecomment-1208342094
+    // to make sass work
+    const scssConfigIndex = config.module.rules.findIndex(c =>
+      '.scss'.match(c.test)
     );
+    if (scssConfigIndex > 0 && config.module.rules[scssConfigIndex]?.oneOf) {
+      config.module.rules[scssConfigIndex].oneOf.push({
+        test: /\.(css|s(a|c)ss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      });
+    } else {
+      config.module.rules.push({
+        test: /\.(css|s(a|c)ss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      });
+    }
 
     const tsPaths = new TsconfigPathsPlugin({
       configFile: './tsconfig.base.json',
@@ -84,32 +107,14 @@ module.exports = {
         rules: [
           {
             test: /\.tsx?$/,
-            use: [
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  rootMode: 'upward',
-                },
-              },
-            ],
+            exclude: /node_modules/,
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
             enforce: 'pre',
           },
           ...rules,
-          {
-            test: /\.scss$/,
-            use: [
-              'style-loader',
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: {
-                    localIdentName: '[name]__[local]___[hash:base64:5]',
-                  },
-                },
-              },
-              'sass-loader',
-            ],
-          },
           {
             test: /\.svg$/,
             exclude: /node_modules/,
@@ -138,6 +143,6 @@ module.exports = {
   },
 
   docs: {
-    autodocs: true
-  }
+    autodocs: true,
+  },
 };
