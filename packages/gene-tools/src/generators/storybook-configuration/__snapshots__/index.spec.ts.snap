@@ -23,6 +23,7 @@ exports[`storybookConfiguration generator application should generate configurat
 
 module.exports = {
   ...rootMain,
+  staticDirs: ['../public', '../../../.storybook/assets'],
   stories: [
     '../components/**/*.stories.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
@@ -97,6 +98,7 @@ exports[`storybookConfiguration generator application should generate the .story
 
 module.exports = {
   ...rootMain,
+  staticDirs: ['../public', '../../../.storybook/assets'],
   stories: [
     '../components/**/*.stories.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
@@ -189,6 +191,7 @@ exports[`storybookConfiguration generator library should generate the .storybook
 
 module.exports = {
   ...rootMain,
+  staticDirs: ['../public', '../../../.storybook/assets'],
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   webpackFinal: async (config, { configType }) => {
