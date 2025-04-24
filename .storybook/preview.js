@@ -1,6 +1,4 @@
-import { addParameters } from '@storybook/react';
 import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
-import { rest } from 'msw';
 import { mswDecorator } from 'msw-storybook-addon';
 
 const styles = {
@@ -29,6 +27,10 @@ export const parameters = {
   msw: {
     handlers: [],
   },
+  viewport: {
+    viewports: customViewports,
+    defaultViewport: 'mobile',
+  },
 };
 
 const customViewports = {
@@ -47,7 +49,3 @@ const customViewports = {
     },
   },
 };
-
-addParameters({
-  viewport: { viewports: customViewports, defaultViewport: 'mobile' },
-});

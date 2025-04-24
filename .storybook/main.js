@@ -5,6 +5,7 @@ module.exports = {
   core: {
     builder: 'webpack5',
   },
+
   addons: [
     '@storybook/addon-knobs',
     '@storybook/addon-actions',
@@ -15,6 +16,7 @@ module.exports = {
     '@storybook/addon-links',
     'storybook-addon-next-router',
   ],
+
   previewHead: (head) => `
     ${head}
     <link href="brainly-style-guide/css/style-guide.css" rel="stylesheet"/>
@@ -37,6 +39,7 @@ module.exports = {
       };
     </script>
   `,
+
   managerHead: (head) => `
     ${head}
     <link rel="icon" type="image/x-icon" href="brainly-style-guide/images/favicons/brainly/favicon.ico">
@@ -134,4 +137,8 @@ module.exports = {
       },
     };
   },
+
+  docs: {
+    autodocs: true
+  }
 };
