@@ -2,7 +2,10 @@ const rootMain = require('<%= offsetFromRoot %>../.storybook/main');
 
 module.exports = {
   ...rootMain,
-  staticDirs: ['../public', '<%= offsetFromRoot %>../.storybook/assets'],
+  staticDirs: [
+    <% if (!isLibrary) { %>'../public',<% } %>
+    '<%= offsetFromRoot %>../.storybook/assets',
+  ],
   stories: [
     <% if (isLibrary) { %>
     '../src/**/*.stories.mdx',

@@ -55,6 +55,7 @@ export function addStorybookTargets(
         config: {
           configFolder: options.storybookDir,
         },
+        configDir: options.storybookDir,
       },
       configurations: { ci: { quiet: true } },
     },

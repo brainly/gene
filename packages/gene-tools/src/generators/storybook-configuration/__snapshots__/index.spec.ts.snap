@@ -191,7 +191,7 @@ exports[`storybookConfiguration generator library should generate the .storybook
 
 module.exports = {
   ...rootMain,
-  staticDirs: ['../public', '../../../.storybook/assets'],
+  staticDirs: ['../../../.storybook/assets'],
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   webpackFinal: async (config, { configType }) => {
