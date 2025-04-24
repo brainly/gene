@@ -20,19 +20,6 @@ export const workerPath = `${window.location.pathname
   .slice(0, -1)
   .join('/')}/mockServiceWorker.js`;
 
-export const parameters = {
-  nextRouter: {
-    Provider: RouterContext.Provider,
-  },
-  msw: {
-    handlers: [],
-  },
-  viewport: {
-    viewports: customViewports,
-    defaultViewport: 'mobile',
-  },
-};
-
 const customViewports = {
   mobile: {
     name: 'Phone (375px min width)',
@@ -47,5 +34,18 @@ const customViewports = {
       width: '1024px',
       height: '768px',
     },
+  },
+};
+
+export const parameters = {
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
+  msw: {
+    handlers: [],
+  },
+  viewport: {
+    viewports: customViewports,
+    defaultViewport: 'mobile',
   },
 };
