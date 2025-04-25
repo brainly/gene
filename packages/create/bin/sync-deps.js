@@ -27,39 +27,63 @@ try {
 // Extract versions for each dependency and devDependency
 const getVersions = (packages, source) => {
   const versions = {};
+  const removedPackages = [];
+
   packages.forEach((pkg) => {
     if (source.dependencies && source.dependencies[pkg]) {
       versions[pkg] = source.dependencies[pkg];
-      return versions;
-    }
-
-    if (source.devDependencies && source.devDependencies[pkg]) {
+    } else if (source.devDependencies && source.devDependencies[pkg]) {
       versions[pkg] = source.devDependencies[pkg];
-      return versions;
-    }
-
-    if (pkg.startsWith('@brainly-gene/')) {
+    } else if (pkg.startsWith('@brainly-gene/')) {
       versions[pkg] = rootPackageData.version;
-      return versions;
+    } else {
+      removedPackages.push(pkg);
     }
-
-    throw new Error(`Version not found for ${pkg}`);
   });
-  return versions;
+
+  return { versions, removedPackages };
 };
 
-const allVersions = {
-  dependencies: getVersions(
-    dependenciesData.dependencies || [],
-    rootPackageData,
-  ),
-  devDependencies: getVersions(
-    dependenciesData.devDependencies || [],
-    rootPackageData,
-  ),
-};
+const { versions: dependencyVersions, removedPackages: removedDependencies } =
+  getVersions(dependenciesData.dependencies || [], rootPackageData);
+
+const {
+  versions: devDependencyVersions,
+  removedPackages: removedDevDependencies,
+} = getVersions(dependenciesData.devDependencies || [], rootPackageData);
+
+// Update dependencies.json by removing packages not found in package.json
+if (removedDependencies.length > 0 || removedDevDependencies.length > 0) {
+  dependenciesData.dependencies = dependenciesData.dependencies.filter(
+    (pkg) => !removedDependencies.includes(pkg)
+  );
+  dependenciesData.devDependencies = dependenciesData.devDependencies.filter(
+    (pkg) => !removedDevDependencies.includes(pkg)
+  );
+
+  // Write updated dependencies.json
+  try {
+    fs.writeFileSync(
+      dependenciesPath,
+      JSON.stringify(dependenciesData, null, 2),
+      'utf8'
+    );
+    console.log('dependencies.json has been updated by removing:', [
+      ...removedDependencies,
+      ...removedDevDependencies,
+    ]);
+  } catch (err) {
+    console.error('Error updating dependencies.json:', err);
+    process.exit(1);
+  }
+}
 
 // Write the versions.json file
+const allVersions = {
+  dependencies: dependencyVersions,
+  devDependencies: devDependencyVersions,
+};
+
 try {
   fs.writeFileSync(outputPath, JSON.stringify(allVersions, null, 2), 'utf8');
   console.log('versions.json has been created successfully.');

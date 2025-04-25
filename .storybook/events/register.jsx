@@ -26,7 +26,7 @@ function getDividedItems(items) {
 
       return acc;
     },
-    [[], []],
+    [[], []]
   );
 }
 

@@ -1,7 +1,12 @@
 const rootMain = require('<%= offsetFromRoot %>../.storybook/main');
+rootMain.addons.push('@storybook/addon-essentials');
 
 module.exports = {
   ...rootMain,
+  staticDirs: [
+    <% if (!isLibrary) { %>'../public',<% } %>
+    '<%= offsetFromRoot %>../.storybook/assets',
+  ],
   stories: [
     <% if (isLibrary) { %>
     '../src/**/*.stories.mdx',

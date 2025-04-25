@@ -1,6 +1,4 @@
-import { addParameters } from '@storybook/react';
-import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
-import { rest } from 'msw';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
 import { mswDecorator } from 'msw-storybook-addon';
 
 const styles = {
@@ -22,15 +20,6 @@ export const workerPath = `${window.location.pathname
   .slice(0, -1)
   .join('/')}/mockServiceWorker.js`;
 
-export const parameters = {
-  nextRouter: {
-    Provider: RouterContext.Provider,
-  },
-  msw: {
-    handlers: [],
-  },
-};
-
 const customViewports = {
   mobile: {
     name: 'Phone (375px min width)',
@@ -48,6 +37,15 @@ const customViewports = {
   },
 };
 
-addParameters({
-  viewport: { viewports: customViewports, defaultViewport: 'mobile' },
-});
+export const parameters = {
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
+  msw: {
+    handlers: [],
+  },
+  viewport: {
+    viewports: customViewports,
+    defaultViewport: 'mobile',
+  },
+};

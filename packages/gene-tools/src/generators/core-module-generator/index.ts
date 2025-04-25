@@ -71,6 +71,18 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
     tags: resolveTags(schema),
   });
 
+  // Update tsconfig.json to set esModuleInterop
+  const tsconfigPath = `${modulePath}/tsconfig.json`;
+  if (tree.exists(tsconfigPath)) {
+    updateJson(tree, tsconfigPath, (json) => ({
+      ...json,
+      compilerOptions: {
+        ...json.compilerOptions,
+        esModuleInterop: true,
+      },
+    }));
+  }
+
   // delete default files
   tree.delete(moduleSourcePath);
   tree.delete(`libs/${directoryPath}${nameWithSuffix}/README.md`);

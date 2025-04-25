@@ -7,7 +7,7 @@ import type { NormalizedOptions } from '../schema';
 
 export function addStorybookTargets(
   tree: Tree,
-  options: NormalizedOptions,
+  options: NormalizedOptions
 ): void {
   const projectConfig = readProjectConfiguration(tree, options.name);
 
@@ -51,13 +51,11 @@ export function addStorybookTargets(
         },
       ],
       options: {
-        uiFramework: '@storybook/react',
         port: 4400,
         config: {
           configFolder: options.storybookDir,
         },
         configDir: options.storybookDir,
-        staticDir: ['.storybook/assets'],
       },
       configurations: { ci: { quiet: true } },
     },
@@ -75,11 +73,8 @@ export function addStorybookTargets(
       ],
       outputs: ['{options.outputPath}'],
       options: {
-        uiFramework: '@storybook/react',
         outputPath: `dist/storybook/${options.name}`,
         config: { configFolder: options.storybookDir },
-        configDir: options.storybookDir,
-        staticDir: ['.storybook/assets'],
       },
       configurations: { ci: { quiet: true } },
     },
