@@ -9,6 +9,7 @@ module.exports = {
 
   core: {
     builder: 'webpack5',
+    disableTelemetry: true, // enabled by default: https://storybook.js.org/docs/configure/telemetry#how-to-opt-out
   },
 
   addons: [
@@ -21,7 +22,7 @@ module.exports = {
     '@storybook/addon-links',
   ],
 
-  previewHead: head => `
+  previewHead: (head) => `
     ${head}
     <link href="brainly-style-guide/css/style-guide.css" rel="stylesheet"/>
     <script src="brainly-style-guide/images/icons.js" defer></script>
@@ -44,28 +45,28 @@ module.exports = {
     </script>
   `,
 
-  managerHead: head => `
+  managerHead: (head) => `
     ${head}
     <link rel="icon" type="image/x-icon" href="brainly-style-guide/images/favicons/brainly/favicon.ico">
     <link rel="icon" sizes="192x192" href="brainly-style-guide/images/favicons/brainly/favicon-hd.png">
     <meta name="theme-color" content="#ffffff">
   `,
 
-  env: config => ({
+  env: (config) => ({
     ...config,
     NEXT_PUBLIC_ENV: 'local',
   }),
 
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     const rules = config.module.rules
       // removes default file-loader
-      .filter(rule => !rule.loader || !rule.loader.includes('file-loader'))
+      .filter((rule) => !rule.loader || !rule.loader.includes('file-loader'))
       // removes default svg loader
-      .filter(rule => !rule.test?.toString().includes('svg'));
+      .filter((rule) => !rule.test?.toString().includes('svg'));
 
     // taken from: https://github.com/webpack-contrib/sass-loader/issues/867#issuecomment-1208342094
     // to make sass work
-    const scssConfigIndex = config.module.rules.findIndex(c =>
+    const scssConfigIndex = config.module.rules.findIndex((c) =>
       '.scss'.match(c.test)
     );
     if (scssConfigIndex > 0 && config.module.rules[scssConfigIndex]?.oneOf) {
