@@ -20,6 +20,7 @@ Object {
 
 exports[`storybookConfiguration generator application should generate configuration files when .storybook folder exists without any files inside 1`] = `
 "const rootMain = require('../../../.storybook/main');
+rootMain.addons.push('@storybook/addon-essentials');
 
 module.exports = {
   ...rootMain,
@@ -95,6 +96,7 @@ exports[`storybookConfiguration generator application should generate configurat
 
 exports[`storybookConfiguration generator application should generate the .storybook folder with the configuration files 1`] = `
 "const rootMain = require('../../../.storybook/main');
+rootMain.addons.push('@storybook/addon-essentials');
 
 module.exports = {
   ...rootMain,
@@ -188,6 +190,7 @@ Object {
 
 exports[`storybookConfiguration generator library should generate the .storybook folder with the configuration files 1`] = `
 "const rootMain = require('../../../.storybook/main');
+rootMain.addons.push('@storybook/addon-essentials');
 
 module.exports = {
   ...rootMain,

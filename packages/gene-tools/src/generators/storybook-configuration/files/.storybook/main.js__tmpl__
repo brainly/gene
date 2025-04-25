@@ -1,4 +1,5 @@
 const rootMain = require('<%= offsetFromRoot %>../.storybook/main');
+rootMain.addons.push('@storybook/addon-essentials');
 
 module.exports = {
   ...rootMain,
