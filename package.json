@@ -6,6 +6,7 @@
     "build": "pnpm nx run-many --target=build --all",
     "generate-package": "nx generate library --publishable --buildable",
     "lint": "pnpm nx run-many --target=lint --all",
+    "package-json:format": "prettier-package-json --write",
     "test": "pnpm nx run-many --target=test --all"
   },
   "dependencies": {
@@ -167,6 +168,7 @@
     "mini-css-extract-plugin": "2.2.0",
     "msw": "0.49.2",
     "msw-storybook-addon": "1.6.3",
+    "prettier-package-json": "2.8.0",
     "reflect-metadata": "0.1.13",
     "sass": "1.55.0",
     "sass-loader": "9.0.2",
