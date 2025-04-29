@@ -39,8 +39,8 @@ describe('Components library generator', () => {
 
     expect(
       appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/index.ts`,
-      ),
+        `libs/social-qa/question/components/${projectName}-ui/src/index.ts`
+      )
     ).toBeTruthy();
   });
 
@@ -52,7 +52,7 @@ describe('Components library generator', () => {
 
     const tsconfig = readJson(
       appTree,
-      `libs/social-qa/question/components/${projectName}-ui/tsconfig.json`,
+      `libs/social-qa/question/components/${projectName}-ui/tsconfig.json`
     );
 
     expect(tsconfig.compilerOptions.isolatedModules).toBe(true);
@@ -67,7 +67,7 @@ describe('Components library generator', () => {
 
     const appConfig = readProjectConfiguration(
       appTree,
-      `social-qa-question-components-${projectName}-ui`,
+      `social-qa-question-components-${projectName}-ui`
     );
     expect(appConfig.tags).toEqual([
       'type:component',
@@ -86,7 +86,7 @@ describe('Components library generator', () => {
 
     await componentGenerator(appTree, {
       library: libName,
-      'prompts-profile': 'basic',
+      promptsProfile: 'basic',
     });
 
     const indexContent = appTree
@@ -96,26 +96,26 @@ describe('Components library generator', () => {
 
     expect(
       appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/index.ts`,
-      ),
+        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/index.ts`
+      )
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.tsx`,
-      ),
+        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.tsx`
+      )
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.spec.tsx`,
-      ),
+        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.spec.tsx`
+      )
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.stories.tsx`,
-      ),
+        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.stories.tsx`
+      )
     ).toBeTruthy();
   });
 });

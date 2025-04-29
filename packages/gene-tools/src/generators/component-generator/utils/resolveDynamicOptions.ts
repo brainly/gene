@@ -4,7 +4,7 @@ import { resolveGeneratorOptions } from './resolveGeneratorOptions';
 export type ComponentPromptsProfileType = 'basic' | 'sample' | 'advanced';
 
 export interface ComponentSchemaType {
-  ['prompts-profile']: ComponentPromptsProfileType;
+  promptsProfile: ComponentPromptsProfileType;
   name?: string;
   props?: string;
   events?: string;
@@ -13,9 +13,9 @@ export interface ComponentSchemaType {
   tests?: boolean | string;
   storybook?: boolean | string;
   reexport?: boolean | string;
-  ['sg-components']?: string;
-  ['data-testid']?: string;
-  ['markup-content']?: string;
+  sgComponents?: string;
+  dataTestid?: string;
+  markupContent?: string;
   directory?: string;
   reexportIndexPath?: string;
   reexportRelativePath?: string;
@@ -35,7 +35,7 @@ export const ComponentPromptsProfileMapping: Readonly<
     'styles',
     'tests',
     'storybook',
-    'data-testid',
+    'dataTestid',
   ],
 };
 
@@ -48,7 +48,7 @@ export const ComponentPromptsProfileDefaultValueKeyMapping: Readonly<
 };
 
 export const resolveDynamicOptions = async (
-  initialOptions: ComponentSchemaType,
+  initialOptions: ComponentSchemaType
 ): Promise<ComponentSchemaType> => {
   const options = await resolveGeneratorOptions<
     ComponentPromptsProfileType,
