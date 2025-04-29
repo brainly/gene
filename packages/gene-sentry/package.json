@@ -1,5 +1,9 @@
 {
   "name": "@brainly-gene/sentry",
   "version": "0.2.0-alpha.8",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "peerDependencies": {
+    "tslib": ">=2.3.0"
+  }
 }
