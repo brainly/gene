@@ -6,24 +6,7 @@
     "prompts-profile": {
       "type": "string",
       "enum": ["basic", "sample", "advanced"],
-      "x-prompt": {
-        "message": "You will create a new component now. Which prompting options would you like to choose?",
-        "type": "list",
-        "items": [
-          {
-            "value": "basic",
-            "label": "I would like to create a basic component (only name)."
-          },
-          {
-            "value": "sample",
-            "label": "I would like to create a basic component with defaults for props, events, copy, styles."
-          },
-          {
-            "value": "advanced",
-            "label": "I would like to create an advanced component (name, props, events, copy, styles)."
-          }
-        ]
-      }
+      "description": "The prompting profile to use (determines which other options are relevant)."
     },
     "library": {
       "type": "string",
@@ -32,7 +15,47 @@
         "$source": "argv",
         "index": 0
       }
+    },
+    "name": {
+      "type": "string",
+      "description": "Component name"
+    },
+    "props": {
+      "type": "string",
+      "description": "Component props definition"
+    },
+    "events": {
+      "type": "string",
+      "description": "Component events definition"
+    },
+    "copy": {
+      "type": "string",
+      "description": "Component copy/text content"
+    },
+    "styles": {
+      "type": "string",
+      "description": "Component styles definition"
+    },
+    "tests": {
+      "type": ["boolean", "string"],
+      "description": "Whether to generate tests and test configuration"
+    },
+    "storybook": {
+      "type": ["boolean", "string"],
+      "description": "Whether to generate Storybook stories"
+    },
+    "reexport": {
+      "type": ["boolean", "string"],
+      "description": "Whether to reexport the component"
+    },
+    "sg-components": {
+      "type": "string",
+      "description": "Style guide components to use"
+    },
+    "data-testid": {
+      "type": "string",
+      "description": "Data test ID for testing"
     }
   },
-  "required": ["prompts-profile"]
+  "required": []
 }

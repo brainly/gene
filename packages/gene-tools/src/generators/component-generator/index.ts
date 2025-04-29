@@ -17,15 +17,46 @@ import { camelCase, upperFirst } from 'lodash';
 import { promptSelectAppName } from '../utilities/getAppName';
 import { classify } from '@nx/devkit/src/utils/string-utils';
 import { getComponentTemplateVariables } from './utils/getComponentTemplateVariables';
+import type { ComponentPromptsProfileType } from './utils/resolveDynamicOptions';
 
 export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
   const projects = getProjects(tree);
 
+  let promptsProfile: ComponentPromptsProfileType;
+
+  if (schema.promptsProfile) {
+    promptsProfile = schema.promptsProfile;
+  } else {
+    const answer = await prompt([
+      {
+        name: 'promptsProfile',
+        type: 'list',
+        message:
+          'You will create a new component now. Which prompting options would you like to choose?',
+        choices: [
+          {
+            value: 'basic',
+            name: 'I would like to create a basic component (only name).',
+          },
+          {
+            value: 'sample',
+            name: 'I would like to create a basic component with defaults for props, events, copy, styles.',
+          },
+          {
+            value: 'advanced',
+            name: 'I would like to create an advanced component (name, props, events, copy, styles).',
+          },
+        ],
+      },
+    ]);
+    promptsProfile = answer.promptsProfile;
+  }
+
   const libraryName = await promptSelectAppName(
-    schema.library,
+    schema.library ?? '',
     tree,
-    'What is name of library in which you want to create a component?',
+    'What is name of library in which you want to create a component?'
   );
 
   const library = projects.get(libraryName);
@@ -48,7 +79,7 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
 
   if (tags?.includes('type:module')) {
     const variants = readdirSync(`${sourceRoot}/lib`).filter(
-      (entry) => !entry.includes('.'),
+      (entry) => !entry.includes('.')
     );
 
     const isModuleLibrary = tags?.includes('type:application-module-library');
@@ -77,7 +108,8 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
   const libraryShortName = root.split('/').pop();
 
   const generatorOptions = await resolveDynamicOptions({
-    'prompts-profile': schema['prompts-profile'],
+    ...schema,
+    promptsProfile,
     reexportIndexPath,
     reexportRelativePath,
     directory: directoryPath,
@@ -100,7 +132,7 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
       ...templateVariables,
       filename: classify(generatorOptions.name),
       tmpl: '',
-    },
+    }
   );
 
   const reexportFileName = upperFirst(camelCase(generatorOptions.name));
@@ -114,7 +146,6 @@ export default async function (tree: Tree, schema: BrainlyComponentGenerator) {
 
   await formatFiles(tree);
 
-  // revert possible changes to package.json
   writeJson(tree, 'package.json', currentPackageJson);
   return () => {
     installPackagesTask(tree);
