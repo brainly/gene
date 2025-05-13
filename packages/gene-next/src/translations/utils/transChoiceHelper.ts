@@ -39,6 +39,8 @@ export function transChoiceHelper({
       case 'en':
       case 'en-US':
       case 'en_US':
+      case 'en-GB':
+      case 'en_GB':
       case 'es-ES':
       case 'es_ES':
       case 'fr':
