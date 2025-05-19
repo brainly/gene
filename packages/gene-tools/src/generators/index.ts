@@ -1,7 +1,6 @@
 export { default as apiRouteGenerator } from './api-route-generator';
 export { default as componentGenerator } from './component-generator';
 export { default as componentsLibraryGenerator } from './components-library-generator';
-export { default as e2eTestsGenerator } from './e2e-tests-generator';
 export { default as moduleGenerator } from './module-generator';
 export { default as serviceGenerator } from './service-generator';
 export { default as storybookConfigurationGenerator } from './storybook-configuration';
