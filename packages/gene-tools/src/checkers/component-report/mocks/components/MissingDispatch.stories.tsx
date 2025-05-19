@@ -1,8 +1,7 @@
 import { MissingDispatchEventsType } from './MissingDispatchEventsType';
-
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { registerStoryInPackages, StorybookMediator } from '@brainly-gene/core';
+import { StorybookMediator } from '@brainly-gene/tools/storybook-utils';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const EVENTS_LIST = [
   {
@@ -11,8 +10,18 @@ const EVENTS_LIST = [
   },
 ];
 
-storiesOf(registerStoryInPackages('mocks/Dispatch'), module).addDecorator(
-  (storyFn) => (
-    <StorybookMediator events={EVENTS_LIST}>{storyFn()}</StorybookMediator>
-  ),
-);
+const meta: Meta = {
+  title: 'mocks/Dispatch',
+  decorators: [
+    (Story) => (
+      <StorybookMediator events={EVENTS_LIST}>
+        <Story />
+      </StorybookMediator>
+    ),
+  ],
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

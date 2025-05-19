@@ -1,4 +1,10 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-storiesOf('invalid-module', module);
+const meta: Meta = {
+  title: 'invalid-module',
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

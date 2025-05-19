@@ -1,7 +1,12 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { InvalidModule } from './InvalidModule';
 
-storiesOf('invalid-module', module).add('default view', () => (
-  <InvalidModule />
-));
+export default {
+  title: 'invalid-module',
+};
+
+export const DefaultView = () => <InvalidModule />;
+
+DefaultView.story = {
+  name: 'default view',
+};

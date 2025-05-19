@@ -18,7 +18,7 @@ Feature: MyModule
 
 ### Cypress Test Implementation
 
-Here’s an example of the Cypress test implementation:
+Here's an example of the Cypress test implementation:
 
 ```jsx
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
@@ -63,9 +63,11 @@ export { decorators, parameters } from '../../../../../../.storybook/preview';
 
 ### Defining Mock Handlers
 
-Define the request mocks within the module's story. Here’s an example setup:
+Define the request mocks within the module's story. Here's an example setup:
 
 ```tsx
+import type { Meta, StoryObj } from '@storybook/react';
+
 const handlers = {
   myGraphqlMutation: [
     graphql.mutation('myGraphqlMutation', (req, res, ctx) => {
@@ -85,14 +87,21 @@ const handlers = {
   ],
 };
 
-storiesOf('MyModule', module)
-  .addParameters({
+const meta: Meta = {
+  title: 'MyModule',
+  parameters: {
     msw: {
       handlers,
     },
-  })
-  .addDecorator()
-  .add('core - default view', () => <MyModule />);
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => <MyModule />,
+};
 ```
 
 For more information on `MockServiceWorker`, refer to the [MSW Storybook Addon documentation](https://github.com/mswjs/msw-storybook-addon).

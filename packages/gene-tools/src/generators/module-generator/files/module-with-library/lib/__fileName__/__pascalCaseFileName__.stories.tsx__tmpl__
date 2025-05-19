@@ -1,10 +1,20 @@
 import React from 'react';
-import {storiesOf} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {<%= pascalCaseFileName %>} from './<%= pascalCaseFileName %>';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {StorybookProviders} from '@<%= npmScope %>/e2e-testing-providers';
 
-storiesOf('<%= pascalCaseFileName %>', module)
-  .addDecorator(storyFn => <StorybookProviders>{storyFn()}</StorybookProviders>)
-  .add('default view', () => <<%= pascalCaseFileName %> />);
+const meta: Meta = {
+  title: '<%= pascalCaseFileName %>',
+  decorators: [
+    (Story) => <StorybookProviders><Story /></StorybookProviders>,
+  ],
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => <<%= pascalCaseFileName %> />,
+};
