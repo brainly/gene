@@ -2,7 +2,7 @@
   <%= flowDeclaration %>
 <% } %>
 import React from 'react';
-import {storiesOf} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import {StorybookMediator} from '@brainly-gene/tools/storybook-utils';
 <% if (storybookKnobs.length > 0) { %>import {<%= storybookKnobs.join(', ') %>} from '@storybook/addon-knobs';<% } %>
 import <%= classify(name) %> from './<%= classify(name) %>';
@@ -13,14 +13,25 @@ const EVENTS_LIST = [<% for (let event of eventsArray) { %>{
     description: 'Event runs on action: <%= classify(event) %>',
   },<% } %>];
 
-storiesOf('<%= libraryShortName %>/<%= classify(name) %>', module)
-  .addDecorator(storyFn => (
-    <StorybookMediator events={EVENTS_LIST}>{storyFn()}</StorybookMediator>
-  ))
-  .addParameters({
+const meta: Meta = {
+  title: '<%= libraryShortName %>/<%= classify(name) %>',
+  decorators: [
+    (Story) => (
+      <StorybookMediator events={EVENTS_LIST}>
+        <Story />
+      </StorybookMediator>
+    ),
+  ],
+  parameters: {
     events: EVENTS_LIST,
-  })
-  .add('Default view', () => (
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => (
     <<%= classify(name) %>
       <% if (props || copy) { %>
         <% if (copy) { %>
@@ -29,4 +40,5 @@ storiesOf('<%= libraryShortName %>/<%= classify(name) %>', module)
       <% for (let [prop, propType] of propsArray) { %><%= camelize(prop) %>={<%- defaultStorybookInput(prop, propType) %>}
       <% } %>
     <% } %> />
-  ));
+  ),
+};

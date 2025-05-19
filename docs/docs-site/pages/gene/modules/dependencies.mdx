@@ -3,6 +3,8 @@ title: Modules Dependencies
 ---
 
 import Image from 'next/image';
+// import { StorybookProviders } from '@acme/e2e-testing-providers';
+import { Meta, StoryObj } from '@storybook/react';
 
 # Dependencies
 
@@ -97,7 +99,7 @@ Gene's DI system is based on [Inversify.js](https://inversify.io/) - if you woul
 During Storybook development, you have to bind all interfaces because Storybook is just an isolated environment - it can be treated like the app that renders the module. To do that, we prepared a provider that implements a context provider, and all you need to do is provide a container in the props.
 
 ```jsx
-import { StorybookProviders } from '@acme/e2e-testing-providers';
+// import { StorybookProviders } from '@acme/e2e-testing-providers';
 
 // create container like in the app
 
@@ -115,13 +117,23 @@ const getModuleContainer = function (nextRouter) {
 
 const { container } = getModuleContainer();
 
-storiesOf('SimpleModule', module)
-  .addDecorator((storyFn) => (
-    <StorybookProviders additionalContainers={[container]}>
-      {storyFn()}
-    </StorybookProviders>
-  ))
-  .add('core - default view', () => <SimpleModule />);
+const meta: Meta = {
+  title: 'SimpleModule',
+  decorators: [
+    (Story) => (
+      <StorybookProviders additionalContainers={[container]}>
+        <Story />
+      </StorybookProviders>
+    ),
+  ],
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => <SimpleModule />,
+};
 ```
 
 The rule is the same: you must provide a container and fulfill the interface. For Storybook purposes, when we don't need a real router, we can just put `console.log` in the navigate method. But it doesn't matter what you are binding - you have to fulfill the interface, and you can render your module whenever you want.

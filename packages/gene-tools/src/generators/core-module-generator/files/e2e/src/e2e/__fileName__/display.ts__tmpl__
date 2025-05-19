@@ -1,7 +1,7 @@
 import {Given, Then} from '@badeball/cypress-cucumber-preprocessor';
 
 Given('I visit <%= pascalCaseFileName %> storybook', () => {
-  cy.visit('/iframe.html?id=<%= connectedFileName %>--core-default-view');
+  cy.visit('/iframe.html?id=<%= connectedFileName %>--default');
 });
 
 Then('I see <%= pascalCaseFileName %> is displayed', () => {

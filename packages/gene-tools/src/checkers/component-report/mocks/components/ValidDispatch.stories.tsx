@@ -1,7 +1,6 @@
 import { ValidDispatchEventsType } from './ValidDispatchEventsType';
 
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { registerStoryInPackages, StorybookMediator } from '@brainly-gene/core';
 import ValidDispatch from './ValidDispatch';
 import { array } from '@storybook/addon-knobs';
@@ -13,10 +12,10 @@ const EVENTS_LIST = [
   },
 ];
 
-storiesOf(registerStoryInPackages('mocks/Dispatch'), module)
-  .addDecorator((storyFn) => (
-    <StorybookMediator events={EVENTS_LIST}>{storyFn()}</StorybookMediator>
-  ))
-  .add('default', () => (
+export const Default = () => (
+  <StorybookMediator events={EVENTS_LIST}>
     <ValidDispatch id="1" content="1" items={array('items', [])} />
-  ));
+  </StorybookMediator>
+);
+
+Default.storyName = 'Valid Dispatch';
