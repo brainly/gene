@@ -5,8 +5,7 @@ export default {
   title: 'another-module',
 };
 
-export const DefaultView = () => <AnotherValidModule />;
-
-DefaultView.story = {
+export const DefaultView = {
+  render: () => <AnotherValidModule />,
   name: 'default view',
 };

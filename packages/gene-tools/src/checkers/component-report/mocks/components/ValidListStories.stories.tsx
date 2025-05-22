@@ -27,25 +27,27 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = () => (
-  <ValidListStories
-    text="Example title"
-    list={[]}
-    fourth={[]}
-    second={array('second array', ['item 1'])}
-    third={[]}
-  />
-);
+export const Default: Story = {
+  render: () => (
+    <ValidListStories
+      text="Example title"
+      list={[]}
+      fourth={[]}
+      second={array('second array', ['item 1'])}
+      third={[]}
+    />
+  ),
+  name: 'Valid List Stories - default view',
+};
 
-Default.storyName = 'Valid List Stories';
+export const WithList: Story = {
+  render: () => <ValidListStories list={['string', 'string']} />,
+  name: 'with List',
+};
 
-export const WithList: Story = () => <ValidListStories list={['string', 'string']} />;
-
-WithList.storyName = 'with List';
-
-export const WithThirdList = () => (
-  <ValidListStories list={[]} fourth={['1', '2']} third={[1, 2, 3]} />
-);
-
-WithThirdList.storyName = 'with ThirdList';
-
+export const WithThirdList: Story = {
+  render: () => (
+    <ValidListStories list={[]} fourth={['1', '2']} third={[1, 2, 3]} />
+  ),
+  name: 'with ThirdList',
+};

@@ -7,7 +7,12 @@ function getModuleStoriesMeta({ storybookFile }) {
   const src = fs.readFileSync(storybookFile).toString();
   const ast = j(src);
 
-  const oldStories = ast
+  /**
+   * CSF1 format
+   * storiesOf('ValidModule')
+   *   .add('DefaultView', () => <ValidModule />);
+   */
+  const storiesOfStories = ast
     .find(jscodeshift.CallExpression, {
       callee: {
         type: 'MemberExpression',
@@ -32,8 +37,11 @@ function getModuleStoriesMeta({ storybookFile }) {
     })
     .filter(Boolean);
 
-  // Find stories in new Storybook format
-  const newStories = ast
+  /**
+   * CSF2 format
+   * export const DefaultView = () => <ValidModule />;
+   */
+  const csf2Stories = ast
     .find(jscodeshift.ExportNamedDeclaration)
     .nodes()
     .map((node) => {
@@ -53,7 +61,46 @@ function getModuleStoriesMeta({ storybookFile }) {
     })
     .filter(Boolean);
 
-  return [...oldStories, ...newStories];
+  /**
+   * CSF3 format
+   * export const DefaultView = {
+   *   render: () => <ValidModule />
+   * };
+   */
+  const csf3Stories = ast
+    .find(jscodeshift.ExportNamedDeclaration)
+    .nodes()
+    .map((node) => {
+      if (
+        node.declaration &&
+        node.declaration.type === 'VariableDeclaration' &&
+        node.declaration.declarations[0] &&
+        node.declaration.declarations[0].init &&
+        node.declaration.declarations[0].init.type === 'ObjectExpression'
+      ) {
+        const storyName = node.declaration.declarations[0].id.name;
+        const renderProperty =
+          node.declaration.declarations[0].init.properties.find(
+            (prop) => prop.key.name === 'render'
+          );
+
+        if (
+          renderProperty &&
+          renderProperty.value &&
+          renderProperty.value.body &&
+          renderProperty.value.body.openingElement &&
+          renderProperty.value.body.openingElement.name
+        ) {
+          const moduleVariantName =
+            renderProperty.value.body.openingElement.name.name;
+          return [moduleVariantName, storyName];
+        }
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+  return [...storiesOfStories, ...csf2Stories, ...csf3Stories];
 }
 
 module.exports = { getModuleStoriesMeta };

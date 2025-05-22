@@ -6,14 +6,12 @@ export default {
   title: 'valid-module',
 };
 
-export const DefaultView = () => <ValidModule />;
-
-DefaultView.story = {
+export const DefaultView = {
+  render: () => <ValidModule />,
   name: 'default view',
 };
 
-export const ValidVariationModuleDefaultView = () => <ValidVariationModule />;
-
-ValidVariationModuleDefaultView.story = {
+export const ValidVariationModuleDefaultView = {
+  render: () => <ValidVariationModule />,
   name: 'ValidVariationModule - default view',
 };
