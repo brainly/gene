@@ -12,10 +12,11 @@ const EVENTS_LIST = [
   },
 ];
 
-export const Default = () => (
-  <StorybookMediator events={EVENTS_LIST}>
-    <ValidDispatch id="1" content="1" items={array('items', [])} />
-  </StorybookMediator>
-);
-
-Default.storyName = 'Valid Dispatch';
+export const Default = {
+  render: () => (
+    <StorybookMediator events={EVENTS_LIST}>
+      <ValidDispatch id="1" content="1" items={array('items', [])} />
+    </StorybookMediator>
+  ),
+  name: 'Valid Dispatch - default view',
+};

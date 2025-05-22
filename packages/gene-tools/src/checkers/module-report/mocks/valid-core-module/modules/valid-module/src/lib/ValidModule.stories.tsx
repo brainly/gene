@@ -6,14 +6,12 @@ export default {
   title: 'valid-module',
 };
 
-export const CoreDefaultView = () => <ValidModule />;
-
-CoreDefaultView.story = {
+export const CoreDefaultView = {
+  render: () => <ValidModule />,
   name: 'core - default view',
 };
 
-export const CoreVariationView = () => <ValidVariationModule />;
-
-CoreVariationView.story = {
+export const CoreVariationView = {
+  render: () => <ValidVariationModule />,
   name: 'core - variation view',
 };

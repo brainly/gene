@@ -27,8 +27,9 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = () => (
-  <InvalidDispatch id="1" content="1" items={array('items', [])} />
-);
-
-Default.storyName = 'Invalid Dispatch';
+export const Default: Story = {
+  render: () => (
+    <InvalidDispatch id="1" content="1" items={array('items', [])} />
+  ),
+  name: 'Invalid Dispatch - default view',
+};

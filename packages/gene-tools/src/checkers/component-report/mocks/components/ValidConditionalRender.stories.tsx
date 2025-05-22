@@ -27,25 +27,23 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = () => (
-  <ValidConditionalRender
-    firstName="Joe"
-    lastName={text('last Name', 'Doe')}
-    booleanExample={false}
-  />
-);
+export const Default: Story = {
+  render: () => (
+    <ValidConditionalRender
+      firstName="Joe"
+      lastName={text('last Name', 'Doe')}
+      booleanExample={false}
+    />
+  ),
+  name: 'Valid Conditional Render - default view',
+};
 
-Default.storyName = 'Valid Conditional Render';
+export const WithNegativeFirstName = {
+  render: () => <ValidConditionalRender firstName={null} />,
+  name: 'with negative firstName',
+};
 
-export const WithNegativeFirstName = () => (
-  <ValidConditionalRender firstName={null} />
-);
-
-WithNegativeFirstName.storyName = 'with negative firstName';
-
-export const WithPositiveBoolean = () => (
-  <ValidConditionalRender booleanExample />
-);
-
-WithPositiveBoolean.storyName = 'with positive boolean';
-
+export const WithPositiveBoolean = {
+  render: () => <ValidConditionalRender booleanExample />,
+  name: 'with positive boolean',
+};

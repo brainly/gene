@@ -1,19 +1,12 @@
 import React from 'react';
-import { registerStoryInPackages } from '@brainly-gene/core';
 import ValidConditionalRenderWithoutKnobs from './ValidConditionalRenderWithoutKnobs';
 
-export const DefaultView = () => (
-  <ValidConditionalRenderWithoutKnobs variation={66} />
-);
-
-DefaultView.story = {
+export const DefaultView = {
+  render: () => <ValidConditionalRenderWithoutKnobs variation={66} />,
   name: 'Default view',
 };
 
-export const WithoutVariation = () => (
-  <ValidConditionalRenderWithoutKnobs variation={-55} />
-);
-
-WithoutVariation.story = {
+export const WithoutVariation = {
+  render: () => <ValidConditionalRenderWithoutKnobs variation={-55} />,
   name: 'without variation',
 };

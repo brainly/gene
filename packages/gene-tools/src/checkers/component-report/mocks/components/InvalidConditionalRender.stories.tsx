@@ -26,8 +26,9 @@ const EVENTS_LIST = [
   },
 ];
 
-export const Default: Story = () => (
-  <ValidConditionalRender firstName="Joe" lastName={null} booleanExample />
-);
-
-Default.storyName = 'Invalid Conditional Render';
+export const Default: Story = {
+  render: () => (
+    <ValidConditionalRender firstName="Joe" lastName={null} booleanExample />
+  ),
+  name: 'Invalid Conditional Render - default view',
+};
