@@ -3,13 +3,18 @@ import {
   useInjectedReactQueryClient,
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
-import type {<%= fileName %>sGetResultBody} from '@brainly/<%= library %>/api';
-
 import type {QueryClient, QueryFunctionContext} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
 
-export type <%= fileName %>sAPIType = <%= fileName %>sGetResultBody;
+// TODO: Replace with actual types from your API
+export type <%= fileName %>sAPIType = {
+  data: Array<{
+    id: string;
+    // Add your specific item type properties here
+  }>;
+  // Add pagination or other metadata properties here
+};
 
 export type VariablesType = {
   <%= fileName %>Ids: string[];

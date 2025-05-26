@@ -3,18 +3,22 @@ import {
   useReactQueryLazy,
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
-import type {
-  <%= fileName %>UpdateInputBody,
-  <%= fileName %>PostResultBody,
-} from '@brainly/<%= library %>/api';
-
 import type {QueryClient} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
 import {get<%= fileName %>QueryKey} from './use<%= fileName %>';
 
-export type Update<%= fileName %>APIType = <%= fileName %>PostResultBody;
+// TODO: Replace with actual types from your API
+export type Update<%= fileName %>APIType = {
+  id: string;
+  // Add your specific return type properties here
+};
 
-export type VariablesType = Omit<<%= fileName %>UpdateInputBody, 'yourVariable'>;
+export type VariablesType = {
+  id: string;
+  // Add your specific input properties here
+  // Remove 'yourVariable' and add actual properties
+  [key: string]: unknown;
+};
 
 export const queryKey = (variables?: VariablesType) => [
   'update-<%= lowerCaseFileName %>-key',

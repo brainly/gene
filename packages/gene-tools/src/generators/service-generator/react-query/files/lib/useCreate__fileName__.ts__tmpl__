@@ -6,14 +6,18 @@ import {
 
 import type {QueryFunctionContext} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
-import type {
-  <%= fileName %>PostResultBody,
-  <%= fileName %>PostInputBody,
-} from '@brainly/<%= library %>/api';
 
-export type Create<%= fileName %>APIType = <%= fileName %>PostResultBody;
+// TODO: Replace with actual types from your API
+export type Create<%= fileName %>APIType = {
+  id: string;
+  // Add your specific return type properties here
+};
 
-export type VariablesType = Omit<<%= fileName %>PostInputBody, 'yourVariable'>;
+export type VariablesType = {
+  // Add your specific input properties here
+  // Remove 'yourVariable' and add actual properties
+  [key: string]: unknown;
+};
 
 export const queryKey = (variables?: VariablesType) => [
   'create-<%= lowerCaseFileName %>-key',

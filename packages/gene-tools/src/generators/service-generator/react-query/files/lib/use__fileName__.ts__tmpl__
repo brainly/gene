@@ -3,14 +3,15 @@ import {
   useInjectedReactQueryClient,
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
-import type {<%= fileName %>sGetResultBody} from '@brainly/<%= library %>/api';
-
 import type {QueryClient, QueryFunctionContext} from '@tanstack/react-query';
 import {useQuery} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
 
-// Change this to match output of your API
-export type <%= fileName %>APIType = <%= fileName %>sGetResultBody;
+// TODO: Replace with actual types from your API
+export type <%= fileName %>APIType = {
+  id: string;
+  // Add your specific return type properties here
+};
 
 // Change this to match input of your API
 export type VariablesType = {
