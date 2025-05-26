@@ -12,11 +12,11 @@ import nodeFetch from 'node-fetch';
 export type <%= fileName %>sAPIType = <%= fileName %>sGetResultBody;
 
 export type VariablesType = {
-  <%= lowerCaseFileName %>Ids: string[];
+  <%= fileName %>Ids: string[];
 };
 
 export const get<%= fileName %>sQueryKey = (variables?: VariablesType) => [
-  'get-<%= lowerCaseFileName %>s-key',
+  'get-<%= fileName %>s-key',
   variables,
 ];
 
@@ -25,13 +25,7 @@ export function defaultQueryFn(
   context?: QueryFunctionContext
 ) {
   const params = new URLSearchParams();
-  if (variables.<%= lowerCaseFileName %>Ids?.length) {
-    params.append('<%= lowerCaseFileName %>Ids', variables.<%= lowerCaseFileName %>Ids.join(','));
-  }
-  if (variables.skipQuizzes) {
-    params.append('skipQuizzes', 'true');
-  }
-  const url = `/your-url/<%= kebabCaseFileName %>${params.toString() ? `?${params}` : ''}`;
+  const url = `/your-url/<%= lowerCaseFileName %>${params.toString() ? `?${params}` : ''}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
 
   return reactQueryFetchWrapper<<%= fileName %>sAPIType>(() => fetchMethod(url));
