@@ -15,7 +15,6 @@ import {
   camelize,
   dasherize,
 } from '@nx/devkit/src/utils/string-utils';
-import inquirer = require('inquirer');
 
 import { getNpmScope } from '../utilities';
 
@@ -59,47 +58,50 @@ const getDirectoryPath = (
   return `${schema.directory}`;
 };
 
-const promptCrudFunctions = async (
+const getCrudFunctions = (
   serviceName: string,
-  useDefaultCrudFunctions?: boolean
+  schema: BrainlyServiceGenerator
 ) => {
   const classifiedName = classify(serviceName);
-  if (useDefaultCrudFunctions) {
-    return [`use${classifiedName}s`];
+
+  // Build CRUD functions array from individual flags or existing crudFunctions array
+  const selectedChoices: string[] = [];
+
+  // Check individual flags first (priority over crudFunctions array)
+  if (
+    schema.includeList ||
+    schema.includeRead ||
+    schema.includeCreate ||
+    schema.includeUpdate ||
+    schema.includeDelete
+  ) {
+    if (schema.includeList) selectedChoices.push('list');
+    if (schema.includeRead) selectedChoices.push('get');
+    if (schema.includeCreate) selectedChoices.push('create');
+    if (schema.includeUpdate) selectedChoices.push('update');
+    if (schema.includeDelete) selectedChoices.push('delete');
+  } else {
+    // Default to list if nothing is specified
+    selectedChoices.push('list');
   }
 
-  const { crudFunctions } = await inquirer.prompt([
-    {
-      type: 'checkbox',
-      name: 'crudFunctions',
-      message: `Select CRUD functions you want to generate`,
-      choices: [
-        {
-          name: `use${classifiedName}s - to get multiple ${serviceName}s`,
-          value: `use${classifiedName}s`,
-          checked: true,
-        },
-        {
-          name: `useCreate${classifiedName} - to create a new ${serviceName}`,
-          value: `useCreate${classifiedName}`,
-        },
-        {
-          name: `useUpdate${classifiedName} - to update a single ${serviceName}`,
-          value: `useUpdate${classifiedName}`,
-        },
-        {
-          name: `useDelete${classifiedName} - to delete a single ${serviceName}`,
-          value: `useDelete${classifiedName}`,
-        },
-        {
-          name: `use${classifiedName} - to get a single ${serviceName}`,
-          value: `use${classifiedName}`,
-        },
-      ],
-    },
-  ]);
-
-  return crudFunctions;
+  // Map the selected choices to the actual function names
+  return selectedChoices.map((choice) => {
+    switch (choice) {
+      case 'list':
+        return `use${classifiedName}s`;
+      case 'create':
+        return `useCreate${classifiedName}`;
+      case 'update':
+        return `useUpdate${classifiedName}`;
+      case 'delete':
+        return `useDelete${classifiedName}`;
+      case 'get':
+        return `use${classifiedName}`;
+      default:
+        return `use${classifiedName}s`;
+    }
+  });
 };
 
 export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
@@ -110,10 +112,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   let crudFunctions: string[] = [];
 
   if (schema.serviceType === 'react-query') {
-    crudFunctions = await promptCrudFunctions(
-      name,
-      schema.useDefaultCrudFunctions
-    );
+    crudFunctions = getCrudFunctions(name, schema);
   }
 
   await libraryGenerator(tree, {
