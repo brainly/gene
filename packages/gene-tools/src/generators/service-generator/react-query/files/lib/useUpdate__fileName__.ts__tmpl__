@@ -25,7 +25,7 @@ export async function defaultQueryFn(
   variables: VariablesType,
   client: QueryClient
 ) {
-  const url = `/your-url/<%= lowerCaseFileName %>/${variables.id}`;
+  const url = `/your-url/<%= kebabCaseFileName %>/${variables.id}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
   const result = await reactQueryFetchWrapper<Update<%= fileName %>APIType>(() =>
     fetchMethod(url, {

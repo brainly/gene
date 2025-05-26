@@ -26,7 +26,7 @@ export async function defaultQueryFn(
   variables: VariablesType,
   queryClient: QueryClient
 ) {
-  const url = `/your-url/<%= lowerCaseFileName %>/${variables.id}`;
+  const url = `/your-url/<%= kebabCaseFileName %>/${variables.id}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
   const deleteResult = await reactQueryFetchWrapper<Delete<%= fileName %>APIType>(() =>
     fetchMethod(url, {

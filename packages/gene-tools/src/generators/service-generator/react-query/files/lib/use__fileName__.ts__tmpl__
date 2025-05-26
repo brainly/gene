@@ -26,7 +26,7 @@ export function defaultQueryFn(
   variables: VariablesType,
   context?: QueryFunctionContext
 ) {
-  const url = `/your-url/<%= lowerCaseFileName %>?<%= lowerCaseFileName %>Ids=${variables.id}`;
+  const url = `/your-url/<%= kebabCaseFileName %>?<%= kebabCaseFileName %>Ids=${variables.id}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
   return reactQueryFetchWrapper<<%= fileName %>APIType>(() => fetchMethod(url));
 }

@@ -25,7 +25,7 @@ export function defaultQueryFn(
   context?: QueryFunctionContext
 ) {
   const params = new URLSearchParams();
-  const url = `/your-url/<%= lowerCaseFileName %>${params.toString() ? `?${params}` : ''}`;
+  const url = `/your-url/<%= kebabCaseFileName %>${params.toString() ? `?${params}` : ''}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
 
   return reactQueryFetchWrapper<<%= fileName %>sAPIType>(() => fetchMethod(url));
