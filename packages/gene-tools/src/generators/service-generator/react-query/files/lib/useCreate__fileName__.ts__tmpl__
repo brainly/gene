@@ -1,46 +1,40 @@
 import {
   useInjectedReactQueryClient,
   useReactQueryLazy,
-} from '@brainly-gene/core';
-
-import {QueryFunctionContext} from '@tanstack/react-query';
-import {
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
+
+import type {QueryFunctionContext} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
+import type {
+  <%= fileName %>PostResultBody,
+  <%= fileName %>PostInputBody,
+} from '@brainly/<%= library %>/api';
 
-// Change this to match output of your API
-export type Create<%= fileName %>APIType = {
-  id: number,
-  userId: number,
-  title: string,
-  body: string,
-};
+export type Create<%= fileName %>APIType = <%= fileName %>PostResultBody;
 
-// Change this to match input of your API
-export type VariablesType = {
-  title: string,
-  body: string,
-  userId: number,
-};
+export type VariablesType = Omit<<%= fileName %>PostInputBody, 'yourVariable'>;
 
 export const queryKey = (variables?: VariablesType) => [
   'create-<%= lowerCaseFileName %>-key',
   variables,
 ];
 
-export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
-  const url = 'https://jsonplaceholder.typicode.com/posts';
+export function defaultQueryFn(
+  variables: VariablesType,
+  context?: QueryFunctionContext
+) {
+  const url = '/your-url/<%= kebabCaseFileName %>';
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
   return reactQueryFetchWrapper<Create<%= fileName %>APIType>(() =>
     fetchMethod(url, {
-        method: 'POST',
-        body: JSON.stringify({
-          ...variables
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+      method: 'POST',
+      body: JSON.stringify({
+        ...variables,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
     })
   );
 }
@@ -52,5 +46,5 @@ export function useCreate<%= fileName %>() {
     reactQueryClient: queryClient,
     queryFn: (_client, variables) => defaultQueryFn(variables),
     queryKey,
-  })
+  });
 }
