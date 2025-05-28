@@ -8,6 +8,7 @@ import {
   readJson,
   writeJson,
 } from '@nx/devkit';
+import { prompt } from 'inquirer';
 import libraryGenerator from '../library-generator';
 import type { BrainlyServiceGenerator } from './schema';
 import {
@@ -63,33 +64,32 @@ const getCrudFunctions = (
   schema: BrainlyServiceGenerator
 ) => {
   const classifiedName = classify(serviceName);
-
-  // Build CRUD functions array from individual flags or existing crudFunctions array
   const selectedChoices: string[] = [];
 
-  // Check individual flags first (priority over crudFunctions array)
-  if (
-    schema.includeList ||
-    schema.includeRead ||
-    schema.includeCreate ||
-    schema.includeUpdate ||
-    schema.includeDelete
-  ) {
-    if (schema.includeList) selectedChoices.push('list');
-    if (schema.includeRead) selectedChoices.push('get');
-    if (schema.includeCreate) selectedChoices.push('create');
-    if (schema.includeUpdate) selectedChoices.push('update');
-    if (schema.includeDelete) selectedChoices.push('delete');
+  if (schema.useDefaultCrudOptions) {
+    selectedChoices.push('get');
   } else {
-    // Default to list if nothing is specified
-    selectedChoices.push('list');
+    const hasIndividualFlags =
+      schema.includeRead ||
+      schema.includeCreate ||
+      schema.includeUpdate ||
+      schema.includeDelete;
+
+    if (hasIndividualFlags) {
+      if (schema.includeRead) selectedChoices.push('get');
+      if (schema.includeCreate) selectedChoices.push('create');
+      if (schema.includeUpdate) selectedChoices.push('update');
+      if (schema.includeDelete) selectedChoices.push('delete');
+    } else if (schema.crudOperations && schema.crudOperations.length > 0) {
+      selectedChoices.push(...schema.crudOperations);
+    } else {
+      selectedChoices.push('get');
+    }
   }
 
   // Map the selected choices to the actual function names
   return selectedChoices.map((choice) => {
     switch (choice) {
-      case 'list':
-        return `use${classifiedName}s`;
       case 'create':
         return `useCreate${classifiedName}`;
       case 'update':
@@ -99,12 +99,44 @@ const getCrudFunctions = (
       case 'get':
         return `use${classifiedName}`;
       default:
-        return `use${classifiedName}s`;
+        return `use${classifiedName}`;
     }
   });
 };
 
 export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
+  if (schema.useDefaultCrudOptions) {
+    schema.crudOperations = undefined;
+  } else {
+    const hasIndividualFlags =
+      schema.includeRead ||
+      schema.includeCreate ||
+      schema.includeUpdate ||
+      schema.includeDelete;
+
+    const hasCrudOperations =
+      schema.crudOperations && schema.crudOperations.length > 0;
+
+    if (!hasIndividualFlags && !hasCrudOperations) {
+      const response = await prompt([
+        {
+          type: 'checkbox',
+          name: 'crudOperations',
+          message: 'Which CRUD operations do you want to include?',
+          choices: [
+            { value: 'get', name: 'Get/Read single item' },
+            { value: 'create', name: 'Create new item' },
+            { value: 'update', name: 'Update existing item' },
+            { value: 'delete', name: 'Delete item' },
+          ],
+          default: ['get'],
+        },
+      ]);
+
+      schema.crudOperations = response.crudOperations;
+    }
+  }
+
   const currentPackageJson = readJson(tree, 'package.json');
   const name = dasherize(schema.name);
   const directory = getDirectoryPath(schema, name);
