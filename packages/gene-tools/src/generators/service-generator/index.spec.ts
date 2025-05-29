@@ -20,7 +20,7 @@ describe('Service generator', () => {
       directory: 'question',
       name: projectName,
       serviceType: 'apollo',
-      useDefaultCrudOptions: true,
+      useDefaultCrudFunctions: true,
       tags: '',
     });
 
@@ -52,7 +52,7 @@ describe('Service generator', () => {
       directory: 'question',
       name: projectName,
       serviceType: 'apollo',
-      useDefaultCrudOptions: true,
+      useDefaultCrudFunctions: true,
       tags: '',
     });
 
@@ -196,7 +196,7 @@ describe('Service generator', () => {
       directory: 'question',
       name: 'service-name',
       serviceType: 'apollo',
-      useDefaultCrudOptions: true,
+      useDefaultCrudFunctions: true,
       tags: '',
     });
 

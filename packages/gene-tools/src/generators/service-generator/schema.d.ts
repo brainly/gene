@@ -6,7 +6,7 @@ export interface BrainlyServiceGenerator {
   directory: string;
   tags: string;
   serviceType: ServiceType;
-  useDefaultCrudOptions?: boolean;
+  useDefaultCrudFunctions?: boolean;
   crudOperations?: string[];
   includeRead?: boolean;
   includeCreate?: boolean;

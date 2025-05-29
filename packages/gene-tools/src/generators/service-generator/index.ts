@@ -66,7 +66,7 @@ const getCrudFunctions = (
   const classifiedName = classify(serviceName);
   const selectedChoices: string[] = [];
 
-  if (schema.useDefaultCrudOptions) {
+  if (schema.useDefaultCrudFunctions) {
     selectedChoices.push('get');
   } else {
     const hasIndividualFlags =
@@ -88,24 +88,33 @@ const getCrudFunctions = (
   }
 
   // Map the selected choices to the actual function names
-  return selectedChoices.map((choice) => {
+  const functions: string[] = [];
+  selectedChoices.forEach((choice) => {
     switch (choice) {
       case 'create':
-        return `useCreate${classifiedName}`;
+        functions.push(`useCreate${classifiedName}`);
+        break;
       case 'update':
-        return `useUpdate${classifiedName}`;
+        functions.push(`useUpdate${classifiedName}`);
+        break;
       case 'delete':
-        return `useDelete${classifiedName}`;
+        functions.push(`useDelete${classifiedName}`);
+        break;
       case 'get':
-        return `use${classifiedName}`;
+        functions.push(`use${classifiedName}`);
+        functions.push(`use${classifiedName}s`);
+        break;
       default:
-        return `use${classifiedName}`;
+        functions.push(`use${classifiedName}`);
+        functions.push(`use${classifiedName}s`);
     }
   });
+
+  return functions;
 };
 
 export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
-  if (schema.useDefaultCrudOptions) {
+  if (schema.useDefaultCrudFunctions) {
     schema.crudOperations = undefined;
   } else {
     const hasIndividualFlags =
@@ -129,7 +138,12 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
             { value: 'update', name: 'Update existing item' },
             { value: 'delete', name: 'Delete item' },
           ],
-          default: ['get'],
+          validate: (input: string[]) => {
+            if (input.length === 0) {
+              return 'Please select at least one CRUD operation.';
+            }
+            return true;
+          },
         },
       ]);
 
