@@ -217,9 +217,10 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
           return false;
         }
 
-        return !crudFunctions.find((crudFunction) =>
-          filename?.includes(crudFunction)
-        );
+        return !crudFunctions.find((crudFunction) => {
+          const fileBaseName = filename.replace('.ts', '');
+          return fileBaseName === crudFunction;
+        });
       })
       .map(({ path }) => path);
 

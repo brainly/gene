@@ -1,5 +1,5 @@
 type ServiceType = 'apollo' | 'react-query';
-type CrudFunction = 'list' | 'get' | 'create' | 'update' | 'delete';
+type CrudFunction = 'get' | 'create' | 'update' | 'delete';
 
 export interface BrainlyServiceGenerator {
   name: string;
@@ -8,7 +8,6 @@ export interface BrainlyServiceGenerator {
   serviceType: ServiceType;
   useDefaultCrudOptions?: boolean;
   crudOperations?: string[];
-  includeList?: boolean;
   includeRead?: boolean;
   includeCreate?: boolean;
   includeUpdate?: boolean;

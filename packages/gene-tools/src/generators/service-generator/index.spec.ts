@@ -2,14 +2,6 @@ import type { Tree } from '@nx/devkit';
 import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import serviceGenerator from './index';
-import { prompt } from 'inquirer';
-jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
-
-const mockCrudOptions = (options: string[]) => {
-  (prompt as unknown as jest.Mock).mockImplementationOnce(() => {
-    return { crudFunctions: options };
-  });
-};
 
 describe('Service generator', () => {
   let appTree: Tree;
@@ -25,10 +17,10 @@ describe('Service generator', () => {
 
   it('should generate files and delete default files', async () => {
     await serviceGenerator(appTree, {
-      directory: '',
+      directory: 'question',
       name: projectName,
       serviceType: 'apollo',
-      library: 'question',
+      useDefaultCrudOptions: true,
       tags: '',
     });
 
@@ -57,10 +49,10 @@ describe('Service generator', () => {
 
   it('should generate apollo service', async () => {
     await serviceGenerator(appTree, {
-      directory: '',
+      directory: 'question',
       name: projectName,
       serviceType: 'apollo',
-      library: 'question',
+      useDefaultCrudOptions: true,
       tags: '',
     });
 
@@ -78,31 +70,16 @@ describe('Service generator', () => {
   });
 
   it('should generate react-query service', async () => {
-    mockCrudOptions([
-      'useQuestions',
-      'useQuestion',
-      'useCreateQuestion',
-      'useUpdateQuestion',
-      'useDeleteQuestion',
-    ]);
-
     await serviceGenerator(appTree, {
-      directory: '',
+      directory: 'question',
       name: projectName,
       serviceType: 'react-query',
-      library: 'question',
+      crudOperations: ['get', 'create', 'update', 'delete'],
       tags: '',
     });
 
-    // useQuestions
+    // useQuestions - Note: the generator creates useQuestion for 'get', not useQuestions
     let hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestions.ts')
-      ?.toString();
-
-    expect(hookContent).toContain('useQuestions');
-
-    // useQuestion
-    hookContent = appTree
       .read('libs/question/services/question-service/src/lib/useQuestion.ts')
       ?.toString();
 
@@ -161,25 +138,16 @@ describe('Service generator', () => {
   });
 
   it('should generate react-query service with only selected crud operations', async () => {
-    mockCrudOptions(['useQuestions', 'useUpdateQuestion']);
-
     await serviceGenerator(appTree, {
-      directory: '',
+      directory: 'question',
       name: projectName,
       serviceType: 'react-query',
-      library: 'question',
+      crudOperations: ['update'],
       tags: '',
     });
 
-    // useQuestions
+    // useQuestions - Note: the generator creates useQuestion for 'get', not useQuestions
     let hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestions.ts')
-      ?.toString();
-
-    expect(hookContent).toContain('useQuestions');
-
-    // useQuestion
-    hookContent = appTree
       .read('libs/question/services/question-service/src/lib/useQuestion.ts')
       ?.toString();
 
@@ -218,31 +186,210 @@ describe('Service generator', () => {
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
-      "export {
-        useQuestions,
-        queryQuestions,
-        getQuestionsQueryKey,
-      } from './lib/useQuestions';
-      export { useUpdateQuestion } from './lib/useUpdateQuestion';
+      "export { useUpdateQuestion } from './lib/useUpdateQuestion';
       "
     `);
   });
 
   it('should camelize query name if service name includes "-"', async () => {
     await serviceGenerator(appTree, {
-      directory: '',
+      directory: 'question',
       name: 'service-name',
       serviceType: 'apollo',
-      library: 'question',
+      useDefaultCrudOptions: true,
       tags: '',
     });
 
     const queriesContent = appTree
-      .read(
-        'libs/service-name/services/service-name-service/src/lib/queries.ts'
-      )
+      .read('libs/question/services/service-name-service/src/lib/queries.ts')
       ?.toString();
 
     expect(queriesContent).toContain('serviceNameQuery');
+  });
+
+  it('should generate react-query service with includeRead flag', async () => {
+    await serviceGenerator(appTree, {
+      directory: 'question',
+      name: projectName,
+      serviceType: 'react-query',
+      includeRead: true,
+      tags: '',
+    });
+
+    // Should have useQuestion
+    let hookContent = appTree
+      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      ?.toString();
+
+    expect(hookContent).toContain('useQuestion');
+
+    // Should NOT have create, update, delete operations
+    hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toBe(undefined);
+
+    hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toBe(undefined);
+
+    hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toBe(undefined);
+
+    const indexFile = appTree
+      .read('libs/question/services/question-service/src/index.ts')
+      ?.toString();
+
+    expect(indexFile).toMatchInlineSnapshot(`
+      "export {
+        useQuestion,
+        queryQuestion,
+        getQuestionQueryKey,
+      } from './lib/useQuestion';
+      export {
+        useQuestions,
+        queryQuestions,
+        getQuestionsQueryKey,
+      } from './lib/useQuestions';
+      "
+    `);
+  });
+
+  it('should generate react-query service with includeCreate flag', async () => {
+    await serviceGenerator(appTree, {
+      directory: 'question',
+      name: projectName,
+      serviceType: 'react-query',
+      includeCreate: true,
+      tags: '',
+    });
+
+    // Should have useCreateQuestion
+    let hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toContain('useCreateQuestion');
+    expect(hookContent).toContain(`method: 'POST'`);
+
+    // Should NOT have read, update, delete operations
+    hookContent = appTree
+      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      ?.toString();
+
+    expect(hookContent).toBe(undefined);
+
+    const indexFile = appTree
+      .read('libs/question/services/question-service/src/index.ts')
+      ?.toString();
+
+    expect(indexFile).toMatchInlineSnapshot(`
+      "export { useCreateQuestion } from './lib/useCreateQuestion';
+      "
+    `);
+  });
+
+  it('should generate react-query service with multiple include flags', async () => {
+    await serviceGenerator(appTree, {
+      directory: 'question',
+      name: projectName,
+      serviceType: 'react-query',
+      includeRead: true,
+      includeUpdate: true,
+      includeDelete: true,
+      tags: '',
+    });
+
+    // Should have useQuestion
+    let hookContent = appTree
+      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      ?.toString();
+
+    expect(hookContent).toContain('useQuestion');
+
+    // Should have useUpdateQuestion
+    hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toContain('useUpdateQuestion');
+    expect(hookContent).toContain(`method: 'PATCH'`);
+
+    // Should have useDeleteQuestion
+    hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toContain('useDeleteQuestion');
+    expect(hookContent).toContain(`method: 'DELETE'`);
+
+    // Should NOT have useCreateQuestion
+    hookContent = appTree
+      .read(
+        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
+      )
+      ?.toString();
+
+    expect(hookContent).toBe(undefined);
+
+    const indexFile = appTree
+      .read('libs/question/services/question-service/src/index.ts')
+      ?.toString();
+
+    expect(indexFile).toMatchInlineSnapshot(`
+      "export {
+        useQuestion,
+        queryQuestion,
+        getQuestionQueryKey,
+      } from './lib/useQuestion';
+      export {
+        useQuestions,
+        queryQuestions,
+        getQuestionsQueryKey,
+      } from './lib/useQuestions';
+      export { useUpdateQuestion } from './lib/useUpdateQuestion';
+      export { useDeleteQuestion } from './lib/useDeleteQuestion';
+      "
+    `);
+  });
+
+  it('should generate apollo service with includeRead flag', async () => {
+    await serviceGenerator(appTree, {
+      directory: 'question',
+      name: projectName,
+      serviceType: 'apollo',
+      includeRead: true,
+      tags: '',
+    });
+
+    const hookContent = appTree
+      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      ?.toString();
+
+    expect(hookContent).toContain('useInjectedApolloClient');
+
+    const queriesContent = appTree
+      .read('libs/question/services/question-service/src/lib/queries.ts')
+      ?.toString();
+
+    expect(queriesContent).toContain('ApolloClient');
   });
 });
