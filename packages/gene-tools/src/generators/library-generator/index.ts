@@ -7,7 +7,6 @@ import {
   workspaceRoot,
   writeJson,
 } from '@nx/devkit';
-import { Linter } from '@nx/linter';
 import { libraryGenerator } from '@nx/react';
 import type { GeneLibraryGenerator } from './schema';
 import { getNpmScope, updateJestConfig } from '../utilities';
@@ -21,9 +20,9 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
 
   await libraryGenerator(tree, {
     name: schema.name,
-    directory: schema.directory,
+    directory,
     tags: schema.tags,
-    linter: Linter.EsLint,
+    linter: 'eslint',
     skipFormat: false,
     skipTsConfig: false,
     style: 'scss',
@@ -51,7 +50,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
 
   const pathToSetupFile = relative(
     pathToProject,
-    `${workspaceRoot}/jest.setup.js`,
+    `${workspaceRoot}/jest.setup.js`
   );
 
   updateJestConfig(
@@ -75,7 +74,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
       }
       //#endregion
     },
-  },`,
+  },`
   );
 
   await formatFiles(tree);
