@@ -11,7 +11,7 @@ export async function secureServeExecutor(
   context: ExecutorContext,
 ) {
   let success = false;
-  const target = parseTargetString(options.serveTarget);
+  const target = parseTargetString(options.serveTarget, context);
 
   for await (const result of await runExecutor(target, {}, context)) {
     success = result.success;
