@@ -335,6 +335,9 @@ importers:
       '@types/eslint':
         specifier: 8.56.10
         version: 8.56.10
+      '@types/fs-extra':
+        specifier: 9.0.13
+        version: 9.0.13
       '@types/glob':
         specifier: 7.2.0
         version: 7.2.0
@@ -4429,6 +4432,9 @@ packages:
   '@types/find-cache-dir@3.2.1':
     resolution: {integrity: sha512-frsJrz2t/CeGifcu/6uRo4b+SzAwT4NYCVPu1GN8IB9XTzrpPkGuV0tmh9mN+/L0PklAlsC3u5Fxt0ju00LXIw==}
 
+  '@types/fs-extra@9.0.13':
+    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
+
   '@types/glob@7.2.0':
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
 
@@ -4536,9 +4542,6 @@ packages:
 
   '@types/node@18.19.9':
     resolution: {integrity: sha512-oZFKlC8l5YtzGQNT4zC2PiSSKzQVZ8bAwwd+EYdPLtyk0nSEq6O16SkK+rkkT2eflDAbormJgEF3QnH3oDrTSw==}
-
-  '@types/node@22.10.10':
-    resolution: {integrity: sha512-X47y/mPNzxviAGY5TcYPtYL8JsY3kAq2n8fMmKoRCxq/c4v4pyGNCzM2R6+M5/umG4ZfHuT+sgqDYqWc9rJ6ww==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -13302,9 +13305,6 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici-types@6.20.0:
-    resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
-
   undici@5.28.4:
     resolution: {integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==}
     engines: {node: '>=14.0'}
@@ -19450,7 +19450,7 @@ snapshots:
       '@storybook/node-logger': 7.6.20
       '@storybook/types': 7.6.20
       '@types/find-cache-dir': 3.2.1
-      '@types/node': 22.10.10
+      '@types/node': 18.19.9
       '@types/node-fetch': 2.6.12
       '@types/pretty-hrtime': 1.0.3
       chalk: 4.1.2
@@ -20301,6 +20301,10 @@ snapshots:
 
   '@types/find-cache-dir@3.2.1': {}
 
+  '@types/fs-extra@9.0.13':
+    dependencies:
+      '@types/node': 18.19.9
+
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
@@ -20418,10 +20422,6 @@ snapshots:
   '@types/node@18.19.9':
     dependencies:
       undici-types: 5.26.5
-
-  '@types/node@22.10.10':
-    dependencies:
-      undici-types: 6.20.0
 
   '@types/normalize-package-data@2.4.4': {}
 
@@ -31337,8 +31337,6 @@ snapshots:
       xtend: 4.0.2
 
   undici-types@5.26.5: {}
-
-  undici-types@6.20.0: {}
 
   undici@5.28.4:
     dependencies:
