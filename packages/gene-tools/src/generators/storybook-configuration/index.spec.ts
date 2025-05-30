@@ -2,14 +2,13 @@ import * as devkit from '@nx/devkit';
 import type { Tree } from '@nx/devkit';
 import { readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { Linter } from '@nx/linter';
 import { applicationGenerator } from '@nx/next';
 import { libraryGenerator } from '@nx/react';
 import { storybookConfigurationGenerator } from './index';
 
 jest.mock('@nx/devkit', () => {
   return {
-    __esModule: true, // Fix for TypeError: Cannot redefine property: formatFiles
+    __esModule: true,
     ...jest.requireActual('@nx/devkit'),
   };
 });
@@ -29,7 +28,8 @@ describe('storybookConfiguration generator', () => {
       // Generate the application to add configuration to
       await applicationGenerator(tree, {
         name: application,
-        linter: Linter.EsLint,
+        directory: 'apps',
+        linter: 'eslint',
         skipFormat: false,
         style: 'css',
         unitTestRunner: 'jest',
@@ -117,9 +117,8 @@ describe('storybookConfiguration generator', () => {
       await storybookConfigurationGenerator(tree, { name: application });
 
       const { targets } = readProjectConfiguration(tree, application);
-      expect(targets).toBeTruthy();
-      expect(targets!.storybook).toMatchSnapshot();
-      expect(targets!['build-storybook']).toMatchSnapshot();
+      expect(targets && targets.storybook).toMatchSnapshot();
+      expect(targets && targets['build-storybook']).toMatchSnapshot();
     });
 
     it('should format files', async () => {
@@ -138,7 +137,8 @@ describe('storybookConfiguration generator', () => {
       // Generate the library to add configuration to
       await libraryGenerator(tree, {
         name: library,
-        linter: Linter.EsLint,
+        directory: 'libs',
+        linter: 'eslint',
         skipFormat: false,
         skipTsConfig: false,
         style: 'css',
@@ -203,9 +203,8 @@ describe('storybookConfiguration generator', () => {
       await storybookConfigurationGenerator(tree, { name: library });
 
       const { targets } = readProjectConfiguration(tree, library);
-      expect(targets).toBeTruthy();
-      expect(targets!.storybook).toMatchSnapshot();
-      expect(targets!['build-storybook']).toMatchSnapshot();
+      expect(targets && targets.storybook).toMatchSnapshot();
+      expect(targets && targets['build-storybook']).toMatchSnapshot();
     });
 
     it('should format files', async () => {
