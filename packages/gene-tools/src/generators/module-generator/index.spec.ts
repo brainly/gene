@@ -3,7 +3,6 @@ import { logger, readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
 import { applicationGenerator } from '@nx/next';
-import { Linter } from '@nx/linter';
 
 describe('Module generator', () => {
   let expectedModuleFolder: string;
@@ -21,10 +20,11 @@ describe('Module generator', () => {
 
     await applicationGenerator(appTree, {
       name: 'my-app',
+      directory: 'my-app',
       tags: ['type:app', domainTag].join(','),
       style: 'none',
       unitTestRunner: 'jest',
-      linter: Linter.EsLint,
+      linter: 'eslint',
       js: false,
       e2eTestRunner: 'none',
     });
@@ -41,44 +41,44 @@ describe('Module generator', () => {
     });
 
     expect(
-      appTree.exists(expectedModuleFolder + '/src/README.md'),
+      appTree.exists(expectedModuleFolder + '/src/README.md')
     ).toBeTruthy();
     expect(
       appTree.exists(
-        expectedModuleFolder + '/src/lib/my-lib-module/MyAppMyLibModule.tsx',
-      ),
+        expectedModuleFolder + '/src/lib/my-lib-module/MyAppMyLibModule.tsx'
+      )
     ).toBeTruthy();
     expect(
-      appTree.exists(expectedModuleFolder + '/src/lib/my-lib-module/index.ts'),
+      appTree.exists(expectedModuleFolder + '/src/lib/my-lib-module/index.ts')
     ).toBeTruthy();
     expect(
       appTree.exists(
         expectedModuleFolder +
-          '/src/lib/my-lib-module/MyAppMyLibModule.stories.tsx',
-      ),
+          '/src/lib/my-lib-module/MyAppMyLibModule.stories.tsx'
+      )
     ).toBeTruthy();
     expect(
       appTree.exists(
-        expectedModuleFolder + '/src/lib/my-lib-module/hooks/index.ts',
-      ),
+        expectedModuleFolder + '/src/lib/my-lib-module/hooks/index.ts'
+      )
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module/display.ts',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module/display.ts'
+      )
     ).toBeFalsy();
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module.feature',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module.feature'
+      )
     ).toBeFalsy();
 
     const moduleContent = appTree
       .read('libs/my-app/app-modules/src/lib/my-lib-module/index.ts')
       ?.toString();
     expect(moduleContent).toMatch(
-      /export { MyAppMyLibModule } from '.\/MyAppMyLibModule'/,
+      /export { MyAppMyLibModule } from '.\/MyAppMyLibModule'/
     );
 
     const appConfig = readProjectConfiguration(appTree, createdProjectName);
@@ -116,26 +116,26 @@ describe('Module generator', () => {
 
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module/display.ts',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module/display.ts'
+      )
     ).toBeTruthy();
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module.feature',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-lib-module.feature'
+      )
     ).toBeTruthy();
 
     expect(cypressConfig).toContain('retries: 2');
 
     const tsconfig = readJson(
       appTree,
-      'apps/my-app-app-modules-e2e/tsconfig.json',
+      'apps/my-app-app-modules-e2e/tsconfig.json'
     );
 
     expect(tsconfig.compilerOptions.allowJs).toBe(true);
     expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
     expect(
-      tsconfig.compilerOptions.types.includes('@testing-library/cypress'),
+      tsconfig.compilerOptions.types.includes('@testing-library/cypress')
     ).toBe(true);
 
     const e2eDir = `apps/my-app-app-modules-e2e`;
@@ -149,7 +149,7 @@ describe('Module generator', () => {
             'import/no-extraneous-dependencies': 'off',
           },
         },
-      ]),
+      ])
     );
   });
 
@@ -169,37 +169,37 @@ describe('Module generator', () => {
     expect(
       appTree.exists(
         expectedModuleFolder +
-          '/src/lib/my-second-lib-module/MyAppMySecondLibModule.tsx',
-      ),
+          '/src/lib/my-second-lib-module/MyAppMySecondLibModule.tsx'
+      )
     ).toBeTruthy();
     expect(
       appTree.exists(
-        expectedModuleFolder + '/src/lib/my-second-lib-module/index.ts',
-      ),
+        expectedModuleFolder + '/src/lib/my-second-lib-module/index.ts'
+      )
     ).toBeTruthy();
     expect(
       appTree.exists(
         expectedModuleFolder +
-          '/src/lib/my-second-lib-module/MyAppMySecondLibModule.stories.tsx',
-      ),
+          '/src/lib/my-second-lib-module/MyAppMySecondLibModule.stories.tsx'
+      )
     ).toBeTruthy();
 
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module/display.ts',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module/display.ts'
+      )
     ).toBeFalsy();
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module.feature',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module.feature'
+      )
     ).toBeFalsy();
 
     const moduleContent = appTree
       .read(expectedModuleFolder + '/src/lib/my-second-lib-module/index.ts')
       ?.toString();
     expect(moduleContent).toMatch(
-      /export { MyAppMySecondLibModule } from '.\/MyAppMySecondLibModule';/,
+      /export { MyAppMySecondLibModule } from '.\/MyAppMySecondLibModule';/
     );
   });
 
@@ -220,13 +220,13 @@ describe('Module generator', () => {
 
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module/display.ts',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module/display.ts'
+      )
     ).toBeTruthy();
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module.feature',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module.feature'
+      )
     ).toBeTruthy();
   });
 
@@ -251,26 +251,26 @@ describe('Module generator', () => {
 
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module/display.ts',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module/display.ts'
+      )
     ).toBeTruthy();
     expect(
       appTree.exists(
-        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module.feature',
-      ),
+        'apps/my-app-app-modules-e2e/src/e2e/my-second-lib-module.feature'
+      )
     ).toBeTruthy();
 
     expect(cypressConfig).toContain('retries: 2');
 
     const tsconfig = readJson(
       appTree,
-      'apps/my-app-app-modules-e2e/tsconfig.json',
+      'apps/my-app-app-modules-e2e/tsconfig.json'
     );
 
     expect(tsconfig.compilerOptions.allowJs).toBe(true);
     expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
     expect(
-      tsconfig.compilerOptions.types.includes('@testing-library/cypress'),
+      tsconfig.compilerOptions.types.includes('@testing-library/cypress')
     ).toBe(true);
 
     const e2eDir = `apps/my-app-app-modules-e2e`;
@@ -284,7 +284,7 @@ describe('Module generator', () => {
             'import/no-extraneous-dependencies': 'off',
           },
         },
-      ]),
+      ])
     );
   });
 
