@@ -21,7 +21,6 @@ import {
   camelize,
   underscore,
 } from '@nx/devkit/src/utils/string-utils';
-import { Linter } from '@nx/linter';
 import {
   getNpmScope,
   promptBoolean,
@@ -168,7 +167,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
     if (schema.e2e && !isE2EProjectExists) {
       await cypressProjectGenerator(tree, {
         name: moduleProjectName,
-        linter: Linter.EsLint,
+        linter: 'eslint',
       });
 
       updateCypressTsConfig(tree, e2ePath);
@@ -295,7 +294,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
   if (schema.e2e) {
     await cypressProjectGenerator(tree, {
       name: moduleProjectName,
-      linter: Linter.EsLint,
+      linter: 'eslint'
     });
 
     updateCypressTsConfig(tree, e2ePath);

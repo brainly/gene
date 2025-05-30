@@ -13,7 +13,6 @@ import {
 import type { BrainlyNextJSAppGenerator } from './schema';
 import { applicationGenerator } from '@nx/next';
 import { updateWorkspaceTarget } from './utils/updateWorkspaceTarget';
-import { Linter } from '@nx/linter';
 import { maybeExcludeRewrites } from './utils/maybeExcludeRewrites';
 import { resolveTags } from './utils/resolveTags';
 import storybookConfigurationGenerator from '../storybook-configuration';
@@ -34,7 +33,7 @@ export default async function (tree: Tree, schema: BrainlyNextJSAppGenerator) {
     tags: resolveTags(schema),
     style: 'none',
     unitTestRunner: 'jest',
-    linter: Linter.EsLint,
+    linter: 'eslint',
     js: false,
     e2eTestRunner: e2e !== false ? 'cypress' : 'none',
     appDir: false,

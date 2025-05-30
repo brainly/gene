@@ -20,7 +20,6 @@ import {
   camelize,
   underscore,
 } from '@nx/devkit/src/utils/string-utils';
-import { Linter } from '@nx/linter';
 import { updateCypressTsConfig } from '../utilities/update-cypress-json-config';
 import { resolveTags } from './utils/resolveTags';
 import { getNpmScope } from '../utilities';
@@ -116,7 +115,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
    */
   await cypressProjectGenerator(tree, {
     name: moduleProjectName,
-    linter: Linter.EsLint,
+    linter: 'eslint',
   });
 
   updateCypressTsConfig(tree, e2ePath);
