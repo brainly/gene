@@ -87,7 +87,6 @@ const getCrudFunctions = (
     }
   }
 
-  // Map the selected choices to the actual function names
   const functions: string[] = [];
   selectedChoices.forEach((choice) => {
     switch (choice) {
@@ -133,7 +132,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
           name: 'crudOperations',
           message: 'Which CRUD operations do you want to include?',
           choices: [
-            { value: 'get', name: 'Get/Read single item' },
+            { value: 'get', name: 'Get/Read single item', checked: true },
             { value: 'create', name: 'Create new item' },
             { value: 'update', name: 'Update existing item' },
             { value: 'delete', name: 'Delete item' },
