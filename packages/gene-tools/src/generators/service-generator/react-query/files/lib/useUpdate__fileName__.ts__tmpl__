@@ -1,27 +1,23 @@
 import {
   useInjectedReactQueryClient,
   useReactQueryLazy,
-} from '@brainly-gene/core';
-
-import {QueryFunctionContext} from '@tanstack/react-query';
-import {
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
+import type {QueryClient} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
+import {get<%= fileName %>QueryKey} from './use<%= fileName %>';
 
-// Change this to match output of your API
+// TODO: Replace with actual types from your API
 export type Update<%= fileName %>APIType = {
-  id: number,
-  userId: number,
-  title: string,
-  body: string,
+  id: string;
+  // Add your specific return type properties here
 };
 
-// Change this to match input of your API
 export type VariablesType = {
-  title: string,
-  body: string,
-  userId: number,
+  id: string;
+  // Add your specific input properties here
+  // Remove 'yourVariable' and add actual properties
+  [key: string]: unknown;
 };
 
 export const queryKey = (variables?: VariablesType) => [
@@ -29,20 +25,28 @@ export const queryKey = (variables?: VariablesType) => [
   variables,
 ];
 
-export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
-  const url = `https://jsonplaceholder.typicode.com/posts/${variables.id}`;
+export async function defaultQueryFn(
+  variables: VariablesType,
+  client: QueryClient
+) {
+  const url = `/your-url/<%= kebabCaseFileName %>/${variables.id}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
-  return reactQueryFetchWrapper<Update<%= fileName %>APIType>(() =>
+  const result = await reactQueryFetchWrapper<Update<%= fileName %>APIType>(() =>
     fetchMethod(url, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          ...variables
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+      method: 'PATCH',
+      body: JSON.stringify({
+        ...variables,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
     })
   );
+
+  client.removeQueries({
+    queryKey: get<%= fileName %>QueryKey({id: variables.id}),
+  });
+  return result;
 }
 
 export function useUpdate<%= fileName %>() {
@@ -50,7 +54,7 @@ export function useUpdate<%= fileName %>() {
 
   return useReactQueryLazy<Update<%= fileName %>APIType, VariablesType>({
     reactQueryClient: queryClient,
-    queryFn: (_client, variables) => defaultQueryFn(variables),
+    queryFn: (_client, variables) => defaultQueryFn(variables, queryClient),
     queryKey,
-  })
+  });
 }

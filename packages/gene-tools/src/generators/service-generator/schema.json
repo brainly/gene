@@ -38,7 +38,35 @@
     },
     "useDefaultCrudFunctions": {
       "type": "boolean",
-      "description": "Use default CRUD functions",
+      "description": "Use default CRUD options (only get/read function)",
+      "default": false
+    },
+    "crudOperations": {
+      "type": "array",
+      "description": "Select CRUD operations to include",
+      "items": {
+        "type": "string",
+        "enum": ["get", "create", "update", "delete"]
+      }
+    },
+    "includeRead": {
+      "type": "boolean",
+      "description": "Include read/get single item function",
+      "default": false
+    },
+    "includeCreate": {
+      "type": "boolean",
+      "description": "Include create function",
+      "default": false
+    },
+    "includeUpdate": {
+      "type": "boolean",
+      "description": "Include update function",
+      "default": false
+    },
+    "includeDelete": {
+      "type": "boolean",
+      "description": "Include delete function",
       "default": false
     }
   },

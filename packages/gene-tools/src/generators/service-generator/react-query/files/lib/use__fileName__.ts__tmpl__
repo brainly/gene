@@ -1,25 +1,21 @@
 import {
   transformReactQueryResponse,
   useInjectedReactQueryClient,
-} from '@brainly-gene/core';
-
-import {QueryClient, QueryFunctionContext, useQuery} from '@tanstack/react-query';
-import {
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
+import type {QueryClient, QueryFunctionContext} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
 
-// Change this to match output of your API
+// TODO: Replace with actual types from your API
 export type <%= fileName %>APIType = {
-  id: number,
-  userId: number,
-  title: string,
-  body: string,
+  id: string;
+  // Add your specific return type properties here
 };
 
 // Change this to match input of your API
 export type VariablesType = {
-  postId: number
+  yourVariable?: string;
 };
 
 export const get<%= fileName %>QueryKey = (variables?: VariablesType) => [
@@ -27,31 +23,40 @@ export const get<%= fileName %>QueryKey = (variables?: VariablesType) => [
   variables,
 ];
 
-export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
-  const url = `https://jsonplaceholder.typicode.com/posts/${variables.postId}`;
+export function defaultQueryFn(
+  variables: VariablesType,
+  context?: QueryFunctionContext
+) {
+  const url = `/your-url/<%= kebabCaseFileName %>?<%= kebabCaseFileName %>Ids=${variables.id}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
-  return reactQueryFetchWrapper<<%= fileName %>APIType>(() =>
-    fetchMethod(url)
-  );
+  return reactQueryFetchWrapper<<%= fileName %>APIType>(() => fetchMethod(url));
 }
 
 // Use this function to run this query on SSR, pass the subapp as queryFn
-export async function query<%= fileName %>(client: QueryClient, variables: VariablesType, queryFn = defaultQueryFn) {
+export async function query<%= fileName %>(
+  client: QueryClient,
+  variables: VariablesType,
+  queryFn = defaultQueryFn
+) {
   return client.fetchQuery({
     queryFn: () => queryFn(variables),
     queryKey: get<%= fileName %>QueryKey(variables),
   });
 }
 
-export function use<%= fileName %>(props: {variables: VariablesType}, skip = false) {
+export function use<%= fileName %>(
+  props: {variables: VariablesType; refetchInterval?: number},
+  skip = false
+) {
   const queryClient = useInjectedReactQueryClient();
 
   // useInfiniteQuery if paging is needed
   const result = useQuery(
     {
       queryKey: get<%= fileName %>QueryKey(props.variables),
-      queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
-      enabled: !skip
+      queryFn: ctx => defaultQueryFn(props.variables, ctx),
+      enabled: !skip,
+      refetchInterval: props.refetchInterval || false,
     },
     queryClient
   );

@@ -8,6 +8,7 @@ import {
   readJson,
   writeJson,
 } from '@nx/devkit';
+import { prompt } from 'inquirer';
 import libraryGenerator from '../library-generator';
 import type { BrainlyServiceGenerator } from './schema';
 import {
@@ -15,7 +16,6 @@ import {
   camelize,
   dasherize,
 } from '@nx/devkit/src/utils/string-utils';
-import inquirer = require('inquirer');
 
 import { getNpmScope } from '../utilities';
 
@@ -29,7 +29,7 @@ interface GeneratorOptions {
 function createFiles(
   tree: Tree,
   schema: BrainlyServiceGenerator,
-  options: GeneratorOptions,
+  options: GeneratorOptions
 ) {
   generateFiles(
     tree,
@@ -40,14 +40,15 @@ function createFiles(
       npmScope: options.npmScope,
       fileName: classify(schema.name),
       lowerCaseFileName: camelize(schema.name),
+      kebabCaseFileName: dasherize(schema.name),
       tmpl: '',
-    },
+    }
   );
 }
 
 const getDirectoryPath = (
   schema: BrainlyServiceGenerator,
-  dasherizedName: string,
+  dasherizedName: string
 ) => {
   if (!schema.directory) {
     return `${dasherizedName}/services`;
@@ -58,50 +59,97 @@ const getDirectoryPath = (
   return `${schema.directory}`;
 };
 
-const promptCrudFunctions = async (
+const getCrudFunctions = (
   serviceName: string,
-  useDefaultCrudFunctions?: boolean,
+  schema: BrainlyServiceGenerator
 ) => {
   const classifiedName = classify(serviceName);
-  if (useDefaultCrudFunctions) {
-    return [`use${classifiedName}s`];
+  const selectedChoices: string[] = [];
+
+  if (schema.useDefaultCrudFunctions) {
+    selectedChoices.push('get');
+  } else {
+    const hasIndividualFlags =
+      schema.includeRead ||
+      schema.includeCreate ||
+      schema.includeUpdate ||
+      schema.includeDelete;
+
+    if (hasIndividualFlags) {
+      if (schema.includeRead) selectedChoices.push('get');
+      if (schema.includeCreate) selectedChoices.push('create');
+      if (schema.includeUpdate) selectedChoices.push('update');
+      if (schema.includeDelete) selectedChoices.push('delete');
+    } else if (schema.crudOperations && schema.crudOperations.length > 0) {
+      selectedChoices.push(...schema.crudOperations);
+    } else {
+      selectedChoices.push('get');
+    }
   }
 
-  const { crudFunctions } = await inquirer.prompt([
-    {
-      type: 'checkbox',
-      name: 'crudFunctions',
-      message: `Select CRUD functions you want to generate`,
-      choices: [
-        {
-          name: `use${classifiedName}s - to get multiple ${serviceName}s`,
-          value: `use${classifiedName}s`,
-          checked: true,
-        },
-        {
-          name: `useCreate${classifiedName} - to create a new ${serviceName}`,
-          value: `useCreate${classifiedName}`,
-        },
-        {
-          name: `useUpdate${classifiedName} - to update a single ${serviceName}`,
-          value: `useUpdate${classifiedName}`,
-        },
-        {
-          name: `useDelete${classifiedName} - to delete a single ${serviceName}`,
-          value: `useDelete${classifiedName}`,
-        },
-        {
-          name: `use${classifiedName} - to get a single ${serviceName}`,
-          value: `use${classifiedName}`,
-        },
-      ],
-    },
-  ]);
+  const functions: string[] = [];
+  selectedChoices.forEach((choice) => {
+    switch (choice) {
+      case 'create':
+        functions.push(`useCreate${classifiedName}`);
+        break;
+      case 'update':
+        functions.push(`useUpdate${classifiedName}`);
+        break;
+      case 'delete':
+        functions.push(`useDelete${classifiedName}`);
+        break;
+      case 'get':
+        functions.push(`use${classifiedName}`);
+        functions.push(`use${classifiedName}s`);
+        break;
+      default:
+        functions.push(`use${classifiedName}`);
+        functions.push(`use${classifiedName}s`);
+    }
+  });
 
-  return crudFunctions;
+  return functions;
 };
 
 export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
+  if (schema.useDefaultCrudFunctions) {
+    schema.crudOperations = undefined;
+  } else {
+    const hasIndividualFlags =
+      schema.includeRead ||
+      schema.includeCreate ||
+      schema.includeUpdate ||
+      schema.includeDelete;
+
+    const hasCrudOperations =
+      schema.crudOperations && schema.crudOperations.length > 0;
+
+    if (!hasIndividualFlags && !hasCrudOperations) {
+      const response = await prompt([
+        {
+          type: 'checkbox',
+          name: 'crudOperations',
+          message: 'Which CRUD operations do you want to include?',
+          choices: [
+            { value: 'get', name: 'Get/Read single item', checked: true },
+            { value: 'create', name: 'Create new item' },
+            { value: 'update', name: 'Update existing item' },
+            { value: 'delete', name: 'Delete item' },
+          ],
+          validate: (input: string[]) => {
+            if (input.length === 0) {
+              return 'Please select at least one CRUD operation.';
+            }
+            return true;
+          },
+        },
+      ]);
+
+      schema.crudOperations = response.crudOperations;
+    }
+  }
+
   const currentPackageJson = readJson(tree, 'package.json');
   const name = dasherize(schema.name);
   const directory = getDirectoryPath(schema, name);
@@ -109,17 +157,14 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
   let crudFunctions: string[] = [];
 
   if (schema.serviceType === 'react-query') {
-    crudFunctions = await promptCrudFunctions(
-      name,
-      schema.useDefaultCrudFunctions,
-    );
+    crudFunctions = getCrudFunctions(name, schema);
   }
 
   await libraryGenerator(tree, {
     name: `${name}-service`,
     directory: directory,
     tags: ['type:service', ...(schema.tags ? schema.tags.split(',') : [])].join(
-      ',',
+      ','
     ),
   });
 
@@ -136,7 +181,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
         path.endsWith(`${name}-service.ts`) ||
         path.endsWith(`${name}-service.spec.ts`) ||
         path.endsWith('README.md') ||
-        path === 'index.ts',
+        path === 'index.ts'
     )
     .map(({ path }) => path);
 
@@ -185,9 +230,10 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
           return false;
         }
 
-        return !crudFunctions.find((crudFunction) =>
-          filename?.includes(crudFunction),
-        );
+        return !crudFunctions.find((crudFunction) => {
+          const fileBaseName = filename.replace('.ts', '');
+          return fileBaseName === crudFunction;
+        });
       })
       .map(({ path }) => path);
 
@@ -200,7 +246,7 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     });
     tree.write(
       `${baseOptions.targetLocation}/index.ts`,
-      lines?.join('\n') || '',
+      lines?.join('\n') || ''
     );
   }
 

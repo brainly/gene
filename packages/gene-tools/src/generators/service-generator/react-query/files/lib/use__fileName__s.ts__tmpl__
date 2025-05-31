@@ -1,43 +1,47 @@
 import {
   transformReactQueryResponse,
   useInjectedReactQueryClient,
-} from '@brainly-gene/core';
-
-import type {QueryClient, QueryFunctionContext } from '@tanstack/react-query';
-import { useQuery} from '@tanstack/react-query';
-import {
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
+import type {QueryClient, QueryFunctionContext} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
 
-// Change this to match output of your API
+// TODO: Replace with actual types from your API
 export type <%= fileName %>sAPIType = {
-  id: number,
-  userId: number,
-  title: string,
-  body: string,
-}[];
+  data: Array<{
+    id: string;
+    // Add your specific item type properties here
+  }>;
+  // Add pagination or other metadata properties here
+};
 
-// Change this to match input of your API
 export type VariablesType = {
-  userId: number
+  <%= fileName %>Ids: string[];
 };
 
 export const get<%= fileName %>sQueryKey = (variables?: VariablesType) => [
-  'get-<%= lowerCaseFileName %>s-key',
+  'get-<%= fileName %>s-key',
   variables,
 ];
 
-export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
-  const url = `https://jsonplaceholder.typicode.com/posts?userId=${variables.userId}`;
+export function defaultQueryFn(
+  variables: VariablesType,
+  context?: QueryFunctionContext
+) {
+  const params = new URLSearchParams();
+  const url = `/your-url/<%= kebabCaseFileName %>${params.toString() ? `?${params}` : ''}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
-  return reactQueryFetchWrapper<<%= fileName %>sAPIType>(() =>
-    fetchMethod(url)
-  );
+
+  return reactQueryFetchWrapper<<%= fileName %>sAPIType>(() => fetchMethod(url));
 }
 
 // Use this function to run this query on SSR, pass the subapp as queryFn
-export async function query<%= fileName %>s(client: QueryClient, variables: VariablesType, queryFn = defaultQueryFn) {
+export async function query<%= fileName %>s(
+  client: QueryClient,
+  variables: VariablesType,
+  queryFn = defaultQueryFn
+) {
   return client.fetchQuery({
     queryFn: () => queryFn(variables),
     queryKey: get<%= fileName %>sQueryKey(variables),
@@ -51,8 +55,8 @@ export function use<%= fileName %>s(props: {variables: VariablesType}, skip = fa
   const result = useQuery(
     {
       queryKey: get<%= fileName %>sQueryKey(props.variables),
-      queryFn: (ctx) => defaultQueryFn(props.variables, ctx),
-      enabled: !skip
+      queryFn: ctx => defaultQueryFn(props.variables, ctx),
+      enabled: !skip,
     },
     queryClient
   );

@@ -1,22 +1,20 @@
 import {
   useInjectedReactQueryClient,
   useReactQueryLazy,
-} from '@brainly-gene/core';
-
-import {QueryFunctionContext} from '@tanstack/react-query';
-import {
   reactQueryFetchWrapper,
 } from '@brainly-gene/core';
+
+import type {QueryClient} from '@tanstack/react-query';
 import nodeFetch from 'node-fetch';
+import type {<%= fileName %>sAPIType} from './use<%= fileName %>s';
+import {get<%= fileName %>sQueryKey} from './use<%= fileName %>s';
 
-// Change this to match output of your API
 export type Delete<%= fileName %>APIType = {
-
+  id: string;
 };
 
-// Change this to match input of your API
 export type VariablesType = {
-  id: number
+  id: string;
 };
 
 export const queryKey = (variables?: VariablesType) => [
@@ -24,14 +22,36 @@ export const queryKey = (variables?: VariablesType) => [
   variables,
 ];
 
-export function defaultQueryFn(variables: VariablesType, context?: QueryFunctionContext) {
-  const url = `https://jsonplaceholder.typicode.com/posts/${variables.id}`;
+export async function defaultQueryFn(
+  variables: VariablesType,
+  queryClient: QueryClient
+) {
+  const url = `/your-url/<%= kebabCaseFileName %>/${variables.id}`;
   const fetchMethod = typeof window === 'undefined' ? nodeFetch : fetch;
-  return reactQueryFetchWrapper<Delete<%= fileName %>APIType>(() =>
+  const deleteResult = await reactQueryFetchWrapper<Delete<%= fileName %>APIType>(() =>
     fetchMethod(url, {
-        method: 'DELETE'
+      method: 'DELETE',
     })
   );
+
+  queryClient.setQueryData<<%= fileName %>sAPIType>(
+    get<%= fileName %>sQueryKey({
+      <%= lowerCaseFileName %>Ids: [],
+    }),
+    current => {
+      if (!current || !current.data) {
+        return current;
+      }
+
+      return {
+        status: 200,
+        success: true,
+        data: current.data?.filter(<%= lowerCaseFileName %> => <%= lowerCaseFileName %>.id !== variables.id),
+      };
+    }
+  );
+
+  return deleteResult;
 }
 
 export function useDelete<%= fileName %>() {
@@ -39,7 +59,7 @@ export function useDelete<%= fileName %>() {
 
   return useReactQueryLazy<Delete<%= fileName %>APIType, VariablesType>({
     reactQueryClient: queryClient,
-    queryFn: (_client, variables) => defaultQueryFn(variables),
+    queryFn: (_client, variables) => defaultQueryFn(variables, queryClient),
     queryKey,
-  })
+  });
 }
