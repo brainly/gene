@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+'use client';
 
 import React, { useContext, useMemo } from 'react';
 import { match, compile } from 'path-to-regexp';
