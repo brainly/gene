@@ -12,5 +12,27 @@
     "./generators.json": "./generators.json",
     ".": "./src/index.js",
     "./storybook-utils": "./storybook-utils/index.js"
+  },
+  "dependencies": {
+    "@cucumber/gherkin": ">=27.0.0",
+    "@cucumber/messages": ">=19.1.4",
+    "@nx/devkit": ">=17.3.2",
+    "@nx/linter": ">=17.3.2",
+    "@nx/next": ">=17.3.2",
+    "@nx/react": ">=17.3.2",
+    "@nx/storybook": ">=16.10.0",
+    "@nx/workspace": ">=17.3.2",
+    "ejs": ">=3.1.10",
+    "glob": ">=7.1.6",
+    "inquirer": ">=7.3.3",
+    "inquirer-search-checkbox": ">=1.0.0",
+    "inquirer-search-list": ">=1.2.6",
+    "jscodeshift": ">=0.11.0",
+    "lodash": ">=4.17.21",
+    "openai": ">=3.3.0",
+    "ramda": ">=0.27.1",
+    "remark": ">=9.0.0",
+    "unist-util-visit": ">=2.0.3",
+    "yaml": ">=1.10.0"
   }
 }
