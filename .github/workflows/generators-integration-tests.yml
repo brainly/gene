@@ -34,14 +34,14 @@ jobs:
               packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory libs/examples --tags domain:social-qa && pnpm nx e2e my-module-module-e2e',
               successRegexp: 'Successfully ran target e2e for project my-module-module-e2e',
             }
-          # - {
-          #     packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx test examples-components-my-components-ui',
-          #     successRegexp: 'Successfully ran target test for project examples-components-my-components-ui',
-          #   }
-          # - {
-          #     packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx lint examples-components-my-components-ui',
-          #     successRegexp: 'Successfully ran target lint for project examples-components-my-components-ui',
-          #   }
+          - {
+              packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory libs/examples --tags domain:social-qa && pnpm nx test my-components-ui',
+              successRegexp: 'Successfully ran target test for project my-components-ui',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory libs/examples --tags domain:social-qa && pnpm nx lint my-components-ui',
+              successRegexp: 'Successfully ran target lint for project my-components-ui',
+            }
           # - {
           #     packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-feature-services-my-data-service',
           #     successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
