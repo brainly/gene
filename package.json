@@ -17,6 +17,7 @@
     "@cucumber/messages": "19.1.4",
     "@nx/devkit": "21.1.2",
     "@nx/eslint-plugin": "21.1.2",
+    "@nx/eslint": "21.1.2",
     "@nx/js": "21.1.2",
     "@nx/node": "21.1.2",
     "@nx/plugin": "21.1.2",
