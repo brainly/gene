@@ -35,7 +35,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
   if (!providedTags.includes('domain:')) {
     throw new Error(
-      'Domain tag is required, please add tag `domain:<YOUR_DOMAIN_NAME>`. Domain should correspond to product or feature name for given lib. Examples: social-qa, tutoring, answer-platform, ads.',
+      'Domain tag is required, please add tag `domain:<YOUR_DOMAIN_NAME>`. Domain should correspond to product or feature name for given lib. Examples: social-qa, tutoring, answer-platform, ads.'
     );
   }
 
@@ -48,10 +48,13 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
   const modulePath = `libs/${directoryPath}/${nameWithSuffix}`;
   const moduleSourcePath = `${modulePath}/src`;
-  const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
-    new RegExp('/', 'g'),
-    '-',
-  );
+  // const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
+  //   new RegExp('/', 'g'),
+  //   '-',
+  // ); // examples-modules-my-module-module
+
+  const moduleProjectName = nameWithSuffix; // 'my-module-module'
+
   const moduleProjectE2EName = `${moduleProjectName}-e2e`;
   const e2ePath = `apps/${moduleProjectE2EName}`;
   const moduleDisplayName = classify(nameWithSuffix);
@@ -100,7 +103,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
       tmpl: '',
       errorBoundary,
       npmScope,
-    },
+    }
   );
 
   /**
@@ -132,7 +135,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
       dataTestId: underscore(`${nameWithSuffix}-id`),
       connectedFileName: camelize(nameWithSuffix).toLocaleLowerCase(),
       tmpl: '',
-    },
+    }
   );
 
   const e2eProjectConfig = readProjectConfiguration(tree, moduleProjectE2EName);
@@ -169,7 +172,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
           },
         ],
       };
-    },
+    }
   );
 
   await formatFiles(tree);
@@ -183,7 +186,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
 const getDirectoryPath = (
   schema: BrainlyCoreModuleGenerator,
-  dasherizedName: string,
+  dasherizedName: string
 ) => {
   if (!schema.directory) {
     return `${dasherizedName}/modules`;
