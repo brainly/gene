@@ -19,6 +19,10 @@ jobs:
       matrix:
         config:
           - {
+              packageCommand: 'pnpm nx generate @brainly-gene/tools:library --name=my-library --directory=libs/examples/my-library --tags=social-qa && pnpm nx lint my-library',
+              successRegexp: 'Successfully ran target lint for project my-library',
+            }
+          - {
               packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx test my-module-module',
               successRegexp: 'Successfully ran target test for project my-module-module',
             }
