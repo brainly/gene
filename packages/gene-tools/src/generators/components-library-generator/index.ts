@@ -19,11 +19,12 @@ import { resolveTags } from './utils/resolveTags';
 const getDirectoryPath = (
   schema: BrainlyComponentLibraryGenerator,
   dasherizedName: string,
+  nameWithSuffix: string
 ) => {
   if (!schema.directory) {
     return `${dasherizedName}/components`;
   } else if (!schema.directory.endsWith('/components')) {
-    return `${schema.directory}/components`;
+    return `${schema.directory}/components/${nameWithSuffix}`;
   }
 
   return `${schema.directory}`;
@@ -31,15 +32,20 @@ const getDirectoryPath = (
 
 export default async function (
   tree: Tree,
-  schema: BrainlyComponentLibraryGenerator,
+  schema: BrainlyComponentLibraryGenerator
 ) {
   const nameWithSuffix = `${dasherize(schema.name)}-ui`;
-  const directoryPath = getDirectoryPath(schema, dasherize(schema.name));
-  const moduleSourcePath = `libs/${directoryPath}/${nameWithSuffix}/src/`;
-  const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
-    new RegExp('/', 'g'),
-    '-',
+  const directoryPath = getDirectoryPath(
+    schema,
+    dasherize(schema.name),
+    nameWithSuffix
   );
+  const moduleSourcePath = `${directoryPath}/src/`;
+  // const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
+  //   new RegExp('/', 'g'),
+  //   '-'
+  // );
+  const moduleProjectName = nameWithSuffix;
   const currentPackageJson = readJson(tree, 'package.json');
 
   /**
@@ -54,11 +60,11 @@ export default async function (
 
   tree.delete(moduleSourcePath);
 
-  await generateFiles(
+  generateFiles(
     tree,
     joinPathFragments(__dirname, './files'),
     moduleSourcePath,
-    {},
+    {}
   );
 
   /**
@@ -67,7 +73,7 @@ export default async function (
    */
   await storybookConfigurationGenerator(tree, { name: moduleProjectName });
 
-  const tsconfigPath = `libs/${directoryPath}/${nameWithSuffix}/tsconfig.json`;
+  const tsconfigPath = joinPathFragments(directoryPath, 'tsconfig.json');
 
   updateJson(tree, tsconfigPath, (currentTsconfig) => {
     return {
