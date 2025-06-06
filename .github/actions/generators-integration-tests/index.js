@@ -3,10 +3,8 @@ const { spawn } = require('child_process');
 
 async function run() {
   try {
-    const packageCommand =
-      'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa  --projectNameAndRootFormat derived';
-    const successRegexp =
-      'Successfully ran target lint for project examples-modules-my-module-module';
+    const packageCommand = core.getInput('packageCommand', { required: true });
+    const successRegexp = core.getInput('successRegexp', { required: true });
     let timeoutId;
 
     const child = spawn(packageCommand, {
