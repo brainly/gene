@@ -2,19 +2,20 @@ import type { Tree } from '@nx/devkit';
 import { logger, readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
+import { nxFileTreeSnapshotSerializer } from './utils/nxFileTreeSnapshotSerializer';
 
 describe('Core module generator', () => {
-  let expectedModuleFolder: string;
   let appTree: Tree;
   let projectName: string;
+  let directory: string;
   let createdProjectName: string;
   let domainTag: string;
 
   beforeEach(async () => {
     projectName = 'my-lib';
-    expectedModuleFolder = 'libs/my-lib/modules';
+    directory = 'libs/my-lib';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-    createdProjectName = 'my-lib-modules-my-lib-module';
+    createdProjectName = 'my-lib-module';
     domainTag = 'domain:test';
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
@@ -23,85 +24,104 @@ describe('Core module generator', () => {
 
   it('should generate files', async () => {
     await moduleGenerator(appTree, {
-      directory: '',
+      directory,
       name: projectName,
       tags: domainTag,
     });
 
-    expect(
-      appTree.exists(expectedModuleFolder + '/my-lib-module/README.md'),
-    ).toBeTruthy();
-    expect(
-      appTree.exists(
-        expectedModuleFolder + '/my-lib-module/src/lib/MyLibModule.tsx',
-      ),
-    ).toBeTruthy();
-    expect(
-      appTree.exists(expectedModuleFolder + '/my-lib-module/src/lib/index.ts'),
-    ).toBeTruthy();
-    expect(
-      appTree.exists(
-        expectedModuleFolder + '/my-lib-module/src/lib/MyLibModule.stories.tsx',
-      ),
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        expectedModuleFolder + '/my-lib-module/src/lib/hooks/index.ts',
-      ),
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/app.spec.ts',
-      ),
-    );
-    expect(
-      appTree.exists(
-        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/my-lib-module.feature',
-      ),
-    );
-    expect(
-      appTree.exists(
-        'apps/my-lib-modules-my-lib-module-e2e/src/e2e/my-lib-module/display.ts',
-      ),
-    );
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      ├── .gitignore
+      └── my-lib-module-e2e
+          ├── project.json
+          ├── src
+          │   ├── e2e
+          │   │   ├── my-lib-module
+          │   │   │   └── display.ts
+          │   │   └── my-lib-module.feature
+          │   ├── support
+          │   │   ├── e2e.ts
+          │   │   └── commands.ts
+          │   ├── fixtures
+          │   │   └── example.json
+          │   └── plugins
+          │       └── index.js
+          ├── cypress.config.ts
+          ├── tsconfig.json
+          ├── .eslintrc.json
+          └── README.md
+      libs
+      ├── .gitignore
+      └── my-lib
+          └── modules
+              └── my-lib-module
+                  ├── project.json
+                  ├── README.md
+                  ├── src
+                  │   ├── index.ts
+                  │   ├── README.md
+                  │   └── lib
+                  │       ├── MyLibModule.stories.tsx
+                  │       ├── MyLibModule.tsx
+                  │       ├── gene.config.yaml
+                  │       ├── hooks
+                  │       │   └── index.ts
+                  │       └── index.ts
+                  ├── tsconfig.lib.json
+                  ├── .babelrc
+                  ├── tsconfig.json
+                  ├── .eslintrc.json
+                  ├── tsconfig.spec.json
+                  ├── jest.config.ts
+                  ├── .storybook
+                  │   ├── main.js
+                  │   ├── manager.js
+                  │   └── preview.js
+                  └── tsconfig.storybook.json
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
   });
 
   it('should update cypress and ts config', async () => {
     await moduleGenerator(appTree, {
-      directory: '',
+      directory,
       name: projectName,
       tags: domainTag,
     });
 
     const cypressConfig = appTree
-      .read('apps/my-lib-modules-my-lib-module-e2e/cypress.config.ts')
+      .read('apps/my-lib-module-e2e/cypress.config.ts')
       ?.toString();
 
     expect(cypressConfig).toContain(`specPattern: './src/e2e/**/*.feature'`);
     expect(cypressConfig).toContain('retries: 2');
 
-    const tsconfig = readJson(
-      appTree,
-      'apps/my-lib-modules-my-lib-module-e2e/tsconfig.json',
-    );
+    const tsconfig = readJson(appTree, 'apps/my-lib-module-e2e/tsconfig.json');
 
     expect(tsconfig.compilerOptions.allowJs).toBe(true);
     expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
     expect(
-      tsconfig.compilerOptions.types.includes('@testing-library/cypress'),
+      tsconfig.compilerOptions.types.includes('@testing-library/cypress')
     ).toBe(true);
   });
 
   it('.eslintrc for e2e should contain updated overrides', async () => {
     await moduleGenerator(appTree, {
-      directory: '',
+      directory,
       name: projectName,
       tags: domainTag,
     });
 
-    const e2eDir = `apps/my-lib-modules-my-lib-module-e2e`;
+    const e2eDir = `apps/my-lib-module-e2e`;
     const eslintJSON = readJson(appTree, `${e2eDir}/.eslintrc.json`);
     expect(eslintJSON.overrides).toEqual(
       expect.arrayContaining([
@@ -112,13 +132,13 @@ describe('Core module generator', () => {
             'import/no-extraneous-dependencies': 'off',
           },
         },
-      ]),
+      ])
     );
   });
 
   it('module should not export module file', async () => {
     await moduleGenerator(appTree, {
-      directory: '',
+      directory,
       name: projectName,
       tags: domainTag,
     });
@@ -127,17 +147,17 @@ describe('Core module generator', () => {
       .read('libs/my-lib/modules/my-lib-module/src/lib/index.ts')
       ?.toString();
     expect(moduleContent).not.toMatch(
-      /export {MyLibModule} from ".\/MyLibModule";/,
+      /export {MyLibModule} from ".\/MyLibModule";/
     );
     expect(moduleContent).toMatch(/export {};/);
     expect(moduleContent).toMatch(
-      /\/\/ reexport here hooks and types used by hooks from core module/,
+      /\/\/ reexport here hooks and types used by hooks from core module/
     );
   });
 
   it('should create tags in workspace', async () => {
     await moduleGenerator(appTree, {
-      directory: '',
+      directory,
       name: projectName,
       tags: 'test:tag,second:tag,domain:test',
     });
@@ -153,7 +173,7 @@ describe('Core module generator', () => {
 
   it('should work with camelized module name', async () => {
     await moduleGenerator(appTree, {
-      directory: '',
+      directory,
       name: 'camelizedName',
       tags: domainTag,
     });
