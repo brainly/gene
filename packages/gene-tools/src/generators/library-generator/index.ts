@@ -17,11 +17,10 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   const npmScope = getNpmScope(tree);
 
   const baseDirectory = schema.directory ? `${schema.directory}/` : '';
-  const fullDirectoryPath = `libs/${baseDirectory}`;
 
   await libraryGenerator(tree, {
     name: schema.name,
-    directory: fullDirectoryPath,
+    directory: baseDirectory,
     tags: schema.tags,
     linter: 'eslint',
     skipFormat: false,
@@ -32,7 +31,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
     importPath: `@${npmScope}/${baseDirectory}${schema.name}`,
   });
 
-  const eslintLibPath = `${fullDirectoryPath}/.eslintrc.json`;
+  const eslintLibPath = `${baseDirectory}/.eslintrc.json`;
 
   updateJson(tree, eslintLibPath, (currentEsLint) => {
     return {
@@ -48,13 +47,13 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   });
 
   const pathToSetupFile = relative(
-    fullDirectoryPath,
+    baseDirectory,
     `${workspaceRoot}/jest.setup.js`
   );
 
   updateJestConfig(
     tree,
-    fullDirectoryPath,
+    baseDirectory,
     (currentValues) => {
       return {
         ...currentValues,

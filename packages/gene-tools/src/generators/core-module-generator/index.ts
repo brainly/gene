@@ -48,12 +48,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
   const modulePath = `libs/${directoryPath}/${nameWithSuffix}`;
   const moduleSourcePath = `${modulePath}/src`;
-  // const moduleProjectName = `${directoryPath}/${nameWithSuffix}`.replace(
-  //   new RegExp('/', 'g'),
-  //   '-',
-  // ); // examples-modules-my-module-module
-
-  const moduleProjectName = nameWithSuffix; // 'my-module-module'
+  const moduleProjectName = nameWithSuffix;
 
   const moduleProjectE2EName = `${moduleProjectName}-e2e`;
   const e2ePath = `apps/${moduleProjectE2EName}`;
@@ -69,7 +64,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
    */
   await libraryGenerator(tree, {
     name: nameWithSuffix,
-    directory: directoryPath,
+    directory: modulePath,
     tags: resolveTags(schema),
   });
 
