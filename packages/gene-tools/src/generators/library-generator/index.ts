@@ -10,16 +10,20 @@ import {
 import { libraryGenerator } from '@nx/react';
 import type { GeneLibraryGenerator } from './schema';
 import { getNpmScope, updateJestConfig } from '../utilities';
-import { relative } from 'path';
+import { normalize, relative } from 'path';
 
 export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
   const npmScope = getNpmScope(tree);
 
   const directory = schema.directory ? `${schema.directory}/` : '';
+  const projectRoot = schema.directory ? `libs/${schema.directory}/` : '';
 
   await libraryGenerator(tree, {
+    // examples-modules-my-module-module
     name: schema.name,
+    // simpleName
+    // directory: pathToProject,
     directory,
     tags: schema.tags,
     linter: 'eslint',
@@ -29,11 +33,14 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
     compiler: 'babel',
     unitTestRunner: 'jest',
     importPath: `@${npmScope}/${directory}${schema.name}`,
+    // importPath: `@${npmScope}/${projectRoot}${schema.name}`,
   });
 
-  const pathToProject = `libs/${schema.directory || ''}/${schema.name}`;
-
-  const eslintLibPath = `${pathToProject}/.eslintrc.json`;
+  // const pathToProject = `${directory}${schema.name}`;
+  const pathToProject = `${directory}`;
+  const eslintLibPath = normalize(`${pathToProject}/.eslintrc.json`);
+  // "examples/modules/my-module-module/.eslintrc.json"
+  // examples/modules/.eslintrc.json
 
   updateJson(tree, eslintLibPath, (currentEsLint) => {
     return {
@@ -48,10 +55,13 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
     };
   });
 
-  const pathToSetupFile = relative(
+  const workspaceJestSetupPath = relative(
     pathToProject,
     `${workspaceRoot}/jest.setup.js`
   );
+
+  const contents = (tree.read('tsconfig.base.json') || '').toString();
+  console.log('🚀 ~ contents:', contents);
 
   updateJestConfig(
     tree,
@@ -59,7 +69,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
     (currentValues: any) => {
       return {
         ...currentValues,
-        setupFilesAfterEnv: [pathToSetupFile],
+        setupFilesAfterEnv: [workspaceJestSetupPath],
         transform: {
           '^.+\\.[tj]sx?$': 'ts-jest',
         },
