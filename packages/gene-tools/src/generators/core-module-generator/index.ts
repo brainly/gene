@@ -90,7 +90,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
   tree.delete(`libs/${directoryPath}${nameWithSuffix}/README.md`);
 
   // create custom module file structure
-  await generateFiles(
+  generateFiles(
     tree,
     joinPathFragments(__dirname, './files/module'),
     moduleSourcePath,
@@ -116,27 +116,24 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
    * @description
    * generate cypress app for generated module
    */
+  // 'my-module-module'
   await cypressProjectGenerator(tree, {
     name: moduleProjectName,
     linter: 'eslint',
+    directory: e2ePath,
   });
 
   updateCypressTsConfig(tree, e2ePath);
 
   // create custom cypress files
-  await generateFiles(
-    tree,
-    joinPathFragments(__dirname, './files/e2e'),
-    e2ePath,
-    {
-      ...schema,
-      fileName: nameWithSuffix,
-      pascalCaseFileName: classify(nameWithSuffix),
-      dataTestId: underscore(`${nameWithSuffix}-id`),
-      connectedFileName: camelize(nameWithSuffix).toLocaleLowerCase(),
-      tmpl: '',
-    }
-  );
+  generateFiles(tree, joinPathFragments(__dirname, './files/e2e'), e2ePath, {
+    ...schema,
+    fileName: nameWithSuffix,
+    pascalCaseFileName: classify(nameWithSuffix),
+    dataTestId: underscore(`${nameWithSuffix}-id`),
+    connectedFileName: camelize(nameWithSuffix).toLocaleLowerCase(),
+    tmpl: '',
+  });
 
   const e2eProjectConfig = readProjectConfiguration(tree, moduleProjectE2EName);
 
