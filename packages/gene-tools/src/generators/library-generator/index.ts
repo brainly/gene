@@ -28,7 +28,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
     style: 'scss',
     compiler: 'babel',
     unitTestRunner: 'jest',
-    importPath: `@${npmScope}/${baseDirectory}${schema.name}`,
+    importPath: `@${npmScope}/${baseDirectory}`,
   });
 
   const eslintLibPath = `${baseDirectory}/.eslintrc.json`;
