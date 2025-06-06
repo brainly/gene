@@ -46,7 +46,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
   const directoryPath = getDirectoryPath(schema, dasherizedName);
 
-  const modulePath = `libs/${directoryPath}/${nameWithSuffix}`;
+  const modulePath = `${directoryPath}/${nameWithSuffix}`;
   const moduleSourcePath = `${modulePath}/src`;
   const moduleProjectName = nameWithSuffix;
 
@@ -82,7 +82,7 @@ export default async function (tree: Tree, schema: BrainlyCoreModuleGenerator) {
 
   // delete default files
   tree.delete(moduleSourcePath);
-  tree.delete(`libs/${directoryPath}${nameWithSuffix}/README.md`);
+  tree.delete(`${directoryPath}${nameWithSuffix}/README.md`);
 
   // create custom module file structure
   generateFiles(
