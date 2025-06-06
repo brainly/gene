@@ -2,14 +2,17 @@ import type { Tree } from '@nx/devkit';
 import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import serviceGenerator from './index';
+import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
 describe('Service generator', () => {
   let appTree: Tree;
   let projectName: string;
+  let directory: string;
 
   beforeEach(async () => {
     projectName = 'question';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+    directory = 'libs/question/services';
 
     jest.spyOn(logger, 'warn').mockImplementation(() => 1);
     jest.spyOn(logger, 'debug').mockImplementation(() => 1);
@@ -17,39 +20,51 @@ describe('Service generator', () => {
 
   it('should generate files and delete default files', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'apollo',
       useDefaultCrudFunctions: true,
       tags: '',
     });
 
-    expect(
-      appTree.exists(
-        'libs/question/services/question-service/src/lib/useQuestion.ts'
-      )
-    ).toBeTruthy();
-    expect(
-      appTree.exists(
-        'libs/question/services/question-service/src/lib/queries.ts'
-      )
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        'libs/question/services/question-service/src/lib/question-service.ts'
-      )
-    ).not.toBeTruthy();
-    expect(
-      appTree.exists(
-        'libs/question/services/question-service/src/lib/question-service.spec.ts'
-      )
-    ).not.toBeTruthy();
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      └── .gitignore
+      libs
+      ├── .gitignore
+      └── question
+          └── services
+              └── question-service
+                  ├── project.json
+                  ├── src
+                  │   ├── index.ts
+                  │   ├── README.md
+                  │   └── lib
+                  │       ├── queries.ts
+                  │       ├── useQuestion.ts
+                  │       └── useQuestionLazy.ts
+                  ├── tsconfig.lib.json
+                  ├── .babelrc
+                  ├── tsconfig.json
+                  ├── .eslintrc.json
+                  ├── tsconfig.spec.json
+                  └── jest.config.ts
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
   });
 
   it('should generate apollo service', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'apollo',
       useDefaultCrudFunctions: true,
@@ -57,13 +72,13 @@ describe('Service generator', () => {
     });
 
     const hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useInjectedApolloClient');
 
     const queriesContent = appTree
-      .read('libs/question/services/question-service/src/lib/queries.ts')
+      .read(`${directory}/question-service/src/lib/queries.ts`)
       ?.toString();
 
     expect(queriesContent).toContain('ApolloClient');
@@ -71,7 +86,7 @@ describe('Service generator', () => {
 
   it('should generate react-query service', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'react-query',
       crudOperations: ['get', 'create', 'update', 'delete'],
@@ -80,16 +95,14 @@ describe('Service generator', () => {
 
     // useQuestions - Note: the generator creates useQuestion for 'get', not useQuestions
     let hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useQuestion');
 
     // useCreateQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useCreateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useCreateQuestion');
@@ -97,9 +110,7 @@ describe('Service generator', () => {
 
     // useDeleteQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useDeleteQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useDeleteQuestion');
@@ -107,16 +118,14 @@ describe('Service generator', () => {
 
     // useUpdateQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useUpdateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useUpdateQuestion');
     expect(hookContent).toContain(`method: 'PATCH'`);
 
     const indexFile = appTree
-      .read('libs/question/services/question-service/src/index.ts')
+      .read(`${directory}/question-service/src/index.ts`)
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
@@ -139,7 +148,7 @@ describe('Service generator', () => {
 
   it('should generate react-query service with only selected crud operations', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'react-query',
       crudOperations: ['update'],
@@ -148,41 +157,35 @@ describe('Service generator', () => {
 
     // useQuestions - Note: the generator creates useQuestion for 'get', not useQuestions
     let hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     // useCreateQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useCreateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     // useDeleteQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useDeleteQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     // useUpdateQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useUpdateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useUpdateQuestion');
     expect(hookContent).toContain(`method: 'PATCH'`);
 
     const indexFile = appTree
-      .read('libs/question/services/question-service/src/index.ts')
+      .read(`${directory}/question-service/src/index.ts`)
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
@@ -193,7 +196,7 @@ describe('Service generator', () => {
 
   it('should camelize query name if service name includes "-"', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: 'service-name',
       serviceType: 'apollo',
       useDefaultCrudFunctions: true,
@@ -201,7 +204,7 @@ describe('Service generator', () => {
     });
 
     const queriesContent = appTree
-      .read('libs/question/services/service-name-service/src/lib/queries.ts')
+      .read(`${directory}/service-name-service/src/lib/queries.ts`)
       ?.toString();
 
     expect(queriesContent).toContain('serviceNameQuery');
@@ -209,7 +212,7 @@ describe('Service generator', () => {
 
   it('should generate react-query service with includeRead flag', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'react-query',
       includeRead: true,
@@ -218,38 +221,32 @@ describe('Service generator', () => {
 
     // Should have useQuestion
     let hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useQuestion');
 
     // Should NOT have create, update, delete operations
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useCreateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useUpdateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useDeleteQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     const indexFile = appTree
-      .read('libs/question/services/question-service/src/index.ts')
+      .read(`${directory}/question-service/src/index.ts`)
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
@@ -269,7 +266,7 @@ describe('Service generator', () => {
 
   it('should generate react-query service with includeCreate flag', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'react-query',
       includeCreate: true,
@@ -278,9 +275,7 @@ describe('Service generator', () => {
 
     // Should have useCreateQuestion
     let hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useCreateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useCreateQuestion');
@@ -288,13 +283,13 @@ describe('Service generator', () => {
 
     // Should NOT have read, update, delete operations
     hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     const indexFile = appTree
-      .read('libs/question/services/question-service/src/index.ts')
+      .read(`${directory}/question-service/src/index.ts`)
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
@@ -305,7 +300,7 @@ describe('Service generator', () => {
 
   it('should generate react-query service with multiple include flags', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'react-query',
       includeRead: true,
@@ -316,16 +311,14 @@ describe('Service generator', () => {
 
     // Should have useQuestion
     let hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useQuestion');
 
     // Should have useUpdateQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useUpdateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useUpdateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useUpdateQuestion');
@@ -333,9 +326,7 @@ describe('Service generator', () => {
 
     // Should have useDeleteQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useDeleteQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useDeleteQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useDeleteQuestion');
@@ -343,15 +334,13 @@ describe('Service generator', () => {
 
     // Should NOT have useCreateQuestion
     hookContent = appTree
-      .read(
-        'libs/question/services/question-service/src/lib/useCreateQuestion.ts'
-      )
+      .read(`${directory}/question-service/src/lib/useCreateQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toBe(undefined);
 
     const indexFile = appTree
-      .read('libs/question/services/question-service/src/index.ts')
+      .read(`${directory}/question-service/src/index.ts`)
       ?.toString();
 
     expect(indexFile).toMatchInlineSnapshot(`
@@ -373,7 +362,7 @@ describe('Service generator', () => {
 
   it('should generate apollo service with includeRead flag', async () => {
     await serviceGenerator(appTree, {
-      directory: 'question',
+      directory,
       name: projectName,
       serviceType: 'apollo',
       includeRead: true,
@@ -381,13 +370,13 @@ describe('Service generator', () => {
     });
 
     const hookContent = appTree
-      .read('libs/question/services/question-service/src/lib/useQuestion.ts')
+      .read(`${directory}/question-service/src/lib/useQuestion.ts`)
       ?.toString();
 
     expect(hookContent).toContain('useInjectedApolloClient');
 
     const queriesContent = appTree
-      .read('libs/question/services/question-service/src/lib/queries.ts')
+      .read(`${directory}/question-service/src/lib/queries.ts`)
       ?.toString();
 
     expect(queriesContent).toContain('ApolloClient');
