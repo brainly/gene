@@ -19,16 +19,16 @@ jobs:
       matrix:
         config:
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx test examples-modules-my-module-module',
-              successRegexp: 'Successfully ran target test for project examples-modules-my-module-module',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx test my-module-module',
+              successRegexp: 'Successfully ran target test for project my-module-module',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx lint examples-modules-my-module-module',
-              successRegexp: 'Successfully ran target lint for project examples-modules-my-module-module',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx lint my-module-module',
+              successRegexp: 'Successfully ran target lint for project my-module-module',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx e2e examples-modules-my-module-module-e2e --verbose',
-              successRegexp: 'Successfully ran target e2e for project examples-modules-my-module-module-e2e',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx e2e my-module-module-e2e --verbose',
+              successRegexp: 'Successfully ran target e2e for project my-module-module-e2e',
             }
           - {
               packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx test examples-components-my-components-ui',
