@@ -1,26 +1,26 @@
-import {apiHandlerConnect} from '@brainly-gene/next';
-import {legacyApiMiddleware} from '@<%= npmScope %>/middlewares';
+import { apiHandlerConnect } from '@brainly-gene/next';
+import { legacyApiMiddleware } from '@<%= npmScope %>/middlewares';
 import cors from 'cors';
 
-import {RouteConfig} from '@asteasolutions/zod-to-openapi';
-import {defaultResponses} from '@<%= npmScope %>/swagger/api';
-import {getConfig} from '../../../config/envVars';
-import {NextApiRequest, NextApiResponse} from 'next';
+import type { RouteConfig } from '@asteasolutions/zod-to-openapi';
+import { defaultResponses } from '@<%= npmScope %>/swagger/api';
+import { getConfig } from '../../../config/envVars';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { EndpointConfig } from '@<%= npmScope %>/examples/api-handler';
 import {
-  EndpointConfig,
   handleGetEndpointHandler,
   handlePostEndpointHandler,
 } from '@<%= npmScope %>/examples/api-handler';
 import {
   endpointHandlerPostInputBodySchema,
-  EndpointHandlerPostResultBody,
   endpointHandlerPostResultBodySchema,
 } from '../../../types/endpointHandlerPostTypes';
+import type { EndpointHandlerPostResultBody } from '../../../types/endpointHandlerPostTypes';
 import {
   endpointHandlerGetInputQuerySchema,
-  EndpointHandlerGetResultBody,
   endpointHandlerGetResultBodySchema,
 } from '../../../types/endpointHandlerGetTypes';
+import type { EndpointHandlerGetResultBody } from '../../../types/endpointHandlerGetTypes';
 import {
   parseRequestBody,
   parseRequestQuery,
@@ -53,18 +53,18 @@ export function newPostEndpointHandler(config: EndpointConfig) {
     res: NextApiResponse<EndpointHandlerPostResultBody>
   ) {
     try {
-      const {someValue} = parseRequestBody(
+      const { someValue } = parseRequestBody(
         endpointHandlerPostInputBodySchema,
         req
       );
-      const response = await handlePostEndpointHandler(config, {someValue});
+      const response = await handlePostEndpointHandler(config, { someValue });
 
       return res.status(response.status).json(response);
     } catch (error) {
       if (error instanceof ValidationError) {
-        return res.status(400).json({error: error.message});
+        return res.status(400).json({ error: error.message });
       } else {
-        return res.status(500).json({error: error.message});
+        return res.status(500).json({ error: error.message });
       }
     }
   };
@@ -76,14 +76,14 @@ export function newGetEndpointHandler(config: EndpointConfig) {
     res: NextApiResponse<EndpointHandlerGetResultBody>
   ) {
     try {
-      const {id} = parseRequestQuery(endpointHandlerGetInputQuerySchema, req);
-      const response = await handleGetEndpointHandler(config, {id});
+      const { id } = parseRequestQuery(endpointHandlerGetInputQuerySchema, req);
+      const response = await handleGetEndpointHandler(config, { id });
       return res.status(response.status).json(response);
     } catch (error) {
       if (error instanceof ValidationError) {
-        return res.status(400).json({error: error.message});
+        return res.status(400).json({ error: error.message });
       } else {
-        return res.status(500).json({error: error.message});
+        return res.status(500).json({ error: error.message });
       }
     }
   };
