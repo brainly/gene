@@ -70,6 +70,14 @@ jobs:
               packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx lint my-app',
               successRegexp: 'Successfully ran target lint for project my-app',
             }
+          - {
+              packageCommand: 'pnpm exec nx g @brainly-gene/tools:bff-app --name=web-app --directory=apps/examples/web-app --reactQuery=true --rewrites=true --tags=domain:social-qa && pnpm nx lint web-app',
+              successRegexp: 'Successfully ran target lint for project web-app',
+            }
+          - {
+              packageCommand: 'pnpm exec nx g @brainly-gene/tools:bff-app --name=web-app --directory=apps/examples/web-app --reactQuery=true --rewrites=true --tags=domain:social-qa && pnpm nx e2e web-app-e2e',
+              successRegexp: 'Successfully ran target e2e for project web-app-e2e',
+            }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
