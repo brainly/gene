@@ -78,6 +78,10 @@ jobs:
               packageCommand: 'pnpm exec nx g @brainly-gene/tools:bff-app --name=web-app --directory=apps/examples/web-app --reactQuery=true --rewrites=true --tags=domain:social-qa && pnpm nx e2e web-app-e2e',
               successRegexp: 'Successfully ran target e2e for project web-app-e2e',
             }
+          - {
+              packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=assets && pnpm nx g @brainly-gene/tools:assets-library --withStyleGuide=true && pnpm nx lint assets',
+              successRegexp: 'Successfully ran target lint for project assets',
+            }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
