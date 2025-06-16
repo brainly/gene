@@ -10,8 +10,20 @@
   "affected": { "defaultBase": "master" },
   "cli": { "defaultCollection": "@nx/next" },
   "generators": {
-    "@nx/react": { "application": { "babel": true } },
-    "@nx/next": { "application": { "style": "scss", "linter": "eslint" } }
+    "@nx/react": {
+      "application": {
+        "babel": true
+      },
+      "library": {
+        "unitTestRunner": "jest"
+      }
+    },
+    "@nx/next": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
   },
   "defaultProject": "docs",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
