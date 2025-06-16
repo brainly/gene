@@ -94,6 +94,10 @@ jobs:
               packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=assets && pnpm nx generate @nx/workspace:remove --projectName=translations && pnpm exec nx generate @brainly-gene/tools:gene-workspace && echo "successfully generated gene workspace"',
               successRegexp: 'successfully generated gene workspace',
             }
+          - {
+              packageCommand: 'pnpm exec nx generate @brainly-gene/tools:subapp && nx run api-utils:lint --fix',
+              successRegexp: 'Successfully ran target lint for project api-utils',
+            }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
