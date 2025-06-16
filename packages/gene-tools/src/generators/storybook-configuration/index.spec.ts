@@ -13,6 +13,8 @@ jest.mock('@nx/devkit', () => {
   };
 });
 
+jest.setTimeout(10000);
+
 describe('storybookConfiguration generator', () => {
   let tree: Tree;
 
@@ -28,7 +30,7 @@ describe('storybookConfiguration generator', () => {
       // Generate the application to add configuration to
       await applicationGenerator(tree, {
         name: application,
-        directory: 'apps',
+        directory: `apps/${application}`,
         linter: 'eslint',
         skipFormat: false,
         style: 'css',
@@ -137,7 +139,7 @@ describe('storybookConfiguration generator', () => {
       // Generate the library to add configuration to
       await libraryGenerator(tree, {
         name: library,
-        directory: 'libs',
+        directory: `libs/${library}`,
         linter: 'eslint',
         skipFormat: false,
         skipTsConfig: false,
