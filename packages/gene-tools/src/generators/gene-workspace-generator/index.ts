@@ -18,7 +18,7 @@ export default async function (tree: Tree) {
 
   await translationsLibraryGenerator(tree);
 
-  await generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
+  generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
 
   // Update .eslintrc.json
   const updatedEslintJson = `

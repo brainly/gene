@@ -90,6 +90,10 @@ jobs:
               packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=e2e-testing-providers && pnpm exec nx generate @brainly-gene/tools:e2e-providers && pnpm nx lint e2e-testing-providers --fix',
               successRegexp: 'Successfully ran target lint for project e2e-testing-providers',
             }
+          - {
+              packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=assets && pnpm nx generate @nx/workspace:remove --projectName=translations && pnpm exec nx generate @brainly-gene/tools:gene-workspace && echo "successfully generated gene workspace"',
+              successRegexp: 'successfully generated gene workspace',
+            }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
