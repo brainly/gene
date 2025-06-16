@@ -3,9 +3,6 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   framework: '@storybook/nextjs',
-  features: {
-    storyStoreV7: false,
-  },
 
   core: {
     builder: 'webpack5',
