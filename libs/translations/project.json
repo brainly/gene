@@ -6,31 +6,13 @@
   "tags": ["type:utility"],
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/translations/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/translations"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "libs/translations/jest.config.ts"
-      }
-    },
-    "copy-translations-to-app": {
-      "executor": "nx:run-commands",
-      "outputs": ["{options.projectRoot}/public/nx-locales"],
-      "options": {
-        "command": "pnpm gene-tools copy-translations-to-app {args.projectName}"
-      }
-    },
-    "copy-translations-to-storybook": {
-      "executor": "nx:run-commands",
-      "outputs": ["{projectRoot}/storybook/assets/images"],
-      "options": {
-        "command": "pnpm gene-tools copy-translations-to-storybook"
       }
     },
     "fetch": {
