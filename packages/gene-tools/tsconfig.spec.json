@@ -2,7 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "types": ["jest", "node", "@testing-library/jest-dom"],
-    "rootDir": "src/",
+    "allowJs": true,
+    "outDir": "../../dist/out-tsc",
+    "esModuleInterop": true,
+    "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "strict": true,
