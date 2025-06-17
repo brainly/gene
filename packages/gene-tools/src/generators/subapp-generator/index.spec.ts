@@ -4,6 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import libraryGenerator from '../library-generator';
 import subappGenerator from './index';
 import { prompt } from 'inquirer';
+import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
@@ -20,7 +21,7 @@ describe('Subapp generator', () => {
 
     await libraryGenerator(appTree, {
       name: 'api-utils',
-      directory: '',
+      directory: 'libs/api-utils',
       tags: '',
     });
   });
@@ -34,9 +35,40 @@ describe('Subapp generator', () => {
       postHandler: true,
     });
 
-    expect(
-      appTree.exists('libs/api-utils/src/subapps/my-subapp.ts'),
-    ).toBeTruthy();
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      └── .gitignore
+      libs
+      ├── .gitignore
+      └── api-utils
+          ├── project.json
+          ├── README.md
+          ├── src
+          │   ├── index.ts
+          │   └── subapps
+          │       ├── my-subapp.spec.ts
+          │       ├── my-subapp.ts
+          │       └── types
+          │           ├── mySubappGetTypes.ts
+          │           ├── mySubappPostTypes.ts
+          │           └── index.ts
+          ├── tsconfig.lib.json
+          ├── .babelrc
+          ├── tsconfig.json
+          ├── .eslintrc.json
+          ├── tsconfig.spec.json
+          └── jest.config.ts
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
   });
 
   it('should reexport subapp', async () => {
@@ -61,7 +93,7 @@ describe('Subapp generator', () => {
       }
 
       if (name === 'libDirectory') {
-        return { libDirectory: 'my-domain' };
+        return { libDirectory: 'libs/my-domain/my-api-utils' };
       }
     });
 
@@ -73,9 +105,52 @@ describe('Subapp generator', () => {
       postHandler: true,
     });
 
-    expect(
-      appTree.exists('libs/my-domain/my-api-utils/src/subapps/my-subapp.ts'),
-    ).toBeTruthy();
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      └── .gitignore
+      libs
+      ├── .gitignore
+      ├── api-utils
+      │   ├── project.json
+      │   ├── README.md
+      │   ├── src
+      │   │   └── index.ts
+      │   ├── tsconfig.lib.json
+      │   ├── .babelrc
+      │   ├── tsconfig.json
+      │   ├── .eslintrc.json
+      │   ├── tsconfig.spec.json
+      │   └── jest.config.ts
+      └── my-domain
+          └── my-api-utils
+              ├── project.json
+              ├── README.md
+              ├── src
+              │   ├── index.ts
+              │   └── subapps
+              │       ├── my-subapp.spec.ts
+              │       ├── my-subapp.ts
+              │       └── types
+              │           ├── mySubappGetTypes.ts
+              │           ├── mySubappPostTypes.ts
+              │           └── index.ts
+              ├── tsconfig.lib.json
+              ├── .babelrc
+              ├── tsconfig.json
+              ├── .eslintrc.json
+              ├── tsconfig.spec.json
+              └── jest.config.ts
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
 
     const indexContent = appTree
       .read(`libs/my-domain/my-api-utils/src/index.ts`)

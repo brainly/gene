@@ -20,7 +20,9 @@ describe('secureServe executor', () => {
     targetPort: 4200,
     noOutput: false,
   };
-  const context = {} as ExecutorContext;
+  const context: ExecutorContext = {
+    projectGraph: { nodes: {} },
+  } as ExecutorContext;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -48,10 +50,10 @@ describe('secureServe executor', () => {
     });
 
     await expect(
-      async () => await secureServeExecutor(options, context),
+      async () => await secureServeExecutor(options, context)
     ).rejects.toThrow();
     expect(logger.error).toHaveBeenCalledWith(
-      expect.stringContaining('Failed to initialize the proxy'),
+      expect.stringContaining('Failed to initialize the proxy')
     );
   });
 
@@ -61,8 +63,8 @@ describe('secureServe executor', () => {
     expect(result.success).toBe(true);
     expect(logger.info).toHaveBeenCalledWith(
       expect.stringContaining(
-        `Started https://${options.host}:${options.port} → http://${options.targetHost}:${options.targetPort}`,
-      ),
+        `Started https://${options.host}:${options.port} → http://${options.targetHost}:${options.targetPort}`
+      )
     );
     expect(runExecutor).toHaveBeenCalled();
     expect(createServer).toHaveBeenCalled();
