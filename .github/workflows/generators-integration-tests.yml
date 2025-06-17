@@ -59,7 +59,7 @@ jobs:
               successRegexp: 'Successfully ran target test for project my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true --verbose && NODE_OPTIONS="--max-old-space-size=8192" pnpm nx e2e my-app-e2e --verbose',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && NODE_OPTIONS="--max-old-space-size=8192" pnpm nx e2e my-app-e2e',
               successRegexp: 'Successfully ran target e2e for project my-app-e2e',
             }
           - {
@@ -97,6 +97,10 @@ jobs:
           - {
               packageCommand: 'pnpm exec nx generate @brainly-gene/tools:subapp && nx run api-utils:lint --fix',
               successRegexp: 'Successfully ran target lint for project api-utils',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm exec nx generate @brainly-gene/tools:module --name=my-example --appName=my-app --e2e=true --shouldAutoprefix=true --no-interactive && pnpm exec nx generate @brainly-gene/tools:module --name=my-example2 --appName=my-app --e2e=true --shouldAutoprefix=true --no-interactive && pnpm exec nx run-many --target=lint --projects=my-app,my-app-e2e',
+              successRegexp: 'Successfully ran target lint for 2 projects',
             }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
