@@ -1,5 +1,5 @@
-const { generateComponentReport } = require('./index');
-const path = require('path');
+import { generateComponentReport } from './index';
+import path from 'path';
 
 const pathPrefix = path.resolve(__dirname, 'mocks');
 
