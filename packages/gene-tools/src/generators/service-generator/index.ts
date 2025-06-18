@@ -2,7 +2,6 @@ import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   installPackagesTask,
-  getWorkspaceLayout,
   generateFiles,
   joinPathFragments,
   readJson,
@@ -160,9 +159,11 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
     crudFunctions = getCrudFunctions(name, schema);
   }
 
+  const serviceName = `${name}-service`;
+
   await libraryGenerator(tree, {
-    name: `${name}-service`,
-    directory: directory,
+    name: serviceName,
+    directory: `${directory}/${serviceName}`,
     tags: ['type:service', ...(schema.tags ? schema.tags.split(',') : [])].join(
       ','
     ),
@@ -187,13 +188,8 @@ export default async function (tree: Tree, schema: BrainlyServiceGenerator) {
 
   findDefaultCreatedFilePaths.forEach((path) => tree.delete(path));
 
-  /**
-   * Getting base options
-   */
-  const { libsDir } = getWorkspaceLayout(tree);
-
   const baseOptions = {
-    targetLocation: `${libsDir}/${directory}/${name}-service/src`,
+    targetLocation: `${directory}/${name}-service/src`,
     name: name,
   };
 

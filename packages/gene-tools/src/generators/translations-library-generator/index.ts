@@ -16,11 +16,11 @@ export default async function (tree: Tree) {
 
   await libraryGenerator(tree, {
     name: 'translations',
-    directory: '',
+    directory: 'libs/translations',
     tags: 'type:utility',
   });
 
-  await generateFiles(
+  generateFiles(
     tree,
     joinPathFragments(__dirname, './files'),
     'libs/translations/src',
