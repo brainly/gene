@@ -65,7 +65,7 @@ const cssLoaderConfig = (
     const postcssOptionsConfig = Object.assign(
       {},
       postcssLoaderOptions.config,
-      {path: postcssConfig}
+      { path: postcssConfig }
     );
 
     postcssLoader = {
@@ -119,19 +119,19 @@ const cssLoaderConfig = (
 module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
+      updateWithSvgConfig(config);
       config.devtool =
         process.env.NODE_ENV === 'production'
           ? 'source-map'
           : 'eval-cheap-module-source-map';
-          
+
       if (!options.defaultLoaders) {
         throw new Error(
           'This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade'
         );
       }
 
-      const {dev, isServer} = options;
-
+      const { dev, isServer } = options;
 
       config.module.rules.push({
         test: /\.(jpe?g|png|gif)$/i,
@@ -195,7 +195,7 @@ module.exports = (nextConfig = {}) => {
         {
           test: /packages\/.+\.tsx?$/,
           use: options.defaultLoaders.babel,
-        },
+        }
       );
 
       if (typeof nextConfig.webpack === 'function') {
@@ -204,5 +204,31 @@ module.exports = (nextConfig = {}) => {
 
       return config;
     },
+  });
+};
+
+/**
+ * @param {import('webpack').Configuration} config
+ */
+const updateWithSvgConfig = (config) => {
+  // see: https://github.com/gregberge/svgr/blob/6b329ac8b9f045ef56ba0020ef4d90c2f3080287/website/pages/docs/next.mdx#usage
+  // Grab the existing rule that handles SVG imports
+  const fileLoaderRule = config.module?.rules?.find((rule) =>
+    rule.test?.test?.('.svg')
+  );
+
+  config.module.rules.push({
+    ...fileLoaderRule,
+    test: /\.svg$/i,
+    use: ['@svgr/webpack'],
+  });
+
+  // Modify the file loader rule to ignore *.svg, since we have it handled now.
+  fileLoaderRule.exclude = /\.svg$/i;
+
+  config.module?.rules?.push({
+    test: /\.svg$/,
+    issuer: /\.(css|scss)$/,
+    loader: 'url-loader',
   });
 };
