@@ -5,6 +5,7 @@ const withNextra = require('nextra')({
 });
 const nextConfig = {
   ...withNextra(),
+  nx: {svgr: true},
   output: 'export',
   distDir: '../../dist/docs/docs-site/.next',
   images: {
