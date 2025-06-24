@@ -36,6 +36,7 @@ const getConfig = () => {
       return next(acc);
     },
     {
+      ...(process.env.IS_PROD_BUILD === 'true' ? {output: 'standalone'} : {}),
       images: {
         /**
          * Disable image optimization. When image optimization is enabled, the
