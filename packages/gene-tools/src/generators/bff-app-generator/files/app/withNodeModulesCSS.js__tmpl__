@@ -177,7 +177,10 @@ module.exports = (nextConfig = {}) => {
         loaders: [
           {
             loader: 'sass-loader',
-            options: sassLoaderOptions,
+            options: {
+              ...sassLoaderOptions,
+              implementation: require('sass'),
+            },
           },
         ],
       });

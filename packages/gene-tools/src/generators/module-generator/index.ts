@@ -21,7 +21,6 @@ import {
   camelize,
   underscore,
 } from '@nx/devkit/src/utils/string-utils';
-import { Linter } from '@nx/linter';
 import {
   getNpmScope,
   promptBoolean,
@@ -41,7 +40,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
 
   const workspaceJsonProjects = [...getProjects(tree)].map(
     ([projectName, project]) =>
-      [projectName, project] as [string, ProjectConfiguration],
+      [projectName, project] as [string, ProjectConfiguration]
   );
 
   const appProjects = workspaceJsonProjects
@@ -58,7 +57,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
       schema.appName || '',
       tree,
       'For which app would you like to generate the module?',
-      appProjects,
+      appProjects
     ));
 
   if (!appName) {
@@ -73,7 +72,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
 
   const { root, tags } = appProject;
 
-  const directoryPath = `${root.replace('apps/', '')}`;
+  const directoryPath = `libs/${root.replace('apps/', '')}`;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const moduleLibrary = workspaceJsonProjects.find(([_, project]) => {
@@ -83,14 +82,15 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
   const dasherizedName = dasherize(schema.name);
   const nameWithSuffix = `${dasherizedName}-module`;
 
-  const modulePath = `libs/${directoryPath}/${APP_MODULES_LIB_SUFFIX}`;
+  const modulePath = `${directoryPath}/${APP_MODULES_LIB_SUFFIX}`;
   const moduleSourcePath = `${modulePath}/src`;
-  const moduleProjectName =
-    `${directoryPath}/${APP_MODULES_LIB_SUFFIX}`.replace(
-      new RegExp('/', 'g'),
-      '-',
-    );
-  const moduleProjectE2EName = `${moduleProjectName}-e2e`;
+  // const moduleProjectName = nameWithSuffix;
+
+  const appModuleLibraryName = dasherize(
+    `${appName}-${APP_MODULES_LIB_SUFFIX}`
+  );
+  const moduleProjectE2EName = `${appModuleLibraryName}-e2e`;
+
   const e2ePath = `apps/${moduleProjectE2EName}`;
 
   const moduleAutoprefixedName = classify(`${appName}-${nameWithSuffix}`);
@@ -102,7 +102,7 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
       ? schema.shouldAutoprefix
       : await promptBoolean(
           `Would you like to autoprefix the module name with the app name? (default: ${defaultModuleName}, autoprefixed: ${moduleAutoprefixedName})
-Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/branching#modules-naming`,
+Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/branching#modules-naming`
         );
 
   const moduleDisplayName = shouldAutoprefix
@@ -114,10 +114,11 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
     : null;
 
   if (moduleLibrary) {
+    // TODO: check this path
     console.log(`Module library for app ${appName} already exists.`);
     const scopedPath = `${moduleSourcePath}/lib`;
 
-    await generateFiles(
+    generateFiles(
       tree,
       joinPathFragments(__dirname, './files/module'),
       scopedPath,
@@ -130,7 +131,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         tmpl: '',
         errorBoundary,
         npmScope,
-      },
+      }
     );
 
     const reexportFilePath = `${moduleSourcePath}/index.ts`;
@@ -139,17 +140,17 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
 
     tree.write(
       reexportFilePath,
-      `${existingReexportFile}\nexport {${moduleDisplayName}} from './lib/${nameWithSuffix}';`,
+      `${existingReexportFile}\nexport {${moduleDisplayName}} from './lib/${nameWithSuffix}';`
     );
 
     const isE2EProjectExists = workspaceJsonProjects.find(
-      ([projectName]) => projectName === moduleProjectE2EName,
+      ([projectName]) => projectName === moduleProjectE2EName
     );
 
     if (schema.e2e && isE2EProjectExists) {
       const scopedE2EPath = `${e2ePath}/src/e2e`;
 
-      await generateFiles(
+      generateFiles(
         tree,
         joinPathFragments(__dirname, './files/e2e'),
         scopedE2EPath,
@@ -161,20 +162,22 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           connectedFileName: camelize(moduleDisplayName).toLocaleLowerCase(),
           tmpl: '',
           npmScope,
-        },
+        }
       );
     }
 
     if (schema.e2e && !isE2EProjectExists) {
       await cypressProjectGenerator(tree, {
-        name: moduleProjectName,
-        linter: Linter.EsLint,
+        // name: moduleProjectName,
+        name: appModuleLibraryName,
+        linter: 'eslint',
+        directory: e2ePath,
       });
 
       updateCypressTsConfig(tree, e2ePath);
 
       // create custom cypress files
-      await generateFiles(
+      generateFiles(
         tree,
         joinPathFragments(__dirname, './files/e2e-with-library'),
         e2ePath,
@@ -186,12 +189,12 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           connectedFileName: camelize(moduleDisplayName).toLocaleLowerCase(),
           tmpl: '',
           npmScope,
-        },
+        }
       );
 
       const e2eProjectConfig = readProjectConfiguration(
         tree,
-        moduleProjectE2EName,
+        moduleProjectE2EName
       );
 
       updateProjectConfiguration(tree, moduleProjectE2EName, {
@@ -203,7 +206,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
             options: {
               cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
               testingType: 'e2e',
-              devServerTarget: `${moduleProjectName}:storybook-e2e`,
+              devServerTarget: `${appModuleLibraryName}:storybook-e2e`,
             },
           },
           'e2e-base': {
@@ -232,7 +235,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
               },
             ],
           };
-        },
+        }
       );
     }
 
@@ -246,7 +249,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
   }
 
   console.log(
-    `Module library for app ${appName} was not found in ${modulePath}. Generating...`,
+    `Module library for app ${appName} was not found in ${modulePath}. Generating...`
   );
 
   const domainTags = tags?.filter((tag) => tag.startsWith('domain:'));
@@ -260,8 +263,8 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
    * Generate module
    */
   await libraryGenerator(tree, {
-    name: APP_MODULES_LIB_SUFFIX,
-    directory: directoryPath,
+    name: appModuleLibraryName,
+    directory: `${directoryPath}/${APP_MODULES_LIB_SUFFIX}`,
     tags: resolvedTags,
   });
 
@@ -270,7 +273,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
   tree.delete(`libs/${directoryPath}/${APP_MODULES_LIB_SUFFIX}/README.md`);
 
   // create custom module file structure
-  await generateFiles(
+  generateFiles(
     tree,
     joinPathFragments(__dirname, './files/module-with-library'),
     moduleSourcePath,
@@ -283,25 +286,27 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       tmpl: '',
       errorBoundary,
       npmScope,
-    },
+    }
   );
 
   /**
    * @description
    * configure storybook for generated module
    */
-  await storybookConfigurationGenerator(tree, { name: moduleProjectName });
+  await storybookConfigurationGenerator(tree, { name: appModuleLibraryName });
 
   if (schema.e2e) {
     await cypressProjectGenerator(tree, {
-      name: moduleProjectName,
-      linter: Linter.EsLint,
+      // name: moduleProjectName,
+      name: appModuleLibraryName,
+      linter: 'eslint',
+      directory: e2ePath,
     });
 
     updateCypressTsConfig(tree, e2ePath);
 
     // create custom cypress files
-    await generateFiles(
+    generateFiles(
       tree,
       joinPathFragments(__dirname, './files/e2e-with-library'),
       e2ePath,
@@ -313,12 +318,12 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         connectedFileName: camelize(moduleDisplayName).toLocaleLowerCase(),
         tmpl: '',
         npmScope,
-      },
+      }
     );
 
     const e2eProjectConfig = readProjectConfiguration(
       tree,
-      moduleProjectE2EName,
+      moduleProjectE2EName
     );
 
     updateProjectConfiguration(tree, moduleProjectE2EName, {
@@ -330,7 +335,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
           options: {
             cypressConfig: `apps/${moduleProjectE2EName}/cypress.config.ts`,
             testingType: 'e2e',
-            devServerTarget: `${moduleProjectName}:storybook-e2e`,
+            devServerTarget: `${appModuleLibraryName}:storybook-e2e`,
           },
         },
       },
@@ -353,7 +358,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
             },
           ],
         };
-      },
+      }
     );
   }
 
