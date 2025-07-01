@@ -7,7 +7,7 @@ import { applicationGenerator } from '@nx/next';
 
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
-jest.setTimeout(10000);
+jest.setTimeout(60000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
 describe('Subapp generator', () => {
   let appTree: Tree;
@@ -17,14 +17,14 @@ describe('Subapp generator', () => {
   let apiPath: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     apiRouteName = 'my-api-route';
     appDirectory = 'apps/example.com';
     appName = 'example.com';
     apiPath = 'v1';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
 
     await applicationGenerator(appTree, {
       directory: appDirectory,
@@ -37,6 +37,10 @@ describe('Subapp generator', () => {
         return { appName };
       }
     });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate files', async () => {

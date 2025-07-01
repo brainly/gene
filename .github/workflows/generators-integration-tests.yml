@@ -95,8 +95,8 @@ jobs:
               successRegexp: 'successfully generated gene workspace',
             }
           - {
-              packageCommand: 'pnpm exec nx generate @brainly-gene/tools:subapp && nx run api-utils:lint --fix',
-              successRegexp: 'Successfully ran target lint for project api-utils',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:library --name=my-library --directory=libs/examples/my-library --tags=social-qa && pnpm nx g @brainly-gene/tools:subapp --library=my-library --name=my-subapp --directory=my-subapp --tags=domain:social-qa && pnpm nx run my-library:lint --fix',
+              successRegexp: 'Successfully ran target lint for project my-library',
             }
           - {
               packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm exec nx generate @brainly-gene/tools:module --name=my-example --appName=my-app --e2e=true --shouldAutoprefix=true --no-interactive && pnpm exec nx generate @brainly-gene/tools:module --name=my-example2 --appName=my-app --e2e=true --shouldAutoprefix=true --no-interactive && pnpm exec nx run-many --target=lint --projects=my-app,my-app-e2e',

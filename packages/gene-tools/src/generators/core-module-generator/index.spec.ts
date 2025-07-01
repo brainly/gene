@@ -12,14 +12,18 @@ describe('Core module generator', () => {
   let domainTag: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'my-lib';
     directory = 'libs/my-lib';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     createdProjectName = 'my-lib-module';
     domainTag = 'domain:test';
+  });
 
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate files', async () => {

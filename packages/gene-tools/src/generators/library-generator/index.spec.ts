@@ -10,12 +10,16 @@ describe('Library generator', () => {
   let directory: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'my-library';
     directory = 'libs/my-library';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+  });
 
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate files', async () => {
