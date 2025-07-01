@@ -4,6 +4,8 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
 import { applicationGenerator } from '@nx/next';
 
+jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
+
 describe('Module generator', () => {
   let expectedModuleFolder: string;
   let appTree: Tree;
@@ -12,6 +14,9 @@ describe('Module generator', () => {
   let domainTag: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'my-lib';
     expectedModuleFolder = 'libs/my-app/app-modules';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
@@ -28,9 +33,10 @@ describe('Module generator', () => {
       js: false,
       e2eTestRunner: 'none',
     });
+  });
 
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate appropriate module library files if no library has been generated before, without e2e', async () => {

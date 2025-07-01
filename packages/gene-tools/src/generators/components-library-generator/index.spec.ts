@@ -21,19 +21,23 @@ describe('Components library generator', () => {
   let directory: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'answer-box';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     directory = 'libs/social-qa/question/components';
     projectNameWithSuffix = `${projectName}-ui`;
-
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
 
     (prompt as unknown as jest.Mock).mockImplementation(({ name }) => {
       if (name === 'input') {
         return { input: 'TestComponent' };
       }
     });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate files', async () => {

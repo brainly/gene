@@ -10,12 +10,16 @@ describe('Service generator', () => {
   let directory: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'question';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     directory = 'libs/question/services';
+  });
 
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate files and delete default files', async () => {
