@@ -43,7 +43,18 @@ jobs:
           echo "NX_HEAD=$(git rev-parse HEAD)" >> $GITHUB_ENV
       - name: Lint
         run: pnpm nx affected --target=lint --parallel=3
-      - name: Test
-        run: pnpm nx affected --target=test --parallel=1 -- --runInBand
+
+      # region test
+      - run: pnpm nx run packages-gene:test --runInBand
+      - run: pnpm nx run packages-gene-next:test --runInBand
+      - run: pnpm nx run packages-gene-tools:test --runInBand
+      - run: pnpm nx run packages-gene-apollo:test --runInBand
+      - run: pnpm nx run assets:test --runInBand
+      - run: pnpm nx run packages-gene-sentry:test --runInBand
+      - run: pnpm nx run translations:test --runInBand
+      - run: pnpm nx run docs-docs-site:test --runInBand
+      - run: pnpm nx run e2e-testing-providers:test --runInBand
+      # endregion
+
       - name: Build
         run: pnpm nx affected --target=build --parallel=3
