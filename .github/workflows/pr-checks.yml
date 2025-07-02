@@ -45,15 +45,15 @@ jobs:
         run: pnpm nx affected --target=lint --parallel=3
 
       # region test
-      - run: pnpm nx run packages-gene:test --runInBand
-      - run: pnpm nx run packages-gene-next:test --runInBand
-      - run: pnpm nx run packages-gene-tools:test --runInBand
-      - run: pnpm nx run packages-gene-apollo:test --runInBand
-      - run: pnpm nx run assets:test --runInBand
-      - run: pnpm nx run packages-gene-sentry:test --runInBand
-      - run: pnpm nx run translations:test --runInBand
-      - run: pnpm nx run docs-docs-site:test --runInBand
-      - run: pnpm nx run e2e-testing-providers:test --runInBand
+      - run: pnpm nx run packages-gene:test
+      - run: pnpm nx run packages-gene-next:test
+      - run: pnpm nx run packages-gene-tools:test
+      - run: pnpm nx run packages-gene-apollo:test
+      - run: pnpm nx run assets:test
+      - run: pnpm nx run packages-gene-sentry:test
+      - run: pnpm nx run translations:test
+      - run: pnpm nx run docs-docs-site:test
+      - run: pnpm nx run e2e-testing-providers:test
       # endregion
 
       - name: Build
