@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { useReactQueryObservableQuery } from './useReactQueryObservableQuery';
 import type { QueryObserver } from '@tanstack/react-query';
@@ -65,7 +65,9 @@ describe('useReactQueryObservableQuery', () => {
       data: { hello: { world: 'value 0' } },
     });
     foo = 1;
-    rerender();
+    act(() => {
+      rerender();
+    });
     initialValue = result.current;
     await waitFor(() => {
       expect(result.current).not.toBe(initialValue);
@@ -76,7 +78,9 @@ describe('useReactQueryObservableQuery', () => {
     });
 
     foo = 2;
-    rerender();
+    act(() => {
+      rerender();
+    });
     initialValue = result.current;
     await waitFor(() => {
       expect(result.current).not.toBe(initialValue);
@@ -87,7 +91,9 @@ describe('useReactQueryObservableQuery', () => {
     });
 
     foo = 3;
-    rerender();
+    act(() => {
+      rerender();
+    });
     initialValue = result.current;
     await waitFor(() => {
       expect(result.current).not.toBe(initialValue);
@@ -112,7 +118,9 @@ describe('useReactQueryObservableQuery', () => {
       data: { hello: { world: 'value 1' } },
     });
 
-    result.current.refetch();
+    act(() => {
+      result.current.refetch();
+    });
 
     initialValue = result.current;
     await waitFor(() => {
@@ -146,7 +154,9 @@ describe('useReactQueryObservableQuery', () => {
     });
 
     foo = 2;
-    rerender();
+    act(() => {
+      rerender();
+    });
 
     initialValue = result.current;
     await waitFor(() => {
@@ -158,7 +168,9 @@ describe('useReactQueryObservableQuery', () => {
     });
 
     foo = 3;
-    rerender();
+    act(() => {
+      rerender();
+    });
     initialValue = result.current;
     await waitFor(() => {
       expect(result.current).not.toBe(initialValue);
@@ -169,7 +181,9 @@ describe('useReactQueryObservableQuery', () => {
     });
 
     foo = 1;
-    rerender();
+    act(() => {
+      rerender();
+    });
 
     expect(result.current.data).toMatchObject({
       data: { hello: { world: 'value 1' } },
@@ -178,7 +192,9 @@ describe('useReactQueryObservableQuery', () => {
     expect(spy).toHaveBeenCalledTimes(3);
 
     foo = 2;
-    rerender();
+    act(() => {
+      rerender();
+    });
 
     expect(result.current.data).toMatchObject({
       data: { hello: { world: 'value 2' } },
@@ -187,7 +203,9 @@ describe('useReactQueryObservableQuery', () => {
     expect(spy).toHaveBeenCalledTimes(3);
 
     foo = 3;
-    rerender();
+    act(() => {
+      rerender();
+    });
 
     expect(result.current.data).toMatchObject({
       data: { hello: { world: 'value 3' } },

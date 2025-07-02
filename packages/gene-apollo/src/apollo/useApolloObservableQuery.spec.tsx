@@ -1,17 +1,16 @@
 import React from 'react';
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useApolloObservableQuery } from './useApolloObservableQuery';
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  NormalizedCacheObject,
-} from '@apollo/client';
+import type { NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import gql from 'graphql-tag';
 import { makeWatchQuery } from './makeWatchQuery';
-import { mockFetch } from '@brainly-gene/core';
-import { useMockedRouterContainer } from '@brainly-gene/core';
-import { Provider } from '@brainly-gene/core';
+import {
+  mockFetch,
+  useMockedRouterContainer,
+  Provider,
+} from '@brainly-gene/core';
 
 mockFetch();
 
@@ -55,7 +54,7 @@ describe('useApolloObservableQuery', () => {
       () => useApolloObservableQuery(queryObservable),
       {
         wrapper: ContainerWrapper,
-      },
+      }
     );
 
     expect(result.current.error).toBe(null);
@@ -91,14 +90,16 @@ describe('useApolloObservableQuery', () => {
       () => useApolloObservableQuery(queryObservable),
       {
         wrapper: ContainerWrapper,
-      },
+      }
     );
 
     // test refetch works correctly
-    const refetchedData = await result.current.refetch();
+    await act(async () => {
+      const refetchedData = await result.current.refetch();
 
-    expect(refetchedData.data).toMatchObject({
-      hello: { world: 'value' },
+      expect(refetchedData.data).toMatchObject({
+        hello: { world: 'value' },
+      });
     });
   });
 
@@ -119,14 +120,16 @@ describe('useApolloObservableQuery', () => {
       () => useApolloObservableQuery(queryObservable),
       {
         wrapper: ContainerWrapper,
-      },
+      }
     );
 
     // test fetchMore works correctly
-    const moreResults = await result.current.fetchMore({});
+    await act(async () => {
+      const moreResults = await result.current.fetchMore({});
 
-    expect(moreResults.data).toMatchObject({
-      hello: { world: 'value' },
+      expect(moreResults.data).toMatchObject({
+        hello: { world: 'value' },
+      });
     });
   });
 });
