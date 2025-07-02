@@ -150,6 +150,7 @@ describe('useReactQueryLazy', () => {
   });
 
   it('does not update if query key does not exist', async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => jest.fn());
     const updateFn = (currentData: any) => {
       return { ...currentData, value: 'updated' };
     };
@@ -173,6 +174,7 @@ describe('useReactQueryLazy', () => {
 
     const updatedData = queryClient.getQueryData(['otherKey']);
     expect(updatedData).toBe(undefined);
+    jest.restoreAllMocks();
   });
 
   it('handles errors and reverts other queries updates', async () => {
