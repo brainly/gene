@@ -9,7 +9,7 @@ jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
 jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
-describe.skip('Subapp generator', () => {
+describe('Subapp generator', () => {
   let appTree: Tree;
   let apiRouteName: string;
   let appDirectory: string;
