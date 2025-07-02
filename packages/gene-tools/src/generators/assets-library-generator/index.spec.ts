@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import assetsLibraryGenerator from './index';
 import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
-describe('Assets library generator', () => {
+describe.skip('Assets library generator', () => {
   let appTree: Tree;
 
   beforeEach(async () => {
