@@ -2,5 +2,15 @@
   "name": "@brainly-gene/core",
   "version": "0.2.0-alpha.8",
   "license": "Apache-2.0",
-  "main": "./src/index.js"
+  "sideEffects": false,
+  "peerDependencies": {
+    "@sentry/react": ">=7.77.0",
+    "@storybook/addon-actions": ">=6.5.16",
+    "@tanstack/react-query": ">=5.55.4",
+    "inversify": ">=5.1.1",
+    "ramda": ">=0.27.1",
+    "react": ">=18.3.1",
+    "tslib": ">=2.3.0",
+    "zen-observable-ts": ">=1.1.0"
+  }
 }
