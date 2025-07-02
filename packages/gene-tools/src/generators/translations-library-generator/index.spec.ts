@@ -1,23 +1,15 @@
 import type { Tree } from '@nx/devkit';
-import { logger } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import translationsLibraryGenerator from './index';
 import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
-describe.skip('Translations library generator', () => {
+describe('Translations library generator', () => {
   let appTree: Tree;
 
   beforeEach(async () => {
-    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
-    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
-
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
     await new Promise(process.nextTick);
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
   });
 
   it('should generate files', async () => {
