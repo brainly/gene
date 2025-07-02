@@ -163,7 +163,6 @@
     "husky": "2.7.0",
     "jest": "29.4.3",
     "jest-environment-jsdom": "29.4.3",
-    "jest-watch-typeahead": "2.2.2",
     "jsonc-eslint-parser": "2.1.0",
     "lint-staged": "9.5.0",
     "lucide-react": "0.453.0",
