@@ -3,10 +3,11 @@ import { logger, readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import moduleGenerator from './index';
 import { applicationGenerator } from '@nx/next';
+import { isCI } from 'nx/src/utils/is-ci';
 
 jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
-describe.skip('Module generator', () => {
+(isCI() ? describe.skip : describe)('Module generator', () => {
   let expectedModuleFolder: string;
   let appTree: Tree;
   let projectName: string;

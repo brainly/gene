@@ -5,6 +5,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { applicationGenerator } from '@nx/next';
 import { libraryGenerator } from '@nx/react';
 import { storybookConfigurationGenerator } from './index';
+import { isCI } from 'nx/src/utils/is-ci';
 
 jest.mock('@nx/devkit', () => {
   return {
@@ -15,7 +16,7 @@ jest.mock('@nx/devkit', () => {
 
 jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
-describe.skip('storybookConfiguration generator', () => {
+(isCI() ? describe.skip : describe)('storybookConfiguration generator', () => {
   let tree: Tree;
 
   beforeEach(async () => {
