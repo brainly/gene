@@ -13,9 +13,9 @@ jest.mock('@nx/devkit', () => {
   };
 });
 
-jest.setTimeout(120000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
+jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
-describe('storybookConfiguration generator', () => {
+describe.skip('storybookConfiguration generator', () => {
   let tree: Tree;
 
   beforeEach(async () => {

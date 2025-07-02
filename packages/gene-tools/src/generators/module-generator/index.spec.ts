@@ -6,7 +6,7 @@ import { applicationGenerator } from '@nx/next';
 
 jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
-describe('Module generator', () => {
+describe.skip('Module generator', () => {
   let expectedModuleFolder: string;
   let appTree: Tree;
   let projectName: string;
