@@ -24,6 +24,8 @@ describe('Subapp generator', () => {
       directory: 'libs/api-utils',
       tags: '',
     });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

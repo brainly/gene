@@ -12,6 +12,8 @@ describe('Assets library generator', () => {
     jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
 
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

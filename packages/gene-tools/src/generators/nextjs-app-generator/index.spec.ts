@@ -18,6 +18,8 @@ describe('NextJS App generator', () => {
     projectName = 'my-app';
     directory = 'apps/example/my-app';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

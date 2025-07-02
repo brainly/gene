@@ -33,6 +33,8 @@ describe('Module generator', () => {
       js: false,
       e2eTestRunner: 'none',
     });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

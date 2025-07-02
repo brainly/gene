@@ -19,12 +19,14 @@ jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during
 describe.skip('storybookConfiguration generator', () => {
   let tree: Tree;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
     jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
 
     // Create a tree with an empty workspace
     tree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

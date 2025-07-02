@@ -16,6 +16,8 @@ describe('Service generator', () => {
     projectName = 'question';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     directory = 'libs/question/services';
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {
