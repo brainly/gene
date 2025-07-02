@@ -43,6 +43,5 @@
       "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     }
   },
-  "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
-  "nxCloudAccessToken": "Yzc1NWEzZTgtYmJiOS00ZjE0LWI5ZWItZWI0MWM3MjBlYzZifHJlYWQtd3JpdGU="
+  "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } }
 }
