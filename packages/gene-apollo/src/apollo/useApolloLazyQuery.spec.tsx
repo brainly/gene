@@ -1,18 +1,13 @@
-import React from 'react';
 import {
   mockFetch,
   mockFetchBasedOnQuery,
   mockFetchWithDelay,
 } from '@brainly-gene/core';
-import {
-  ApolloClient,
-  InMemoryCache,
-  NormalizedCacheObject,
-  useQuery,
-} from '@apollo/client';
+import type { NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useApolloLazyQuery } from './useApolloLazyQuery';
-import { waitFor, renderHook } from '@testing-library/react';
+import { waitFor, renderHook, act } from '@testing-library/react';
 
 const query = `
   query GetSomething {
@@ -51,14 +46,16 @@ describe('useApolloLazyQuery', () => {
       useApolloLazyQuery({
         apolloClient,
         queryFn,
-      }),
+      })
     );
 
     expect(result.current.error).toBe(null);
     expect(result.current.loading).toBe(false);
     expect(result.current.data).toBe(undefined);
 
-    result.current.fetch();
+    act(() => {
+      result.current.fetch();
+    });
 
     const initialValue = result.current;
     await waitFor(() => {
@@ -90,10 +87,13 @@ describe('useApolloLazyQuery', () => {
       useApolloLazyQuery({
         apolloClient,
         queryFn,
-      }),
+      })
     );
 
-    result.current.fetch({ optimisticResponse });
+    act(() => {
+      result.current.fetch({ optimisticResponse });
+    });
+
     await waitFor(() => {
       expect(result.current.data).toMatchObject(optimisticResponse);
     });
@@ -119,13 +119,13 @@ describe('useApolloLazyQuery', () => {
       useApolloLazyQuery({
         apolloClient,
         queryFn,
-      }),
+      })
     );
 
     const { result: otherResult } = renderHook(() =>
       useQuery(gql(otherQuery), {
         client: apolloClient,
-      }),
+      })
     );
 
     // Fetch other query first
@@ -139,7 +139,7 @@ describe('useApolloLazyQuery', () => {
             query:
               'query GetSomethingElse {\n  hola {\n    mundo\n    __typename\n  }\n}\n',
           }),
-        }),
+        })
       );
     });
 
@@ -149,7 +149,9 @@ describe('useApolloLazyQuery', () => {
       });
     });
 
-    result.current.fetch({ refetchQueries });
+    act(() => {
+      result.current.fetch({ refetchQueries });
+    });
 
     // Fetch first query
     await waitFor(() => {
@@ -162,7 +164,7 @@ describe('useApolloLazyQuery', () => {
             query:
               'query GetSomething {\n  hello {\n    world\n    __typename\n  }\n}\n',
           }),
-        }),
+        })
       );
     });
 
@@ -183,7 +185,7 @@ describe('useApolloLazyQuery', () => {
             query:
               'query GetSomethingElse {\n  hola {\n    mundo\n    __typename\n  }\n}\n',
           }),
-        }),
+        })
       );
     });
 

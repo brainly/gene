@@ -1,5 +1,6 @@
 import type { AbstractEventBusEventType } from './EventBus';
 import { register, emit } from './EventBus';
+import { act } from '@testing-library/react';
 
 describe('Test EventBus Core Features', () => {
   const eventType1 = 'testEvent1';
@@ -16,20 +17,22 @@ describe('Test EventBus Core Features', () => {
       (value: AbstractEventBusEventType) => {
         count++;
         expect(value.payload).toBe(eventPayload);
-      },
+      }
     );
     const subscription2 = register(
       { type: eventType1 },
       (value: AbstractEventBusEventType) => {
         count++;
         expect(value.payload).toBe(eventPayload);
-      },
+      }
     );
     const subscription3 = register({ type: 'different-event' }, () => count++);
 
-    emit({
-      type: eventType1,
-      payload: eventPayload,
+    act(() => {
+      emit({
+        type: eventType1,
+        payload: eventPayload,
+      });
     });
 
     expect(count).toBe(2);
@@ -48,9 +51,11 @@ describe('Test EventBus Core Features', () => {
 
     subscription.unsubscribe();
 
-    emit({
-      type: eventType1,
-      payload: eventPayload,
+    act(() => {
+      emit({
+        type: eventType1,
+        payload: eventPayload,
+      });
     });
 
     expect(count).toBe(1);
@@ -59,9 +64,11 @@ describe('Test EventBus Core Features', () => {
 
     subscription2.unsubscribe();
 
-    emit({
-      type: eventType1,
-      payload: eventPayload,
+    act(() => {
+      emit({
+        type: eventType1,
+        payload: eventPayload,
+      });
     });
 
     expect(count).toBe(1);
@@ -78,9 +85,11 @@ describe('Test EventBus Core Features', () => {
     subscription.unsubscribe();
     subscription.unsubscribe();
 
-    emit({
-      type: eventType1,
-      payload: eventPayload,
+    act(() => {
+      emit({
+        type: eventType1,
+        payload: eventPayload,
+      });
     });
 
     expect(count).toBe(1);
@@ -89,9 +98,11 @@ describe('Test EventBus Core Features', () => {
 
     subscription2.unsubscribe();
 
-    emit({
-      type: eventType1,
-      payload: eventPayload,
+    act(() => {
+      emit({
+        type: eventType1,
+        payload: eventPayload,
+      });
     });
 
     expect(count).toBe(1);
@@ -110,9 +121,11 @@ describe('Test EventBus Core Features', () => {
     });
     const subscription2 = register({ type: eventType1 }, () => count++);
 
-    emit({
-      type: eventType1,
-      payload: eventPayload,
+    act(() => {
+      emit({
+        type: eventType1,
+        payload: eventPayload,
+      });
     });
 
     expect(count).toBe(2);
@@ -134,7 +147,7 @@ describe('Test EventBus Core Features', () => {
         expect(value.payload).toBe(asyncEventPayload);
         cleanSubscriptions([subscription]);
         done();
-      },
+      }
     );
 
     const asyncEvent = createAsyncEvent({
@@ -152,9 +165,11 @@ describe('Test EventBus Core Features', () => {
 
     subscription.unsubscribe();
 
-    emit({
-      type: asyncEventType,
-      payload: asyncEventPayload,
+    act(() => {
+      emit({
+        type: asyncEventType,
+        payload: asyncEventPayload,
+      });
     });
 
     expect(count).toBe(0);
@@ -166,7 +181,7 @@ describe('Test EventBus Core Features', () => {
   }
 
   function createAsyncEvent(
-    event: AbstractEventBusEventType,
+    event: AbstractEventBusEventType
   ): Promise<AbstractEventBusEventType> {
     return new Promise<AbstractEventBusEventType>((resolve) => {
       setTimeout(() => {
