@@ -16,18 +16,18 @@ export default async function (tree: Tree, schema: AssetsLibraryGenerator) {
 
   await libraryGenerator(tree, {
     name: 'assets',
-    directory: '',
+    directory: 'libs/assets',
     tags: 'type:utility',
   });
 
-  await generateFiles(
+  generateFiles(
     tree,
     joinPathFragments(__dirname, './files'),
     'libs/assets/src',
     {
       ...schema,
       tmpl: '',
-    },
+    }
   );
 
   await formatFiles(tree);

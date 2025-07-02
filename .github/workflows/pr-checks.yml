@@ -12,6 +12,9 @@ env:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [lint, test, build]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -41,8 +44,5 @@ jobs:
         run: |
           echo "NX_BASE=$(git merge-base origin/master HEAD)" >> $GITHUB_ENV
           echo "NX_HEAD=$(git rev-parse HEAD)" >> $GITHUB_ENV
-      - name: Lint, Test, and Build
-        run: |
-          pnpm nx affected --target=lint --parallel=3
-          pnpm nx affected --target=test --parallel=3
-          pnpm nx affected --target=build --parallel=3
+      - name: Run ${{ matrix.target }}
+        run: pnpm nx affected --target=${{ matrix.target }}

@@ -2,69 +2,131 @@ import type { Tree } from '@nx/devkit';
 import { logger, readJson, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import appGenerator from './index';
+import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
 jest.setTimeout(10000);
 
 describe('NextJS App generator', () => {
   let appTree: Tree;
   let projectName: string;
+  let directory: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'my-app';
+    directory = 'apps/example/my-app';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
 
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
+    await new Promise(process.nextTick);
   });
 
-  it('should generate files', async () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should generate files structure', async () => {
     await appGenerator(appTree, {
-      directory: '',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
       rewrites: true,
     });
 
-    expect(appTree.exists('apps/my-app/pages/index.tsx')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/pages/_app.tsx')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/pages/_document.tsx')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/context/appContext.ts')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/types/types.ts')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/ioc/baseIoc.ts')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/ioc/getHomePageIoc.ts')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/config/rewrites.json')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/loadRewrites.js')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/withNodeModulesCSS.js')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/.storybook/main.js')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/.env')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/index.d.ts')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/next.config.js')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/README.md')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/tsconfig.json')).toBeTruthy();
-    expect(appTree.exists('apps/my-app/tsconfig.spec.json')).toBeTruthy();
-    expect(appTree.exists('apps/my-app-e2e/cypress.config.ts')).toBeTruthy();
-    expect(
-      appTree.exists('apps/my-app-e2e/src/fixtures/example.json')
-    ).toBeTruthy();
-
-    expect(appTree.exists('apps/my-app-e2e/src/support/e2e.ts')).toBeTruthy();
-    expect(
-      appTree.exists('apps/my-app-e2e/src/e2e/Home/display.ts')
-    ).toBeTruthy();
-    expect(appTree.exists('apps/my-app-e2e/src/e2e/Home.feature')).toBeTruthy();
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      ├── .gitignore
+      └── example
+          ├── my-app
+          │   ├── index.d.ts
+          │   ├── next-env.d.ts
+          │   ├── next.config.js
+          │   ├── public
+          │   │   ├── .gitkeep
+          │   │   ├── favicon.ico
+          │   │   └── nx-static
+          │   │       ├── .gitignore
+          │   │       └── manifest.json
+          │   ├── tsconfig.json
+          │   ├── pages
+          │   │   ├── index.tsx
+          │   │   ├── _app.tsx
+          │   │   ├── _document.tsx
+          │   │   ├── styles.css
+          │   │   ├── _error.tsx
+          │   │   └── api
+          │   │       └── health.ts
+          │   ├── project.json
+          │   ├── tsconfig.spec.json
+          │   ├── jest.config.ts
+          │   ├── .eslintrc.json
+          │   ├── .swcrc
+          │   ├── .env
+          │   ├── .gitignore
+          │   ├── README.md
+          │   ├── components
+          │   │   └── index.tsx
+          │   ├── config
+          │   │   ├── redirects.json
+          │   │   └── rewrites.json
+          │   ├── context
+          │   │   └── appContext.ts
+          │   ├── ioc
+          │   │   ├── baseIoc.ts
+          │   │   └── getHomePageIoc.ts
+          │   ├── loadRewrites.js
+          │   ├── types
+          │   │   └── types.ts
+          │   ├── withNodeModulesCSS.js
+          │   ├── .storybook
+          │   │   ├── main.js
+          │   │   ├── manager.js
+          │   │   └── preview.js
+          │   └── tsconfig.storybook.json
+          └── my-app-e2e
+              ├── project.json
+              ├── src
+              │   ├── e2e
+              │   │   ├── Home
+              │   │   │   └── display.ts
+              │   │   └── Home.feature
+              │   ├── support
+              │   │   ├── e2e.ts
+              │   │   └── commands.ts
+              │   ├── fixtures
+              │   │   └── example.json
+              │   └── plugins
+              │       └── index.js
+              ├── cypress.config.ts
+              ├── tsconfig.json
+              └── .eslintrc.json
+      libs
+      └── .gitignore
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
   });
 
   it('should update workspace targets', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
       rewrites: true,
     });
 
-    const appConfig = readProjectConfiguration(appTree, 'example.com-my-app');
+    const appConfig = readProjectConfiguration(appTree, `${projectName}`);
     expect(appConfig?.targets?.['build']).toBeTruthy();
     expect(appConfig?.targets?.['serve-base']).toBeTruthy();
     expect(appConfig?.targets?.['serve']).toBeTruthy();
@@ -133,21 +195,18 @@ describe('NextJS App generator', () => {
       }
     `);
 
-    const e2eConfig = readProjectConfiguration(
-      appTree,
-      'example.com-my-app-e2e'
-    );
+    const e2eConfig = readProjectConfiguration(appTree, `${projectName}-e2e`);
     expect(e2eConfig?.targets?.['e2e']).toMatchInlineSnapshot(`
       Object {
         "configurations": Object {
           "production": Object {
-            "devServerTarget": "example.com-my-app:serve-base:production",
+            "devServerTarget": "my-app:serve-base:production",
           },
         },
         "executor": "@nx/cypress:cypress",
         "options": Object {
-          "cypressConfig": "apps/example.com/my-app-e2e/cypress.config.ts",
-          "devServerTarget": "example.com-my-app:serve-base",
+          "cypressConfig": "apps/example/my-app-e2e/cypress.config.ts",
+          "devServerTarget": "my-app:serve-base",
           "testingType": "e2e",
         },
       }
@@ -156,7 +215,7 @@ describe('NextJS App generator', () => {
 
   it('should update cypress configs', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
@@ -164,7 +223,7 @@ describe('NextJS App generator', () => {
     });
 
     const cypressConfig = appTree
-      .read('apps/example.com/my-app-e2e/cypress.config.ts')
+      .read(`${directory}-e2e/cypress.config.ts`)
       ?.toString();
 
     const baseUrl = 'https://localhost:3000';
@@ -172,10 +231,7 @@ describe('NextJS App generator', () => {
     expect(cypressConfig).toContain(baseUrl);
     expect(cypressConfig).toContain('retries: 2');
 
-    const tsconfig = readJson(
-      appTree,
-      'apps/example.com/my-app-e2e/tsconfig.json'
-    );
+    const tsconfig = readJson(appTree, `${directory}-e2e/tsconfig.json`);
 
     expect(tsconfig.compilerOptions.allowJs).toBe(true);
     expect(tsconfig.compilerOptions.isolatedModules).toBe(false);
@@ -186,7 +242,7 @@ describe('NextJS App generator', () => {
 
   it('should exclude files', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
@@ -194,23 +250,23 @@ describe('NextJS App generator', () => {
     });
 
     expect(
-      appTree.exists('apps/example.com/my-app/config/rewrites.json')
+      appTree.exists(`${directory}/config/rewrites.json`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/app.po.ts')
+      appTree.exists(`${directory}-e2e/src/support/app.po.ts`)
     ).not.toBeTruthy();
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/app.spec.ts')
+      appTree.exists(`${directory}-e2e/src/e2e/app.spec.ts`)
     ).not.toBeTruthy();
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/specs/index.spec.tsx')
+      appTree.exists(`${directory}-e2e/specs/index.spec.tsx`)
     ).not.toBeTruthy();
   });
 
   it('should render without e2e files', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
@@ -219,77 +275,73 @@ describe('NextJS App generator', () => {
     });
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/config/rewrites.json')
+      appTree.exists(`${directory}-e2e/config/rewrites.json`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/app.po.ts')
+      appTree.exists(`${directory}-e2e/src/support/app.po.ts`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/app.spec.ts')
+      appTree.exists(`${directory}-e2e/src/e2e/app.spec.ts`)
     ).not.toBeTruthy();
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/specs/index.spec.tsx')
-    ).not.toBeTruthy();
-
-    expect(
-      appTree.exists('apps/example.com/my-app-e2e/cypress.config.ts')
+      appTree.exists(`${directory}-e2e/specs/index.spec.tsx`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/fixtures/example.json')
+      appTree.exists(`${directory}-e2e/cypress.config.ts`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/commands.ts')
+      appTree.exists(`${directory}-e2e/src/fixtures/example.json`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/support/e2e.ts')
+      appTree.exists(`${directory}-e2e/src/support/commands.ts`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/tsconfig.json')
+      appTree.exists(`${directory}-e2e/src/support/e2e.ts`)
+    ).not.toBeTruthy();
+
+    expect(appTree.exists(`${directory}-e2e/tsconfig.json`)).not.toBeTruthy();
+
+    expect(appTree.exists(`${directory}-e2e/.eslintrc.json`)).not.toBeTruthy();
+
+    expect(
+      appTree.exists(`${directory}-e2e/src/e2e/Home/display.ts`)
     ).not.toBeTruthy();
 
     expect(
-      appTree.exists('apps/example.com/my-app-e2e/.eslintrc.json')
-    ).not.toBeTruthy();
-
-    expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home/display.ts')
-    ).not.toBeTruthy();
-
-    expect(
-      appTree.exists('apps/example.com/my-app-e2e/src/e2e/Home.feature')
+      appTree.exists(`${directory}-e2e/src/e2e/Home.feature`)
     ).not.toBeTruthy();
   });
 
   it('.eslintrc should contain rootDir setting', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
       rewrites: true,
     });
 
-    const appDir = `apps/example.com/my-app`;
+    const appDir = directory;
     const eslintJSON = readJson(appTree, `${appDir}/.eslintrc.json`);
     expect(eslintJSON.settings.next.rootDir).toBe(appDir);
   });
 
   it('.eslintrc for e2e should contain updated overrides', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
       rewrites: true,
     });
 
-    const e2eDir = `apps/example.com/my-app-e2e`;
+    const e2eDir = `${directory}-e2e`;
     const eslintJSON = readJson(appTree, `${e2eDir}/.eslintrc.json`);
     expect(eslintJSON.overrides).toEqual(
       expect.arrayContaining([
@@ -306,7 +358,7 @@ describe('NextJS App generator', () => {
 
   it('should generate files with both service clients', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
@@ -314,21 +366,21 @@ describe('NextJS App generator', () => {
     });
 
     const baseIocContent = appTree
-      .read('apps/example.com/my-app/ioc/baseIoc.ts')
+      .read(`${directory}/ioc/baseIoc.ts`)
       ?.toString();
 
     expect(baseIocContent).toContain('apolloContainer');
     expect(baseIocContent).toContain('reactQueryContainer');
 
     const containerContent = appTree
-      .read('apps/example.com/my-app/ioc/getHomePageIoc.ts')
+      .read(`${directory}/ioc/getHomePageIoc.ts`)
       ?.toString();
 
     expect(containerContent).toContain('apolloClient.getClient()');
     expect(containerContent).toContain('queryClient.getClient()');
 
     const typesContent = appTree
-      .read('apps/example.com/my-app/types/types.ts')
+      .read(`${directory}/types/types.ts`)
       ?.toString();
 
     expect(typesContent).toContain(
@@ -339,7 +391,7 @@ describe('NextJS App generator', () => {
 
   it('should generate files without service clients', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: false,
       name: projectName,
       reactQuery: false,
@@ -347,21 +399,21 @@ describe('NextJS App generator', () => {
     });
 
     const baseIocContent = appTree
-      .read('apps/example.com/my-app/ioc/baseIoc.ts')
+      .read(`${directory}/ioc/baseIoc.ts`)
       ?.toString();
 
     expect(baseIocContent).not.toContain('apolloContainer');
     expect(baseIocContent).not.toContain('reactQueryContainer');
 
     const containerContent = appTree
-      .read('apps/example.com/my-app/ioc/getHomePageIoc.ts')
+      .read(`${directory}/ioc/getHomePageIoc.ts`)
       ?.toString();
 
     expect(containerContent).not.toContain('apolloClient.getClient()');
     expect(containerContent).not.toContain('queryClient.getClient()');
 
     const typesContent = appTree
-      .read('apps/example.com/my-app/types/types.ts')
+      .read(`${directory}/types/types.ts`)
       ?.toString();
 
     expect(typesContent).not.toContain(
@@ -374,7 +426,7 @@ describe('NextJS App generator', () => {
 
   it('should generate files with only apollo service client', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: false,
@@ -382,21 +434,21 @@ describe('NextJS App generator', () => {
     });
 
     const baseIocContent = appTree
-      .read('apps/example.com/my-app/ioc/baseIoc.ts')
+      .read(`${directory}/ioc/baseIoc.ts`)
       ?.toString();
 
     expect(baseIocContent).toContain('apolloContainer');
     expect(baseIocContent).not.toContain('reactQueryContainer');
 
     const containerContent = appTree
-      .read('apps/example.com/my-app/ioc/getHomePageIoc.ts')
+      .read(`${directory}/ioc/getHomePageIoc.ts`)
       ?.toString();
 
     expect(containerContent).toContain('apolloClient.getClient()');
     expect(containerContent).not.toContain('queryClient.getClient()');
 
     const typesContent = appTree
-      .read('apps/example.com/my-app/types/types.ts')
+      .read(`${directory}/types/types.ts`)
       ?.toString();
 
     expect(typesContent).toContain(
@@ -409,7 +461,7 @@ describe('NextJS App generator', () => {
 
   it('should generate files only with react query service client', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: false,
       name: projectName,
       reactQuery: true,
@@ -417,21 +469,21 @@ describe('NextJS App generator', () => {
     });
 
     const baseIocContent = appTree
-      .read('apps/example.com/my-app/ioc/baseIoc.ts')
+      .read(`${directory}/ioc/baseIoc.ts`)
       ?.toString();
 
     expect(baseIocContent).not.toContain('apolloContainer');
     expect(baseIocContent).toContain('reactQueryContainer');
 
     const containerContent = appTree
-      .read('apps/example.com/my-app/ioc/getHomePageIoc.ts')
+      .read(`${directory}/ioc/getHomePageIoc.ts`)
       ?.toString();
 
     expect(containerContent).not.toContain('apolloClient.getClient()');
     expect(containerContent).toContain('queryClient.getClient()');
 
     const typesContent = appTree
-      .read('apps/example.com/my-app/types/types.ts')
+      .read(`${directory}/types/types.ts`)
       ?.toString();
 
     expect(typesContent).not.toContain(
@@ -442,7 +494,7 @@ describe('NextJS App generator', () => {
 
   it('should create tags in workspace', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: true,
       name: projectName,
       reactQuery: true,
@@ -450,13 +502,13 @@ describe('NextJS App generator', () => {
       tags: 'test:tag,second:tag',
     });
 
-    const appConfig = readProjectConfiguration(appTree, 'example.com-my-app');
+    const appConfig = readProjectConfiguration(appTree, `${projectName}`);
     expect(appConfig.tags).toEqual(['type:app', 'test:tag', 'second:tag']);
   });
 
   it('app should use LinkRewriteContextProvider if rewrites is true', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: false,
       name: projectName,
       reactQuery: true,
@@ -464,7 +516,7 @@ describe('NextJS App generator', () => {
     });
 
     const appPageContent = appTree
-      .read('apps/example.com/my-app/pages/_app.tsx')
+      .read(`${directory}/pages/_app.tsx`)
       ?.toString();
 
     expect(appPageContent).toContain('LinkRewriteContextProvider');
@@ -472,7 +524,7 @@ describe('NextJS App generator', () => {
 
   it('app should not use LinkRewriteContextProvider if rewrites is false', async () => {
     await appGenerator(appTree, {
-      directory: 'example.com',
+      directory,
       apollo: false,
       name: projectName,
       reactQuery: true,
@@ -480,9 +532,8 @@ describe('NextJS App generator', () => {
     });
 
     const appPageContent = appTree
-      .read('apps/example.com/my-app/pages/_app.tsx')
+      .read(`${directory}/pages/_app.tsx`)
       ?.toString();
-
     expect(appPageContent).not.toContain('LinkRewriteContextProvider');
   });
 });

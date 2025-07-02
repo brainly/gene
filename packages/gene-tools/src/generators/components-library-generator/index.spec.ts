@@ -4,6 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import componentsLibraryGenerator from './index';
 import { prompt } from 'inquirer';
 import componentGenerator from '../component-generator';
+import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
 /**
  * @description
@@ -16,59 +17,92 @@ jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 describe('Components library generator', () => {
   let appTree: Tree;
   let projectName: string;
+  let projectNameWithSuffix: string;
+  let directory: string;
 
   beforeEach(async () => {
+    jest.spyOn(logger, 'warn').mockImplementation(() => jest.fn());
+    jest.spyOn(logger, 'debug').mockImplementation(() => jest.fn());
+
     projectName = 'answer-box';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
-
-    jest.spyOn(logger, 'warn').mockImplementation(() => 1);
-    jest.spyOn(logger, 'debug').mockImplementation(() => 1);
+    directory = 'libs/social-qa/question/components';
+    projectNameWithSuffix = `${projectName}-ui`;
 
     (prompt as unknown as jest.Mock).mockImplementation(({ name }) => {
       if (name === 'input') {
         return { input: 'TestComponent' };
       }
     });
+
+    await new Promise(process.nextTick);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should generate files', async () => {
     await componentsLibraryGenerator(appTree, {
-      directory: 'social-qa/question/components',
+      directory,
       name: projectName,
     });
 
-    expect(
-      appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/index.ts`
-      )
-    ).toBeTruthy();
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      └── .gitignore
+      libs
+      ├── .gitignore
+      └── social-qa
+          └── question
+              └── components
+                  ├── project.json
+                  ├── README.md
+                  ├── src
+                  │   └── index.ts
+                  ├── tsconfig.lib.json
+                  ├── .babelrc
+                  ├── tsconfig.json
+                  ├── .eslintrc.json
+                  ├── tsconfig.spec.json
+                  ├── jest.config.ts
+                  ├── .storybook
+                  │   ├── main.js
+                  │   ├── manager.js
+                  │   └── preview.js
+                  └── tsconfig.storybook.json
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
   });
 
   it('should update tsconfig with isolatedModules', async () => {
     await componentsLibraryGenerator(appTree, {
-      directory: 'social-qa/question/components',
+      directory,
       name: projectName,
     });
 
-    const tsconfig = readJson(
-      appTree,
-      `libs/social-qa/question/components/${projectName}-ui/tsconfig.json`
-    );
+    const tsconfig = readJson(appTree, `${directory}/tsconfig.json`);
 
     expect(tsconfig.compilerOptions.isolatedModules).toBe(true);
   });
 
   it('should create tags in workspace', async () => {
     await componentsLibraryGenerator(appTree, {
-      directory: 'social-qa/question/components',
+      directory,
       name: projectName,
       tags: 'test:tag,second:tag',
     });
 
-    const appConfig = readProjectConfiguration(
-      appTree,
-      `social-qa-question-components-${projectName}-ui`
-    );
+    const appConfig = readProjectConfiguration(appTree, projectNameWithSuffix);
     expect(appConfig.tags).toEqual([
       'type:component',
       'test:tag',
@@ -78,44 +112,60 @@ describe('Components library generator', () => {
 
   it('should generate and reexport component in library', async () => {
     await componentsLibraryGenerator(appTree, {
-      directory: 'social-qa/question/components',
+      directory,
       name: projectName,
     });
 
-    const libName = `social-qa-question-components-${projectName}-ui`;
-
     await componentGenerator(appTree, {
-      library: libName,
+      library: projectNameWithSuffix,
       promptsProfile: 'basic',
     });
 
-    const indexContent = appTree
-      .read(`libs/social-qa/question/components/${projectName}-ui/src/index.ts`)
-      ?.toString();
+    expect(nxFileTreeSnapshotSerializer(appTree)).toMatchInlineSnapshot(`
+      ".prettierrc
+      package.json
+      nx.json
+      tsconfig.base.json
+      apps
+      └── .gitignore
+      libs
+      ├── .gitignore
+      └── social-qa
+          └── question
+              └── components
+                  ├── project.json
+                  ├── README.md
+                  ├── src
+                  │   ├── index.ts
+                  │   └── lib
+                  │       └── TestComponent
+                  │           ├── TestComponent.module.scss
+                  │           ├── TestComponent.spec.tsx
+                  │           ├── TestComponent.stories.tsx
+                  │           ├── TestComponent.tsx
+                  │           ├── TestComponentCopyType.ts
+                  │           ├── TestComponentEventsType.ts
+                  │           └── index.ts
+                  ├── tsconfig.lib.json
+                  ├── .babelrc
+                  ├── tsconfig.json
+                  ├── .eslintrc.json
+                  ├── tsconfig.spec.json
+                  ├── jest.config.ts
+                  ├── .storybook
+                  │   ├── main.js
+                  │   ├── manager.js
+                  │   └── preview.js
+                  └── tsconfig.storybook.json
+      .prettierignore
+      .eslintrc.json
+      .eslintignore
+      jest.preset.js
+      jest.config.ts
+      "
+    `);
+
+    const indexContent = appTree.read(`${directory}/src/index.ts`)?.toString();
     expect(indexContent).toContain("export * from './lib/TestComponent';");
-
-    expect(
-      appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/index.ts`
-      )
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.tsx`
-      )
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.spec.tsx`
-      )
-    ).toBeTruthy();
-
-    expect(
-      appTree.exists(
-        `libs/social-qa/question/components/${projectName}-ui/src/lib/TestComponent/TestComponent.stories.tsx`
-      )
-    ).toBeTruthy();
   });
 });

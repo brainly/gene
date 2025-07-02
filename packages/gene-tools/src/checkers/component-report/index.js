@@ -22,6 +22,14 @@ function isNotApplicable(column, { isPrivate, truncatedPath }) {
   return false;
 }
 
+/**
+ * @param {{
+ *  files: string[],
+ *  pathPrefix: string,
+ *  jestOutput?: string,
+ *  prUrl?: string,
+ * }} options
+ */
 function generateComponentReport({ files, pathPrefix, jestOutput, prUrl }) {
   const truncatedPaths = extractReactComponents({ files });
 
@@ -34,7 +42,7 @@ function generateComponentReport({ files, pathPrefix, jestOutput, prUrl }) {
     try {
       const { isPrivate, componentName, componentDisplayName } =
         getComponentMetadata(
-          fs.readFileSync(`${truncatedPath}.tsx`).toString(),
+          fs.readFileSync(`${truncatedPath}.tsx`).toString()
         );
 
       return columns

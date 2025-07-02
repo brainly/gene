@@ -56,7 +56,6 @@
     "@nx/devkit",
     "@nx/eslint-plugin",
     "@nx/jest",
-    "@nx/linter",
     "@nx/react",
     "@nx/web",
     "@nx/workspace",

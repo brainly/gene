@@ -14,17 +14,17 @@ export default async function (tree: Tree) {
 
   await libraryGenerator(tree, {
     name: 'e2e-testing-providers',
-    directory: '',
+    directory: 'libs/e2e-testing-providers',
     tags: 'type:utility',
   });
 
-  await generateFiles(
+  generateFiles(
     tree,
     joinPathFragments(__dirname, './files'),
     'libs/e2e-testing-providers/src',
     {
       tmpl: '',
-    },
+    }
   );
 
   await formatFiles(tree);
