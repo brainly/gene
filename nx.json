@@ -2,31 +2,16 @@
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
     }
   },
   "extends": "nx/presets/core.json",
   "npmScope": "brainly-gene",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "cli": {
-    "defaultCollection": "@nx/next"
-  },
+  "affected": { "defaultBase": "master" },
+  "cli": { "defaultCollection": "@nx/next" },
   "generators": {
-    "@nx/react": {
-      "application": {
-        "babel": true
-      }
-    },
-    "@nx/next": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint"
-      }
-    }
+    "@nx/react": { "application": { "babel": true } },
+    "@nx/next": { "application": { "style": "scss", "linter": "eslint" } }
   },
   "defaultProject": "docs",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
@@ -50,26 +35,14 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
-    },
+    "lint": { "inputs": ["default", "{workspaceRoot}/.eslintrc.json"] },
     "@nx/jest:jest": {
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "cache": true,
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "options": { "passWithNoTests": true },
+      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     }
   },
-  "pluginsConfig": {
-    "@nx/js": {
-      "analyzeSourceFiles": true
-    }
-  }
+  "pluginsConfig": { "@nx/js": { "analyzeSourceFiles": true } },
+  "nxCloudAccessToken": "Yzc1NWEzZTgtYmJiOS00ZjE0LWI5ZWItZWI0MWM3MjBlYzZifHJlYWQtd3JpdGU="
 }
