@@ -19,8 +19,4 @@ export default {
     '<rootDir>/src/checkers/component-report/mocks',
     '<rootDir>/src/checkers/module-report/mocks',
   ],
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
-  ],
 };
