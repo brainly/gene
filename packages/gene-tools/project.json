@@ -37,7 +37,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/gene-tools"],
       "options": {
-        "jestConfig": "packages/gene-tools/jest.config.ts"
+        "jestConfig": "packages/gene-tools/jest.config.ts",
+        "runInBand": true
       }
     }
   },
