@@ -16,6 +16,8 @@ describe('Library generator', () => {
     projectName = 'my-library';
     directory = 'libs/my-library';
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

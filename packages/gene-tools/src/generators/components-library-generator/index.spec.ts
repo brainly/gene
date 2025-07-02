@@ -34,6 +34,8 @@ describe('Components library generator', () => {
         return { input: 'TestComponent' };
       }
     });
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

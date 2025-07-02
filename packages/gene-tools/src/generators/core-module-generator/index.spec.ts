@@ -20,6 +20,8 @@ describe('Core module generator', () => {
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
     createdProjectName = 'my-lib-module';
     domainTag = 'domain:test';
+
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {

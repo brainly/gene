@@ -7,7 +7,7 @@ import { applicationGenerator } from '@nx/next';
 
 jest.mock('inquirer', () => ({ prompt: jest.fn(), registerPrompt: jest.fn() }));
 
-jest.setTimeout(60000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
+jest.setTimeout(30000); // NX fetches @nx/playwright with package manager during tests (to be mocked)
 
 describe('Subapp generator', () => {
   let appTree: Tree;
@@ -37,6 +37,7 @@ describe('Subapp generator', () => {
         return { appName };
       }
     });
+    await new Promise(process.nextTick);
   });
 
   afterEach(() => {
