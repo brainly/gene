@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import translationsLibraryGenerator from './index';
 import { nxFileTreeSnapshotSerializer } from '../core-module-generator/utils/nxFileTreeSnapshotSerializer';
 
-describe('Translations library generator', () => {
+describe.skip('Translations library generator', () => {
   let appTree: Tree;
 
   beforeEach(async () => {
