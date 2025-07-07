@@ -3,16 +3,15 @@ import { Container } from 'inversify';
 <% if (apollo) { %>
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { ApolloClientType, apolloFactory } from '@brainly-gene/apollo';
+import type { ApolloClientType } from '@brainly-gene/apollo';
+import { apolloFactory } from '@brainly-gene/apollo';
 
 <% } %>
 
 <% if (reactQuery) { %>
 
-import {
-  ReactQueryClientType,
-  reactQueryFactory,
-} from '@brainly-gene/core';
+import type { ReactQueryClientType } from '@brainly-gene/core';
+import { reactQueryFactory } from '@brainly-gene/core';
 import { QueryClient } from '@tanstack/react-query';
 
 <% } %>

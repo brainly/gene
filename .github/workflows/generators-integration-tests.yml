@@ -19,52 +19,88 @@ jobs:
       matrix:
         config:
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx test examples-modules-my-module-module',
-              successRegexp: 'Successfully ran target test for project examples-modules-my-module-module',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:library --name=my-library --directory=libs/examples/my-library --tags=social-qa && pnpm nx lint my-library',
+              successRegexp: 'Successfully ran target lint for project my-library',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx lint examples-modules-my-module-module',
-              successRegexp: 'Successfully ran target lint for project examples-modules-my-module-module',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory libs/examples/my-module --tags domain:social-qa && pnpm nx test my-module-module',
+              successRegexp: 'Successfully ran target test for project my-module-module',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory examples --tags domain:social-qa && pnpm nx e2e examples-modules-my-module-module-e2e --verbose',
-              successRegexp: 'Successfully ran target e2e for project examples-modules-my-module-module-e2e',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory libs/examples/my-module --tags domain:social-qa && pnpm nx lint my-module-module',
+              successRegexp: 'Successfully ran target lint for project my-module-module',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx test examples-components-my-components-ui',
-              successRegexp: 'Successfully ran target test for project examples-components-my-components-ui',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:core-module --name my-module --directory libs/examples/my-module --tags domain:social-qa && pnpm nx e2e my-module-module-e2e',
+              successRegexp: 'Successfully ran target e2e for project my-module-module-e2e',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory examples --tags domain:social-qa && pnpm nx lint examples-components-my-components-ui',
-              successRegexp: 'Successfully ran target lint for project examples-components-my-components-ui',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory libs/examples/my-components --tags domain:social-qa && pnpm nx test my-components-ui',
+              successRegexp: 'Successfully ran target test for project my-components-ui',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-feature-services-my-data-service',
-              successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:components-library --name my-components --directory libs/examples/my-components --tags domain:social-qa && pnpm nx lint my-components-ui',
+              successRegexp: 'Successfully ran target lint for project my-components-ui',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx test my-feature-services-my-data-service',
-              successRegexp: 'Successfully ran target test for project my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory libs/my-feature/services/my-data --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-data-service',
+              successRegexp: 'Successfully ran target lint for project my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-feature-services-my-data-service',
-              successRegexp: 'Successfully ran target lint for project my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory libs/my-feature/services/my-data --serviceType=apollo --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx test my-data-service',
+              successRegexp: 'Successfully ran target test for project my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory=my-feature/services --serviceType=react-query --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx test my-feature-services-my-data-service',
-              successRegexp: 'Successfully ran target test for project my-feature-services-my-data-service',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory libs/my-feature/services/my-data --serviceType=react-query --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx lint my-data-service',
+              successRegexp: 'Successfully ran target lint for project my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=example --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && NODE_OPTIONS="--max-old-space-size=8192" pnpm nx e2e example-my-app-e2e --verbose',
-              successRegexp: 'Successfully ran target e2e for project example-my-app-e2e',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:service --name=my-data --directory libs/my-feature/services/my-data --serviceType=react-query --tags=domain:social-qa --useDefaultCrudFunctions && pnpm nx test my-data-service',
+              successRegexp: 'Successfully ran target test for project my-data-service',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=example --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx test example-my-app',
-              successRegexp: 'Successfully ran target test for project example-my-app',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && NODE_OPTIONS="--max-old-space-size=8192" pnpm nx e2e my-app-e2e',
+              successRegexp: 'Successfully ran target e2e for project my-app-e2e',
             }
           - {
-              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=example --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx lint example-my-app',
-              successRegexp: 'Successfully ran target lint for project example-my-app',
+              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx test my-app',
+              successRegexp: 'Successfully ran target test for project my-app',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm nx lint my-app',
+              successRegexp: 'Successfully ran target lint for project my-app',
+            }
+          - {
+              packageCommand: 'pnpm exec nx g @brainly-gene/tools:bff-app --name=web-app --directory=apps/examples/web-app --reactQuery=true --rewrites=true --tags=domain:social-qa && pnpm nx lint web-app',
+              successRegexp: 'Successfully ran target lint for project web-app',
+            }
+          - {
+              packageCommand: 'pnpm exec nx g @brainly-gene/tools:bff-app --name=web-app --directory=apps/examples/web-app --reactQuery=true --rewrites=true --tags=domain:social-qa && pnpm nx e2e web-app-e2e',
+              successRegexp: 'Successfully ran target e2e for project web-app-e2e',
+            }
+          - {
+              packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=assets && pnpm nx g @brainly-gene/tools:assets-library --withStyleGuide=true && pnpm nx lint assets',
+              successRegexp: 'Successfully ran target lint for project assets',
+            }
+          - {
+              packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=translations && pnpm nx g @brainly-gene/tools:translations-library && pnpm nx lint translations',
+              successRegexp: 'Successfully ran target lint for project translations',
+            }
+          - {
+              packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=e2e-testing-providers && pnpm exec nx generate @brainly-gene/tools:e2e-providers && pnpm nx lint e2e-testing-providers --fix',
+              successRegexp: 'Successfully ran target lint for project e2e-testing-providers',
+            }
+          - {
+              packageCommand: 'pnpm nx generate @nx/workspace:remove --projectName=assets && pnpm nx generate @nx/workspace:remove --projectName=translations && pnpm exec nx generate @brainly-gene/tools:gene-workspace && echo "successfully generated gene workspace"',
+              successRegexp: 'successfully generated gene workspace',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly-gene/tools:library --name=my-library --directory=libs/examples/my-library --tags=social-qa && pnpm nx g @brainly-gene/tools:subapp --library=my-library --name=my-subapp --directory=my-subapp --tags=domain:social-qa && pnpm nx run my-library:lint --fix',
+              successRegexp: 'Successfully ran target lint for project my-library',
+            }
+          - {
+              packageCommand: 'pnpm nx g @brainly-gene/tools:nextjs-app --name=my-app --directory=apps/example/my-app --tags=domain:social-qa --rewrites=true --apollo=true --reactQuery=true --e2e=true && pnpm exec nx generate @brainly-gene/tools:module --name=my-example --appName=my-app --e2e=true --shouldAutoprefix=true --no-interactive && pnpm exec nx generate @brainly-gene/tools:module --name=my-example2 --appName=my-app --e2e=true --shouldAutoprefix=true --no-interactive && pnpm exec nx run-many --target=lint --projects=my-app,my-app-e2e',
+              successRegexp: 'Successfully ran target lint for 2 projects',
             }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4

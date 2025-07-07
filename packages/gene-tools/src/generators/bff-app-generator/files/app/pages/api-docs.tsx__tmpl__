@@ -1,4 +1,4 @@
-import {InferGetStaticPropsType} from 'next';
+import type { InferGetStaticPropsType } from 'next';
 import dynamic from 'next/dynamic';
 import openApiDocumentation from '../config/openApi';
 import {ApiDocumentation} from '@<%= npmScope %>/swagger/components';

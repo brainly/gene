@@ -1,9 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/matchers';
 import { createGeneModule } from './createModule';
-import { ModuleComponentType } from './types';
+import type { ModuleComponentType } from './types';
 
 describe('createGeneModule', () => {
   const SimpleModuleComponent = () => (
@@ -45,7 +44,7 @@ describe('createGeneModule', () => {
     render(
       <SlotsModule
         slots={{ adSlot: <div data-testid="ad-slot" />, nullSlot: null }}
-      />,
+      />
     );
 
     expect(screen.getByTestId('slots-module')).toBeInTheDocument();

@@ -7,7 +7,6 @@ import {
   workspaceRoot,
   writeJson,
 } from '@nx/devkit';
-import { Linter } from '@nx/linter';
 import { libraryGenerator } from '@nx/react';
 import type { GeneLibraryGenerator } from './schema';
 import { getNpmScope, updateJestConfig } from '../utilities';
@@ -17,24 +16,22 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
   const npmScope = getNpmScope(tree);
 
-  const directory = schema.directory ? `${schema.directory}/` : '';
+  const baseDirectory = schema.directory ? `${schema.directory}/` : '';
 
   await libraryGenerator(tree, {
     name: schema.name,
-    directory: schema.directory,
+    directory: baseDirectory,
     tags: schema.tags,
-    linter: Linter.EsLint,
+    linter: 'eslint',
     skipFormat: false,
     skipTsConfig: false,
     style: 'scss',
     compiler: 'babel',
     unitTestRunner: 'jest',
-    importPath: `@${npmScope}/${directory}${schema.name}`,
+    importPath: `@${npmScope}/${baseDirectory}`,
   });
 
-  const pathToProject = `libs/${schema.directory || ''}/${schema.name}`;
-
-  const eslintLibPath = `${pathToProject}/.eslintrc.json`;
+  const eslintLibPath = `${baseDirectory}/.eslintrc.json`;
 
   updateJson(tree, eslintLibPath, (currentEsLint) => {
     return {
@@ -50,14 +47,14 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   });
 
   const pathToSetupFile = relative(
-    pathToProject,
-    `${workspaceRoot}/jest.setup.js`,
+    baseDirectory,
+    `${workspaceRoot}/jest.setup.js`
   );
 
   updateJestConfig(
     tree,
-    pathToProject,
-    (currentValues: any) => {
+    baseDirectory,
+    (currentValues) => {
       return {
         ...currentValues,
         setupFilesAfterEnv: [pathToSetupFile],
@@ -75,7 +72,7 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
       }
       //#endregion
     },
-  },`,
+  },`
   );
 
   await formatFiles(tree);

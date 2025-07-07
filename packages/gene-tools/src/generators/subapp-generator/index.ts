@@ -56,12 +56,7 @@ export default async function (tree: Tree, schema: SubappGenerator) {
 
     projects = getProjects(tree);
 
-    const moduleProjectName = `${libDirectory}/${library}`.replace(
-      new RegExp('/', 'g'),
-      '-',
-    );
-
-    moduleProject = projects.get(moduleProjectName);
+    moduleProject = projects.get(library);
 
     if (!moduleProject || !moduleProject.sourceRoot) {
       throw new Error(`Error while creating new library.`);
