@@ -68,6 +68,7 @@
     "@storybook/addons",
     "@storybook/core-server",
     "@storybook/react",
+    "@storybook/nextjs",
     "@storybook/theming",
     "@testing-library/dom",
     "@testing-library/jest-dom",
