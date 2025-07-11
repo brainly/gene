@@ -16,7 +16,9 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
   const currentPackageJson = readJson(tree, 'package.json');
   const npmScope = getNpmScope(tree);
 
-  const baseDirectory = schema.directory ? `${schema.directory}/` : '';
+  const baseDirectory = schema.directory || '';
+
+  console.log('🔍 DEBUG: baseDirectory:', baseDirectory);
 
   await libraryGenerator(tree, {
     name: schema.name,
