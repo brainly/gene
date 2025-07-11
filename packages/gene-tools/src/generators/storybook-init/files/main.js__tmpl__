@@ -2,7 +2,15 @@ const { join } = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  framework: '@storybook/nextjs',
+  framework: {
+    name: '@storybook/nextjs',
+    options: {builder: {useSWC: true}},
+  },
+
+  typescript: {
+    reactDocgen: 'react-docgen',
+  },
+
 
   core: {
     builder: 'webpack5',
@@ -55,89 +63,53 @@ module.exports = {
   }),
 
   webpackFinal: async (config) => {
-    const rules = config.module.rules
-      // removes default file-loader
-      .filter((rule) => !rule.loader || !rule.loader.includes('file-loader'))
-      // removes default svg loader
-      .filter((rule) => !rule.test?.toString().includes('svg'));
-
-    // taken from: https://github.com/webpack-contrib/sass-loader/issues/867#issuecomment-1208342094
-    // to make sass work
-    const scssConfigIndex = config.module.rules.findIndex((c) =>
-      '.scss'.match(c.test)
+    // Filter out the default SCSS rule from Storybook's webpack config
+    const rules = config.module.rules.filter(
+      (rule) => rule.test?.toString().indexOf('scss') === -1
     );
-    if (scssConfigIndex > 0 && config.module.rules[scssConfigIndex]?.oneOf) {
-      config.module.rules[scssConfigIndex].oneOf.push({
-        test: /\.(css|s(a|c)ss)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      });
-    } else {
-      config.module.rules.push({
-        test: /\.(css|s(a|c)ss)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      });
-    }
 
-    const tsPaths = new TsconfigPathsPlugin({
-      configFile: './tsconfig.base.json',
+    // Add our own custom SCSS rule with the correct css-loader options
+    rules.push({
+      test: /\.scss$/,
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            import: true, // required for css-loader v6+
+            url: true, // required for css-loader v6+
+            modules: {
+              auto: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+            },
+          },
+        },
+        'sass-loader',
+      ],
     });
 
-    return {
-      ...config,
-      node: {
-        __dirname: true,
-        __filename: true,
-      },
-      resolve: {
-        ...config.resolve,
-        extensions: ['.mjs', '.ts', '.tsx', '.js', '.jsx'],
-        plugins: [...(config.resolve.plugins ?? []), tsPaths],
-        fallback: {
-          ...(config.resolve || {}).fallback,
-          fs: false,
-          stream: false,
-          os: false,
-          zlib: false,
-        },
-      },
-      module: {
-        ...config.module,
-        rules: [
-          {
-            test: /\.tsx?$/,
-            exclude: /node_modules/,
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-            },
-            enforce: 'pre',
-          },
-          ...rules,
-          {
-            test: /\.svg$/,
-            exclude: /node_modules/,
-            use: 'svg-inline-loader/?classPrefix=_[hash:4]__',
-          },
-          {
-            test: /\.(jpe?g|png|gif)$/i,
-            use: [
-              {
-                loader: 'file-loader',
-                options: {
-                  name: '[name].[hash:8].[ext]',
-                },
-              },
-            ],
-            type: 'javascript/auto',
-          },
-          {
-            test: /\.mjs$/,
-            include: /node_modules/,
-            type: 'javascript/auto',
-          },
-        ],
-      },
+    config.module.rules = rules;
+
+    // Add tsconfig-paths-webpack-plugin to resolve path aliases
+    config.resolve.plugins = [
+      new TsconfigPathsPlugin({
+        configFile: './tsconfig.base.json',
+      }),
+    ];
+
+    // Add fallbacks for node built-ins
+    config.resolve.fallback = {
+      ...(config.resolve.fallback || {}),
+      net: false,
+      dns: false,
+      tls: false,
+      fs: false,
+      crypto: false,
+      stream: false,
+      zlib: false,
     };
+
+    return config;
   },
 
   docs: {

@@ -10,6 +10,7 @@ import {
   getProjects,
   readJson,
   writeJson,
+  getWorkspaceLayout,
 } from '@nx/devkit';
 import libraryGenerator from '../library-generator';
 import { cypressProjectGenerator } from '@nx/storybook';
@@ -50,6 +51,11 @@ export default async function (tree: Tree, schema: BrainlyModuleGenerator) {
       );
     })
     .map(([projectName]) => projectName);
+
+  const { libsDir } = getWorkspaceLayout(tree);
+  const e2eTestingProvidersPath = libsDir
+    ? `${npmScope}/${libsDir}/e2e-testing-providers`
+    : `${npmScope}/e2e-testing-providers`;
 
   const appName =
     schema.appName ||
@@ -131,6 +137,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
         tmpl: '',
         errorBoundary,
         npmScope,
+        e2eTestingProvidersPath,
       }
     );
 
@@ -286,6 +293,7 @@ Learn more about modules naming on: https://brainly.github.io/gene/gene/modules/
       tmpl: '',
       errorBoundary,
       npmScope,
+      e2eTestingProvidersPath,
     }
   );
 
