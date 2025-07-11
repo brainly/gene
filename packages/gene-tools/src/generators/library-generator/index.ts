@@ -18,8 +18,6 @@ export default async function (tree: Tree, schema: GeneLibraryGenerator) {
 
   const baseDirectory = schema.directory || '';
 
-  console.log('🔍 DEBUG: baseDirectory:', baseDirectory);
-
   await libraryGenerator(tree, {
     name: schema.name,
     directory: baseDirectory,

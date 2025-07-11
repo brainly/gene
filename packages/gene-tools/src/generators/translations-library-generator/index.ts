@@ -2,6 +2,7 @@ import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
+  getWorkspaceLayout,
   installPackagesTask,
   joinPathFragments,
   readProjectConfiguration,
@@ -12,21 +13,24 @@ import {
 import libraryGenerator from '../library-generator';
 
 export default async function (tree: Tree) {
+  const { libsDir } = getWorkspaceLayout(tree);
+  const directory = joinPathFragments(libsDir, 'translations');
+
   const currentPackageJson = readJson(tree, 'package.json');
 
   await libraryGenerator(tree, {
     name: 'translations',
-    directory: 'libs/translations',
+    directory,
     tags: 'type:utility',
   });
 
   generateFiles(
     tree,
     joinPathFragments(__dirname, './files'),
-    'libs/translations/src',
+    joinPathFragments(directory, 'src'),
     {
       tmpl: '',
-    },
+    }
   );
 
   const projectConfig = readProjectConfiguration(tree, 'translations');
@@ -38,8 +42,7 @@ export default async function (tree: Tree) {
       fetch: {
         executor: 'nx:run-commands',
         options: {
-          command:
-            "echo 'Create your own script to fetch translations and save them in the libs/translations/src/locales folder'",
+          command: `echo 'Create your own script to fetch translations and save them in the ${directory}/src/locales folder'`,
         },
       },
     },
