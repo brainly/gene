@@ -7,6 +7,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "create-nx-workspace": "17.3.0"
+    "create-nx-workspace": "21.1.2"
   }
 }
