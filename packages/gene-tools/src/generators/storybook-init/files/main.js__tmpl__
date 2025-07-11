@@ -92,7 +92,6 @@ module.exports = {
 
     // Add tsconfig-paths-webpack-plugin to resolve path aliases
     config.resolve.plugins = [
-      ...(config.resolve.plugins || []),
       new TsconfigPathsPlugin({
         configFile: './tsconfig.base.json',
       }),
