@@ -65,6 +65,21 @@ async function runCommands() {
       '--nxCloud=skip',
     ]);
 
+    // modify package.json to add storybook preset to have name of the workspace, currently name is wrongly set so make sure that it will be "name": name <- passed by user
+    const packageJsonPath = path.resolve(name, 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    packageJson.name = name;
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+    //update nx.json to add workspaceLayout to have libsDir: "libs"
+    const nxJsonPath = path.resolve(name, 'nx.json');
+    const nxJson = JSON.parse(fs.readFileSync(nxJsonPath, 'utf8'));
+    nxJson.workspaceLayout = {
+      libsDir: 'libs',
+      appsDir: 'apps',
+    };
+    fs.writeFileSync(nxJsonPath, JSON.stringify(nxJson, null, 2));
+
     console.log(
       `Workspace ${name} created successfully with NX version ${nxVersion}!`,
     );
@@ -100,6 +115,9 @@ async function runCommands() {
 
     console.log('Generating gene-workspace with nx');
     await execCommand('nx', ['g', '@brainly-gene/tools:gene-workspace']);
+
+    console.log('Initializing storybook config');
+    await execCommand('nx', ['g', '@brainly-gene/tools:storybook-init']);
 
     console.log('Generating e2e testing providers');
     await execCommand('nx', ['g', '@brainly-gene/tools:e2e-providers']);
