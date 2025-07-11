@@ -2,19 +2,59 @@
 
 exports[`storybookConfiguration generator application should add storybook targets to the project configuration 1`] = `
 Object {
-  "executor": "@brainly-gene/tools:storybook",
+  "configurations": Object {
+    "ci": Object {
+      "quiet": true,
+    },
+  },
+  "dependsOn": Array [
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-images",
+    },
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-translations",
+    },
+  ],
+  "executor": "@nx/storybook:storybook",
   "options": Object {
-    "command": "start",
+    "config": Object {
+      "configFolder": "apps/my-app1/.storybook",
+    },
+    "configDir": "apps/my-app1/.storybook",
+    "port": 4400,
   },
 }
 `;
 
 exports[`storybookConfiguration generator application should add storybook targets to the project configuration 2`] = `
 Object {
-  "executor": "@brainly-gene/tools:storybook",
-  "options": Object {
-    "command": "build",
+  "configurations": Object {
+    "ci": Object {
+      "quiet": true,
+    },
   },
+  "dependsOn": Array [
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-images",
+    },
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-translations",
+    },
+  ],
+  "executor": "@nx/storybook:build",
+  "options": Object {
+    "config": Object {
+      "configFolder": "apps/my-app1/.storybook",
+    },
+    "outputPath": "dist/storybook/my-app1",
+  },
+  "outputs": Array [
+    "{options.outputPath}",
+  ],
 }
 `;
 
@@ -172,19 +212,59 @@ exports[`storybookConfiguration generator application should generate the .story
 
 exports[`storybookConfiguration generator library should add storybook targets to the project configuration 1`] = `
 Object {
-  "executor": "@brainly-gene/tools:storybook",
+  "configurations": Object {
+    "ci": Object {
+      "quiet": true,
+    },
+  },
+  "dependsOn": Array [
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-images",
+    },
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-translations",
+    },
+  ],
+  "executor": "@nx/storybook:storybook",
   "options": Object {
-    "command": "start",
+    "config": Object {
+      "configFolder": "libs/my-lib1/.storybook",
+    },
+    "configDir": "libs/my-lib1/.storybook",
+    "port": 4400,
   },
 }
 `;
 
 exports[`storybookConfiguration generator library should add storybook targets to the project configuration 2`] = `
 Object {
-  "executor": "@brainly-gene/tools:storybook",
-  "options": Object {
-    "command": "build",
+  "configurations": Object {
+    "ci": Object {
+      "quiet": true,
+    },
   },
+  "dependsOn": Array [
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-images",
+    },
+    Object {
+      "projects": "self",
+      "target": "copy-storybook-translations",
+    },
+  ],
+  "executor": "@nx/storybook:build",
+  "options": Object {
+    "config": Object {
+      "configFolder": "libs/my-lib1/.storybook",
+    },
+    "outputPath": "dist/storybook/my-lib1",
+  },
+  "outputs": Array [
+    "{options.outputPath}",
+  ],
 }
 `;
 

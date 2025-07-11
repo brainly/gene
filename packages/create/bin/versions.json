@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@brainly-gene/core": "0.7.4-alpha.5",
-    "@brainly-gene/next": "0.7.4-alpha.5",
+    "@brainly-gene/core": "0.7.4-alpha.6",
+    "@brainly-gene/next": "0.7.4-alpha.6",
     "@nx/next": "21.1.2",
     "@sentry/react": "7.77.0",
     "@tanstack/react-query": "5.55.4",
@@ -50,8 +50,8 @@
     "mini-css-extract-plugin": "2.9.2"
   },
   "devDependencies": {
-    "@brainly-gene/eslint-plugin": "0.7.4-alpha.5",
-    "@brainly-gene/tools": "0.7.4-alpha.5",
+    "@brainly-gene/eslint-plugin": "0.7.4-alpha.6",
+    "@brainly-gene/tools": "0.7.4-alpha.6",
     "@nx/cypress": "21.1.2",
     "@nx/devkit": "21.1.2",
     "@nx/eslint-plugin": "21.1.2",
