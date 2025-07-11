@@ -1,6 +1,6 @@
 {
   "name": "brainly-gene",
-  "version": "0.2.0-alpha.20",
+  "version": "0.7.4-alpha.5",
   "license": "Apache-2.0",
   "scripts": {
     "build": "pnpm nx run-many --target=build --all",
