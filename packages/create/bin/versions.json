@@ -47,7 +47,7 @@
     "zen-observable": "0.8.15",
     "zen-observable-ts": "1.1.0",
     "find-up": "5.0.0",
-    "mini-css-extract-plugin": "2.2.0"
+    "mini-css-extract-plugin": "2.9.2"
   },
   "devDependencies": {
     "@brainly-gene/eslint-plugin": "0.2.0-alpha.20",
@@ -59,6 +59,9 @@
     "@nx/react": "21.1.2",
     "@nx/web": "21.1.2",
     "@nx/workspace": "21.1.2",
+    "@nx/linter": "19.8.4",
+    "ajv": "8.8.2",
+    "ajv-keywords": "5.1.0",
     "@storybook/addon-actions": "7.6.20",
     "@storybook/addon-backgrounds": "7.6.20",
     "@storybook/addon-knobs": "7.1.1",
@@ -89,6 +92,7 @@
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-regexp": "2.6.0",
+    "mini-css-extract-plugin": "2.9.2",
     "inquirer-search-checkbox": "1.0.0",
     "inquirer-search-list": "1.2.6",
     "jest": "29.4.3",

@@ -12,13 +12,17 @@ export default async function (tree: Tree) {
   tree.write('apps/.gitkeep', '');
   tree.write('libs/.gitkeep', '');
 
-  await assetsLibraryGenerator(tree, {
-    withStyleGuide: true,
-  });
+  try {
+    await assetsLibraryGenerator(tree, {
+      withStyleGuide: true,
+    });
 
-  await translationsLibraryGenerator(tree);
+    await translationsLibraryGenerator(tree);
 
-  generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
+    generateFiles(tree, joinPathFragments(__dirname, './files'), './', {});
+  } catch (error) {
+    console.error('Error creating assets library:', error);
+  }
 
   // Update .eslintrc.json
   const updatedEslintJson = `
