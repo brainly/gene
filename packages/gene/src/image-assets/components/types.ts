@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 export type GeneImagePropsType = Omit<
   JSX.IntrinsicElements['img'],
   'src' | 'srcSet' | 'ref' | 'width' | 'height' | 'loading'
