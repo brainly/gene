@@ -15,7 +15,7 @@ export function useObservableQuery<T>(observable: Observable<T>) {
   const [, rerender] = React.useReducer((c) => c + 1, 0);
 
   const isMounted = useIsMounted();
-  const lastValue = useRef<T>();
+  const lastValue = useRef<T>(undefined);
 
   useEffect(() => {
     const subcription = observable.subscribe((next) => {

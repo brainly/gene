@@ -33,13 +33,13 @@ interface ReturnType<TData, TObservable> {
   refetch:
     | ((options?: RefetchOptions) => Promise<QueryObserverResult<TData, Error>>)
     | ((
-        options?: RefetchOptions,
+        options?: RefetchOptions
       ) => Promise<QueryObserverResult<InfiniteData<TData, unknown>, Error>>);
   fetchPreviousPage: (
-    options?: FetchPreviousPageOptions,
+    options?: FetchPreviousPageOptions
   ) => Promise<InfiniteQueryObserverResult<unknown, Error>>;
   fetchMore: (
-    options?: FetchNextPageOptions,
+    options?: FetchNextPageOptions
   ) => Promise<InfiniteQueryObserverResult<unknown, Error>>;
   hasNextPage: boolean;
 }
@@ -51,7 +51,7 @@ interface ReturnType<TData, TObservable> {
  */
 export function useReactQueryObservableQuery<
   TData,
-  TObservable = ObservableType<TData>,
+  TObservable = ObservableType<TData>
 >(observable: ObservableType<TData>) {
   const [, rerender] = React.useReducer((c) => c + 1, 0);
 
@@ -60,7 +60,7 @@ export function useReactQueryObservableQuery<
   const lastValue = React.useRef<
     | QueryObserverResult<TData, Error>
     | InfiniteQueryObserverResult<InfiniteData<TData, unknown>, Error>
-  >();
+  >(undefined);
 
   React.useEffect(() => {
     mountedRef.current = true;
