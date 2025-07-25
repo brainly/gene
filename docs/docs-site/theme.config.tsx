@@ -1,16 +1,10 @@
 import type { DocsThemeConfig } from 'nextra-theme-docs';
-import Search from './components/search';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const config: DocsThemeConfig = {
   docsRepositoryBase:
     'https://github.com/brainly/gene/tree/master/docs/docs-site/pages',
-  useNextSeoProps() {
-    return {
-      titleTemplate: '%s – Brainly Gene',
-    };
-  },
   navigation: {
     next: true,
     prev: true,
@@ -18,15 +12,12 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/brainly/gene',
   },
-  search: {
-    component: <Search />,
-  },
   darkMode: false, // wether to show theme switcher
   nextThemes: {
     defaultTheme: 'dark',
   },
-  primaryHue: 177,
-  primarySaturation: 89,
+  // primaryHue: 177,
+  // primarySaturation: 89,
   sidebar: {
     // defaultMenuCollapseLevel: 0,
   },
@@ -59,11 +50,6 @@ const config: DocsThemeConfig = {
       </footer>
     ),
   },
-  // editLink: {
-  //   footer: {
-  //     text: 'Edit this page on GitHub',
-  //   },
-  // },
   logo: (
     <Link href="/">
       <>
@@ -79,6 +65,7 @@ const config: DocsThemeConfig = {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="description" content="Gene docs" />
       <meta name="og:title" content="Gene docs" />
+      <title>Gene docs</title>
       <link rel="icon" type="image/png" href="/favicon.png" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link

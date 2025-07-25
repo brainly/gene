@@ -24,6 +24,12 @@
     {
       "files": ["*.js", "*.jsx"],
       "rules": {}
+    },
+    {
+      "files": ["_meta.js", "_meta.ts"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
     }
   ],
   "env": {
