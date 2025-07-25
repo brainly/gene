@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import type React from 'react';
 import type { Container } from 'inversify';
 import type { ErrorBoundaryDeclarationType } from '../error-boundary';
@@ -7,7 +8,7 @@ export type MediatorPropsType<T extends Record<string, unknown>> = T & {
 };
 
 export type MediatorFactory<T extends Record<string, unknown> = any> = (
-  props: MediatorPropsType<T>,
+  props: MediatorPropsType<T>
 ) => void;
 
 export type EventHandler = (props: unknown) => void;
@@ -18,11 +19,11 @@ interface InjectableFactory {
 
 export type MediatorDeclarationsType = [
   symbol,
-  MediatorFactory | InjectableFactory,
+  MediatorFactory | InjectableFactory
 ][];
 export type ComponentDeclarationType = [
   symbol,
-  React.ComponentType<any> | InjectableFactory,
+  React.ComponentType<any> | InjectableFactory
 ][];
 
 export type EventHandlersType = [symbol, EventHandler][];
@@ -38,7 +39,7 @@ export interface DefaultDeclarationsType {
 
 export interface ModuleComponentPropsType<
   T = Record<string, any>,
-  U extends string = string,
+  U extends string = string
 > {
   serverProps?: Record<string, any>;
   renderChildren?: (props: T) => JSX.Element;
@@ -47,7 +48,7 @@ export interface ModuleComponentPropsType<
 
 export type ModuleComponentType<
   RenderChildrenProps = Record<string, any>,
-  SlotsLabels extends string = string,
+  SlotsLabels extends string = string
 > = (
-  props: ModuleComponentPropsType<RenderChildrenProps, SlotsLabels>,
+  props: ModuleComponentPropsType<RenderChildrenProps, SlotsLabels>
 ) => JSX.Element | null;

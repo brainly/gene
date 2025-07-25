@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 export interface ErrorBoundaryPropsType {
   children: React.ReactNode;
   boundaryName: string;
@@ -5,7 +7,7 @@ export interface ErrorBoundaryPropsType {
 }
 
 export type ErrorBoundaryComponentType = (
-  props: ErrorBoundaryPropsType,
+  props: ErrorBoundaryPropsType
 ) => JSX.Element;
 
 export type ErrorBoundaryDeclarationType = Omit<

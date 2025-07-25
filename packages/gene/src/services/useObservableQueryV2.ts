@@ -23,7 +23,7 @@ export function useObservableQueryV2<T>(
     };
   }, []);
 
-  const lastValue = useRef<T>();
+  const lastValue = useRef<T>(undefined);
 
   useEffect(() => {
     const subcription = observable.subscribe((next) => {
