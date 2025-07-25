@@ -8,7 +8,9 @@
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "target": "ESNext",
+    "module": "ESNext"
   },
   "files": [
     "../../node_modules/@nx/react/typings/cssmodule.d.ts",
