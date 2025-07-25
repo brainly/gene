@@ -5,30 +5,28 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
+      "executor": "@nx/next:build",
+      "dependsOn": ["cache", "build-styles"],
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "commands": [
-          "node ./scripts/cache.js",
-          "next build",
-          "nx run docs-docs-site:build-styles"
-        ],
-        "cwd": "docs/docs-site"
-      },
-      "configurations": {
-        "production": {}
-      },
-      "outputs": ["{workspaceRoot}/dist/docs/docs-site"]
+        "outputPath": "dist/docs/docs-site"
+      }
     },
     "serve": {
+      "executor": "@nx/next:server",
+      "dependsOn": ["sync-styles", "cache"],
+      "options": {
+        "buildTarget": "docs-docs-site:build",
+        "dev": true,
+        "port": 3000,
+        "hostname": "localhost"
+      }
+    },
+    "cache": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "node ./scripts/cache.js",
-          "next dev",
-          "nx run docs-docs-site:sync-styles"
-        ],
-        "cwd": "docs/docs-site",
-        "outputPath": "dist/docs/docs-site"
+        "commands": ["node ./scripts/cache.js"],
+        "cwd": "docs/docs-site"
       }
     },
     "build-styles": {
@@ -41,6 +39,7 @@
       }
     },
     "sync-styles": {
+      "continuous": true,
       "executor": "nx:run-commands",
       "options": {
         "commands": [
