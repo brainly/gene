@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { createContext, useContext, useReducer } from 'react';
 
 export type DispatchType<A> = (action: A) => void;
@@ -9,7 +10,7 @@ type PropsType<S> = {
 
 export function makeStore<S, A>(
   initialState: S,
-  reducer: ReducerType<S, A>,
+  reducer: ReducerType<S, A>
 ): [(props: PropsType<S>) => JSX.Element, () => DispatchType<A>, () => S] {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const dispatchContext = createContext((action: A) => {});
