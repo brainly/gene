@@ -51,4 +51,4 @@ export type ModuleComponentType<
   SlotsLabels extends string = string
 > = (
   props: ModuleComponentPropsType<RenderChildrenProps, SlotsLabels>
-) => JSX.Element | null;
+) => React.ReactNode | null;
