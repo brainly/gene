@@ -43,6 +43,7 @@ export default {
               'type:service',
               'type:api-handler',
               'type:application-module-library',
+              'type:native-module'
             ],
           },
           {
@@ -59,6 +60,15 @@ export default {
             ],
           },
           {
+            sourceTag: 'type:native-module',
+            onlyDependOnLibsWithTags: [
+              'type:ioc',
+              'type:service',
+              'type:utility',
+              'type:machine',
+            ],
+          },
+          {
             sourceTag: 'type:core-module',
             onlyDependOnLibsWithTags: [
               'type:ioc',
@@ -67,6 +77,7 @@ export default {
               'type:utility',
               'type:machine',
               'type:vendor',
+              'type:native-module'
             ],
           },
           {
