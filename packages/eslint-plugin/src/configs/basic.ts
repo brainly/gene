@@ -93,6 +93,7 @@ export default {
               'type:vendor',
               'type:module-inheritor',
               'type:temporary-nested-machine-module',
+              'type:native-module'
             ],
           },
           {
@@ -132,6 +133,7 @@ export default {
               'type:utility',
               'type:machine',
               'type:vendor',
+              'type:native-module'
             ],
           },
           {
