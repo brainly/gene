@@ -47,6 +47,14 @@ export default {
             ],
           },
           {
+            sourceTag: "type:native-app",
+            onlyDependOnLibsWithTags: [
+              'type:native-module',
+              'type:utility',
+              'type:service',
+            ],
+          },
+          {
             sourceTag: 'type:module',
             onlyDependOnLibsWithTags: [
               'type:ioc',
