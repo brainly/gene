@@ -57,6 +57,7 @@ export default {
               'type:utility',
               'type:machine',
               'type:vendor',
+              'type:native-module'
             ],
           },
           {
