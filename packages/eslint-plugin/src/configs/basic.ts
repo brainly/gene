@@ -22,6 +22,10 @@ export default {
             onlyDependOnLibsWithTags: ['domain:shared'],
           },
           {
+            sourceTag: 'platform:*',
+            onlyDependOnLibsWithTags: ['platform:*'],
+          },
+          {
             sourceTag: 'scope:poc',
             onlyDependOnLibsWithTags: [
               'type:module',
@@ -43,15 +47,6 @@ export default {
               'type:service',
               'type:api-handler',
               'type:application-module-library',
-              'type:native-module'
-            ],
-          },
-          {
-            sourceTag: "type:native-app",
-            onlyDependOnLibsWithTags: [
-              'type:native-module',
-              'type:utility',
-              'type:service',
             ],
           },
           {
@@ -65,16 +60,7 @@ export default {
               'type:utility',
               'type:machine',
               'type:vendor',
-              'type:native-module'
-            ],
-          },
-          {
-            sourceTag: 'type:native-module',
-            onlyDependOnLibsWithTags: [
-              'type:ioc',
-              'type:service',
-              'type:utility',
-              'type:machine',
+              "platform:*"
             ],
           },
           {
@@ -85,8 +71,7 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
-              'type:vendor',
-              'type:native-module'
+              'type:vendor',  
             ],
           },
           {
@@ -101,7 +86,6 @@ export default {
               'type:vendor',
               'type:module-inheritor',
               'type:temporary-nested-machine-module',
-              'type:native-module'
             ],
           },
           {
@@ -114,7 +98,6 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
-              'type:vendor',
               'type:module-inheritor',
             ],
           },
@@ -128,7 +111,6 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
-              'type:vendor',
             ],
           },
           {
@@ -140,8 +122,6 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
-              'type:vendor',
-              'type:native-module'
             ],
           },
           {
