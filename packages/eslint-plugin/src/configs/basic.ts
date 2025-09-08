@@ -100,8 +100,8 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
-              'type:module-inheritor',
               'type:vendor',
+              'type:module-inheritor',
             ],
           },
           {
@@ -114,6 +114,7 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
+              'type:vendor',
             ],
           },
           {
