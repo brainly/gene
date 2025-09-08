@@ -47,6 +47,7 @@ export default {
               'type:service',
               'type:api-handler',
               'type:application-module-library',
+              'platform:*',
             ],
           },
           {
@@ -72,6 +73,7 @@ export default {
               'type:utility',
               'type:machine',
               'type:vendor',
+              'platform:*',
             ],
           },
           {
