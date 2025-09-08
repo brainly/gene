@@ -13,6 +13,7 @@ export interface CommonServiceType<
   fetchPreviousPage?: TFetchPreviousPage;
   hasMore?: boolean;
   isFetchingNextPage?: boolean;
+  isRefetching?: boolean;
 }
 
 export interface FetchPropsType<TData, TVariables, TQueryKey> {
