@@ -44,6 +44,8 @@ export function transformReactQueryResponse<TData = null, TVariables = null>(
 
   const isFetchingNextPage =
     'isFetchingNextPage' in response ? response.isFetchingNextPage : undefined;
+  const isRefetching =
+    'isRefetching' in response ? response.isRefetching : undefined;
 
   return {
     error: response.error || null,
@@ -54,5 +56,6 @@ export function transformReactQueryResponse<TData = null, TVariables = null>(
     hasMore,
     refetch,
     isFetchingNextPage,
+    isRefetching,
   };
 }
