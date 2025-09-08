@@ -60,7 +60,7 @@ export default {
               'type:utility',
               'type:machine',
               'type:vendor',
-              "platform:*"
+              'platform:*',
             ],
           },
           {
@@ -71,7 +71,7 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
-              'type:vendor',  
+              'type:vendor',
             ],
           },
           {
@@ -122,6 +122,7 @@ export default {
               'type:service',
               'type:utility',
               'type:machine',
+              'platform:*',
             ],
           },
           {
