@@ -13,23 +13,11 @@ export function addStorybookTargets(
 
   projectConfig.targets = {
     ...projectConfig.targets,
-    storybook: {
-      executor: '@brainly-gene/tools:storybook',
-      options: {
-        command: 'start',
-      },
-    },
     'storybook-e2e': {
       executor: '@brainly-gene/tools:storybook',
       options: {
         command: 'start',
         e2e: true,
-      },
-    },
-    'build-storybook': {
-      executor: '@brainly-gene/tools:storybook',
-      options: {
-        command: 'build',
       },
     },
     'copy-storybook-images': {
@@ -38,7 +26,7 @@ export function addStorybookTargets(
     'copy-storybook-translations': {
       executor: '@brainly-gene/tools:copy-translations-to-storybook',
     },
-    'nrwl-storybook': {
+    storybook: {
       executor: '@nx/storybook:storybook',
       dependsOn: [
         {
@@ -59,7 +47,7 @@ export function addStorybookTargets(
       },
       configurations: { ci: { quiet: true } },
     },
-    'build-nrwl-storybook': {
+    'build-storybook': {
       executor: '@nx/storybook:build',
       dependsOn: [
         {

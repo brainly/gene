@@ -2,6 +2,7 @@ import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   generateFiles,
+  getWorkspaceLayout,
   installPackagesTask,
   joinPathFragments,
   readJson,
@@ -12,18 +13,21 @@ import type { AssetsLibraryGenerator } from './schema';
 import libraryGenerator from '../library-generator';
 
 export default async function (tree: Tree, schema: AssetsLibraryGenerator) {
+  const { libsDir } = getWorkspaceLayout(tree);
+  const directory = joinPathFragments(libsDir, 'assets');
+
   const currentPackageJson = readJson(tree, 'package.json');
 
   await libraryGenerator(tree, {
     name: 'assets',
-    directory: 'libs/assets',
+    directory,
     tags: 'type:utility',
   });
 
   generateFiles(
     tree,
     joinPathFragments(__dirname, './files'),
-    'libs/assets/src',
+    joinPathFragments(directory, 'src'),
     {
       ...schema,
       tmpl: '',
