@@ -64,7 +64,7 @@
     "remark-react": "4.0.3",
     "tslib": "2.3.0",
     "unist-util-visit": "2.0.3",
-    "yaml": "1.10.0",
+    "yaml": "1.10.3",
     "zen-observable": "0.8.15",
     "zen-observable-ts": "1.1.0"
   },
