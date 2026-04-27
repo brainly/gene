@@ -43,7 +43,7 @@
     "inquirer-search-list": "1.2.6",
     "inversify": "5.1.1",
     "jscodeshift": "0.11.0",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "mdast": "3.0.0",
     "next": "14.2.29",
     "next-connect": "0.12.1",
