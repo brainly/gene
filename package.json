@@ -178,7 +178,7 @@
     "sass": "1.55.0",
     "sass-loader": "9.0.2",
     "standard-version": "9.5.0",
-    "storybook": "7.6.20",
+    "storybook": "7.6.21",
     "style-loader": "2.0.0",
     "svg-inline-loader": "0.8.2",
     "tailwind-merge": "2.5.4",
