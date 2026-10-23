@@ -133,7 +133,7 @@ const isPropertyIncludedInPromptsProfile = <
 // * return empty string for option outside of prompts profile and without default value
 // * return default value for option outside of prompts profile and with default value
 // * return empty string for option within prompts profile without defined question or without mapping from schematic to inquirer prompt
-// * return prompting result for optio within prompts profile with schematic-inquirer mapping and defined question
+// * return prompting result for option within prompts profile with schematic-inquirer mapping and defined question
 
 const resolveOption = async <
   TPromptsProfile extends string,
